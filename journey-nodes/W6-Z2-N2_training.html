@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — ARINC 429 word structure basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link active">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W6 // DATABUS // ARINC 429 ARCHITECTURE</span>
+                <span>NODE: W6-Z2-N2</span>
+            </div>
+            <h1>ARINC 429 word structure basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Identify the total bit length of a standard ARINC 429 data word.</li>
+        <li>Define the specific purpose of the Label and the SSM (Sign/Status Matrix) fields.</li>
+        <li>Describe the voltage states of Tri-State Encoding.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/arinc_429_analyzer.png" alt="A close-up of the digital screen of an avionics databus analyzer displaying rows of hex data and the text &#x27;Label 203 Altitude&#x27;" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A close-up of the digital screen of an avionics databus analyzer displaying rows of hex data and the text &#x27;Label 203 Altitude&#x27;</figcaption>
+                </figure>
+        <p class="body-text">You connect a $5,000 Ballard bus analyzer to an erratic ARINC 429 line and capture a live data word. The screen displays: <code>Label 203 | SDI 00 | Data: 35,000 | SSM: Failure</code>. What exactly is the analyzer telling you? Label 203 mathematically translates to Barometric Altitude. The data field says 35,000 feet. But the all-important SSM (Status) flags the data as a hardware &quot;Failure&quot;. Without comprehending how this 32-bit word is structured, you are staring at an indecipherable matrix of raw hex numbers. Knowing the structure instantly isolates the fault to the transmitting air data computer, exonerating the wiring.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">The 32-Bit Word Architecture</h3>
+        <p class="body-text">Every single ARINC 429 transmission is packaged into an exact <strong>32-bit data word</strong>. These 32 bits are rigidly organized into five specific fields:</p>
+        <table class="styled-table"><thead><tr><th>Field Name</th><th>Bit Position</th><th>Technical Purpose</th></tr></thead><tbody><tr><td><strong>Label</strong></td><td>Bits 1–8</td><td>The core identifier (an 8-bit octal number) that tells receiving LRUs exactly what parameter the word carries (e.g., Label 100 = Selected Heading, Label 203 = Altitude).</td></tr><tr><td><strong>SDI (Source/Destination)</strong></td><td>Bits 9–10</td><td>Source/Destination Identifier. Used in multi-system aircraft to specify which specific LRU the data applies to (e.g., &quot;This heading is for Autopilot 2, not Autopilot 1&quot;).</td></tr><tr><td><strong>Data Field</strong></td><td>Bits 11–29</td><td>The actual raw engineering value (the numbers representing 35,000 feet, or 275 degrees, or Mach 0.82) encoded in BCD or BNR format.</td></tr><tr><td><strong>SSM (Sign/Status Matrix)</strong></td><td>Bits 30–31</td><td>The critical health indicator. It reports the validity of the data. States include: Normal Operation, Functional Test, Hardware Failure, or No Computed Data (NCD).</td></tr><tr><td><strong>Parity</strong></td><td>Bit 32</td><td>An Odd Parity bit used for instant mathematical error detection. If the bit count doesn&#x27;t add up oddly, the receiver discards the corrupted word.</td></tr></tbody></table>
+        <h3 class="content-h3">ARINC 429 Logic Levels (Tri-State Encoding)</h3>
+        <p class="body-text">While basic digital systems utilize two states (5V and 0V), ARINC 429 utilizes three distinct differential voltage states (measured from Wire A to Wire B) to ensure absolute timing sync:</p>
+        <ul class="content-list">
+        <li><strong>Binary &quot;1&quot; (High):</strong> Differential voltage is +10V (Wire A is 10V higher than Wire B).</li>
+        <li><strong>NULL (Zero Volt Gap):</strong> Differential voltage is 0V. Used exclusively as the timing gap between individual bits or words.</li>
+        <li><strong>Binary &quot;0&quot; (Low):</strong> Differential voltage is -10V (Wire A is 10V lower than Wire B).</li>
+        </ul>
+        <h3 class="content-h3">The Foundation of Binary</h3>
+        <p class="body-text">A <strong>bit</strong> (binary digit) is the absolute fundamental unit of all digital information — it physically exists only as an electrical 0 or 1. All modern avionics data, from high-def radar sweeps to simple switch positions, is ultimately transmitted, calculated, and stored purely as continuous streams of binary ones and zeros.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 6.2A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Inside the 32-Bit ARINC 429 Word] --> B[Bits 1-8: LABEL]
+    A --> C[Bits 9-10: SDI]
+    A --> D[Bits 11-29: DATA]
+    A --> E[Bits 30-31: SSM]
+    A --> F[Bit 32: PARITY]
+    
+    B -->|Label 204| G[Identifies Data as: Baro Correction]
+    D -->|Binary Encoded| H[Value: 29.92 inches Hg]
+    E -->|Status 00| I[Flag: Hardware Failure]
+    
+    I --> J[Receiver ignores the 29.92 data because it is flagged invalid]
+    
+    style E fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style J fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Interactive Simulation</span>
+                <h2 class="section-title">Interactive Lab</h2>
+                <div class="simulation-container" style="background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 30px 0; padding: 20px;">
+                    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    .arinc-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: #020617;
+        /* Very dark slate */
+        padding: 30px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .arinc-header {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #38bdf8;
+        /* Sky blue */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        margin-bottom: 5px;
+    }
+
+    .arinc-word {
+        display: flex;
+        flex-wrap: nowrap;
+        background: #0f172a;
+        padding: 30px 15px 20px 15px;
+        border-radius: 10px;
+        border: 1px solid #334155;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow-x: auto;
+    }
+
+    .arinc-word::before {
+        content: 'DATABUS PAYLOAD [32 BITS]';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #1e293b;
+        padding: 4px 10px;
+        font-size: 0.70rem;
+        font-weight: 700;
+        color: #94a3b8;
+        letter-spacing: 2px;
+        text-align: center;
+        border-radius: 9px 9px 0 0;
+    }
+
+    .arinc-field {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 0 5px;
+        position: relative;
+    }
+
+    .arinc-field:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 15%;
+        bottom: 10%;
+        width: 1px;
+        background: #334155;
+    }
+
+    .arinc-field.field-data {
+        flex: 2;
+        /* Data field needs more room */
+    }
+
+    .arinc-field-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .arinc-bits {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 3px;
+        justify-content: center;
+    }
+
+    .arinc-bit {
+        width: 22px;
+        height: 32px;
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1rem;
+        color: #475569;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.15s ease;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .arinc-bit:hover {
+        background: #334155;
+        color: #94a3b8;
+    }
+
+    /* Colors per field - High contrast neon */
+    .field-parity .arinc-bit.active {
+        background: #ca8a04;
+        border-color: #fde047;
+        color: #fef08a;
+        box-shadow: 0 0 12px rgba(253, 224, 71, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 5px #fef08a;
+    }
+
+    .field-ssm .arinc-bit.active {
+        background: #059669;
+        border-color: #34d399;
+        color: #a7f3d0;
+        box-shadow: 0 0 12px rgba(52, 211, 153, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 5px #a7f3d0;
+    }
+
+    .field-data .arinc-bit.active {
+        background: #2563eb;
+        border-color: #60a5fa;
+        color: #bfdbfe;
+        box-shadow: 0 0 12px rgba(96, 165, 250, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 5px #bfdbfe;
+    }
+
+    .field-sdi .arinc-bit.active {
+        background: #7c3aed;
+        border-color: #a78bfa;
+        color: #ddd6fe;
+        box-shadow: 0 0 12px rgba(167, 139, 250, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 5px #ddd6fe;
+    }
+
+    .field-label .arinc-bit.active {
+        background: #e11d48;
+        border-color: #fb7185;
+        color: #fecdd3;
+        box-shadow: 0 0 12px rgba(251, 113, 133, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 5px #fecdd3;
+    }
+
+    .arinc-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .info-box {
+        background: #0f172a;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .info-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+    }
+
+    .info-box.l-box::before {
+        background: #e11d48;
+    }
+
+    .info-box.s-box::before {
+        background: #059669;
+    }
+
+    .info-box.d-box::before {
+        background: #2563eb;
+    }
+
+    .info-box.p-box::before {
+        background: #ca8a04;
+    }
+
+    .info-box h4 {
+        margin: 0 0 8px 0;
+        color: #64748b;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .info-box p {
+        margin: 0;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.4rem;
+        color: #f8fafc;
+    }
+
+    .parity-status {
+        padding: 8px 12px;
+        text-align: center;
+        font-weight: 800;
+        border-radius: 4px;
+        margin-top: 8px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+
+    .parity-valid {
+        background: rgba(16, 185, 129, 0.1);
+        color: #34d399;
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+    }
+
+    .parity-invalid {
+        background: rgba(239, 68, 68, 0.1);
+        color: #f87171;
+        border: 1px solid rgba(248, 113, 113, 0.3);
+        text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+        animation: flash-error 1s infinite alternate;
+    }
+
+    @keyframes flash-error {
+        from {
+            box-shadow: 0 0 4px rgba(248, 113, 113, 0.1);
+        }
+
+        to {
+            box-shadow: 0 0 15px rgba(248, 113, 113, 0.6);
+        }
+    }
+
+    .help-text {
+        font-size: 0.75rem;
+        color: #475569;
+        margin-top: 6px;
+        line-height: 1.4;
+    }
+</style>
+
+<div class="arinc-container">
+    <div style="text-align:center;">
+        <div class="arinc-header">ARINC 429 Data Word Analyzer</div>
+        <p style="color:#64748b; font-size:0.9rem; margin-top:5px;">Digital avionics bus diagnostic tool. Click bits to
+            alter transmission state.</p>
+    </div>
+
+    <div class="arinc-word" id="arinc-word">
+        <!-- Parity (1 bit) -->
+        <div class="arinc-field field-parity">
+            <div class="arinc-field-label" style="color:#fde047;">P [32]</div>
+            <div class="arinc-bits">
+                <div class="arinc-bit" data-bit="32">0</div>
+            </div>
+        </div>
+        <!-- SSM (2 bits) -->
+        <div class="arinc-field field-ssm">
+            <div class="arinc-field-label" style="color:#34d399;">SSM [31-30]</div>
+            <div class="arinc-bits">
+                <div class="arinc-bit active" data-bit="31">1</div>
+                <div class="arinc-bit active" data-bit="30">1</div>
+            </div>
+        </div>
+        <!-- Data (19 bits) -->
+        <div class="arinc-field field-data">
+            <div class="arinc-field-label" style="color:#60a5fa;">DATA PAYLOAD [29-11]</div>
+            <div class="arinc-bits">
+                <div class="arinc-bit" data-bit="29">0</div>
+                <div class="arinc-bit" data-bit="28">0</div>
+                <div class="arinc-bit" data-bit="27">0</div>
+                <div class="arinc-bit" data-bit="26">0</div>
+                <div class="arinc-bit" data-bit="25">0</div>
+                <div class="arinc-bit" data-bit="24">0</div>
+                <div class="arinc-bit active" data-bit="23">1</div>
+                <div class="arinc-bit" data-bit="22">0</div>
+                <div class="arinc-bit active" data-bit="21">1</div>
+                <div class="arinc-bit" data-bit="20">0</div>
+                <div class="arinc-bit active" data-bit="19">1</div>
+                <div class="arinc-bit" data-bit="18">0</div>
+                <div class="arinc-bit active" data-bit="17">1</div>
+                <div class="arinc-bit" data-bit="16">0</div>
+                <div class="arinc-bit" data-bit="15">0</div>
+                <div class="arinc-bit" data-bit="14">0</div>
+                <div class="arinc-bit" data-bit="13">0</div>
+                <div class="arinc-bit" data-bit="12">0</div>
+                <div class="arinc-bit" data-bit="11">0</div>
+            </div>
+        </div>
+        <!-- SDI (2 bits) -->
+        <div class="arinc-field field-sdi">
+            <div class="arinc-field-label" style="color:#a78bfa;">SDI [10-9]</div>
+            <div class="arinc-bits">
+                <div class="arinc-bit" data-bit="10">0</div>
+                <div class="arinc-bit" data-bit="9">0</div>
+            </div>
+        </div>
+        <!-- Label (8 bits) -->
+        <div class="arinc-field field-label">
+            <div class="arinc-field-label" style="color:#fb7185;">LABEL [8-1]</div>
+            <div class="arinc-bits">
+                <div class="arinc-bit" data-bit="8">0</div>
+                <div class="arinc-bit active" data-bit="7">1</div>
+                <div class="arinc-bit active" data-bit="6">1</div>
+                <div class="arinc-bit active" data-bit="5">1</div>
+                <div class="arinc-bit" data-bit="4">0</div>
+                <div class="arinc-bit" data-bit="3">0</div>
+                <div class="arinc-bit active" data-bit="2">1</div>
+                <div class="arinc-bit" data-bit="1">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="arinc-info">
+        <div class="info-box l-box">
+            <h4>Label (Octal ID)</h4>
+            <p id="info-label">120 (Eng Oil Press)</p>
+            <div class="help-text">Transmitted reversed (Bit 1 is MSB, Bit 8 is LSB for the first octal digit).</div>
+        </div>
+        <div class="info-box s-box">
+            <h4>Sign/Status Matrix (SSM)</h4>
+            <p id="info-ssm" style="color:#34d399;">Normal Operation</p>
+            <div class="help-text">Indicates valid hardware or data signs (North/East, Plus/Minus).</div>
+        </div>
+        <div class="info-box d-box">
+            <h4>Decoded Data (Decimal)</h4>
+            <p id="info-data">Value: 85</p>
+            <div class="help-text">Binary numerical value (BNR) or Binary Coded Decimal (BCD).</div>
+        </div>
+        <div class="info-box p-box">
+            <h4>Parity Check (Odd)</h4>
+            <div id="info-parity" class="parity-status parity-valid">VALID (Odd 1s)</div>
+            <div class="help-text">Bit 32 ensures total word contains an odd number of '1's.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bits = document.querySelectorAll('.arinc-bit');
+
+        function getBitState(bitNum) {
+            return document.querySelector(`.arinc-bit[data-bit="${bitNum}"]`).classList.contains('active') ? 1 : 0;
+        }
+
+        function calculateInfo() {
+            // Parity
+            let numberOfOnes = 0;
+            for (let i = 1; i <= 32; i++) {
+                if (getBitState(i) === 1) numberOfOnes++;
+            }
+            const isParityValid = numberOfOnes % 2 !== 0;
+            const parityEl = document.getElementById('info-parity');
+            parityEl.className = 'parity-status ' + (isParityValid ? 'parity-valid' : 'parity-invalid');
+            parityEl.innerHTML = isParityValid ? `VALID (Odd 1s)` : `INVALID (Even 1s)`;
+
+            // Label
+            let l_oct1 = (getBitState(8) << 1) | getBitState(7);
+            let l_oct2 = (getBitState(6) << 2) | (getBitState(5) << 1) | getBitState(4);
+            let l_oct3 = (getBitState(3) << 2) | (getBitState(2) << 1) | getBitState(1);
+            let octalStr = `${l_oct1}${l_oct2}${l_oct3}`;
+
+            let labelMeaning = "Unknown Parameter";
+            if (octalStr === "120") labelMeaning = "Eng Oil Press";
+            if (octalStr === "203") labelMeaning = "Altitude (Uncorr)";
+            if (octalStr === "310") labelMeaning = "Latitude";
+            if (octalStr === "000") labelMeaning = "Null/Padding";
+
+            document.getElementById('info-label').innerText = `${octalStr} (${labelMeaning})`;
+
+            // SSM
+            let ssm31 = getBitState(31);
+            let ssm30 = getBitState(30);
+            let ssmStr = "Normal Operation";
+            let ssmColor = "#34d399";
+            if (ssm31 === 0 && ssm30 === 0) { ssmStr = "Failure Warning [NCD]"; ssmColor = "#f87171"; }
+            if (ssm31 === 0 && ssm30 === 1) { ssmStr = "No Computed Data"; ssmColor = "#fbbf24"; }
+            if (ssm31 === 1 && ssm30 === 0) { ssmStr = "Functional Test"; ssmColor = "#60a5fa"; }
+
+            document.getElementById('info-ssm').innerText = ssmStr;
+            document.getElementById('info-ssm').style.color = ssmColor;
+
+            // Data
+            let dataVal = 0;
+            for (let i = 11; i <= 29; i++) {
+                if (getBitState(i) === 1) {
+                    dataVal += Math.pow(2, i - 11);
+                }
+            }
+            document.getElementById('info-data').innerText = `Value: ${dataVal}`;
+        }
+
+        bits.forEach(bit => {
+            bit.addEventListener('click', () => {
+                bit.classList.toggle('active');
+                bit.innerText = bit.classList.contains('active') ? '1' : '0';
+                calculateInfo();
+            });
+        });
+
+        calculateInfo();
+    });
+</script>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When utilizing a databus analyzer on the flight deck, do not become overwhelmed by the torrent of numerical data. The first thing you must check is the <strong>Label</strong> — it tells you definitively what parameter you are looking at. The second, and most critical, thing you must check is the <strong>SSM</strong>. If the analyzer shows the SSM as &quot;Failure&quot; or &quot;No Computed Data&quot; (NCD), the source LRU has internally recognized an error and flagged its own data as invalid. The problem is definitively inside the transmitting box, not in your bus wiring.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 6.2 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ARINC 429 Word Length</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ARINC 429 Word Length</div>
+                            <p>An ARINC 429 data word is 32 bits long, consisting of a label (8 bits), status/source destination identifier (2 bits), data field (19 bits), and sign/status matrix or parity bit (1 bit each).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ARINC 429 Logic Levels</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ARINC 429 Logic Levels</div>
+                            <p>ARINC 429 uses tri-state encoding: binary &#x27;1&#x27; = +10V (A high, B low); NULL = 0V; binary &#x27;0&#x27; = -10V (A low, B high). The voltage differential between the A and B lines determines the bit value.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Bit (Binary Digit)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Bit (Binary Digit)</div>
+                            <p>A bit is the most fundamental unit of digital information, representing one of two possible states: 0 or 1. All digital data in avionics systems is stored, processed, and transmitted as groups of bits.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Binary Number System</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Binary Number System</div>
+                            <p>The binary (base-2) number system uses only two digits — 0 and 1 — to represent all data in digital systems. Every digital avionics value (altitude, airspeed, heading) is ultimately stored and transmitted as a sequence of binary digits.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>32-Bit Word</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">32-Bit Word</div>
+                            <p>The rigidly formatted fixed-length data packet transmitted on an ARINC 429 bus, containing five distinct operational fields.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Label</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Label</div>
+                            <p>The 8-bit octal identifier field (bits 1–8) defining exactly which engineering parameter the word is carrying.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>SSM (Sign/Status Matrix)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">SSM (Sign/Status Matrix)</div>
+                            <p>The 2-bit health field (bits 30–31) indicating the absolute validity of the data: Normal, Test, Failure, or No Computed Data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Tri-State Encoding</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Tri-State Encoding</div>
+                            <p>The +10V / 0V / -10V bipolar differential signaling architecture utilized geographically by ARINC 429 transceivers.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 6.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="1" data-feedback="ARINC 429 transmits data in fixed-length 32-bit words. This standardized word length ensures consistent encoding and decoding across all compliant LRUs.">
+                <div class="kc-header">Knowledge Verification [1/4]</div>
+                <div class="kc-question">How many bits are in an ARINC 429 data word?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">8 bits (one byte)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">32 bits</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">16 bits</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">64 bits</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="1" data-feedback="ARINC 429 uses differential encoding: +10V between A and B (A high relative to B) represents binary &#x27;1&#x27;. NULL (0V) separates words; -10V represents binary &#x27;0&#x27;.">
+                <div class="kc-header">Knowledge Verification [2/4]</div>
+                <div class="kc-question">How is a binary &#x27;1&#x27; encoded in an ARINC 429 signal?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">A voltage of -10V on the A line with B at 0V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">A differential of approximately +10V between the A and B lines (A positive, B negative)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">A voltage of +5V on both A and B lines simultaneously</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">A zero-voltage NULL state between B line transitions</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="2" data-feedback="A bit is the smallest, most fundamental unit — a single binary digit that can be 0 or 1. Bytes, words, and all higher structures are just groups of bits.">
+                <div class="kc-header">Knowledge Verification [3/4]</div>
+                <div class="kc-question">What is the fundamental building block of all digital systems?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">A byte — the standard 8-bit unit used by all computers</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">A word — the standard 32-bit unit used in ARINC 429</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">A bit (binary digit) — the smallest unit of digital information representing a 0 or 1</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">A label — the ARINC 429 unit that identifies each data type</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="3" data-feedback="All digital data processing is ultimately binary — 0s and 1s. Decimal or hex are just human-friendly representations of underlying binary values.">
+                <div class="kc-header">Knowledge Verification [4/4]</div>
+                <div class="kc-question">What number system is fundamental to all digital avionics data processing?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0">
+                        <div class="kc-option-text">Decimal (base-10), because avionics displays show decimal numbers</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1">
+                        <div class="kc-option-text">Octal (base-8), as defined in the ARINC 429 label specification</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2">
+                        <div class="kc-option-text">Hexadecimal (base-16), because avionics computers use 16-bit processors</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3">
+                        <div class="kc-option-text">Binary (base-2), where all data is represented as combinations of 0s and 1s</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Every ARINC 429 word is strictly 32 bits: the 8-bit Label identifies *what* the data is, the 19 bits carry the *value*, and the 2-bit SSM tells you if the value is *valid and trustworthy*.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W6-Z2-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W6-Z2-N3_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W6-Z2-N2';
+        const TOTAL_KCS = 4;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

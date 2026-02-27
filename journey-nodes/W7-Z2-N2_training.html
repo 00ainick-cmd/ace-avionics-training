@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Antennas &amp; RF safety basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link active">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W7 // CNS // COMMUNICATIONS</span>
+                <span>NODE: W7-Z2-N2</span>
+            </div>
+            <h1>Antennas &amp; RF safety basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Identify the five critical inspection points for any VHF communication antenna.</li>
+        <li>Explain the physical hazards of RF radiation on the flight line.</li>
+        <li>Define SWR and its impact on transmitter efficiency.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/vhf_antenna_inspection.png" alt="An avionics technician&#x27;s hand closely inspecting the sleek white fiberglass blade of a VHF communication antenna mounted on the aluminum skin of an aircraft" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // An avionics technician&#x27;s hand closely inspecting the sleek white fiberglass blade of a VHF communication antenna mounted on the aluminum skin of an aircraft</figcaption>
+                </figure>
+        <p class="body-text">A technician is hastily replacing a weather-damaged VHF comm antenna on a regional jet. They bolt the new antenna to the roof, hastily torque the BNC coax connector, and do a quick 30-second radio check to the tower—it sounds crystal clear. They skip the required SWR measurement to save time. Six months later, the aircraft returns squawking intermittent comm dropouts at a distance. The culprit? Hidden corrosion at the antenna base had severely degraded the ground plane connection, driving the SWR through the roof and bleeding off 40% of the transmitter&#x27;s power as wasted heat. Measuring the SWR post-install would have caught the glaring impedance mismatch instantly.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">Comprehensive VHF Antenna Inspection</h3>
+        <p class="body-text">An antenna is the absolute most structurally exposed avionics component on the aircraft, taking relentless abuse from 500-knot winds, hail, and extreme icing. A thorough phase inspection requires five strict checks:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Physical Integrity:</strong> Inspect the fiberglass or composite shell for micro-cracks, deep erosion, or structural delamination.</li>
+        <li><strong>2.</strong> <strong>Mounting Security:</strong> Grab the antenna firmly—there should be absolutely zero wobble. Loose antennas vibrate violently and quickly tear massive holes in the aluminum skin.</li>
+        <li><strong>3.</strong> <strong>Connector Torque:</strong> Verify the coaxial BNC/TNC connector at the base is completely seated and biologically sealed against moisture.</li>
+        <li><strong>4.</strong> <strong>Coaxial Health:</strong> Follow the cable run inside the fuselage to ensure the coax is not violently kinked, crushed by cargo, or weeping internal water.</li>
+        <li><strong>5.</strong> <strong>Corrosion and Ground Plane:</strong> An antenna must violently bond to the bare aluminum airframe to utilize the skin as the &quot;bottom half&quot; of the antenna (the ground plane). Severe corrosion between the antenna base and the skin destroys this electrical mirror, crippling performance.</li>
+        </ol>
+        <h3 class="content-h3">RF Radiation Safety</h3>
+        <p class="body-text">Radio Frequency (RF) energy is invisible, non-ionizing radiation. While it won&#x27;t cause cellular mutation like X-rays, high-powered RF massively vibrates water molecules in human tissue, causing deep internal heating (exactly like a microwave oven).</p>
+        <ul class="content-list">
+        <li><strong>The Absolute Rule:</strong> Never stand near, touch, or inspect an antenna while the transmitter is energized.</li>
+        <li>This applies critically to high-power systems like HF radios, weather radar, transponders, and DME.</li>
+        <li>Always physically pull the system circuit breaker and hang a highly visible lockout tag before climbing onto the fuselage near an antenna cluster.</li>
+        </ul>
+        <h3 class="content-h3">Impedance and SWR (Standing Wave Ratio)</h3>
+        <p class="body-text">For a transmitter to push its full rated wattage (e.g., 16 watts) into the atmosphere, the entire electrical pathway—the radio, the coax cable, and the antenna—must mathematically share the exact same impedance (historically <strong>50 Ohms</strong> for aviation VHF).</p>
+        <ul class="content-list">
+        <li><strong>SWR (Standing Wave Ratio):</strong> This is the ultimate metric of antenna health. It measures how much power actually radiates into the sky, versus how much power violently reflects back down the cable into the radio due to an impedance mismatch.</li>
+        <li>A perfect system has an SWR of <strong>1:1</strong> (100% power radiated).</li>
+        <li>An SWR above <strong>3:1</strong> means severe power loss and the reflected energy is literally cooking the transmitter&#x27;s final amplifier stage. Always use a calibrated SWR meter to scientifically prove an installation.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.2A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[VHF Comm Radio 16W Output] -->|Coax Cable 50 Ohms| B{Antenna Base Connection}
+    
+    B -->|Corroded Ground Plane - High Impedance| C[Impedance Mismatch occurs]
+    C --> D[Massive power reflects back down the coax - High SWR]
+    D --> E[Transmission range drops by 50% - Amplifier overheats]
+    
+    B -->|Clean Bare Aluminum Bond - 50 Ohms| F[Perfect Impedance Match]
+    F --> G[100% of power radiates into atmosphere - Low 1:1 SWR]
+    G --> H[Crystal clear comms at 200 miles]
+    
+    style E fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style H fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When replacing an antenna, absolutely ensure you aggressively clean the footprint on the fuselage down to bright, shiny aluminum to guarantee a flawless ground plane connection. Immediately after installation, seal the edges perfectly with aerodynamic sealant to prevent capillary water action from dragging corrosion under the base. Finally, never sign off an antenna installation based solely on a short-range radio check to Ground Control; you must connect an SWR/Wattmeter inline to scientifically prove the impedance match is sound.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.2 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>VHF antenna inspection items</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">VHF antenna inspection items</div>
+                            <p>Regular VHF antenna inspection: (1) physical condition — no cracks, chips, or broken base; (2) secure mounting — no looseness; (3) connector tightness — coax connector properly torqued; (4) coaxial cable condition — no kinks, chafing, or water infiltration; (5) no corrosion at base or connector.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>RF radiation safety</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">RF radiation safety</div>
+                            <p>Radio frequency (RF) radiation from transmitting antennas can cause tissue heating, eye damage, and interference with medical devices at close range. ALWAYS de-energize the transmitter before working on or near the antenna. This applies to all RF systems: VHF comm, transponder, DME, ADS-B.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Coaxial cable replacement — critical steps</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Coaxial cable replacement — critical steps</div>
+                            <p>When replacing coax for a VHF antenna: (1) use correct impedance cable (50Ω for VHF comm), (2) use correct cable type/spec for the run length and environment, (3) install connectors properly — correct preparation, crimping, and torque, (4) measure SWR (Standing Wave Ratio) to verify the installation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Intermittent comm audio — common causes</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Intermittent comm audio — common causes</div>
+                            <p>Three most common causes of intermittent or noisy comm audio: (1) loose or corroded connector (high contact resistance causing noise), (2) damaged coaxial cable (bent, kinked, or crushed center conductor), (3) failing microphone jack (worn or oxidized contacts causing noise when moving).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Ground Plane</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Ground Plane</div>
+                            <p>The massive conductive surface (the aluminum aircraft skin) beneath a VHF whip antenna that acts as the required electrical second half of the dipole.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>SWR (Standing Wave Ratio)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">SWR (Standing Wave Ratio)</div>
+                            <p>The critical numerical ratio measuring the efficiency of an antenna system; indicating how much power radiates vs. how much violently reflects back.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Impedance Mismatch</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Impedance Mismatch</div>
+                            <p>A destructive electrical condition where components of unequal resistance (like a corroded connector) cause massive signal reflections and power loss.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>RF Safety Barrier</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">RF Safety Barrier</div>
+                            <p>The mandatory clearance zone around active transmitting antennas to prevent severe internal tissue heating from high-power electromagnetic radiation.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="3" data-feedback="A standard VHF antenna inspection is visual and physical: check for physical damage to the element, verify it&#x27;s securely mounted with no wobble, confirm the coax connector is tight, inspect the coax for damage, and check for corrosion at all contact points. An SWR measurement can be added after any maintenance.">
+                <div class="kc-header">Knowledge Verification [1/4]</div>
+                <div class="kc-question">What should be checked during a regular VHF communication antenna inspection?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">Antenna impedance using a network analyzer and SWR meter</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">The antenna radiation pattern using a calibrated antenna range</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">The radio&#x27;s transmitted power output and frequency accuracy</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">Physical condition, mounting security, connector tightness, coax condition, and corrosion</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="0" data-feedback="The only safe approach is to de-energize the system. RF can cause tissue injury at close range — &#x27;standby&#x27; or &#x27;low power&#x27; modes still transmit and are not safe for nearby work. Always verify the system is off before working at the antenna or along the transmission line.">
+                <div class="kc-header">Knowledge Verification [2/4]</div>
+                <div class="kc-question">What is the key safety requirement when performing maintenance near an aircraft VHF antenna?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">Ensure the RF transmitting system is off before working near the antenna</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">Keep the system in low-power standby mode to reduce risk</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">Wear RF-shielded gloves rated for VHF frequencies</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">Only approach the antenna from behind to avoid the main radiation lobe</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="2" data-feedback="All three steps are critical: wrong impedance creates a mismatch (increased reflected power, reduced range); improperly installed connectors cause intermittent connection and RF leakage; without SWR verification, a hidden fault may not be detected until the radio fails in flight.">
+                <div class="kc-header">Knowledge Verification [3/4]</div>
+                <div class="kc-question">What are the critical steps when replacing coaxial cable on a VHF communication antenna?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">Only match cable length to the original; impedance doesn&#x27;t matter for short runs</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">Replace the antenna at the same time for guaranteed performance</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">Use correct impedance and cable type, install and torque connectors properly, verify SWR after installation</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">Only SWR verification is required — cable type and connector torque are secondary</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="2" data-feedback="The vast majority of intermittent/noisy comm audio issues are physical connection problems: corroded or loose connectors create variable resistance; damaged coax (kinked, crushed, water-infiltrated) degrades signal; failing mic jacks introduce noise with movement. These should be the first inspection points.">
+                <div class="kc-header">Knowledge Verification [4/4]</div>
+                <div class="kc-question">What are the most common causes of intermittent or noisy audio in an aircraft communication system?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0">
+                        <div class="kc-option-text">Incorrectly programmed squelch threshold and volume setting</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1">
+                        <div class="kc-option-text">Software version mismatch between the radio and audio panel</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2">
+                        <div class="kc-option-text">Loose or corroded connectors, damaged coaxial cable, or failing microphone jack</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3">
+                        <div class="kc-option-text">Alternator noise from an unfiltered electrical bus</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Inspect antennas methodically for structural security and base corrosion, always de-energize the transmitters to prevent RF tissue burns, and definitively utilize an SWR meter to scientifically validate your 50-Ohm impedance match.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W7-Z2-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W7-Z3-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W7-Z2-N2';
+        const TOTAL_KCS = 4;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

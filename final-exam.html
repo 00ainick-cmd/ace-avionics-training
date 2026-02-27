@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Final Mock Exam</title>
+    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="shared/ace-theme.css">
+    <style>
+        /* =======================================================
+       PREMIUM EXAM ENVIRONMENT (PROCTORED LOOK)
+       ======================================================= */
+        :root {
+            --exam-bg: #090B10;
+            --exam-surface: #131722;
+            --exam-border: #2A3042;
+            --exam-accent: #D4A853;
+            /* ACE Gold */
+            --exam-accent-hover: #E8C87A;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+        }
+
+        body {
+            background: var(--exam-bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--text-main);
+            user-select: none;
+            /* Prevent selection like a real proctored exam */
+        }
+
+        /* Top Bar - Strict & Serious */
+        .exam-header {
+            background: #000;
+            border-bottom: 2px solid var(--exam-border);
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .exam-logo {
+            height: 32px;
+        }
+
+        .exam-title-badge {
+            background: var(--exam-surface);
+            border: 1px solid var(--exam-border);
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--exam-accent);
+        }
+
+        /* Timer Area */
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #111;
+            padding: 8px 24px;
+            border: 1px solid var(--exam-border);
+            border-radius: 6px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .timer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .timer-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.05em;
+        }
+
+        .timer-value.warning {
+            color: #EF4444;
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes pulse-red {
+
+            0%,
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            }
+
+            50% {
+                opacity: 0.7;
+                text-shadow: none;
+            }
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .candidate-info {
+            text-align: right;
+        }
+
+        .candidate-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .candidate-id {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Main Layout */
+        .exam-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar: Grid Navigator */
+        .exam-sidebar {
+            width: 320px;
+            background: var(--exam-surface);
+            border-right: 1px solid var(--exam-border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--exam-border);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .nav-cell {
+            aspect-ratio: 1;
+            background: var(--exam-bg);
+            border: 1px solid var(--exam-border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-cell:hover {
+            border-color: var(--exam-accent);
+            color: var(--exam-accent);
+        }
+
+        .nav-cell.active {
+            background: var(--exam-accent);
+            color: #000;
+            border-color: var(--exam-accent);
+            font-weight: 700;
+        }
+
+        .nav-cell.answered {
+            background: rgba(212, 168, 83, 0.15);
+            border-color: rgba(212, 168, 83, 0.4);
+            color: var(--exam-accent);
+        }
+
+        .nav-cell.answered.active {
+            background: var(--exam-accent);
+            color: #000;
+        }
+
+        /* Main Content Area */
+        .exam-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 64px 48px;
+        }
+
+        .question-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .question-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--exam-accent);
+            margin-bottom: 24px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(212, 168, 83, 0.2);
+            padding-bottom: 12px;
+        }
+
+        .question-stem {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #FFFFFF;
+            margin-bottom: 48px;
+            font-weight: 500;
+        }
+
+        /* Crisp, squared-off options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: stretch;
+            background: var(--exam-surface);
+            border: 1px solid var(--exam-border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-row:hover {
+            background: #1a202c;
+            border-color: #3f4a5c;
+        }
+
+        .option-row.selected {
+            background: rgba(212, 168, 83, 0.08);
+            border-color: var(--exam-accent);
+        }
+
+        .option-column-left {
+            padding: 24px;
+            border-right: 1px solid var(--exam-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .option-row.selected .option-column-left {
+            background: var(--exam-accent);
+            border-color: var(--exam-accent);
+        }
+
+        /* Custom Radio styling */
+        .radio-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-row.selected .radio-circle {
+            border-color: #000;
+        }
+
+        .radio-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .option-row.selected .radio-dot {
+            background: #000;
+        }
+
+        .option-column-right {
+            padding: 24px 32px;
+            flex: 1;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            line-height: 1.5;
+        }
+
+        /* Bottom Action Bar */
+        .action-bar {
+            background: var(--exam-surface);
+            border-top: 1px solid var(--exam-border);
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-sys {
+            background: transparent;
+            border: 1px solid var(--exam-border);
+            color: var(--text-main);
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+
+        .btn-sys:hover:not(:disabled) {
+            background: var(--exam-border);
+        }
+
+        .btn-sys:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--exam-accent);
+            color: #000;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--exam-accent-hover);
+        }
+
+        .btn-submit {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            display: none;
+        }
+
+        .btn-submit:hover {
+            background: #ef4444;
+        }
+
+        /* Loading Overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(212, 168, 83, 0.2);
+            border-top-color: var(--exam-accent);
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+            margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #compilingText {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Admin Sim Modal */
+        #adminModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-card {
+            background: var(--exam-surface);
+            border: 1px solid var(--exam-accent);
+            padding: 40px;
+            border-radius: 8px;
+            width: 450px;
+            text-align: center;
+        }
+
+        .admin-btn {
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 16px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-btn:hover {
+            background: #334155;
+            border-color: var(--exam-accent);
+            color: var(--exam-accent);
+        }
+    </style>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/js/supabase-client.js"></script>
+</head>
+
+<body>
+
+    <!-- Loading State -->
+    <div id="loadingOverlay">
+        <div class="loader"></div>
+        <div id="compilingText">ESTABLISHING SECURE CONNECTION...</div>
+    </div>
+
+    <header class="exam-header">
+        <div class="header-left">
+            <img src="shared/logo.png" alt="ACE Avionics" class="exam-logo">
+            <div class="exam-title-badge">Official Certification Mock Exam</div>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-label">Time Remaining</div>
+            <div class="timer-value" id="timeDisplay">90:00</div>
+        </div>
+
+        <div class="header-right">
+            <button class="btn-submit" id="btnSubmitTop"
+                style="display: block; margin-right: 16px; padding: 10px 24px; font-size: 0.9rem;">END EXAM
+                EARLY</button>
+            <div class="candidate-info">
+                <div class="candidate-name">CANDIDATE: CAET Trainee</div>
+                <div class="candidate-id">EXAM_ID: CAET-MOCK-001</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="exam-layout" style="display: none;" id="examUI">
+
+        <!-- Navigation Sidebar -->
+        <aside class="exam-sidebar">
+            <div class="sidebar-header">
+                Question Review
+            </div>
+            <div class="nav-grid" id="navGrid">
+                <!-- Cells injected by JS -->
+            </div>
+        </aside>
+
+        <!-- Main Question Area -->
+        <main class="exam-content-area">
+            <div class="content-scroll" id="contentScroll">
+                <div class="question-wrapper">
+                    <div class="question-meta">
+                        <span id="questionCategory">Loading Domain...</span>
+                        <span id="questionCounter">Q 1 / 60</span>
+                    </div>
+
+                    <div class="question-stem" id="questionText">Loading question content...</div>
+
+                    <div class="options-list" id="optionsContainer">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Footer -->
+            <footer class="action-bar">
+                <button class="btn-sys" id="btnPrev" disabled>&larr; Previous</button>
+                <button class="btn-primary" id="btnNext">Next &rarr;</button>
+                <button class="btn-submit" id="btnSubmit">Submit Exam</button>
+            </footer>
+        </main>
+
+    </div>
+
+    <!-- Admin Simulator Modal -->
+    <div id="adminModal">
+        <div class="admin-card">
+            <h2 style="color:var(--exam-accent); margin-top:0; font-weight:700; letter-spacing:0.05em;">ADMIN: SIMULATOR
+            </h2>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom: 32px;">Auto-fill the exam and jump to
+                results. (Does not write to Supabase telemetry).</p>
+            <button class="admin-btn" onclick="simulateExamScore('high')">Simulate High Score (95%)</button>
+            <button class="admin-btn" onclick="simulateExamScore('medium')">Simulate Medium Score (75%)</button>
+            <button class="admin-btn" onclick="simulateExamScore('low')">Simulate Low Score (45%)</button>
+            <button class="btn-sys"
+                style="margin-top:24px; width:100%; border-color:var(--exam-border); color:var(--text-muted);"
+                onclick="document.getElementById('adminModal').style.display='none'">Cancel</button>
+        </div>
+    </div>
+
+    <script src="shared/js/final-exam.js?v=2"></script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+{
+  "id": "W5-Z2-N2",
+  "title": "Connectors & backshells",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Terminations/connectors",
+  "objectiveKeys": [
+    "q36",
+    "q48",
+    "q129",
+    "q42"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Connectors & backshells"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize connectors/backshells/strain relief basics."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Aircraft Connector Function",
+          "definition": "Aircraft connectors provide a reliable, removable electrical junction between wire harnesses and avionics equipment \u2014 allowing LRUs to be disconnected and replaced without disturbing the aircraft wiring harness.",
+          "analogy": "A connector is like a wall outlet \u2014 it provides a reliable connection that can be disconnected and reconnected repeatedly without disturbing the wiring inside the wall."
+        },
+        {
+          "term": "Connector Backshell",
+          "definition": "A backshell is the rear shell of an aircraft connector that clamps the wire bundle, providing mechanical strain relief, protecting the terminations from vibration damage, and (in environmentally sealed types) excluding moisture and contaminants.",
+          "analogy": "A backshell is like the rubber boot on a garden hose fitting \u2014 it clamps the hose, prevents the hose from pulling the connection apart, and keeps water from entering the fitting mechanism."
+        },
+        {
+          "term": "Environmentally Sealed Splice",
+          "definition": "In areas exposed to moisture, fuel, fluids, or temperature extremes (wheel wells, engine bays, bilge areas), wire splices must be environmentally sealed \u2014 using a solder-sleeve (pre-tinned solder ring that flows when heated, sealing the conductor) or adhesive-lined heat-shrink over a crimp splice to exclude contaminants.",
+          "analogy": "An environmentally sealed splice is like a waterproof phone case \u2014 the phone still works, but it's protected from the hazardous environment around it."
+        },
+        {
+          "term": "Wiggle Test",
+          "definition": "A wiggle test involves gently flexing wiring near connectors and terminal points while monitoring for circuit continuity changes; it detects intermittent connections from marginal crimps, loose pins, or strained solder joints that static testing would miss.",
+          "analogy": "A wiggle test is like gently shaking a table lamp to see if the bulb flickers \u2014 the static test said the bulb worked, but only movement reveals the loose socket connection."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of connectors in an aircraft wiring system?",
+      "choices": [
+        "To increase the current-carrying capacity of the wiring harness",
+        "To reduce the total wire weight by eliminating unnecessary conductors",
+        "To provide mechanical rigidity to prevent wire bundle movement during flight",
+        "To provide reliable, removable electrical junctions between wire harnesses and avionics equipment for ease of installation and maintenance"
+      ],
+      "correctIndex": 3,
+      "feedback": "Connectors provide removable junctions \u2014 LRUs can be swapped without re-wiring. This maintainability is the core purpose of connectors in avionics systems."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the primary purposes of a backshell on an aircraft connector?",
+      "choices": [
+        "To increase the connector's current-carrying capacity and reduce contact resistance",
+        "To color-code the connector for identification and reduce installation errors",
+        "To provide an electrical ground path from the connector shell to the wire bundle",
+        "To provide mechanical strain relief, protect terminations from vibration, and maintain environmental integrity"
+      ],
+      "correctIndex": 3,
+      "feedback": "Backshells provide: (1) strain relief \u2014 clamp the bundle so tension doesn't pull on pins, (2) vibration protection \u2014 shield pin terminations from dynamic loads, and (3) environmental sealing in sealed variants."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of wire splice is preferred when making a connection in an aircraft wheel well?",
+      "choices": [
+        "Open crimp butt splice covered with vinyl electrical tape",
+        "Environmentally sealed splice \u2014 a solder-sleeve type or a crimp splice with adhesive-lined heat-shrink \u2014 to exclude moisture and contaminants",
+        "Standard uninsulated crimp splice \u2014 wheel wells are dry enough for open splices",
+        "Direct-solder splice with no covering \u2014 solder provides adequate protection"
+      ],
+      "correctIndex": 1,
+      "feedback": "Wheel wells are exposed to moisture, de-icing fluid, and dirt. An open splice will corrode quickly. Environmentally sealed splices (solder-sleeve or adhesive-lined heat-shrink crimp) are required for these areas."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why should a wiggle test be performed near connectors before finalizing an avionics installation?",
+      "choices": [
+        "To verify that the connector locking mechanism clicks properly",
+        "To check that the connector backshell is correctly torqued to prevent rotation",
+        "To detect intermittent connections that would not be revealed by static continuity tests but could fail in flight",
+        "To ensure the wire insulation has not been damaged during installation"
+      ],
+      "correctIndex": 2,
+      "feedback": "Static tests pass connections that are marginally crimped or soldered. Dynamic flex (wiggle test) simulates service conditions \u2014 loose pins or marginal joints will break intermittently when the wire is flexed."
+    }
+  ]
+}

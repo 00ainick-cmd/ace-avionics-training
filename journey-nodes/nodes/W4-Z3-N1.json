@@ -1,0 +1,113 @@
+{
+  "id": "W4-Z3-N1",
+  "title": "Voltage drop & resistance clues",
+  "world": "Tools & Test Equipment",
+  "zone": "Fault finding",
+  "objectiveKeys": [
+    "q69",
+    "q116",
+    "q138",
+    "q186",
+    "q194"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Voltage drop & resistance clues"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Interpret low voltage/dim load symptoms and resistance-related faults."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Fluctuating milliohmmeter reading",
+          "definition": "An unstable or fluctuating milliohmmeter reading on a bonding strap indicates a poor, intermittent contact \u2014 almost always caused by corrosion or contamination at one or both attachment points. Correct action: inspect, clean, and re-measure.",
+          "analogy": "Like a loose headphone plug causing crackling audio \u2014 the connection exists but isn't solid."
+        },
+        {
+          "term": "Lower-than-expected voltage across load",
+          "definition": "If voltage at a load is lower than expected, excessive resistance upstream is consuming voltage (V=IR voltage drop). Causes: corroded connections, undersized wire, loose terminals. The extra resistance steals voltage from the load.",
+          "analogy": "Water pressure drops at the end of a garden hose with a partially kinked section \u2014 the kink steals the pressure before it reaches the nozzle."
+        },
+        {
+          "term": "Voltage drop \u2014 cause",
+          "definition": "A voltage drop between source and load is caused by resistance in the wiring path: V_drop = I \u00d7 R_wire. Common sources: corroded connectors, undersized wire, loose terminals, bad splices. Even small resistance creates measurable drops at normal aircraft current levels.",
+          "analogy": "Friction in a pipe reduces water pressure at the outlet \u2014 more friction (resistance) means more pressure (voltage) lost before the water (current) arrives."
+        },
+        {
+          "term": "Dim lights \u2014 voltage drop diagnosis",
+          "definition": "Dim bulbs in a lighting circuit indicate reduced voltage at the bulb \u2014 caused by excessive resistance upstream stealing voltage (V=IR drop). Common causes: corroded connectors, loose terminals, undersized wire, or a poor ground return.",
+          "analogy": "Like a clogged showerhead producing weak pressure \u2014 the water supply is fine, but something in the path is choking the flow."
+        },
+        {
+          "term": "0.5V drop \u2014 ground return included",
+          "definition": "A 0.5V drop can occur anywhere in the complete circuit loop: supply wiring, connectors, AND the ground return path. Don't forget that the ground wire and ground connections also have resistance. A bad ground creates the same voltage drop symptom as a bad supply wire.",
+          "analogy": "A water system with a constricted intake pipe AND a constricted drain \u2014 both limit overall flow and pressure."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "During a bonding check, the milliohmmeter reading fluctuates rather than settling on a stable value. What does this indicate and what should be done?",
+      "choices": [
+        "The strap is good \u2014 fluctuation is normal for milliohmmeter readings",
+        "The meter is faulty \u2014 replace the instrument",
+        "There is an intermittent contact \u2014 inspect and clean attachment points for corrosion",
+        "The circuit has AC interference \u2014 use DC excitation mode"
+      ],
+      "correctIndex": 2,
+      "feedback": "A fluctuating reading means the contact is intermittent \u2014 not consistently solid. This is characteristic of corrosion or contamination at the bonding surface. Inspect and clean both attachment points before re-measuring."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A nav radio shows 24V supply at the bus but only 21V at the radio connector. What is the most likely cause?",
+      "choices": [
+        "Excessive resistance in the wiring or connectors between the bus and radio",
+        "There is an open circuit between the bus and the radio",
+        "The radio is drawing more current than rated",
+        "The voltage regulator output is too low"
+      ],
+      "correctIndex": 0,
+      "feedback": "The 3V drop is a classic sign of excessive resistance in the wiring path (V=IR). Corroded pins, a loose terminal, or undersized wire creates resistance that drops voltage before it reaches the load. An open would give 0V at the radio."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "You measure 24V at the bus and 23.5V at a downstream connector. What does this 0.5V difference most likely indicate?",
+      "choices": [
+        "A blown fuse between the bus and connector",
+        "Normal voltage variation within tolerance",
+        "Resistance in the wiring or connectors between those two points",
+        "The downstream equipment is drawing excessive current"
+      ],
+      "correctIndex": 2,
+      "feedback": "V_drop = I \u00d7 R_path. A measurable voltage difference between source and load means there is resistance in the path consuming voltage. This points to corroded connectors, a bad terminal, undersized wire, or a poor splice."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Navigation lights in an aircraft are noticeably dimmer than when the aircraft was new. What is the most likely cause?",
+      "choices": [
+        "The bulbs are drawing more current as they age",
+        "There is an open circuit in one of the branches",
+        "Excessive resistance from corroded connections or undersized wiring is causing a voltage drop",
+        "The bus voltage has increased beyond normal limits"
+      ],
+      "correctIndex": 2,
+      "feedback": "Dim but functioning lights indicate reduced voltage \u2014 not zero volts. Corroded connectors, loose pins, or undersized wire create resistance that drops voltage before it reaches the bulbs. This is the classic presentation of a wiring/connection problem."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A 0.5V drop is measured between the bus and a downstream load in a 24V circuit. Which of the following should be inspected as potential causes?",
+      "choices": [
+        "The wiring, connectors, and ground return path between the source and the load",
+        "Only the ground connection at the load",
+        "Only the positive supply wire",
+        "The load itself \u2014 it must be drawing too much current"
+      ],
+      "correctIndex": 0,
+      "feedback": "Voltage drop can occur in any part of the circuit: supply wire, connectors, and the ground return. All three must be checked. Focusing only on one side misses the complete picture \u2014 a degraded ground is just as capable of creating a measured drop."
+    }
+  ]
+}

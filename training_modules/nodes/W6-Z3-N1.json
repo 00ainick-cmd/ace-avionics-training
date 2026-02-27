@@ -1,0 +1,113 @@
+{
+  "id": "W6-Z3-N1",
+  "title": "MIL-STD-1553 basics",
+  "world": "Digital Databus Systems",
+  "zone": "Other buses",
+  "objectiveKeys": [
+    "q169",
+    "q218",
+    "q220",
+    "q52",
+    "q168"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to MIL-STD-1553 basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize 1553 architecture and roles."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ARINC 429 vs MIL-STD-1553",
+          "definition": "ARINC 429: unidirectional (one-way), one transmitter to multiple receivers, no bus controller required. MIL-STD-1553: bidirectional, command-response with a central Bus Controller (BC) that manages all Remote Terminals (RTs) on a redundant dual-bus.",
+          "analogy": "ARINC 429 is like a bulletin board \u2014 one person posts, everyone reads, no interaction. MIL-STD-1553 is like a controlled radio net \u2014 the net controller (BC) calls each station (RT) in turn, and they respond."
+        },
+        {
+          "term": "MIL-STD-1553 Bus Controller",
+          "definition": "The Bus Controller (BC) in a MIL-STD-1553 system is the master controller that initiates and schedules all data transfers by issuing command words to Remote Terminals (RTs); no data transfer occurs without a BC command.",
+          "analogy": "The bus controller is like an air traffic controller \u2014 it tells each aircraft (remote terminal) exactly when to transmit, what to send, and how much, in a strict controlled sequence."
+        },
+        {
+          "term": "MIL-STD-1553 Protocol",
+          "definition": "MIL-STD-1553 is a bidirectional, command-response serial data bus where a Bus Controller (BC) commands Remote Terminals (RTs) on a dual-redundant shielded twisted-pair bus at 1 Mbps.",
+          "analogy": "MIL-STD-1553 is like military radio protocol: the net controller (BC) calls each station (RT) in sequence, the station responds only when called, on two redundant frequencies (dual bus A and B)."
+        },
+        {
+          "term": "MIL-STD-1553 Device Not Responding \u2014 Diagnosis",
+          "definition": "When a MIL-STD-1553 device does not respond, check three things before replacing hardware: bus controller configuration (is the correct RT address being commanded?), remote terminal address setting (is it set correctly on the device?), and wiring continuity.",
+          "analogy": "Like calling a phone \u2014 if no one answers, first check if you dialed the right number (RT address), then check if the phone is connected (wiring), before concluding the phone is broken."
+        },
+        {
+          "term": "MIL-STD-1553 Bus Non-Idle Fault",
+          "definition": "A MIL-STD-1553 bus stuck in non-idle state (continuously active) is caused by either a remote terminal that is transmitting without receiving a valid command (rogue RT) or a bus controller that fails to release the bus after completing a data transfer.",
+          "analogy": "It's like a walkie-talkie where someone gets their PTT button stuck down \u2014 the channel stays occupied and no one else can transmit. Either an RT or the BC can be the stuck talker."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the key structural difference between ARINC 429 and MIL-STD-1553?",
+      "choices": [
+        "ARINC 429 uses fiber optic cable while MIL-STD-1553 uses copper wire",
+        "ARINC 429 requires a bus controller; MIL-STD-1553 operates without one",
+        "ARINC 429 supports 31 devices; MIL-STD-1553 supports only 2",
+        "ARINC 429 is unidirectional broadcast; MIL-STD-1553 is bidirectional command-response with a central bus controller"
+      ],
+      "correctIndex": 3,
+      "feedback": "ARINC 429: unidirectional broadcast, one transmitter per bus, no bus controller. MIL-STD-1553: bidirectional, command-response, with a Bus Controller that manages all communication between Remote Terminals."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the role of the Bus Controller in a MIL-STD-1553 system?",
+      "choices": [
+        "It schedules all data transfers by issuing command words to Remote Terminals \u2014 no transmission occurs without a BC command",
+        "It monitors bus traffic passively and logs data without initiating transmissions",
+        "It amplifies signals on the bus and extends bus length to more than 100 feet",
+        "It provides backup communication when the primary bus fails"
+      ],
+      "correctIndex": 0,
+      "feedback": "The BC is the active master: it issues command words that instruct each RT when to transmit or receive. Without a functioning BC, no data transfers occur on MIL-STD-1553."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which statement best describes MIL-STD-1553 data transmission?",
+      "choices": [
+        "Unidirectional broadcast at 100 kbps on single twisted pair",
+        "Command-response bidirectional at 1 Mbps with a central Bus Controller and dual-redundant shielded twisted-pair buses",
+        "Token-ring at 10 Mbps where each RT passes a token when it has data to send",
+        "Peer-to-peer at 500 kbps without a central controller"
+      ],
+      "correctIndex": 1,
+      "feedback": "MIL-STD-1553: bidirectional command-response, 1 Mbps, Bus Controller manages all RTs, dual-redundant bus (A and B), shielded twisted pair. All of these characteristics distinguish it from ARINC 429."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A MIL-STD-1553 remote terminal is not responding to bus controller commands. What should the technician investigate first?",
+      "choices": [
+        "Power cycle the bus controller and retry",
+        "Increase bus voltage above specification to overcome signal loss",
+        "Replace the remote terminal with a known-good unit and retest",
+        "Check bus controller configuration, the remote terminal's address setting, and wiring continuity before condemning the device"
+      ],
+      "correctIndex": 3,
+      "feedback": "MIL-STD-1553 non-response is most commonly caused by address mismatch (bus controller calling wrong RT address or RT set to wrong address) or wiring issues \u2014 not hardware failure."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A MIL-STD-1553 bus monitor shows the bus remains non-idle far longer than normal inter-message gaps. What are the two most likely causes?",
+      "choices": [
+        "A wiring short and an incorrect termination resistor value",
+        "Too many remote terminals on the bus and insufficient bus voltage",
+        "A remote terminal transmitting out of turn, or the bus controller failing to release the bus",
+        "Corrupted bus controller firmware and a defective bus coupler"
+      ],
+      "correctIndex": 2,
+      "feedback": "MIL-STD-1553 non-idle conditions are caused by either an RT that is transmitting when it shouldn't (rogue RT) or a BC that hangs and doesn't transition the bus back to idle state."
+    }
+  ]
+}

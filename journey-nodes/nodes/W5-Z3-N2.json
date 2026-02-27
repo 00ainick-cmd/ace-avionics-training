@@ -1,0 +1,131 @@
+{
+  "id": "W5-Z3-N2",
+  "title": "Routing & protection",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Harness fab/routing",
+  "objectiveKeys": [
+    "q6",
+    "q50",
+    "q76",
+    "q122",
+    "q227",
+    "q236"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Routing & protection"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Route/protect bundles; avoid heat/moving parts/chafe."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Strain Relief",
+          "definition": "A strain relief is a clamping or support device attached near a connector that absorbs mechanical tension on the wire, preventing that tension from being transmitted to the connector pins or solder joints.",
+          "analogy": "Strain relief is like a strain relief on a phone charger cord \u2014 without it, every tug on the cable pulls directly on the connector pins and eventually breaks the joint."
+        },
+        {
+          "term": "Wire Routing Priority",
+          "definition": "The most important wire routing consideration is separation from: heat sources (exhaust, heating ducts), moving parts (cables, actuators), sharp edges (structural members, brackets), and fluid lines (fuel, hydraulic, oil) \u2014 all of which can damage insulation and cause failures.",
+          "analogy": "Wire routing is like routing plumbing away from a hot water heater, moving machinery, sharp corners, and electrical panels \u2014 common sense separation prevents damage from the most obvious hazards."
+        },
+        {
+          "term": "Wire Bundle Routing Conflict",
+          "definition": "When a wire bundle does not fit a designated routing path, the correct action is to consult the installation manual for an approved alternate route \u2014 never force the bundle (damages insulation) or trim/omit wires (alters the certified design).",
+          "analogy": "If your luggage doesn't fit in the overhead bin, you don't force it or remove items \u2014 you check a bag using the airline's approved process. Same principle: use the approved alternate method."
+        },
+        {
+          "term": "Chafed Wire Bundle \u2014 Correct Procedure",
+          "definition": "When a wire bundle is found chafed by a metal edge: (1) remove all power from affected circuits, (2) assess the full extent of damage (examine the entire contact area, not just the visible portion), (3) follow only approved repair procedures from the applicable maintenance manual or FAA AC 43.13.",
+          "analogy": "Discovering a chafed wire is like finding a gas leak \u2014 first shut off the valve (remove power), then assess how much pipe is damaged (extent of damage), then use the approved repair method (not duct tape)."
+        },
+        {
+          "term": "Wire Routing Near Flight Controls",
+          "definition": "Wire bundles routed near flight control cables or linkages must be protected with approved conduit or spiral wrap AND have sufficient slack to prevent the bundle from being pulled taut or restricting control movement at any control surface position.",
+          "analogy": "Like giving a leash enough length so it doesn't choke the dog when it turns \u2014 the bundle needs enough slack so that full control deflection doesn't stretch, pinch, or break the wires."
+        },
+        {
+          "term": "Nicked Coaxial Center Conductor",
+          "definition": "A nicked coaxial cable center conductor must result in complete cable replacement \u2014 not repair. A nick changes the local impedance (causing signal reflection), reduces mechanical strength (causing fatigue failure), and cannot be reliably repaired to original specification.",
+          "analogy": "A nicked coaxial conductor is like a cracked violin string \u2014 you don't patch it, you replace it. Any nick changes the vibration characteristics (impedance) and creates a weak point (fatigue)."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of strain relief in an aircraft wiring installation?",
+      "choices": [
+        "To provide electrical insulation at connector entry points",
+        "To prevent tension on the wire from transferring to connector pins or solder joints",
+        "To seal the connector against moisture entry at the wire entry port",
+        "To ensure the wire maintains its minimum bend radius inside the connector"
+      ],
+      "correctIndex": 1,
+      "feedback": "Strain relief absorbs mechanical tension, ensuring that movement of the wire does not pull on the connector pins or solder joints \u2014 the primary cause of intermittent connection failures."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the most important consideration when routing wire bundles in an aircraft?",
+      "choices": [
+        "Routing wires away from heat sources, moving parts, sharp edges, and fuel/fluid lines to prevent chafing and damage",
+        "Keeping wire bundles as short as possible to reduce weight",
+        "Routing all wire bundles along the same path to simplify inspection",
+        "Ensuring all wires run parallel to the fuselage centerline"
+      ],
+      "correctIndex": 0,
+      "feedback": "The four hazards \u2014 heat, moving parts, sharp edges, and fluid lines \u2014 can all damage wire insulation and cause shorts, opens, or fire. Routing away from these hazards is the primary wire routing requirement."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A wire bundle is too large to fit through the designated routing path in the aircraft structure. What is the correct action?",
+      "choices": [
+        "Force the bundle through the path by compressing it to fit \u2014 the harness will expand back to shape",
+        "Remove wires from the bundle to reduce its diameter, splicing them back in after routing",
+        "Trim the cable ties to allow the bundle to spread and route through multiple adjacent holes",
+        "Consult the installation manual for an approved alternate routing path before modifying the bundle or the structure"
+      ],
+      "correctIndex": 3,
+      "feedback": "Forcing a bundle can damage insulation; removing or rerouting wires without approval alters the certified design. The installation manual must be consulted for an approved alternate route."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A wire bundle is found chafed against a structural member during an inspection. What is the correct procedure?",
+      "choices": [
+        "Wrap the chafed area with electrical tape and add a note to the next inspection",
+        "Apply heat shrink tubing over the chafed section and mark the installation as repaired",
+        "Reroute the bundle immediately without removing power to minimize aircraft downtime",
+        "Remove power from all affected circuits, assess the full extent of damage, and repair using approved procedures from the maintenance manual or FAA AC 43.13"
+      ],
+      "correctIndex": 3,
+      "feedback": "Power removal prevents arcing during assessment. Full damage assessment reveals the true extent. Only approved repair procedures (maintenance manual, AC 43.13) ensure the repair meets airworthiness standards."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is required when routing a wire bundle near moving flight control linkages?",
+      "choices": [
+        "Route the bundle as close as possible to the controls to minimize length",
+        "Attach the bundle directly to the flight control cable to move with it",
+        "Use approved conduit or spiral wrap and provide sufficient slack so the bundle cannot contact or restrict control movement at any position",
+        "Route the bundle on the opposite side of the fuselage from the flight controls"
+      ],
+      "correctIndex": 2,
+      "feedback": "Bundles near flight controls must be protected (conduit/spiral wrap) and have sufficient slack so they cannot bind, pinch, or restrict the controls through their full deflection range \u2014 a flight safety requirement."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An avionics technician finds a nick in the center conductor of an NAV/COM antenna coaxial cable during inspection. What is the correct action?",
+      "choices": [
+        "Replace the entire cable run \u2014 a nicked center conductor compromises both impedance and mechanical integrity and cannot be reliably repaired",
+        "Solder fill the nick to restore conductor cross-section, then continue using the cable",
+        "Wrap the nicked area with coaxial repair tape and conduct a VSWR check before approving the cable",
+        "Trim the cable back to the nick point and install a coaxial splice connector"
+      ],
+      "correctIndex": 0,
+      "feedback": "A nicked coaxial center conductor cannot be reliably repaired. The nick changes local impedance (creating reflections that degrade RF performance) and reduces mechanical strength (promoting fatigue failure). Replace the run."
+    }
+  ]
+}

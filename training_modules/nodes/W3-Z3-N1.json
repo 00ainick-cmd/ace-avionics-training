@@ -1,0 +1,77 @@
+{
+  "id": "W3-Z3-N1",
+  "title": "Buses and distribution",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "Aircraft DC systems",
+  "objectiveKeys": [
+    "q173",
+    "q140",
+    "q195"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Buses and distribution"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Describe electrical buses and distribution concepts in aircraft."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Aircraft electrical bus",
+          "definition": "An electrical bus is a common conductive distribution point connected to one or more power sources (battery, alternator) and multiple loads (avionics, lights, systems). All loads connected to the bus share the same voltage source.",
+          "analogy": "Like a power strip \u2014 one plug into the wall (power source), many devices plugged in (loads), all sharing the same supply."
+        },
+        {
+          "term": "Aircraft DC electrical system \u2014 purpose",
+          "definition": "The DC electrical system supplies power to all electrically-powered equipment: avionics (radios, navigation, flight instruments), lighting, ignition systems, fuel pumps, and other electrical loads \u2014 during all phases of flight from pre-start through shutdown.",
+          "analogy": "The aircraft's DC system is like the bloodstream of the aircraft's electrical life \u2014 everything that needs power gets it from here."
+        },
+        {
+          "term": "GA aircraft DC system purpose",
+          "definition": "The DC electrical system in a GA aircraft powers: avionics (radios, navigation equipment), lighting (position lights, landing lights, interior), ignition systems, electric fuel pump, and any other electrically-operated equipment.",
+          "analogy": "The DC system is the electrical utility network of the aircraft \u2014 like the electrical panel in a house powering everything from the refrigerator to the lights."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is an aircraft electrical bus?",
+      "choices": [
+        "A dedicated cable that connects the battery directly to each load",
+        "A protective device that interrupts power during faults",
+        "A voltage regulation device for sensitive avionics",
+        "A common distribution point that supplies power from one or more sources to multiple loads"
+      ],
+      "correctIndex": 3,
+      "feedback": "A bus is a distribution node: power comes in from sources (battery, alternator) and goes out to all connected loads. Multiple buses allow circuit separation \u2014 essential loads on one bus, non-essential on another \u2014 for fault tolerance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of an aircraft's DC electrical system?",
+      "choices": [
+        "To convert AC power from the alternator into usable DC",
+        "To supply power to avionics, lights, ignition, fuel systems, and electrical equipment during all phases of operation",
+        "To charge the battery only when the alternator is operating at cruise RPM",
+        "To distribute power solely to flight-critical instruments"
+      ],
+      "correctIndex": 1,
+      "feedback": "The DC electrical system serves as the backbone of all electrical power distribution \u2014 from pre-start checks through engine shutdown. It powers both flight-critical and non-critical electrical loads at all times."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "In a general aviation aircraft, what does the DC electrical system primarily power?",
+      "choices": [
+        "Only the avionics and radios",
+        "Only flight-critical instruments and the battery charger",
+        "Avionics, lighting, ignition systems, and other electrical equipment",
+        "Only lighting and the electric fuel pump"
+      ],
+      "correctIndex": 2,
+      "feedback": "The DC system is comprehensive \u2014 it powers all electrical loads: avionics, all lighting systems, ignition, fuel pump, and miscellaneous electrical equipment. GA aircraft have very few non-electrical systems."
+    }
+  ]
+}

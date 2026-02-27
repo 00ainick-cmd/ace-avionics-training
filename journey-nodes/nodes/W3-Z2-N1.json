@@ -1,0 +1,113 @@
+{
+  "id": "W3-Z2-N1",
+  "title": "Series/parallel circuit behavior",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "Circuit behavior",
+  "objectiveKeys": [
+    "q27",
+    "q217",
+    "q103",
+    "q164",
+    "q58"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Series/parallel circuit behavior"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Predict behavior of series/parallel circuits (conceptual)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Series resistance formula",
+          "definition": "In a series circuit, total resistance equals the sum of all individual resistances: Rt = R1 + R2 + R3. Because current has only one path, every resistor adds to the total opposition.",
+          "analogy": "Like driving through multiple toll booths in a row \u2014 each one adds delay to your total trip time, and you cannot bypass any of them."
+        },
+        {
+          "term": "Parallel resistance (10k, 1k, 500\u03a9)",
+          "definition": "Using 1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021 \u2192 Rt = 1/0.0021 \u2248 476 ohms. The result is always less than the smallest branch (500 ohms).",
+          "analogy": "Three traffic lanes of different widths merge into one \u2014 a very wide lane (low resistance, 500\u03a9) dominates the total flow capacity. The narrowest lanes add a little but the total is controlled mostly by the widest."
+        },
+        {
+          "term": "Parallel circuit total current",
+          "definition": "In a parallel circuit, total current from the source equals the sum of all individual branch currents: It = I1 + I2 + I3. Each branch draws independently, and the source must supply all of them.",
+          "analogy": "Like multiple faucets on the same water main \u2014 each open faucet draws its own flow, and the main supply must deliver the sum of all flows simultaneously."
+        },
+        {
+          "term": "Parallel resistance reduction",
+          "definition": "Adding resistors in parallel always reduces total circuit resistance because each new branch provides an additional current path. Total parallel resistance is always less than the smallest individual resistor.",
+          "analogy": "Opening extra checkout lanes at a store reduces the total wait time \u2014 more lanes (paths) mean the total flow capacity increases, so the overall resistance to traffic decreases."
+        },
+        {
+          "term": "Parallel circuit fault isolation",
+          "definition": "In a parallel circuit, each load has its own independent path to the power source. If one branch opens (bulb burns out), the remaining branches continue to receive full voltage and remain operational.",
+          "analogy": "Like outlets on a wall \u2014 if one lamp blows a bulb, the other plugged-in devices keep working because each has its own independent connection to the panel."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Three resistors of 5 ohms, 8 ohms, and 7 ohms are connected in series. What is the total resistance of the circuit?",
+      "choices": [
+        "20 ohms",
+        "2.2 ohms",
+        "5 ohms",
+        "280 ohms"
+      ],
+      "correctIndex": 0,
+      "feedback": "Series resistance: Rt = R1 + R2 + R3 = 5 + 8 + 7 = 20 ohms. In a series circuit, current flows through all resistors in sequence and each one adds to the total. The result is always larger than any single resistor in the string."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Three resistors \u2014 10,000 ohms, 1,000 ohms, and 500 ohms \u2014 are wired in parallel. What is the approximate total resistance?",
+      "choices": [
+        "476 ohms",
+        "11,500 ohms",
+        "3,833 ohms",
+        "500 ohms"
+      ],
+      "correctIndex": 0,
+      "feedback": "1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021 \u2192 Rt \u2248 476 ohms. Total parallel resistance is always less than the smallest branch. Note that the 10k\u03a9 resistor contributes very little compared to the 500\u03a9 branch \u2014 the low-resistance branch dominates in parallel circuits."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A 28VDC bus feeds three parallel avionics loads drawing 3A, 2A, and 1A respectively. What is the total current the bus must supply?",
+      "choices": [
+        "6 amps",
+        "2 amps",
+        "1 amp",
+        "3 amps"
+      ],
+      "correctIndex": 0,
+      "feedback": "It = I1 + I2 + I3 = 3 + 2 + 1 = 6 amps. In a parallel circuit, each branch draws its own current from the source, and the total is the sum of all branches. Knowing the total current is essential for sizing fuses, circuit breakers, and bus wiring."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A 100-ohm resistor is connected across a circuit. A second 100-ohm resistor is added in parallel. What happens to the total resistance?",
+      "choices": [
+        "It increases to 200 ohms because resistance adds in parallel",
+        "It decreases to 10 ohms because the values multiply in parallel",
+        "It stays at 100 ohms because the resistors are identical",
+        "It decreases to 50 ohms because parallel paths reduce total resistance"
+      ],
+      "correctIndex": 3,
+      "feedback": "For two equal resistors in parallel: Rt = R/2 = 100/2 = 50 ohms. Adding any parallel branch always reduces total resistance \u2014 it never stays the same or increases. The general rule: Rt is always less than the smallest branch resistor in a parallel combination."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An aircraft's navigation lights are wired in parallel across the 28VDC bus. One bulb burns out, creating an open in that branch. What happens to the other navigation lights?",
+      "choices": [
+        "All lights go out because the circuit is broken",
+        "The remaining lights glow dimmer due to reduced total resistance",
+        "The bus voltage drops and a circuit breaker trips",
+        "The remaining lights stay at full brightness because each branch is independent"
+      ],
+      "correctIndex": 3,
+      "feedback": "In a parallel circuit, each branch has direct access to the full supply voltage. An open in one branch only stops current in that branch \u2014 the other branches are unaffected and continue operating at full voltage. This is why safety-critical aircraft lights use parallel wiring rather than series."
+    }
+  ]
+}

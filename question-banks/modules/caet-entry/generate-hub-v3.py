@@ -1,0 +1,1000 @@
+#!/usr/bin/env python3
+"""
+ACE Category Hub Generator — v3 (with ACE Mentor)
+Generates all 8 cat-*/index.html files from a single template.
+Run from: question-banks/modules/caet-entry/
+"""
+import os, textwrap
+
+CATEGORIES = [
+    {
+        'id':          'cat-1',
+        'dir':         'cat-1-maintenance-regs',
+        'num':         'MRD',
+        'title':       'Maintenance Regulations &amp; Documentation',
+        'title_raw':   'Maintenance Regulations & Documentation',
+        'description': 'Master the regulatory framework, FAA/EASA documentation requirements, maintenance records, and compliance standards for CAET certification.',
+        'color':       '#58a6ff',
+        'objectives':  31,
+    },
+    {
+        'id':          'cat-2',
+        'dir':         'cat-2-basic-electrical',
+        'num':         'BET',
+        'title':       'Basic Electrical Theory &amp; Circuit Analysis',
+        'title_raw':   'Basic Electrical Theory & Circuit Analysis',
+        'description': 'Build a deep foundation in DC/AC theory, Ohm\'s law, circuit analysis, and the electrical principles that underpin every avionics system.',
+        'color':       '#f0883e',
+        'objectives':  52,
+    },
+    {
+        'id':          'cat-3',
+        'dir':         'cat-3-cns-systems',
+        'num':         'CNS',
+        'title':       'CNS Systems: Navigation, Communication &amp; Audio',
+        'title_raw':   'CNS Systems: Navigation, Communication & Audio',
+        'description': 'Understand communications, navigation, and surveillance systems including VOR, ILS, GPS, ADF, transponders, and audio panels.',
+        'color':       '#3fb950',
+        'objectives':  32,
+    },
+    {
+        'id':          'cat-4',
+        'dir':         'cat-4-flight-instruments',
+        'num':         'FI',
+        'title':       'Flight Instruments &amp; AHRS',
+        'title_raw':   'Flight Instruments & AHRS',
+        'description': 'Learn pitot-static systems, attitude indicators, AHRS, air data computers, and the instruments pilots depend on for safe flight.',
+        'color':       '#a371f7',
+        'objectives':  23,
+    },
+    {
+        'id':          'cat-5',
+        'dir':         'cat-5-digital-databus',
+        'num':         'DDS',
+        'title':       'Digital Databuses: ARINC 429, MIL-STD-1553 &amp; Serial Interfaces',
+        'title_raw':   'Digital Databuses: ARINC 429, MIL-STD-1553 & Serial Interfaces',
+        'description': 'Master ARINC 429, MIL-STD-1553, RS-232/422/485, Ethernet, and CAN bus protocols used in modern avionics.',
+        'color':       '#39d353',
+        'objectives':  33,
+    },
+    {
+        'id':          'cat-6',
+        'dir':         'cat-6-aircraft-wiring',
+        'num':         'AWH',
+        'title':       'Aircraft Wiring Practices, Termination &amp; Harness Fabrication',
+        'title_raw':   'Aircraft Wiring Practices, Termination & Harness Fabrication',
+        'description': 'Understand wire types, connectors, crimping, soldering, harness fabrication, shielding, and wiring installation standards.',
+        'color':       '#e3b341',
+        'objectives':  35,
+    },
+    {
+        'id':          'cat-7',
+        'dir':         'cat-7-tools-test-equipment',
+        'num':         'TTE',
+        'title':       'Tools &amp; Test Equipment',
+        'title_raw':   'Tools & Test Equipment',
+        'description': 'Learn to select and use DMMs, oscilloscopes, TDRs, meggers, spectrum analyzers, and specialized avionics test equipment.',
+        'color':       '#56d364',
+        'objectives':  12,
+    },
+    {
+        'id':          'cat-8',
+        'dir':         'cat-8-shop-safety',
+        'num':         'SSP',
+        'title':       'Shop Safety &amp; Best Practices',
+        'title_raw':   'Shop Safety & Best Practices',
+        'description': 'Master ESD protection, chemical safety, ergonomics, PPE requirements, and the safety standards that protect technicians and equipment.',
+        'color':       '#f85149',
+        'objectives':  20,
+    },
+]
+
+TEMPLATE = r'''<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  ACE CATEGORY HUB v3 — Navy+Gold + ACE Mentor                  ║
+  ║  Per-category config is in the CAT_CONFIG block at bottom       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{CAT_NUM}}: {{CAT_TITLE}} | ACE CAET Prep</title>
+  <link rel="icon" type="image/png" href="../../../../shared/ace-sprites/ace-48-happy.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../shared/ace-theme.css">
+
+  <style>
+    /* ── Local tokens ─────────────────────────────────────────── */
+    :root {
+      --cat-color:   {{CAT_COLOR}};
+      --cat-soft:    color-mix(in srgb, {{CAT_COLOR}} 12%, transparent);
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --transition:  0.15s ease;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ── Topbar ───────────────────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      height: 52px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; gap: 16px;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 7px 14px;
+      transition: all var(--transition);
+    }
+    .btn-back:hover { border-color: var(--gold); color: var(--text-primary); }
+    .btn-back svg { opacity: 0.7; }
+    .topbar-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border: 1px solid var(--cat-color); color: var(--cat-color);
+      border-radius: var(--radius-sm);
+      background: var(--cat-soft);
+    }
+    .btn-theme {
+      background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color var(--transition); color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .btn-theme:hover { border-color: var(--gold); color: var(--text-primary); }
+
+    /* ── Page layout ─────────────────────────────────────────── */
+    .page { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    /* ══════════════════════════════════════════════════════════
+       ACE MENTOR PANEL
+    ══════════════════════════════════════════════════════════ */
+    .ace-mentor-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .ace-mentor-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+    }
+    .ace-sprite-wrap {
+      position: relative;
+      width: 120px; height: 120px;
+      flex-shrink: 0;
+    }
+    .ace-sprite, .ace-sprite-steam {
+      position: absolute; top: 0; left: 0;
+      width: 120px; height: 120px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .ace-sprite-steam { pointer-events: none; }
+
+    .ace-chat-container {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column;
+    }
+    .ace-chat-header {
+      display: flex; align-items: baseline; gap: 8px;
+      margin-bottom: 8px; padding-left: 2px;
+    }
+    .ace-chat-name {
+      font-size: 14px; font-weight: 700; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .ace-chat-role { font-size: 11px; color: var(--text-muted); }
+
+    .ace-chat-messages {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      min-height: 60px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .ace-msg {
+      font-size: 14px; color: var(--text-primary);
+      line-height: 1.65; margin-bottom: 8px;
+    }
+    .ace-msg:last-child { margin-bottom: 0; }
+
+    /* v2 chat input (hidden in v1) */
+    .ace-chat-input-wrap {
+      display: none; /* shown in v2 */
+      gap: 8px; margin-top: 10px;
+    }
+    .ace-chat-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: inherit; font-size: 13px; outline: none;
+      transition: border-color var(--transition);
+    }
+    .ace-chat-input:focus { border-color: var(--gold); }
+    .ace-chat-send {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, var(--gold), #C49540);
+      border: none; border-radius: var(--radius-md);
+      color: #080C1A; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: transform 0.15s ease;
+    }
+    .ace-chat-send:hover { transform: translateY(-1px); }
+
+    /* Tip bar */
+    .ace-tip-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--gold-soft);
+    }
+    .ace-tip-icon { color: var(--gold); font-size: 13px; flex-shrink: 0; }
+    .ace-tip-text {
+      flex: 1; font-size: 12px; color: var(--text-secondary);
+      line-height: 1.5; font-style: italic;
+    }
+    .ace-tip-next {
+      background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      width: 28px; height: 28px; font-size: 14px;
+      color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all var(--transition); flex-shrink: 0;
+    }
+    .ace-tip-next:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ══════════════════════════════════════════════════════════
+       HERO CARD
+    ══════════════════════════════════════════════════════════ */
+    .cat-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--cat-color);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+    .cat-hero-num {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--cat-color); margin-bottom: 6px;
+    }
+    .cat-hero-title {
+      font-size: 21px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .cat-hero-desc {
+      font-size: 14px; color: var(--text-muted);
+      max-width: 560px; margin-bottom: 24px; line-height: 1.6;
+    }
+    .hero-stats-row {
+      display: flex; gap: 32px; flex-wrap: wrap;
+      align-items: flex-end; margin-bottom: 20px;
+    }
+    .hero-stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px; font-weight: 600; color: var(--text-primary); line-height: 1;
+    }
+    .hero-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+    .progress-hero { margin-top: 4px; }
+    .progress-hero-row {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 8px;
+    }
+    .progress-hero-lbl { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .progress-hero-pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; font-weight: 600; color: var(--cat-color);
+    }
+    .progress-track { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+    .progress-fill  {
+      height: 100%; background: var(--cat-color);
+      border-radius: 3px; transition: width 0.6s ease;
+    }
+
+    /* Sub-category pills */
+    .cat-subcategories { margin-top: 20px; }
+    .subcat-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .subcat-pill {
+      font-size: 11px; font-weight: 600;
+      padding: 4px 12px; border-radius: 999px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .subcat-pill-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; color: var(--text-muted);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       WARNINGS PANEL
+    ══════════════════════════════════════════════════════════ */
+    .ace-warnings-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--warning);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .warnings-header {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 12px;
+    }
+    .warnings-header svg { flex-shrink: 0; }
+    .warning-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .warning-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .warning-pass-rate {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 700; color: var(--danger);
+      background: rgba(248,113,113,0.12);
+      padding: 2px 8px; border-radius: var(--radius-sm);
+      flex-shrink: 0; min-width: 44px; text-align: center;
+    }
+    .warning-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+    /* ── Section label ───────────────────────────────────────── */
+    .section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 12px;
+    }
+
+    /* ── Training modules ────────────────────────────────────── */
+    .training-section { margin-bottom: 28px; }
+    .training-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .training-card {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 16px;
+      cursor: pointer; transition: all var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .training-card:hover {
+      border-color: var(--gold); transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .training-card.done { border-color: var(--success); }
+    .training-card .tc-icon { width: 28px; height: 28px; margin-bottom: 10px; color: var(--text-muted); }
+    .training-card.done .tc-icon { color: var(--success); }
+    .training-card .tc-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3; }
+    .training-card .tc-meta { font-size: 11px; color: var(--text-muted); }
+    .training-card .tc-status {
+      position: absolute; top: 10px; right: 10px;
+      font-size: 10px; font-weight: 600; padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+    .tc-status.new      { background: rgba(75,139,245,0.12); color: #4B8BF5; }
+    .tc-status.started  { background: rgba(251,191,36,0.12); color: var(--warning); }
+    .tc-status.complete { background: rgba(52,211,153,0.12); color: var(--success); }
+    .training-empty { padding: 20px; text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; }
+
+    /* ── Activity rows ───────────────────────────────────────── */
+    .activity-list {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 8px;
+    }
+    .activity-row {
+      display: flex; align-items: center;
+      padding: 16px 20px; gap: 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: all var(--transition);
+      text-decoration: none; color: inherit;
+    }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-row:hover { background: var(--surface-2); border-left: 3px solid var(--gold); padding-left: 17px; }
+    .activity-row.locked { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+    .act-icon-wrap {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+    }
+    .activity-row:hover .act-icon-wrap { border-color: var(--gold); color: var(--gold); }
+    .act-icon-wrap svg { width: 16px; height: 16px; }
+    .act-body { flex: 1; min-width: 0; }
+    .act-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+    .act-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    .act-meta { flex-shrink: 0; text-align: right; }
+    .act-xp { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+    .act-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-sm); white-space: nowrap; }
+    .status-new      { background: var(--surface-2); color: var(--text-muted); }
+    .status-complete { background: rgba(52,211,153,0.12); color: var(--success); }
+    .status-progress { background: rgba(75,139,245,0.12); color: #4B8BF5; }
+    .status-locked   { background: var(--surface-2); color: var(--text-muted); }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .page { padding: 20px 16px 60px; }
+      .ace-mentor-inner { flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 20px 16px; }
+      .ace-sprite-wrap { width: 80px; height: 80px; }
+      .ace-sprite, .ace-sprite-steam { width: 80px; height: 80px; }
+      .ace-chat-header { justify-content: center; }
+      .ace-chat-messages { max-height: 160px; }
+      .ace-tip-bar { padding: 10px 16px; }
+      .cat-hero { padding: 20px; }
+      .cat-hero-title { font-size: 18px; }
+      .activity-row { padding: 14px 16px; gap: 12px; }
+      .act-desc { display: none; }
+      .hero-stats-row { gap: 20px; }
+      .warning-item { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">
+        <img src="../../../../shared/logo.png" alt="ACE Avionics Training" class="logo-img">
+      </div>
+      <a href="../../../../dashboard.html" class="btn-back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Dashboard
+      </a>
+      <span class="topbar-badge" id="topbarBadge">{{CAT_NUM}}</span>
+    </div>
+    <button class="btn-theme" id="btnTheme" title="Toggle theme" aria-label="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="page">
+
+    <!-- ═══════════════════════════════════════════════════════
+         ACE MENTOR PANEL
+    ═══════════════════════════════════════════════════════ -->
+    <section class="ace-mentor-panel" id="aceMentorPanel">
+      <div class="ace-mentor-inner">
+        <div class="ace-sprite-wrap" id="aceSpriteWrap">
+          <img src="../../../../shared/ace-sprites/ace-192-idle.png"
+               alt="ACE" class="ace-sprite" id="aceSprite">
+          <img src="../../../../shared/ace-sprites/ace-192-idle-steam1.png"
+               alt="" class="ace-sprite-steam" id="aceSpriteSteam" aria-hidden="true">
+        </div>
+        <div class="ace-chat-container" id="aceChatContainer">
+          <div class="ace-chat-header">
+            <span class="ace-chat-name">ACE</span>
+            <span class="ace-chat-role">28-Year Avionics Veteran</span>
+          </div>
+          <div class="ace-chat-messages" id="aceChatMessages">
+            <div class="ace-msg">Loading...</div>
+          </div>
+          <!-- v2: unhide this div to enable chat input -->
+          <div class="ace-chat-input-wrap" id="aceChatInputWrap">
+            <input type="text" class="ace-chat-input" id="aceChatInput" placeholder="Ask ACE a question...">
+            <button class="ace-chat-send" id="aceChatSend">Send</button>
+          </div>
+        </div>
+      </div>
+      <div class="ace-tip-bar" id="aceTipBar">
+        <svg class="ace-tip-icon" width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span class="ace-tip-text" id="aceTipText">Loading tip...</span>
+        <button class="ace-tip-next" id="aceTipNext" title="Next tip">&#8635;</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO CARD
+    ═══════════════════════════════════════════════════════ -->
+    <div class="cat-hero">
+      <div class="cat-hero-num" id="heroNum">{{CAT_NUM}}</div>
+      <div class="cat-hero-title" id="heroTitle">{{CAT_TITLE}}</div>
+      <div class="cat-hero-desc" id="heroDesc">{{CAT_DESC}}</div>
+      <div class="hero-stats-row">
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroMastery">0%</div>
+          <div class="hero-stat-lbl">Mastery</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroXP">0 XP</div>
+          <div class="hero-stat-lbl">Earned</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroObjectives">{{CAT_OBJECTIVES}}</div>
+          <div class="hero-stat-lbl">Objectives</div>
+        </div>
+      </div>
+      <div class="progress-hero">
+        <div class="progress-hero-row">
+          <span class="progress-hero-lbl">Overall mastery</span>
+          <span class="progress-hero-pct" id="progressPct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+      <!-- Sub-category pills (rendered by JS) -->
+      <div class="cat-subcategories" id="catSubcategories" style="display:none;">
+        <div class="section-label" style="margin-top:16px;margin-bottom:8px;">Topics</div>
+        <div class="subcat-pills" id="subcatPills"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         WARNINGS — hardest questions
+    ═══════════════════════════════════════════════════════ -->
+    <div class="ace-warnings-panel" id="aceWarningsPanel">
+      <div class="warnings-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        Watch Out For These
+      </div>
+      <div class="warnings-list" id="warningsList"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TRAINING MODULES
+    ═══════════════════════════════════════════════════════ -->
+    <div class="training-section">
+      <div class="section-label">Training Modules <span style="font-weight:400;color:var(--text-muted);margin-left:4px;">(complete before assessments)</span></div>
+      <div class="training-grid" id="trainingGrid">
+        <div class="training-empty">Loading modules&hellip;</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         STUDY ACTIVITIES
+    ═══════════════════════════════════════════════════════ -->
+    <div class="section-label">Study Activities</div>
+    <div class="activity-list">
+
+      <div class="activity-row" id="row-flashcards" onclick="launchActivity('flashcards', 'Flashcards')">
+        <div class="act-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="12" x="4" y="6" rx="2"/><path d="M8 6V4"/><path d="M16 6V4"/></svg>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Flashcards</div>
+          <div class="act-desc">SM-2 spaced repetition — flip through key terms and definitions.</div>
+        </div>
+        <div class="act-meta">
+          <div class="act-xp">50 XP</div>
+          <div class="act-status status-new" id="status-flashcards">New</div>
+        </div>
+      </div>
+
+      <div class="activity-row" id="row-practice" onclick="launchActivity('practice', 'Drill')">
+        <div class="act-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Drill</div>
+          <div class="act-desc">Open-ended Q&amp;A with reveal answers — build deep understanding.</div>
+        </div>
+        <div class="act-meta">
+          <div class="act-xp">75 XP</div>
+          <div class="act-status status-new" id="status-practice">New</div>
+        </div>
+      </div>
+
+      <div class="activity-row" id="row-practice-test" onclick="launchActivity('practice-test', 'Practice Test')">
+        <div class="act-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Practice Test</div>
+          <div class="act-desc">Timed multiple choice — formal exam simulation with score breakdown.</div>
+        </div>
+        <div class="act-meta">
+          <div class="act-xp">100 XP</div>
+          <div class="act-status status-new" id="status-practice-test">New</div>
+        </div>
+      </div>
+
+      <div class="activity-row" id="row-jeopardy" onclick="launchActivity('jeopardy', 'Jeopardy')">
+        <div class="act-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Jeopardy</div>
+          <div class="act-desc">Battle ACE in game-show format — competitive review mode.</div>
+        </div>
+        <div class="act-meta">
+          <div class="act-xp">150 XP</div>
+          <div class="act-status status-new" id="status-jeopardy">New</div>
+        </div>
+      </div>
+
+      <div class="activity-row locked" id="finalRow" onclick="launchActivity('final', 'Final Test')">
+        <div class="act-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="act-body">
+          <div class="act-title">Final Test</div>
+          <div class="act-desc">Certification readiness check — unlocks at 80% mastery.</div>
+        </div>
+        <div class="act-meta">
+          <div class="act-xp">200 XP</div>
+          <div class="act-status status-locked" id="status-final">Locked</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /page -->
+
+  <script>
+  /* ══════════════════════════════════════════════════════════
+     CATEGORY CONFIG (only thing that changes per file)
+  ══════════════════════════════════════════════════════════ */
+  const CAT_CONFIG = {
+    id:          '{{CAT_ID}}',
+    dir:         '{{CAT_DIR}}',
+    num:         '{{CAT_NUM}}',
+    title:       '{{CAT_TITLE_RAW}}',
+    description: '{{CAT_DESC}}',
+    color:       '{{CAT_COLOR}}',
+    objectives:  {{CAT_OBJECTIVES}},
+    activities: {
+      flashcards:      '../shared/flashcards.html?data=../{{CAT_DIR}}/data/questions.json&back=../{{CAT_DIR}}/index.html',
+      practice:        '../shared/practice.html?data=../{{CAT_DIR}}/data/questions.json&back=../{{CAT_DIR}}/index.html',
+      'practice-test': '../practice-test.html?data=../{{CAT_DIR}}/data/questions.json&cat={{CAT_ID}}&back={{CAT_DIR}}/index.html',
+      jeopardy:        '../shared/jeopardy.html?data=../{{CAT_DIR}}/data/questions.json&back=../{{CAT_DIR}}/index.html',
+      final:           '../shared/final.html?data=../{{CAT_DIR}}/data/questions.json&back=../{{CAT_DIR}}/index.html',
+    }
+  };
+
+  /* ── Bootstrap ── */
+  document.title = `${CAT_CONFIG.num}: ${CAT_CONFIG.title} | ACE CAET Prep`;
+  document.documentElement.style.setProperty('--cat-color', CAT_CONFIG.color);
+
+  /* ── localStorage helpers ── */
+  function lsGet(key, fallback = null) {
+    try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : fallback; }
+    catch(e) { return fallback; }
+  }
+  function lsSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+  }
+  function getMastery()  { return lsGet(`ace_cat_${CAT_CONFIG.id}_mastery`, 0); }
+  function getXP()       { return lsGet(`ace_cat_${CAT_CONFIG.id}_xp`, 0); }
+  function getActDone(k) { return lsGet(`ace_cat_${CAT_CONFIG.id}_${k}_complete`, false); }
+  function getActProg(k) { return lsGet(`ace_cat_${CAT_CONFIG.id}_${k}_progress`, false); }
+
+  /* ── Activity status ── */
+  function setActivityStatus(k) {
+    const el = document.getElementById(`status-${k}`);
+    if (!el) return;
+    if (getActDone(k)) { el.textContent = 'Done'; el.className = 'act-status status-complete'; }
+    else if (getActProg(k)) { el.textContent = 'In progress'; el.className = 'act-status status-progress'; }
+    else { el.textContent = 'New'; el.className = 'act-status status-new'; }
+  }
+
+  /* ── UI refresh ── */
+  function updateUI() {
+    const mastery = getMastery();
+    const xp      = getXP();
+    document.getElementById('heroMastery').textContent  = mastery + '%';
+    document.getElementById('heroXP').textContent       = xp.toLocaleString() + ' XP';
+    document.getElementById('progressPct').textContent  = mastery + '%';
+    document.getElementById('progressFill').style.width = mastery + '%';
+
+    const finalRow = document.getElementById('finalRow');
+    if (mastery < 80) {
+      finalRow.classList.add('locked');
+      const el = document.getElementById('status-final');
+      el.textContent = `Need ${80 - mastery}% more`;
+      el.className = 'act-status status-locked';
+    } else {
+      finalRow.classList.remove('locked');
+      setActivityStatus('final');
+    }
+    ['flashcards', 'practice', 'practice-test', 'jeopardy'].forEach(k => setActivityStatus(k));
+  }
+
+  /* ── Launch activity ── */
+  function launchActivity(key, label) {
+    const path = CAT_CONFIG.activities[key];
+    if (!path) return;
+    lsSet(`ace_cat_${CAT_CONFIG.id}_${key}_progress`, true);
+    window.location.href = path;
+  }
+
+  /* ── Training modules ── */
+  function renderTraining() {
+    const grid = document.getElementById('trainingGrid');
+    if (!grid) return;
+    fetch('training-config.json')
+      .then(r => r.json())
+      .then(config => {
+        if (!config.modules || config.modules.length === 0) {
+          grid.innerHTML = '<div class="training-empty">No training modules assigned yet.</div>';
+          return;
+        }
+        grid.innerHTML = config.modules.map(mod => {
+          const complete = localStorage.getItem(`ace_cat_${CAT_CONFIG.id}_training_${mod.id}_complete`) === 'true';
+          const started  = localStorage.getItem(`ace_cat_${CAT_CONFIG.id}_training_${mod.id}_started`) === 'true';
+          const statusCls  = complete ? 'complete' : started ? 'started' : 'new';
+          const statusText = complete ? 'Done' : started ? 'In progress' : 'New';
+          const cardCls    = complete ? 'done' : '';
+          const bookSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+          return `<div class="training-card ${cardCls}" onclick="window.location.href='${mod.file}?cat=${CAT_CONFIG.id}&mod=${mod.id}'">
+              <div class="tc-status ${statusCls}">${statusText}</div>
+              <div class="tc-icon">${bookSvg}</div>
+              <div class="tc-title">${mod.title}</div>
+              <div class="tc-meta">${mod.estimatedMinutes || 20} min</div>
+            </div>`;
+        }).join('');
+      })
+      .catch(() => { grid.innerHTML = '<div class="training-empty">Training modules loading&hellip;</div>'; });
+  }
+
+  /* ── Theme toggle ── */
+  const html = document.documentElement;
+  const btnTheme  = document.getElementById('btnTheme');
+  const themeIcon = document.getElementById('themeIcon');
+  const SUN_PATH  = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+  const MOON_PATH = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    themeIcon.innerHTML = t === 'dark' ? MOON_PATH : SUN_PATH;
+    try { localStorage.setItem('ace_theme', t); } catch(e) {}
+  }
+  btnTheme.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  const savedTheme = lsGet('ace_theme', null);
+  if (savedTheme) applyTheme(savedTheme);
+
+  /* ══════════════════════════════════════════════════════════
+     ACE MENTOR SYSTEM
+  ══════════════════════════════════════════════════════════ */
+  let aceDialogues = null;
+  let questionsData = null;
+
+  async function loadMentorData() {
+    try {
+      const [dRes, qRes] = await Promise.all([
+        fetch('../../../../shared/ace-sprites/ACE-DIALOGUES.json'),
+        fetch('data/questions.json')
+      ]);
+      if (dRes.ok) aceDialogues = await dRes.json();
+      if (qRes.ok) questionsData = await qRes.json();
+    } catch (e) {
+      console.warn('ACE mentor data load:', e);
+    }
+  }
+
+  function pickRandom(arr) {
+    if (!arr || !arr.length) return '';
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  /* ── Progress state detection ── */
+  function getProgressState() {
+    const mastery = getMastery();
+    const xp = getXP();
+    const visited = lsGet(`ace_cat_${CAT_CONFIG.id}_visited`, false);
+    const activities = ['flashcards', 'practice', 'practice-test', 'jeopardy', 'final'];
+    const doneCount = activities.filter(k => getActDone(k)).length;
+
+    if (!visited && mastery === 0 && xp === 0) return 'first_visit';
+    if (doneCount === activities.length) return 'all_complete';
+    if (mastery < 20 && xp < 50) return 'return_low';
+    return 'return_progress';
+  }
+
+  /**
+   * getAceResponse(context)
+   * v1: Scripted dialogue lookup from ACE-DIALOGUES.json
+   * v2: Replace this function body with an API call.
+   *     Same signature, same return type.
+   *
+   * @param {string} context - 'first_visit'|'return_progress'|'return_low'|'all_complete'
+   * @returns {{ messages: string[], sprite: string }}
+   */
+  function getAceResponse(context) {
+    if (!aceDialogues) {
+      return { messages: ["Let's get to work. Pick a module and start studying."], sprite: 'idle' };
+    }
+    const spriteMap = {
+      first_visit: 'talk2', return_progress: 'happy',
+      return_low: 'concerned', all_complete: 'proud'
+    };
+    const dialogueMap = {
+      first_visit:     aceDialogues.welcome?.index_first_visit,
+      return_progress: aceDialogues.welcome?.index_return_progress,
+      return_low:      aceDialogues.welcome?.index_return_low,
+      all_complete:    aceDialogues.welcome?.index_all_complete
+    };
+    const source = dialogueMap[context] || aceDialogues.welcome?.index_first_visit || [];
+    return { messages: [pickRandom(source)], sprite: spriteMap[context] || 'idle' };
+  }
+
+  /* ── Sprite + steam animation ── */
+  function initAceSprite(mood) {
+    const sprite = document.getElementById('aceSprite');
+    const steam  = document.getElementById('aceSpriteSteam');
+    if (!sprite) return;
+    const base = '../../../../shared/ace-sprites';
+    sprite.src = `${base}/ace-192-${mood}.png`;
+    sprite.onerror = function() { this.src = `${base}/ace-192-idle.png`; this.onerror = null; };
+    if (steam) {
+      let frame = 1;
+      steam.src = `${base}/ace-192-${mood}-steam1.png`;
+      steam.onerror = function() { this.style.display = 'none'; };
+      setInterval(() => { frame = (frame % 3) + 1; steam.src = `${base}/ace-192-${mood}-steam${frame}.png`; }, 150);
+    }
+  }
+
+  /* ── Message rendering ── */
+  function renderAceMessages(messages) {
+    const el = document.getElementById('aceChatMessages');
+    if (!el) return;
+    el.innerHTML = messages.map(m => `<div class="ace-msg">${m}</div>`).join('');
+  }
+
+  /* ── Tip system ── */
+  let tipPool = [];
+  let tipIdx = 0;
+
+  function buildTipPool() {
+    const tips = [];
+    if (aceDialogues) {
+      const addList = (arr, type) => { if (Array.isArray(arr)) arr.forEach(t => tips.push({ type, text: t })); };
+      addList(aceDialogues.random_wisdom,         'wisdom');
+      addList(aceDialogues.war_stories,            'war_story');
+      addList(aceDialogues.that_guy_warnings,      'warning');
+      addList(aceDialogues.aviation_humor,         'humor');
+      addList(aceDialogues.random_coffee,          'coffee');
+      addList(aceDialogues.encouragement_struggling,'encouragement');
+      addList(aceDialogues.hard_truths,            'hard_truth');
+      if (aceDialogues.module_tips) {
+        Object.values(aceDialogues.module_tips).forEach(arr => addList(arr, 'module_tip'));
+      }
+    }
+    if (questionsData?.questions) {
+      questionsData.questions.forEach(q => {
+        if (q.flashcard?.analogy) {
+          tips.push({ type: 'did_you_know', text: `Did you know? ${q.flashcard.term}: ${q.flashcard.analogy}` });
+        }
+      });
+    }
+    // Shuffle
+    for (let i = tips.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tips[i], tips[j]] = [tips[j], tips[i]];
+    }
+    return tips;
+  }
+
+  function showNextTip() {
+    if (!tipPool.length) return;
+    tipIdx = (tipIdx + 1) % tipPool.length;
+    const el = document.getElementById('aceTipText');
+    if (el) el.textContent = tipPool[tipIdx].text;
+  }
+
+  function initTipRotation() {
+    tipPool = buildTipPool();
+    if (tipPool.length > 0) {
+      document.getElementById('aceTipText').textContent = tipPool[0].text;
+    }
+    document.getElementById('aceTipNext')?.addEventListener('click', showNextTip);
+    setInterval(showNextTip, 30000);
+  }
+
+  /* ── Hardest questions warnings ── */
+  function renderWarnings() {
+    if (!questionsData?.questions) return;
+    const hard = questionsData.questions
+      .filter(q => q.analyticsPassRate != null && q.analyticsPassRate < 0.60)
+      .sort((a, b) => a.analyticsPassRate - b.analyticsPassRate)
+      .slice(0, 5);
+    if (!hard.length) return;
+    const panel = document.getElementById('aceWarningsPanel');
+    const list  = document.getElementById('warningsList');
+    if (!panel || !list) return;
+    panel.style.display = 'block';
+    list.innerHTML = hard.map(q => {
+      const pct = Math.round(q.analyticsPassRate * 100);
+      return `<div class="warning-item">
+        <span class="warning-pass-rate">${pct}%</span>
+        <span class="warning-text">${q.learningObjective || q.flashcard?.term || 'Unknown topic'}</span>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── Sub-category breakdown ── */
+  function renderSubcategories() {
+    if (!questionsData?.questions) return;
+    const counts = {};
+    questionsData.questions.forEach(q => {
+      const c = q.category || 'general';
+      counts[c] = (counts[c] || 0) + 1;
+    });
+    const cats = Object.entries(counts);
+    if (cats.length <= 1) return;
+    const container = document.getElementById('catSubcategories');
+    const pills     = document.getElementById('subcatPills');
+    if (!container || !pills) return;
+    container.style.display = 'block';
+    pills.innerHTML = cats
+      .sort((a, b) => b[1] - a[1])
+      .map(([name, count]) => {
+        const display = name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        return `<span class="subcat-pill">${display} <span class="subcat-pill-count">${count}</span></span>`;
+      }).join('');
+  }
+
+  /* ── Mentor master init ── */
+  async function initMentor() {
+    await loadMentorData();
+    const state = getProgressState();
+    lsSet(`ace_cat_${CAT_CONFIG.id}_visited`, true);
+    const response = getAceResponse(state);
+    initAceSprite(response.sprite);
+    renderAceMessages(response.messages);
+    initTipRotation();
+    renderWarnings();
+    renderSubcategories();
+  }
+
+  /* ── Init ── */
+  renderTraining();
+  updateUI();
+  initMentor();
+  </script>
+</body>
+</html>'''
+
+# ── Generate all 8 files ──────────────────────────────────────────
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+for cat in CATEGORIES:
+    out_dir = os.path.join(SCRIPT_DIR, cat['dir'])
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, 'index.html')
+
+    html = TEMPLATE
+    html = html.replace('{{CAT_ID}}',         cat['id'])
+    html = html.replace('{{CAT_DIR}}',        cat['dir'])
+    html = html.replace('{{CAT_NUM}}',        cat['num'])
+    html = html.replace('{{CAT_TITLE_RAW}}',  cat['title_raw'])
+    html = html.replace('{{CAT_TITLE}}',      cat['title'])
+    html = html.replace('{{CAT_DESC}}',       cat['description'])
+    html = html.replace('{{CAT_COLOR}}',      cat['color'])
+    html = html.replace('{{CAT_OBJECTIVES}}', str(cat['objectives']))
+
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    lines = html.count('\n') + 1
+    print(f"  {cat['dir']}/index.html  ({lines} lines)")
+
+print(f"\nDone — {len(CATEGORIES)} hub pages generated.")

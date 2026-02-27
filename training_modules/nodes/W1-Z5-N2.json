@@ -1,0 +1,59 @@
+{
+  "id": "W1-Z5-N2",
+  "title": "FOD and tool accountability",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "ESD/FOD discipline",
+  "objectiveKeys": [
+    "q9",
+    "q31"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to FOD and tool accountability"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Take correct actions to prevent FOD; do not close up until hardware is accounted for."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "FOD Prevention \u2014 Tool Control",
+          "definition": "The most effective FOD prevention practice is strict tool control: count tools BEFORE and AFTER every job, and immediately retrieve and clean up any dropped hardware or debris.",
+          "analogy": "Like a surgeon counting instruments before and after an operation \u2014 every item must be accounted for, because a missing one means something dangerous was left inside."
+        },
+        {
+          "term": "Dropped Hardware FOD Response",
+          "definition": "If a screw is dropped behind a panel during avionics installation: (1) STOP work, (2) retrieve the screw BEFORE closing any panels, (3) log it as a FOD prevention measure.",
+          "analogy": "Like a surgeon who drops an instrument inside a patient \u2014 you stop the procedure, retrieve the item, and document it. You don't close up and hope for the best."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which practice is MOST effective at preventing Foreign Object Damage (FOD) in an avionics shop?",
+      "choices": [
+        "Using only snap-on toolboxes with latching lids",
+        "Strict tool control \u2014 counting tools before and after each job and immediately cleaning up dropped hardware",
+        "Performing tool inventory once per week",
+        "Restricting shop access to credentialed technicians only"
+      ],
+      "correctIndex": 1,
+      "feedback": "Tool control is the foundation of FOD prevention \u2014 counting tools before and after every job ensures nothing is left inside an aircraft, and immediate cleanup of dropped hardware prevents items from migrating into aircraft structure."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "During avionics installation, a screw drops behind a panel and is not immediately visible. What is the correct action?",
+      "choices": [
+        "Close the panel and notify QC on the job card",
+        "Complete the installation and perform a final FOD walk after",
+        "Replace the missing screw with a spare and note the discrepancy on the work order",
+        "Stop work, retrieve the screw before closing any panels, and log the event"
+      ],
+      "correctIndex": 3,
+      "feedback": "No panel may be closed until the dropped hardware is retrieved. A missing screw inside an aircraft structure is a serious FOD hazard, and the event must be logged per FOD prevention procedures."
+    }
+  ]
+}

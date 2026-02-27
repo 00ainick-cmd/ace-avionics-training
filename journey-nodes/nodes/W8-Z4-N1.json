@@ -1,0 +1,113 @@
+{
+  "id": "W8-Z4-N1",
+  "title": "Gyro instruments basics",
+  "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+  "zone": "Gyro fundamentals",
+  "objectiveKeys": [
+    "q24",
+    "q35",
+    "q43",
+    "q89",
+    "q197"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Gyro instruments basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize gyro principles and common instruments."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Vacuum-Driven Gyro Operation",
+          "definition": "In a vacuum-driven attitude indicator, suction created by an engine-driven vacuum pump draws filtered air through a nozzle; the air jet impinges on buckets around the gyro rotor rim, spinning it at high RPM.",
+          "analogy": "It works like a water wheel \u2014 instead of water falling on paddles, a jet of air blows on rotor buckets to make the gyro spin fast enough to maintain rigidity."
+        },
+        {
+          "term": "Turn Coordinator vs Turn-and-Bank",
+          "definition": "The turn coordinator's gyro is canted at approximately 30\u00b0 to sense both roll rate and yaw rate; the turn-and-bank indicator's gyro is vertical (upright), sensing yaw rate only.",
+          "analogy": "Think of tilting a steering wheel at an angle \u2014 a canted wheel can detect turning AND leaning motions, while a straight-up wheel only detects turning."
+        },
+        {
+          "term": "Magnetic Compass",
+          "definition": "The only primary flight instrument not gyroscopically driven; it uses Earth's magnetic field to align a magnetic sensing element and provide directional reference.",
+          "analogy": "A magnetic compass is like a trail of iron filings aligning to a bar magnet \u2014 no motor or spin needed, just the Earth's natural magnetic field."
+        },
+        {
+          "term": "Vacuum-Powered Flight Instruments",
+          "definition": "The attitude indicator (AI) and directional gyro (DG/heading indicator) are the two primary flight instruments that rely on the aircraft vacuum system to spin their gyro rotors.",
+          "analogy": "Think of the vacuum pump as a fan that keeps two spinning tops (the AI and DG gyros) spinning fast enough to stay upright and point in a fixed direction."
+        },
+        {
+          "term": "Gyroscopic Rigidity in Space",
+          "definition": "The property of a spinning gyro rotor to resist any force that tries to change its plane of rotation; once spinning, the rotor axis remains pointed in a fixed direction in space, providing a stable attitude reference.",
+          "analogy": "A spinning top stays upright and resists being knocked over \u2014 the faster it spins, the more it resists tilting. Gyroscopic instruments rely on this same principle to hold a fixed reference."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does the vacuum system provide power to spin the gyro rotor in an air-driven attitude indicator?",
+      "choices": [
+        "Positive pressure from the engine blower forces air directly into the gyro case",
+        "Engine vacuum draws air through a nozzle that directs a jet against rotor buckets, spinning the rotor",
+        "A venturi tube in the airstream creates suction to rotate a turbine connected to the rotor",
+        "Electrical solenoids modulate airflow to vary gyro speed as needed"
+      ],
+      "correctIndex": 1,
+      "feedback": "An engine-driven vacuum pump creates suction that draws air through a nozzle; the air jet impinges on bucket-shaped cutouts on the rotor periphery, spinning the gyro."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the key functional difference between a turn coordinator and a turn-and-bank indicator?",
+      "choices": [
+        "The turn coordinator is electrically driven while the turn-and-bank is vacuum driven",
+        "The turn coordinator uses a ball inclinometer while the turn-and-bank does not",
+        "The turn-and-bank shows coordinated flight while the turn coordinator only shows turn direction",
+        "The turn coordinator senses both roll and yaw rate; the turn-and-bank senses yaw rate only"
+      ],
+      "correctIndex": 3,
+      "feedback": "The critical difference is gyro orientation: the turn coordinator's canted gyro senses roll rate in addition to yaw, while the turn-and-bank's vertical gyro senses only yaw rate."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which primary flight instrument does NOT rely on gyroscopic principles for its operation?",
+      "choices": [
+        "Magnetic compass",
+        "Heading indicator (directional gyro)",
+        "Attitude indicator",
+        "Turn coordinator"
+      ],
+      "correctIndex": 0,
+      "feedback": "The magnetic compass operates on magnetic principles \u2014 it aligns to Earth's magnetic field. All the others (AI, DI, TC) use spinning gyroscopes."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which two flight instruments are commonly powered by the aircraft vacuum system?",
+      "choices": [
+        "Attitude indicator and directional gyro (heading indicator)",
+        "Airspeed indicator and altimeter",
+        "Turn coordinator and VSI",
+        "Magnetic compass and attitude indicator"
+      ],
+      "correctIndex": 0,
+      "feedback": "The attitude indicator and DG use vacuum-driven gyros. The pitot-static instruments (ASI, ALT, VSI) use air pressure, and the TC is usually electric."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What gyroscopic principle allows the attitude indicator to maintain a stable pitch and roll reference as the aircraft maneuvers?",
+      "choices": [
+        "Precession \u2014 the rotor tilts 90\u00b0 from applied force to provide resistance",
+        "Rigidity in space \u2014 the spinning rotor resists any force trying to change its orientation",
+        "Gyroscopic drift \u2014 the systematic error accumulated over time provides a reference",
+        "Transport wander \u2014 the latitude-dependent effect provides a stabilizing force"
+      ],
+      "correctIndex": 1,
+      "feedback": "Gyroscopic rigidity in space means the spinning rotor maintains its axis orientation regardless of aircraft movement. The aircraft moves around the gyro, and the gyro's resistance to change is what provides the attitude reference."
+    }
+  ]
+}

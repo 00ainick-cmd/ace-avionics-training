@@ -1,0 +1,95 @@
+{
+  "id": "W7-Z3-N1",
+  "title": "VOR basics",
+  "world": "CNS Systems",
+  "zone": "Navigation",
+  "objectiveKeys": [
+    "q57",
+    "q72",
+    "q163",
+    "q209"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to VOR basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Describe radials/OBS basics and VOR concept."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "VOR antenna",
+          "definition": "VOR antennas are V-shaped or bent-dipole antennas tuned to 108\u2013117.95 MHz. Typically mounted on the vertical stabilizer or fuselage. They receive VHF omnidirectional range signals from ground stations.",
+          "analogy": "Like a TV rabbit ear antenna \u2014 V-shaped, tuned to specific VHF frequencies to pick up the right signal."
+        },
+        {
+          "term": "Omnibearing Selector (OBS)",
+          "definition": "The OBS knob on a VOR CDI/HSI allows the pilot to manually select a desired VOR radial (0\u2013360\u00b0) for course tracking. Rotating the OBS centers the CDI needle when the aircraft is on that radial, providing TO/FROM and course deviation information.",
+          "analogy": "Like adjusting a compass rose \u2014 you dial in the road you want to drive, and the needle shows whether you're on it."
+        },
+        {
+          "term": "VOR ramp test procedure",
+          "definition": "Using a VOR ramp tester: place tester near antenna, set tester to desired radial, observe CDI response. Check multiple radials (at minimum 0\u00b0, 90\u00b0, 180\u00b0, 270\u00b0). Receiver accuracy per 14 CFR 91.171 must be within \u00b14\u00b0 for VOR checkpoints.",
+          "analogy": "Like calibrating a scale with known weights \u2014 you test against known values at multiple points to confirm accuracy."
+        },
+        {
+          "term": "VOR radial navigation",
+          "definition": "A VOR radial is a magnetic bearing FROM the station (e.g., the 090\u00b0 radial extends due east from the station). The OBS selects a radial; the CDI shows whether you're left or right of it. TO/FROM flag indicates your position relative to the station.",
+          "analogy": "Think of a VOR as a clock on the ground \u2014 each radial is a ray from the clock center to each minute mark around the dial."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of antenna is used for VOR reception and what frequency range does it cover?",
+      "choices": [
+        "Blade antenna, 329\u2013335 MHz",
+        "Loop antenna, 190\u2013535 kHz",
+        "V-shaped or bent-dipole, 108\u2013117.95 MHz",
+        "Patch antenna, 1575.42 MHz"
+      ],
+      "correctIndex": 2,
+      "feedback": "VOR uses V-shaped or bent-dipole antennas in the 108\u2013117.95 MHz VHF range. Loop antennas are for ADF/NDB; patch antennas are for GPS; glideslope operates at ~329 MHz."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the function of the Omnibearing Selector (OBS) on a VOR receiver indicator?",
+      "choices": [
+        "It adjusts the receiver squelch threshold for VOR audio",
+        "It allows the pilot to select and track a desired VOR radial",
+        "It sets the VOR station frequency to receive",
+        "It controls the bearing pointer on the RMI"
+      ],
+      "correctIndex": 1,
+      "feedback": "The OBS sets the selected course (radial) on the CDI display. When the OBS is set to the desired radial and the CDI needle centers, the aircraft is tracking on that radial. The TO/FROM flag indicates whether the radial leads toward or away from the station."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the purpose of using a VOR ramp tester during a post-maintenance check?",
+      "choices": [
+        "To transmit a VOR signal to nearby ATC for coordination",
+        "To simulate VOR station signals and verify the receiver accurately displays each tested radial",
+        "To verify GPS integrity monitoring is working correctly",
+        "To check the aircraft's ILS glideslope sensitivity on the ground"
+      ],
+      "correctIndex": 1,
+      "feedback": "A VOR ramp tester simulates VOR ground station signals so the technician can verify receiver accuracy on the ground at multiple radials without requiring the aircraft to be at a VOR checkpoint location. This is a standard post-maintenance check before RTS."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What navigation information does a VOR ground station provide to aircraft?",
+      "choices": [
+        "GPS-quality position with vertical guidance",
+        "Slant-range distance to the station",
+        "Wind speed and direction above the station",
+        "Magnetic bearing to and from the station along specific radials"
+      ],
+      "correctIndex": 3,
+      "feedback": "VOR provides magnetic bearing/course information only \u2014 it tells you what magnetic direction leads to or from the station, not distance. DME adds distance; ILS adds precision approach guidance. VOR alone gives position on a radial but not how far along the radial."
+    }
+  ]
+}

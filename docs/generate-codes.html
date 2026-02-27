@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ACE — Generate Access Codes</title>
+  <style>
+    body { font-family: monospace; max-width: 600px; margin: 2rem auto; padding: 1rem; background: #111; color: #eee; }
+    input, select, button { display: block; width: 100%; margin: 0.5rem 0; padding: 0.5rem; font-size: 1rem; }
+    button { background: #3b82f6; color: white; border: none; cursor: pointer; border-radius: 4px; }
+    .codes { margin-top: 1rem; }
+    .code { background: #222; padding: 0.5rem; margin: 0.25rem 0; border-radius: 4px; }
+    label { font-size: 0.85rem; color: #aaa; margin-top: 0.75rem; display: block; }
+  </style>
+</head>
+<body>
+  <h2>ACE Access Code Generator</h2>
+  <p style="color:#f87171">WARNING: Keep this file local. Never deploy it — it uses the service role key.</p>
+
+  <label>Supabase Service Role Key (from Settings &rarr; API)</label>
+  <input type="password" id="serviceKey" placeholder="eyJ...">
+
+  <label>Plan</label>
+  <select id="plan">
+    <option value="3mo">3 Month</option>
+    <option value="lifetime">Lifetime</option>
+  </select>
+
+  <label>Student Email (optional)</label>
+  <input type="email" id="email" placeholder="student@example.com">
+
+  <label>Number of Codes</label>
+  <input type="number" id="count" value="1" min="1" max="50">
+
+  <button onclick="generate()">Generate Codes</button>
+
+  <div class="codes" id="output"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://gwxgnlasxzpbipcdavcd.supabase.co'
+
+    function generateCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+      const seg = n => Array.from({length:n}, () => chars[Math.floor(Math.random()*chars.length)]).join('')
+      return `ACE-${seg(4)}-${seg(4)}`
+    }
+
+    async function generate() {
+      const key = document.getElementById('serviceKey').value.trim()
+      const plan = document.getElementById('plan').value
+      const email = document.getElementById('email').value.trim() || null
+      const count = parseInt(document.getElementById('count').value) || 1
+      const output = document.getElementById('output')
+
+      if (!key) { alert('Enter service role key'); return }
+
+      const db = supabase.createClient(SUPABASE_URL, key)
+      const expires = plan === '3mo'
+        ? new Date(Date.now() + 90*86400000).toISOString()
+        : null
+
+      output.innerHTML = '<p>Generating\u2026</p>'
+      const results = []
+
+      for (let i = 0; i < count; i++) {
+        const code = generateCode()
+        const { error } = await db.from('ace_enrollments').insert({
+          access_code: code, email, plan, expires_at: expires, is_active: true
+        })
+        results.push(error ? `FAIL ${code} (error: ${error.message})` : `OK ${code}`)
+      }
+
+      output.innerHTML = results.map(r => `<div class="code">${r}</div>`).join('')
+    }
+  </script>
+</body>
+</html>

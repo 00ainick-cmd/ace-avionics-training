@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Why digital databuses exist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link active">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W6 // DATABUS // WHY DIGITAL BUSES</span>
+                <span>NODE: W6-Z1-N1</span>
+            </div>
+            <h1>Why digital databuses exist</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Contrast the wiring requirements of legacy analog architectures versus modern digital architectures.</li>
+        <li>Identify the physical properties of Shielded Twisted Pair (STP) cable that provide noise immunity.</li>
+        <li>Explain the utility of BITE (Built-In Test Equipment) in modern avionics line maintenance.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/shielded_twisted_pair_cable.png" alt="A macro photograph of an aircraft shielded twisted-pair databus cable revealing the braided metal shield and the twisted inner wires" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A macro photograph of an aircraft shielded twisted-pair databus cable revealing the braided metal shield and the twisted inner wires</figcaption>
+                </figure>
+        <p class="body-text">A 1970s commercial aircraft panel required upwards of 50 individual analog wires running from the air data computer to the autopilot, HSI, and flight director. Each physical parameter — altitude, airspeed, heading, vertical speed — required its own dedicated analog wire pair. In a modern glass-cockpit aircraft, all of that exact same data travels simultaneously on a single twisted-pair cable. Understanding fundamentally why digital buses replaced analog point-to-point wiring helps you comprehend the architecture of every modern avionics suite you will touch.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">What Is a Digital Databus?</h3>
+        <p class="body-text">A <strong>digital databus</strong> is a shared, standardized communication medium (the wires and the language) that allows multiple avionics LRUs (Line Replaceable Units) to seamlessly exchange thousands of data parameters using a standardized digital protocol, completely replacing individual point-to-point analog voltage wiring.</p>
+        <h3 class="content-h3">Why Digital Buses Replaced Analog (The Three Pillars)</h3>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Massive Wiring Reduction (Weight Savings):</strong> A single shared bus replaces dozens of dedicated analog cables. Connecting 10 LRUs point-to-point in a mesh could require up to 45 individual bulky cable runs. A shared digital bus connects all 10 with a single, lightweight daisy-chained cable. This saves hundreds of pounds of copper per aircraft.</li>
+        <li><strong>2.</strong> <strong>Absolute Noise Immunity:</strong> Analog signals (like a 0-5V pressure sensor) degrade proportionally with any induced electrical noise. Digital signals transmit data as discrete, rigid logic states (0 or 1). Small amounts of electrical interference simply do not corrupt the data — the noise spike must be massive enough to flip a 0 to a 1 (exceeding the noise margin) to cause an error.</li>
+        <li><strong>3.</strong> <strong>Industry Standardization:</strong> A standardized bus protocol (like ARINC 429) defines exactly how the binary data is mathematically formatted, allowing a Garmin GPS to natively communicate with a Collins autopilot and a Honeywell display without requiring heavy, custom analog converter boxes.</li>
+        </ol>
+        <h3 class="content-h3">The Physical Medium: Shielded Twisted Pair (STP)</h3>
+        <p class="body-text">Nearly all avionics databuses utilize <strong>shielded twisted-pair (STP)</strong> wire to physically guarantee noise immunity:</p>
+        <ul class="content-list">
+        <li><strong>Twisted construction:</strong> Cancels induced magnetic field interference. Any magnetic noise wave passing through the bundle induces an equal and geometrically opposite voltage in each overlapping twist, perfectly canceling the noise to zero.</li>
+        <li><strong>Conductive braided shield:</strong> Blocks electrostatic (capacitive) coupling from adjacent transmitting antennas.</li>
+        </ul>
+        <h3 class="content-h3">BITE (Built-In Test Equipment)</h3>
+        <p class="body-text">Because digital LRUs are essentially high-powered computers, they include <strong>BITE</strong> — internal self-diagnostic software systems that:</p>
+        <ul class="content-list">
+        <li>Continuously monitor internal hardware health and external bus communication.</li>
+        <li>Perform rigorous power-on self-tests (POST) at startup.</li>
+        <li>Store specific fault codes and flight event records in non-volatile memory.</li>
+        <li>Allow line technicians to retrieve exact diagnostics directly from the front panel without requiring full bench testing or LRU removal.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 6.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Requirement: Transmit Altitude, Airspeed, and Heading] --> B{Analog vs Digital Architecture}
+    
+    B -->|Legacy Analog Method| C[Run 3 separate wire pairs to Autopilot]
+    C --> D[Run 3 separate wire pairs to Display]
+    D --> E[Total: 12 heavy wires, vulnerable to voltage drop]
+    
+    B -->|Modern Digital Databus| F[Encode all 3 parameters into binary words]
+    F --> G[Transmit sequentially over ONE twisted-pair cable]
+    G --> H[Autopilot and Display tap into the same 2 wires]
+    H --> I[Total: 2 lightweight wires, total noise immunity]
+    
+    style E fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style I fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>Before performing a functional test on any digital system (e.g., commanding an autopilot to climb), rigidly verify two things: (1) Check the BITE codes first—the LRU&#x27;s internal diagnostics will often hand you the exact fault code immediately, and (2) Verify the system is actually receiving valid sensor data on its input buses. If the autopilot isn&#x27;t receiving digital altitude data from the Air Data Computer, it will fail the functional test. Testing an LRU without valid input data produces false failures, leading to completely unnecessary box swapping.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 6.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Digital Databus Purpose</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Digital Databus Purpose</div>
+                            <p>A digital databus in avionics enables reliable, standardized transfer of data between multiple LRUs (Line Replaceable Units) over a shared communication medium, replacing individual point-to-point analog wiring.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Digital Bus Noise Immunity</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Digital Bus Noise Immunity</div>
+                            <p>Digital data buses offer significantly greater noise immunity than analog signals because they transmit discrete logic states (0 or 1) that can be reliably detected even in the presence of electrical interference, while analog signals degrade continuously with noise.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Digital Bus — Wiring Reduction Benefit</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Digital Bus — Wiring Reduction Benefit</div>
+                            <p>Using a digital databus instead of individual analog connections reduces wiring complexity by replacing multiple point-to-point analog cables with a single shared bus, improving reliability, maintainability, and system integration.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Shielded Twisted Pair (STP)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Shielded Twisted Pair (STP)</div>
+                            <p>Shielded twisted-pair wire consists of two insulated conductors twisted together (reduces magnetic field emissions and susceptibility) with an overall conductive shield (reduces capacitive coupling with external signals); it is the standard cable for avionics digital data buses including ARINC 429.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>BITE (Built-In Test Equipment)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">BITE (Built-In Test Equipment)</div>
+                            <p>BITE is a self-diagnostic system built into avionics LRUs that continuously monitors the unit&#x27;s internal health, performs power-on self-tests, and stores fault codes and event records retrievable during maintenance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Pre-Functional Check Verification</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Pre-Functional Check Verification</div>
+                            <p>Before a digital autopilot functional check, verify: (1) all ARINC 429 bus connections are properly terminated, and (2) the autopilot is receiving valid sensor data on all required input buses — failure to do either will cause a false test failure.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Digital Databus</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Digital Databus</div>
+                            <p>A shared communication architecture utilizing standardized protocols for digital data exchange between multiple avionics computers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Noise Immunity</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Noise Immunity</div>
+                            <p>The inherent ability of binary digital signals to mathematically resist data corruption from ambient electrical interference.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="0" data-feedback="A databus provides a common, standardized communication medium so multiple LRUs can exchange data reliably without requiring dedicated point-to-point analog wiring between each pair.">
+                <div class="kc-header">Knowledge Verification [1/6]</div>
+                <div class="kc-question">What is the primary purpose of a digital avionics databus?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">To enable reliable, standardized data transfer between multiple avionics units over a shared communication medium</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">To provide backup electrical power distribution during an LRU failure</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">To encrypt navigation data to prevent interception by hostile parties</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">To store flight data for retrieval by maintenance personnel after flight</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="0" data-feedback="Digital signals are binary — noise must exceed the noise margin to cause an error. Analog signals degrade proportionally with any noise, making digital buses far more resistant to EMI/RFI in aircraft environments.">
+                <div class="kc-header">Knowledge Verification [2/6]</div>
+                <div class="kc-question">What is a key advantage of digital data buses over analog signals in avionics?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">Digital buses have greater noise immunity because discrete logic states are not degraded by small amounts of electrical interference</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">Digital buses are cheaper to install and require less cable shielding</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">Digital buses can transmit more types of data because they support variable voltage levels</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">Digital buses eliminate the need for aircraft grounding and bonding</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="0" data-feedback="The key engineering benefit is reduced wiring complexity: a single bus replaces many analog cables, reducing weight, connector count, failure points, and improving maintainability.">
+                <div class="kc-header">Knowledge Verification [3/6]</div>
+                <div class="kc-question">What is the primary engineering justification for using digital data buses in modern avionics instead of individual analog connections?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">Digital buses reduce wiring complexity and improve integration by providing a standardized shared medium for reliable data exchange between multiple LRUs</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">Analog connections are no longer supported by avionics manufacturers</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">Digital buses are required by FAA regulations for all transport category aircraft</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">Digital buses eliminate the need for EMC testing because they are inherently immune to all interference</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="2" data-feedback="Shielded twisted-pair is the standard for digital avionics buses. The twisted construction provides differential noise cancellation and the shield prevents EMI coupling — critical in the electrically noisy aircraft environment.">
+                <div class="kc-header">Knowledge Verification [4/6]</div>
+                <div class="kc-question">What cable type is commonly used for ARINC 429 and other digital avionics data buses?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0">
+                        <div class="kc-option-text">RG-58 coaxial cable for its low attenuation</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1">
+                        <div class="kc-option-text">Unshielded twisted pair to reduce cost and weight</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2">
+                        <div class="kc-option-text">Shielded twisted-pair wire to reduce electromagnetic interference</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3">
+                        <div class="kc-option-text">Multi-strand power cable for its high current capacity</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="1" data-feedback="BITE (Built-In Test Equipment) provides self-monitoring and fault code storage within the LRU — enabling technicians to identify failures quickly without full bench testing.">
+                <div class="kc-header">Knowledge Verification [5/6]</div>
+                <div class="kc-question">What is the purpose of BITE in an avionics LRU?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0">
+                        <div class="kc-option-text">To provide backup navigation data when the primary system fails</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1">
+                        <div class="kc-option-text">To continuously monitor unit health and store fault codes for maintenance retrieval and diagnosis</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2">
+                        <div class="kc-option-text">To calibrate sensor inputs automatically before each flight</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3">
+                        <div class="kc-option-text">To encrypt data on ARINC 429 buses to prevent unauthorized access</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="0" data-feedback="For a valid functional check: bus termination must be correct (ensures signal integrity) and all sensor data must be valid (ensures the autopilot has real inputs to respond to).">
+                <div class="kc-header">Knowledge Verification [6/6]</div>
+                <div class="kc-question">What two things should be verified before performing a functional check of a digital autopilot that uses ARINC 429 inputs?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0">
+                        <div class="kc-option-text">All ARINC 429 connections are properly terminated and the autopilot receives valid sensor data on all input buses</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1">
+                        <div class="kc-option-text">The autopilot firmware version and the aircraft gross weight</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2">
+                        <div class="kc-option-text">The ARINC 429 bus speed is set to low speed and the autopilot power supply is within 0.1V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3">
+                        <div class="kc-option-text">The circuit breaker is in and the ARINC 429 bus labels match the aircraft flight manual</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Digital databuses replaced heavy analog wiring to massively reduce weight, guarantee noise immunity, and standardize communication — and internal BITE software provides you with deep diagnostics before you ever pick up a multimeter.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W5-Z5-N2_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W6-Z2-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W6-Z1-N1';
+        const TOTAL_KCS = 6;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

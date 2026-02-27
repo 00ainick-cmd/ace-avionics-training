@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Pitot/static blockage symptoms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link active">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W8 // INSTRUMENTS // BLOCKAGE SCENARIOS</span>
+            </div>
+            <h1>Pitot/static blockage symptoms</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Analyze the dangerous ASI indication behavior during a climb with a completely blocked pitot tube.</li>
+        <li>Describe the simultaneous instrument reactions of a frozen static port.</li>
+        <li>Explain the physiological concept behind an alternate static source valve.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/blocked_pitot_tube.png" alt="A close-up photograph of a chrome aircraft pitot tube where the small ram air entry hole is tightly packed with dried mud from a wasp nest" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A close-up photograph of a chrome aircraft pitot tube where the small ram air entry hole is tightly packed with dried mud from a wasp nest</figcaption>
+                </figure>
+        <p class="body-text">An aircraft departs into heavy clouds with a pitot tube seamlessly packed solid by a mud dauber wasp nest while it sat on the ramp. As the aircraft physically climbs, the trapped ram pressure remains totally constant inside the tubing. However, the outside static pressure is drastically dropping due to altitude. The Airspeed Indicator (ASI) calculates speed by subtracting static from pitot. Because the static is shrinking, the mathematical gap between the two pressures widens massively. The ASI registers a massive increase in airspeed. The pilot, trusting the instrument, aggressively pulls the throttle back to slow the plane. The actual airspeed collapses, and the aircraft violently stalls and spins. Recognizing blockage symptoms is a survival imperative.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">Scenario 1: Blocked Pitot Tube (Ram Air Trapped)</h3>
+        <p class="body-text">If a pitot tube is entirely blocked (by ice, mud, or a forgotten synthetic cover), the ASI is the <strong>only</strong> instrument affected. The altimeter and VSI remain perfectly healthy.</p>
+        <ul class="content-list">
+        <li><strong>During a Climb:</strong> The trapped pitot pressure stays high. Static pressure mathematically drops. The differential artificially grows. The ASI wildly reads a <strong>falsely high and continuously increasing airspeed</strong>.</li>
+        <li><strong>During a Descent:</strong> The trapped pitot pressure stays constant. Static pressure violently rises. The differential violently shrinks. The ASI wildly reads a <strong>falsely low and decreasing airspeed</strong>, eventually hitting zero.</li>
+        <li><strong>The Analogy:</strong> A blocked pitot tube fundamentally transforms the ASI into a crude altimeter — the airspeed needle will go up when you climb, and go down when you descend, making it lethally deceptive.</li>
+        </ul>
+        <h3 class="content-h3">Scenario 2: Blocked Static Port (Ambient Pressure Trapped)</h3>
+        <p class="body-text">If the static ports ice over or get painted shut, the trapped ambient pressure locks the baseline for all three instruments.</p>
+        <ul class="content-list">
+        <li><strong>Altimeter:</strong> Completely freezes in place at the exact altitude where the blockage occurred.</li>
+        <li><strong>VSI:</strong> Returns to zero and refuses to move, regardless of actual climb or descent rates.</li>
+        <li><strong>ASI:</strong> Registers incorrectly because its reference line is locked. If you climb above the blockage altitude, the ASI will read falsely low (because the trapped static pressure acts like you are still low and dense).</li>
+        </ul>
+        <h3 class="content-h3">The Solution: Alternate Static Source</h3>
+        <p class="body-text">If the primary external static ports ice over in heavy weather, the pilot can physically actuate the <strong>Alternate Static Source</strong> valve.</p>
+        <ul class="content-list">
+        <li>This mechanically vents the static plumbing lines directly into the unpressurized aircraft cabin.</li>
+        <li>Because the fast-moving air outside the aircraft slightly sucks air out of the cabin vents (Venturi effect), the cabin pressure is marginally lower than actual true ambient pressure.</li>
+        <li><strong>The Result:</strong> The altimeter will falsely pop up slightly (showing you higher than you are), and the ASI will show a slightly faster airspeed. This minor, predictable error is infinitely preferable to locked, frozen instruments.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 8.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Pitot Tube packed solid by Mud Bug] --> B[Traps High Ram Pressure in ASI Line]
+    
+    B --> C{Aircraft Climbs to 5,000 ft}
+    
+    C --> D[Static Pressure Plummets with altitude]
+    D --> E[Trapped Pitot stays high, mathematical gap widens drastically]
+    E --> F[ASI incorrectly indicates 250 Knots while actually flying 100 Knots]
+    
+    F --> G[Pilot reduces thrust to 'slow down']
+    G -.-> H[Aircraft fatally stalls and departs controlled flight]
+    
+    style F fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style H fill:#7f1d1d,stroke:#450a0a,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>Before touching any static plumbing after a reported instrument anomaly, meticulously perform a heavy visual inspection of the tiny static port holes on the fuselage sides. Often, an overzealous wash crew gets wax inside the microscopic holes, or a mechanic physically tapes over the ports during painting and forgets to peel the tape off. If an aircraft exhibits all three symptoms simultaneously (frozen altimeter, dead VSI, reversed ASI behavior), absolutely do not start removing gyros or displays—the fault is a 100% pneumatic static obstruction.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 8.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Effect of Blocked Pitot Tube</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Effect of Blocked Pitot Tube</div>
+                            <p>A completely blocked pitot tube removes ram air pressure input to the airspeed indicator; the ASI is the primary instrument affected because it requires the differential between ram pressure and static pressure to compute airspeed.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Blocked Pitot During Descent</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Blocked Pitot During Descent</div>
+                            <p>During descent with a blocked pitot tube, static pressure increases while the trapped ram pressure stays constant; the ASI reads the increasing differential as increasing airspeed, showing a falsely high and increasing reading.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Effect of Blocked Static Port</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Effect of Blocked Static Port</div>
+                            <p>A blocked static port traps pressure at the level where blockage occurred, causing the altimeter to freeze at that altitude and the VSI to read zero, because neither can detect changes in atmospheric pressure.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Blocked Pitot During Climb</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Blocked Pitot During Climb</div>
+                            <p>During a climb with a blocked pitot tube, static pressure decreases while the trapped ram pressure stays constant; the ASI sees a growing pitot-minus-static differential and reads a falsely increasing airspeed.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Consistently Low ASI Indication</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Consistently Low ASI Indication</div>
+                            <p>An airspeed indicator that consistently reads below actual airspeed indicates reduced ram air pressure reaching the ASI, which can result from a partial pitot tube blockage or a leak in the pitot pressure plumbing.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>VSI Falsely Showing Descent</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">VSI Falsely Showing Descent</div>
+                            <p>A VSI showing a constant descent rate in level flight indicates a leak in the static system that allows static pressure to equalize faster than the calibrated orifice; the VSI interprets this as a pressure increase (descent) even when the aircraft is level.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Pitot Blockage</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Pitot Blockage</div>
+                            <p>A lethal obstruction geometry where trapped ram pressure mathematically forces the airspeed indicator to act like an altimeter, wildly registering speed increases during climbs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Static Blockage</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Static Blockage</div>
+                            <p>An obstruction of ambient pressure delivery that immediately freezes the altimeter, zeros the VSI, and skews the baseline reference of the ASI.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Alternate Static Source</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Alternate Static Source</div>
+                            <p>A critical flight deck pneumatic valve allowing pilots to instantly bypass iced-over external static ports by venting the instruments into the ambient cabin air pressure.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Differential Widening</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Differential Widening</div>
+                            <p>The core mechanism causing false airspeed climbs; achieved when the static subtrahend drops while the pitot minuend remains artificially trapped.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="2" data-feedback="Only the ASI uses the pitot (ram pressure) line. The altimeter and VSI use only the static line. The turn coordinator is typically electrically or vacuum driven.">
+                <div class="kc-header">Knowledge Verification [1/6]</div>
+                <div class="kc-question">A pitot tube becomes completely blocked in flight. Which instrument is most directly and immediately affected?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">Altimeter, because it also uses the pitot line for reference</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">Vertical speed indicator, because rate of climb depends on pitot pressure</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">Airspeed indicator, because it depends on ram air pressure that is now unavailable</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">Turn coordinator, because it uses pitot air to drive the gyro rotor</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="1" data-feedback="During descent, atmospheric (static) pressure increases. Because the pitot is blocked, ram pressure is trapped at the level where the blockage occurred. The ASI senses a growing differential, indicating falsely increasing airspeed.">
+                <div class="kc-header">Knowledge Verification [2/6]</div>
+                <div class="kc-question">An aircraft descends with a completely blocked pitot tube. What will the airspeed indicator show?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">A correctly decreasing airspeed consistent with actual speed</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">A falsely high and increasing airspeed as static pressure rises while pitot pressure remains trapped</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">Zero airspeed because no ram air pressure is available</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">An airspeed equal to stall speed due to minimum differential pressure</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="3" data-feedback="Both instruments require changing static pressure to function. A blocked port traps a fixed pressure, so the altimeter needle freezes and the VSI shows zero regardless of actual altitude changes.">
+                <div class="kc-header">Knowledge Verification [3/6]</div>
+                <div class="kc-question">What happens to the altimeter and VSI when the static port becomes completely blocked?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0" data-remediation="">
+                        <div class="kc-option-text">The altimeter reads falsely high and the VSI reads maximum climb</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1" data-remediation="">
+                        <div class="kc-option-text">The altimeter reads zero and the VSI shows maximum descent</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2" data-remediation="">
+                        <div class="kc-option-text">Both instruments read the altitude from the last GPS fix</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3" data-remediation="">
+                        <div class="kc-option-text">The altimeter freezes at the altitude where blockage occurred, and the VSI reads zero</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="1" data-feedback="In a climb, atmospheric pressure (static) falls. The blocked pitot traps constant ram pressure. The ASI measures the growing differential (constant pitot minus decreasing static) as increasing airspeed.">
+                <div class="kc-header">Knowledge Verification [4/6]</div>
+                <div class="kc-question">An aircraft climbs with a completely blocked pitot tube. What will the airspeed indicator show?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0" data-remediation="">
+                        <div class="kc-option-text">A correctly increasing airspeed consistent with actual aircraft speed</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1" data-remediation="">
+                        <div class="kc-option-text">A falsely increasing airspeed because static pressure falls while trapped ram pressure stays constant</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2" data-remediation="">
+                        <div class="kc-option-text">A falsely decreasing airspeed as static pressure falls</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3" data-remediation="">
+                        <div class="kc-option-text">Zero airspeed because the pitot tube cannot sense any air movement</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="3" data-feedback="Consistent under-reading means reduced ram pressure at the ASI. A partial pitot blockage reduces flow, and a leak allows some pressure to escape — both produce a persistently low reading.">
+                <div class="kc-header">Knowledge Verification [5/6]</div>
+                <div class="kc-question">An airspeed indicator consistently reads 15 knots below actual aircraft speed verified by other means. What is the most likely cause?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0" data-remediation="">
+                        <div class="kc-option-text">The static port is fully blocked, reducing reference pressure</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1" data-remediation="">
+                        <div class="kc-option-text">The aircraft&#x27;s true airspeed correction is not applied at this altitude</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2" data-remediation="">
+                        <div class="kc-option-text">The altimeter calibration error is cross-affecting the ASI reading</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3" data-remediation="">
+                        <div class="kc-option-text">A partial pitot blockage or a leak in the pitot pressure line is reducing the ram air pressure at the ASI</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="2" data-feedback="A static leak allows outside pressure to bleed into the static system faster than normal. The VSI compares the two sides of its differential — the faster pressure equalisation looks like a descent signal.">
+                <div class="kc-header">Knowledge Verification [6/6]</div>
+                <div class="kc-question">A VSI indicates a constant 200 fpm descent while the aircraft is confirmed to be in level flight. The altimeter reads correctly. What is the most likely cause?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0" data-remediation="">
+                        <div class="kc-option-text">The altimeter is correct but the VSI aneroid capsule spring has weakened</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1" data-remediation="">
+                        <div class="kc-option-text">A blockage in the pitot tube is causing backpressure that affects the VSI</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2" data-remediation="">
+                        <div class="kc-option-text">A leak in the static system is allowing external pressure to enter faster than the calibrated orifice, making the VSI sense a false pressure rise (descent)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3" data-remediation="">
+                        <div class="kc-option-text">The VSI&#x27;s calibrated orifice has become enlarged, making the instrument over-sensitive</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>A blocked pitot tube lethally commands the ASI to read falsely high in climbs and falsely low in descents; a blocked static port entirely freezes the altimeter and zeros the VSI — always cross-check instruments.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W8-Z2-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W8-Z4-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W8-Z3-N1';
+        const NODE_LOS = ["q33", "q65", "q84", "q110", "q131", "q199"];
+        const TOTAL_KCS = 6;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'Instruments',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

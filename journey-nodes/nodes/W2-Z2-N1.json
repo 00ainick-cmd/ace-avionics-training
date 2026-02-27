@@ -1,0 +1,41 @@
+{
+  "id": "W2-Z2-N1",
+  "title": "Ratings/capability limits (stay in your lane)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Scope & technical data",
+  "objectiveKeys": [
+    "q177"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Ratings/capability limits (stay in your lane)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize that work must stay within ratings/capabilities."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Part 145 Ratings & Scope",
+          "definition": "A Part 145 repair station may only perform work within its specific ratings and classes listed in its operations specifications. Work outside those ratings is not authorized regardless of individual technician qualifications.",
+          "analogy": "Like a contractor's license \u2014 a licensed electrician cannot perform plumbing work just because they are in the same building."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A Part 145 shop receives work for an aircraft component outside its current ratings. What is the correct action?",
+      "choices": [
+        "Perform the work if a certificated technician on staff holds the relevant A&P endorsement",
+        "Perform the work and document it under the closest applicable rating",
+        "Decline the work \u2014 the shop may only perform work within its specific ratings and classes",
+        "Accept the work and request an emergency rating expansion from the local FSDO"
+      ],
+      "correctIndex": 2,
+      "feedback": "Part 145 limits a shop to work within its Ops Specs ratings and classes. An individual tech's A&P certificate does not extend the shop's authorization. There is no emergency rating expansion process."
+    }
+  ]
+}

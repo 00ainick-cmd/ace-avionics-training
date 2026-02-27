@@ -1,0 +1,149 @@
+{
+  "id": "W7-Z5-N1",
+  "title": "Transponder basics",
+  "world": "CNS Systems",
+  "zone": "Surveillance",
+  "objectiveKeys": [
+    "q12",
+    "q83",
+    "q106",
+    "q117",
+    "q126",
+    "q153",
+    "q191"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Transponder basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize transponder purpose and basic modes."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Transponder squawk code",
+          "definition": "A squawk code is a 4-digit octal number (0000\u20137777, excluding some) assigned by ATC to identify a specific aircraft on radar. The transponder replies to radar interrogations with the code, allowing controllers to correlate the radar return with the specific flight.",
+          "analogy": "Like a name badge at a conference \u2014 the squawk code tells ATC which radar blip belongs to which aircraft."
+        },
+        {
+          "term": "Transponder primary purpose",
+          "definition": "The transponder replies to Secondary Surveillance Radar (SSR) interrogations from ATC ground stations. SSR interrogates at 1030 MHz; transponder replies at 1090 MHz with squawk code and altitude. This allows ATC to positively identify and track the aircraft on radar.",
+          "analogy": "Like a ship's IFF system \u2014 when the radar pings you, you reply with your identity code so the controller knows who you are."
+        },
+        {
+          "term": "Transponder antenna installation requirements",
+          "definition": "Transponder antennas operate at 1030/1090 MHz. Installation: (1) verify 50\u03a9 impedance match, (2) use appropriate coax (low-loss type at ~1 GHz, e.g., RG-400 or similar), (3) torque TNC or BNC connectors per spec, (4) verify SWR after installation.",
+          "analogy": "Like installing a high-frequency speaker \u2014 you need the right impedance cable and proper connections or you'll lose signal before it gets there."
+        },
+        {
+          "term": "Mode S 24-bit ICAO address",
+          "definition": "Mode S assigns each aircraft a unique 24-bit ICAO address (set during manufacture/registration). ATC systems use this to selectively interrogate specific aircraft (not all-call interrogation like Mode A/C). Enables data link, reduces RF congestion, and supports ADS-B Out transmission.",
+          "analogy": "Like a cell phone number \u2014 it's yours alone, so the tower can call just you rather than broadcasting to everyone."
+        },
+        {
+          "term": "Mode C transponder",
+          "definition": "Mode C replies include Mode A squawk code PLUS pressure altitude (Gillham code from encoding altimeter or ADC). Altitude is transmitted in 100-ft increments referenced to 29.92 inHg (standard pressure). ATC can see both aircraft identity and altitude on their display.",
+          "analogy": "Mode A is like sending a text with just your name. Mode C is like sending your name AND your GPS altitude at the same time."
+        },
+        {
+          "term": "Transponder antenna",
+          "definition": "Transponder antennas are low-profile blade or stub antennas tuned to 1030/1090 MHz (L-band). Mounted on the belly (bottom of fuselage) and/or top of fuselage. Low profile to minimize drag. 50\u03a9 impedance.",
+          "analogy": "Like a small shark fin on an aircraft belly \u2014 compact, low-drag, tuned to work at the specific L-band frequencies."
+        },
+        {
+          "term": "Mode C \u2014 combined ID and altitude",
+          "definition": "Mode C is the standard operating mode for IFR flight, providing both Mode A squawk code (identity) and pressure altitude in a single transponder reply. Most ATC radar requires Mode C in controlled airspace above 10,000 MSL and near Class B/C airports.",
+          "analogy": "Like sending a package with both a name label AND a return address \u2014 ATC gets both who you are and where you are vertically in one reply."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the purpose of a transponder squawk code?",
+      "choices": [
+        "To encode the aircraft's altitude in binary for TCAS processing",
+        "To allow ATC radar to identify and track a specific aircraft among other traffic",
+        "To broadcast GPS position data to nearby aircraft via ADS-B",
+        "To encrypt the transponder reply to prevent spoofing"
+      ],
+      "correctIndex": 1,
+      "feedback": "The squawk code is an identification tool \u2014 it lets ATC correlate a specific radar return with a specific flight. Without squawk, the radar shows only anonymous returns; with squawk, ATC can say 'that's N12345' and track it with callsign, altitude, and flight data attached."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of an aircraft transponder?",
+      "choices": [
+        "To broadcast GPS position data to other aircraft",
+        "To encrypt aircraft identification data for security purposes",
+        "To monitor other transponder-equipped aircraft for collision avoidance",
+        "To reply to ATC secondary surveillance radar interrogations for identification and tracking"
+      ],
+      "correctIndex": 3,
+      "feedback": "The transponder is fundamentally a reply device \u2014 it listens for SSR interrogations and responds with coded information (squawk code in Mode A, altitude in Mode C, data link in Mode S). This allows ATC secondary radar to create the labeled radar display controllers use for separation."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What must be verified when installing a transponder antenna?",
+      "choices": [
+        "Antenna impedance match, correct coaxial cable type, and connector torque to specification",
+        "Only that the physical mounting is secure \u2014 RF performance self-adjusts",
+        "That the antenna is co-located with the VOR antenna for shared ground plane",
+        "Only the coax length \u2014 connector type doesn't matter at transponder frequencies"
+      ],
+      "correctIndex": 0,
+      "feedback": "All three are required: impedance match ensures proper power transfer and minimal reflection; correct coax minimizes loss at ~1 GHz (standard RG-58 has too much loss); proper connector torque ensures electrical contact and weatherproofing. Ignoring any of these risks poor transponder performance or compliance failure."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does the 24-bit ICAO address in a Mode S transponder enable?",
+      "choices": [
+        "Encoding of aircraft registration number in audio Morse code",
+        "Selective interrogation of specific aircraft by ATC systems",
+        "Automatic frequency selection for the most congested sector",
+        "Encryption of altitude data to prevent spoofing"
+      ],
+      "correctIndex": 1,
+      "feedback": "The 24-bit address enables selective interrogation \u2014 ATC can query a specific aircraft's transponder rather than broadcasting to all. This reduces RF congestion in busy airspace and enables two-way data link communication (used for ACAS coordination, ATIS data, and future applications)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does a Mode C transponder transmit in addition to the squawk code?",
+      "choices": [
+        "GPS-derived latitude and longitude position",
+        "Aircraft registration number in ICAO format",
+        "Groundspeed computed from GPS data",
+        "Pressure altitude encoded from an encoding altimeter"
+      ],
+      "correctIndex": 3,
+      "feedback": "Mode C = Mode A (squawk code) + pressure altitude. The altitude comes from an encoding altimeter (mechanical Gillham code output) or air data computer, transmitted in 100-ft increments at standard pressure (29.92). ATC sees altitude tagged to each radar return."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of antenna does a transponder use and at what frequencies?",
+      "choices": [
+        "Low-profile blade or stub antenna at 1030/1090 MHz",
+        "Loop antenna at 190\u2013535 kHz",
+        "V-shaped bent dipole at 108\u2013118 MHz",
+        "Patch antenna at 1575 MHz"
+      ],
+      "correctIndex": 0,
+      "feedback": "Transponders operate in the L-band at 1030 MHz (interrogation) and 1090 MHz (reply). Low-profile blade or stub antennas are standard \u2014 they provide the omni pattern needed for ATC line-of-sight while minimizing drag. V-shaped dipoles are VOR; loops are ADF; patch antennas are GPS."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What combination of information does Mode C provide?",
+      "choices": [
+        "GPS position and velocity only",
+        "Both the Mode A squawk code (identification) and pressure altitude reporting",
+        "Pressure altitude only, with no identification",
+        "Pilot-entered flight plan data and squawk code"
+      ],
+      "correctIndex": 1,
+      "feedback": "Mode C = Mode A identity (squawk code) + automatic pressure altitude from encoding altimeter. This combination is what allows ATC radar displays to show both the labeled aircraft identity and its altitude \u2014 the minimum information needed for basic radar separation services."
+    }
+  ]
+}

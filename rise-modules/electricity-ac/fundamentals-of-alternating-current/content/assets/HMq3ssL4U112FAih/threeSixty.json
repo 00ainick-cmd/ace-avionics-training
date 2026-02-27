@@ -1,0 +1,35 @@
+{
+  "version": "3.67.28569.0",
+  "course_id": "6cdBUFfGc85",
+  "title": "What is a Capacitor?",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "States"
+    },
+    {
+      "title": "Slides"
+    }
+  ],
+  "slides": [
+    {
+      "id": "66HEw0bN6x9",
+      "title": "Untitled Slide",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "6Y6qk3JqXaa",
+      "title": "Base",
+      "scene_index": "2.1"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 1300,
+    "height": 814
+  },
+  "stage": {
+    "width": 1280,
+    "height": 720
+  }
+}

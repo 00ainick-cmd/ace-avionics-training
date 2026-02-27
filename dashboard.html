@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACE Dashboard | CAET Certification Prep</title>
+  <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared/ace-theme.css?v=1.1">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       DASHBOARD-SPECIFIC STYLES
+       (shared tokens + components live in shared/ace-theme.css)
+    ═══════════════════════════════════════════════════════════ */
+
+    .main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 48px;
+      padding: 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+    }
+
+    /* ACE sprite + steam overlay */
+    .hero-ace-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+    }
+
+    .hero-ace,
+    .hero-ace-steam {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 120px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .hero-ace-steam {
+      pointer-events: none;
+      /* steam layer is purely decorative */
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title .highlight {
+      color: var(--gold);
+    }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-stat-value {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .hero-stat-value.grade-a {
+      color: var(--success);
+    }
+
+    .hero-stat-value.grade-b {
+      color: var(--warning);
+    }
+
+    .hero-stat-value.grade-c {
+      color: #fb923c;
+    }
+
+    .hero-stat-value.grade-d {
+      color: var(--danger);
+    }
+
+    .hero-stat-value.grade-f {
+      color: var(--text-muted);
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .hero-stat-sub {
+      font-size: 10px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* Responsive hero */
+    @media (max-width: 600px) {
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .hero-ace-wrap {
+        width: 80px;
+        height: 80px;
+      }
+
+      .hero-ace,
+      .hero-ace-steam {
+        width: 80px;
+        height: 80px;
+      }
+
+      .hero-title {
+        font-size: 18px;
+      }
+    }
+
+    /* ── SECTION HEADER ──────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+    }
+
+    /* ── MODE CARDS (HUB) ──────────────────────────────────── */
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 900px) {
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mode-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 32px 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(212, 168, 83, 0.05), transparent 70%);
+      opacity: 0;
+      transition: opacity 300ms ease;
+      z-index: -1;
+    }
+
+    .mode-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(212, 168, 83, 0.1);
+    }
+
+    .mode-card:hover::before {
+      opacity: 1;
+    }
+
+    .mode-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--gold);
+      transition: all 300ms ease;
+    }
+
+    .mode-icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .mode-card:hover .mode-icon {
+      background: var(--gold-soft);
+      border-color: rgba(212, 168, 83, 0.3);
+      transform: scale(1.05);
+      /* slightly bigger */
+    }
+
+    .mode-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .mode-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .mode-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 300ms ease;
+    }
+
+    .mode-card:hover .mode-btn {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #080C1A;
+    }
+
+    /* ── ACE COACHING ALERT ───────────────────────────────── */
+    .hero-coaching {
+      margin-top: 24px;
+      padding: 16px 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 400ms ease;
+    }
+
+    .hero-coaching.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-coaching-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+
+    .hero-coaching-content {
+      flex: 1;
+    }
+
+    .hero-coaching-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .hero-coaching-text {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .hero-coaching-text a {
+      color: var(--gold);
+      text-decoration: underline;
+      font-weight: 500;
+      transition: color 200ms ease;
+    }
+
+    .hero-coaching-text a:hover {
+      color: #FFF;
+    }
+
+    /* ── FINAL EXAM SECTION ───────────────────────────────── */
+    .final-exam-section {
+      margin-top: 8px;
+    }
+
+    .final-exam-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      border-top: 3px solid var(--gold);
+      text-decoration: none;
+      color: inherit;
+      transition: all 200ms ease;
+    }
+
+    .final-exam-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 4px 24px rgba(212, 168, 83, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .final-exam-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .final-exam-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--gold-soft);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
+    .final-exam-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .final-exam-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    .final-exam-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .final-exam-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .final-exam-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .final-exam-stat {
+      text-align: center;
+    }
+
+    .final-exam-stat-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .final-exam-stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .final-exam-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--gold), #C49540);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: #080C1A;
+      white-space: nowrap;
+      transition: all 200ms ease;
+    }
+
+    .final-exam-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .final-exam-card:hover .final-exam-btn {
+      transform: translateX(2px);
+    }
+
+    @media (max-width: 680px) {
+      .final-exam-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .final-exam-meta {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .final-exam-meta {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+    }
+  </style>
+
+  <!-- Gamification & Analytics Tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="shared/js/supabase-client.js"></script>
+  <script src="shared/js/ace-gamification.js"></script>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       TOPBAR
+  ════════════════════════════════════════ -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <img src="shared/logo.png" alt="ACE Avionics Training" class="logo-img">
+    </div>
+
+    <div class="topbar-right">
+      <!-- LVL + XP progress widget -->
+      <div class="xp-widget" id="xpWidget">
+        <div class="lvl-badge" id="lvlBadge">LVL 1</div>
+        <div class="xp-bar-wrap">
+          <div class="xp-bar-track">
+            <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+          </div>
+          <div class="xp-bar-label" id="xpBarLabel">0 XP</div>
+        </div>
+      </div>
+      <a href="shared/analytics-sandbox.html" class="topbar-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20V10" />
+          <path d="M18 20V4" />
+          <path d="M6 20v-4" />
+        </svg>
+        Statistics
+      </a>
+      <button class="theme-toggle" id="btnTheme" title="Toggle theme">
+        <span id="themeIcon">&#9728;&#65039;</span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <main class="main">
+
+    <section class="hero">
+      <div class="hero-ace-wrap">
+        <img src="shared/ace-sprites/ace-192-happy.png" alt="ACE" class="hero-ace" id="aceAvatar">
+        <img src="shared/ace-sprites/ace-192-happy-steam1.png" alt="" class="hero-ace-steam" id="aceSteam"
+          aria-hidden="true">
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-label">CAET Certification Prep</div>
+        <h1 class="hero-title">Your path to <span class="highlight">CAET Certification.</span></h1>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value grade-f" id="heroGrade">F</div>
+            <div class="hero-stat-label">Readiness grade</div>
+            <div class="hero-stat-sub" id="heroTimeEstimate">~50 hrs to exam-ready</div>
+          </div>
+
+          <div class="hero-divider"></div>
+
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroXP">0 XP</div>
+            <div class="hero-stat-label">Total earned</div>
+          </div>
+
+          <div class="hero-divider"></div>
+
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroStreak">0</div>
+            <div class="hero-stat-label">Day streak</div>
+          </div>
+        </div>
+
+        <!-- NEW COACHING SECTION -->
+        <div id="aceSpeech" class="hero-coaching" style="display: none;">
+          <div class="hero-coaching-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="hero-coaching-content">
+            <div class="hero-coaching-title">ACE'S STUDY RECOMMENDATION</div>
+            <div class="hero-coaching-text" id="aceSpeechText">Ready to train?</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 16px;">
+          <a href="final-exam.html"
+            style="background:var(--error); color:white; padding:12px 24px; border-radius:var(--radius-md); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+              </polygon>
+            </svg>
+            Take Final Mock Exam
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── RECENT FINAL EXAM PLAN ─────────────────────────── -->
+    <div id="recentStudyPlan"
+      style="display: none; margin-bottom: 48px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden;">
+      <div
+        style="background: rgba(212, 168, 83, 0.1); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="width: 20px; height: 20px;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span
+          style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-primary);">Targeted
+          Study Plan</span>
+        <span style="margin-left:auto; font-size:12px; color:var(--text-muted);" id="recentExamScore">From Latest Mock
+          Exam</span>
+      </div>
+      <div style="padding: 24px;">
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0; margin-bottom: 16px;">Based on your recent
+          CAET Mock Exam, ACE recommends reviewing these specific objectives.</p>
+        <div id="studyPlanLinks" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Links dynamically injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         MODE SELECTION (HUB)
+    ════════════════════════════════════════ -->
+    <section>
+      <div class="section-header">
+        <span class="section-title">Select Training Mode</span>
+      </div>
+
+      <div class="mode-grid">
+
+        <!-- JOURNEY MODE -->
+        <a href="journey.html" class="mode-card" data-mode="journey">
+          <div class="mode-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <div class="mode-title">Learner's Journey</div>
+          <div class="mode-desc">Embark on a guided, node-based microlesson adventure to master CAET standards
+            step-by-step.</div>
+          <div class="mode-btn">
+            Enter Journey
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width:16px; height:16px;">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- CLASSROOM MODE -->
+        <a href="classroom.html" class="mode-card" data-mode="classroom">
+          <div class="mode-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          </div>
+          <div class="mode-title">Classroom</div>
+          <div class="mode-desc">The traditional path. Deep-dive into interactive Rise modules, textbooks, and AI
+            notebook tracking.</div>
+          <div class="mode-btn">
+            Enter Classroom
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width:16px; height:16px;">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+
+        <!-- PRACTICE MODE -->
+        <a href="practice.html" class="mode-card" data-mode="practice">
+          <div class="mode-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+              <polyline points="14 2 14 8 20 8" />
+              <circle cx="10" cy="13" r="2" />
+              <path d="m14 17-2.5-3" />
+            </svg>
+          </div>
+          <div class="mode-title">Practice Area</div>
+          <div class="mode-desc">Prove what you know in the trenches! Test yourself with Flash Cards, Drills, and Battle
+            ACE.</div>
+          <div class="mode-btn">
+            Enter Practice
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width:16px; height:16px;">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         FINAL EXAM SECTION
+    ════════════════════════════════════════ -->
+    <section class="final-exam-section">
+      <div class="section-header" style="margin-bottom:12px;">
+        <span class="section-title">Certification Exam</span>
+      </div>
+
+      <a href="final-exam.html" class="final-exam-card">
+        <div class="final-exam-left">
+          <div class="final-exam-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+          </div>
+          <div>
+            <div class="final-exam-label">CAET Final Exam</div>
+            <div class="final-exam-title">Full Mock Certification Exam</div>
+            <div class="final-exam-desc">60 questions across all 8 categories &middot; Timed &middot; All learning
+              objectives</div>
+          </div>
+        </div>
+
+        <div class="final-exam-meta">
+          <div class="final-exam-stat">
+            <div class="final-exam-stat-val">60</div>
+            <div class="final-exam-stat-label">Questions</div>
+          </div>
+          <div class="final-exam-stat">
+            <div class="final-exam-stat-val">90</div>
+            <div class="final-exam-stat-label">Minutes</div>
+          </div>
+          <div class="final-exam-stat" id="finalExamBestWrap" style="display:none;">
+            <div class="final-exam-stat-val" id="finalExamBest">—</div>
+            <div class="final-exam-stat-label">Best score</div>
+          </div>
+          <div class="final-exam-btn" id="finalExamBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+            Take Exam
+          </div>
+        </div>
+      </a>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="page-footer">
+    ACE Avionics Training &middot; CAET Entry Prep &middot;
+    <a href="mailto:nickb@aceavionicstraining.com">Contact</a>
+  </footer>
+
+
+  <script>
+    /* ════════════════════════════════════════════════════════════
+       CATEGORIES CONFIG — 8 CAET Entry categories
+    ════════════════════════════════════════════════════════════ */
+    const CATEGORIES = [
+      {
+        id: 'cat-1',
+        num: 'MRD',
+        name: 'Maintenance Regulations & Documentation',
+        difficulty: 'medium',
+        accent: 'a-gold',
+        path: 'training/caet/mod1-maintenance-regs/index.html',
+        training: [{ id: 'maintenance-regs', abbr: 'REGS' }],
+      },
+      {
+        id: 'cat-2',
+        num: 'BET',
+        name: 'Basic Electrical Theory & Circuit Analysis',
+        difficulty: 'hard',
+        accent: 'a-blue',
+        path: 'training/caet/mod2-basic-electrical/index.html',
+        training: [{ id: 'electricity-dc', abbr: 'DC' }, { id: 'electricity-ac', abbr: 'AC' }, { id: 'electricity-solid', abbr: 'SS' }, { id: 'maintenance-electrical', abbr: 'ELEC' }],
+      },
+      {
+        id: 'cat-3',
+        num: 'CNS',
+        name: 'CNS Systems',
+        difficulty: 'hard',
+        accent: 'a-gold',
+        path: 'training/caet/mod3-cns-systems/index.html',
+        training: [{ id: 'avionics-comm', abbr: 'COMM' }, { id: 'avionics-nav', abbr: 'NAV' }, { id: 'avionics-surv', abbr: 'SURV' }],
+      },
+      {
+        id: 'cat-4',
+        num: 'FI',
+        name: 'Flight Instruments & Pitot-Static Systems',
+        difficulty: 'medium',
+        accent: 'a-blue',
+        path: 'training/caet/mod4-flight-instruments/index.html',
+        training: [{ id: 'avionics-inst', abbr: 'INST' }],
+      },
+      {
+        id: 'cat-5',
+        num: 'DDS',
+        name: 'Digital Databus Systems',
+        difficulty: 'hard',
+        accent: 'a-gold',
+        path: 'training/caet/mod5-digital-databus/index.html',
+        training: [{ id: 'electricity-digital', abbr: 'DIG' }],
+      },
+      {
+        id: 'cat-6',
+        num: 'AWH',
+        name: 'Aircraft Wiring & Hardware',
+        difficulty: 'medium',
+        accent: 'a-blue',
+        path: 'training/caet/mod6-aircraft-wiring/index.html',
+        training: [{ id: 'maintenance-harness', abbr: 'WIRE' }],
+      },
+      {
+        id: 'cat-7',
+        num: 'TTE',
+        name: 'Tools & Test Equipment',
+        difficulty: 'easy',
+        accent: 'a-gold',
+        path: 'training/caet/mod7-tools-test-equipment/index.html',
+        training: [{ id: 'tools-test-equipment', abbr: 'TTE' }],
+      },
+      {
+        id: 'cat-8',
+        num: 'SSP',
+        name: 'Shop Safety & Best Practices',
+        difficulty: 'easy',
+        accent: 'a-blue',
+        path: 'training/caet/mod8-shop-safety/index.html',
+        training: [{ id: 'maintenance-safety', abbr: 'SAFE' }],
+      },
+    ];
+
+    // Total Rise modules across all categories
+    const TOTAL_MODULES = CATEGORIES.reduce((sum, c) => sum + (c.training ? c.training.length : 0), 0);
+
+    /* ════════════════════════════════════════════════════════════
+       LOCALSTORAGE HELPERS
+    ════════════════════════════════════════════════════════════ */
+    function lsGet(key, fallback = null) {
+      try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : fallback; }
+      catch (e) { return fallback; }
+    }
+    function getCatMastery(catId) { return lsGet(`ace_cat_${catId}_mastery`, 0); }
+    function getCatXP(catId) { return lsGet(`ace_cat_${catId}_xp`, 0); }
+    function getScoredResult(catId, key) { return lsGet(`ace_cat_${catId}_${key}_score`, null); }
+    function getTotalXP() { return lsGet('ace_xp_total', 0); }
+    function getStreak() { return lsGet('ace_streak_days', 0); }
+    function isModuleDone(catId, modId) { return localStorage.getItem(`ace_cat_${catId}_training_${modId}_complete`) === 'true'; }
+
+    /* ════════════════════════════════════════════════════════════
+       XP → LEVEL SYSTEM
+    ════════════════════════════════════════════════════════════ */
+    function xpToLevel(xp) {
+      let lvl = 1, threshold = 500;
+      while (xp >= threshold) { xp -= threshold; lvl++; threshold = 500 * lvl; }
+      return { lvl, current: xp, required: threshold };
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       READINESS → LETTER GRADE
+    ════════════════════════════════════════════════════════════ */
+    function readinessGrade(avgPct) {
+      if (avgPct >= 95) return 'A+';
+      if (avgPct >= 90) return 'A';
+      if (avgPct >= 85) return 'B+';
+      if (avgPct >= 80) return 'B';
+      if (avgPct >= 75) return 'C+';
+      if (avgPct >= 70) return 'C';
+      if (avgPct >= 60) return 'D';
+      return 'F';
+    }
+
+    function gradeClass(grade) {
+      if (grade.startsWith('A')) return 'grade-a';
+      if (grade.startsWith('B')) return 'grade-b';
+      if (grade.startsWith('C')) return 'grade-c';
+      if (grade === 'D') return 'grade-d';
+      return 'grade-f';
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       TIME ESTIMATE
+       Rough model: each incomplete module = ~2hr study
+       Each cat with <70% mastery = ~1.5hr more practice
+    ════════════════════════════════════════════════════════════ */
+    function getTimeEstimate() {
+      let hours = 0;
+
+      CATEGORIES.forEach(cat => {
+        const mastery = getCatMastery(cat.id);
+        // Incomplete modules
+        (cat.training || []).forEach(mod => {
+          if (!isModuleDone(cat.id, mod.id)) hours += 2;
+        });
+        // Practice catch-up for weak categories
+        if (mastery < 70) hours += 1.5;
+      });
+
+      if (hours <= 0) return 'Exam ready!';
+      if (hours < 1) return '< 1 hr to exam-ready';
+      return `~${Math.round(hours)} hrs to exam-ready`;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       HERO STRIP
+    ════════════════════════════════════════════════════════════ */
+    function updateHero() {
+      // XP
+      const xp = getTotalXP();
+      document.getElementById('heroXP').textContent = xp.toLocaleString() + ' XP';
+
+      // LVL badge + XP bar
+      const lvlData = xpToLevel(xp);
+      document.getElementById('lvlBadge').textContent = 'LVL ' + lvlData.lvl;
+      const pct = Math.round((lvlData.current / lvlData.required) * 100);
+      document.getElementById('xpBarFill').style.width = pct + '%';
+      document.getElementById('xpBarLabel').textContent =
+        `${lvlData.current.toLocaleString()} / ${lvlData.required.toLocaleString()} XP`;
+
+      // Streak
+      document.getElementById('heroStreak').textContent = getStreak();
+
+      // Overall readiness = average mastery across all 8 categories
+      const masteries = CATEGORIES.map(c => getCatMastery(c.id));
+      const avg = Math.round(masteries.reduce((a, b) => a + b, 0) / CATEGORIES.length);
+      const grade = readinessGrade(avg);
+
+      const gradeEl = document.getElementById('heroGrade');
+      gradeEl.textContent = grade;
+      gradeEl.className = 'hero-stat-value ' + gradeClass(grade);
+
+      // Time estimate
+      document.getElementById('heroTimeEstimate').textContent = getTimeEstimate();
+
+      // Final exam best score
+      const finalBest = lsGet('ace_final_exam_best', null);
+      if (finalBest !== null) {
+        document.getElementById('finalExamBest').textContent = finalBest + '%';
+        document.getElementById('finalExamBestWrap').style.display = '';
+        document.getElementById('finalExamBtn').innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Retake`;
+      }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       MODE HOVER LOGIC & ACE SPEECH
+    ════════════════════════════════════════════════════════════ */
+    const aceAvatar = document.getElementById('aceAvatar');
+    const aceSpeechWrapper = document.getElementById('aceSpeech');
+    const aceSpeechText = document.getElementById('aceSpeechText');
+
+    const modePhrases = {
+      journey: {
+        text: "Journey mode is currently in development. You ain't ready for this yet.",
+        mood: "proud"
+      },
+      classroom: {
+        text: "Classroom: The traditional path. Hit the books.",
+        mood: "thinking"
+      },
+      practice: {
+        text: "Practice: Prove what you know in the trenches! Let's drill.",
+        mood: "happy"
+      }
+    };
+
+    document.querySelectorAll('.mode-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const mode = card.getAttribute('data-mode');
+        const data = modePhrases[mode];
+        if (data) {
+          aceAvatar.src = `shared/ace-sprites/ace-192-${data.mood}.png`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        aceAvatar.src = `shared/ace-sprites/ace-192-idle.png`;
+      });
+    });
+
+
+    /* ════════════════════════════════════════════════════════════
+       THEME TOGGLE
+    ════════════════════════════════════════════════════════════ */
+    const html = document.documentElement;
+    const btnTheme = document.getElementById('btnTheme');
+    const themeIcon = document.getElementById('themeIcon');
+
+    function applyTheme(t) {
+      html.setAttribute('data-theme', t);
+      themeIcon.innerHTML = t === 'dark' ? '&#9728;&#65039;' : '&#127769;';
+      try { localStorage.setItem('ace_theme', JSON.stringify(t)); } catch (e) { }
+    }
+
+    btnTheme.addEventListener('click', () => {
+      applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    const savedTheme = lsGet('ace_theme', null);
+    if (savedTheme) applyTheme(savedTheme);
+
+
+    /* ════════════════════════════════════════════════════════════
+       ACE MASCOT — Random mood + coffee steam animation
+    ════════════════════════════════════════════════════════════ */
+    (function initAceMascot() {
+      const aceImg = document.getElementById('aceAvatar');
+      const steamImg = document.getElementById('aceSteam');
+      if (!aceImg) return;
+
+      // Pick a random mood that has steam sprites
+      const moods = ['happy', 'idle', 'proud', 'thinking', 'happy', 'idle', 'happy'];
+      const mood = moods[Math.floor(Math.random() * moods.length)];
+
+      // Set base sprite
+      aceImg.src = `shared/ace-sprites/ace-192-${mood}.png`;
+      aceImg.onerror = function () {
+        this.src = 'shared/ace-sprites/ace-192-happy.png';
+        this.onerror = null;
+      };
+
+      // Animate steam — cycle frames 1 → 2 → 3 → 1 every 150ms
+      if (steamImg) {
+        let frame = 1;
+        steamImg.src = `shared/ace-sprites/ace-192-${mood}-steam1.png`;
+
+        setInterval(() => {
+          frame = (frame % 3) + 1;
+          steamImg.src = `shared/ace-sprites/ace-192-${mood}-steam${frame}.png`;
+        }, 150);
+      }
+    })();
+
+
+    /* ════════════════════════════════════════════════════════════
+       INIT
+    ════════════════════════════════════════════════════════════ */
+    async function loadRecentStudyPlan() {
+      const rawData = localStorage.getItem('ace_final_result');
+      if (!rawData) return;
+
+      const planContainer = document.getElementById('recentStudyPlan');
+      const linksContainer = document.getElementById('studyPlanLinks');
+      const scoreLabel = document.getElementById('recentExamScore');
+      if (!planContainer || !linksContainer) return;
+
+      try {
+        const result = JSON.parse(rawData);
+        if (!result.questions) return;
+
+        scoreLabel.innerText = `Latest Score: ${result.scorePct}%`;
+
+        // Tally misses by LO
+        const misses = {};
+        result.questions.forEach(q => {
+          if (!q.isCorrect && q.lo_id) {
+            misses[q.lo_id] = (misses[q.lo_id] || 0) + 1;
+          }
+        });
+
+        const sortedLOs = Object.keys(misses).sort((a, b) => misses[b] - misses[a]);
+        if (sortedLOs.length === 0) return;
+
+        // Fetch course index
+        let cIndex = {};
+        try {
+          const res = await fetch('course_index.json');
+          if (res.ok) cIndex = await res.json();
+        } catch (e) { }
+
+        linksContainer.innerHTML = '';
+        const topMisses = sortedLOs.slice(0, 5); // show top 5
+
+        topMisses.forEach(loId => {
+          const mapping = cIndex[loId];
+          const text = mapping ? mapping.node_title : `Unknown Objective (${loId})`;
+          const link = mapping ? `training_modules/${mapping.node_id}_training.html` : '#';
+
+          linksContainer.innerHTML += `
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+              <span style="color: var(--text-primary); font-size: 14px;"><strong>${mapping ? mapping.node_id : 'Unknown'}:</strong> ${text} <span style="color:var(--error); font-size:12px; margin-left:8px;">(${misses[loId]} missed)</span></span>
+              ${mapping ? `<a href="${link}" style="background: var(--surface-2); border: 1px solid var(--border); padding: 6px 14px; border-radius: 4px; color: var(--gold); text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';" onmouseout="this.style.borderColor='var(--border)';">Review Module</a>` : `<span style="color:var(--text-muted); font-size:12px;">Map Sync Err</span>`}
+            </div>
+          `;
+        });
+
+        linksContainer.lastElementChild.style.borderBottom = 'none';
+        linksContainer.lastElementChild.style.paddingBottom = '0';
+
+        planContainer.style.display = 'block';
+      } catch (err) {
+        console.warn("Failed to parse recent exam results for dashboard.", err);
+      }
+    }
+
+    updateHero();
+    loadRecentStudyPlan();
+  </script>
+</body>
+
+</html>

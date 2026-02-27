@@ -1,0 +1,59 @@
+{
+  "id": "W3-Z2-N2",
+  "title": "Circuit protection (fuses/breakers)",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "Circuit behavior",
+  "objectiveKeys": [
+    "q51",
+    "q102"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Circuit protection (fuses/breakers)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain overcurrent protection purpose and basic device behavior."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Fuses and circuit breakers \u2014 purpose",
+          "definition": "Fuses and circuit breakers protect wiring and equipment from overcurrent. When current exceeds the rated value, they interrupt the circuit before the wire overheats and starts a fire. They protect the WIRE, not the equipment \u2014 sized to the wire's current capacity.",
+          "analogy": "Like a pressure relief valve on a boiler \u2014 it blows before the boiler does, protecting the more expensive and dangerous component."
+        },
+        {
+          "term": "Fuse \u2014 function",
+          "definition": "A fuse contains a metal element that melts when current exceeds its rated value, permanently opening the circuit. Unlike a circuit breaker, a fuse cannot be reset \u2014 it must be replaced. It protects the wiring from overheating by interrupting excessive current.",
+          "analogy": "Like a one-time safety link in a chain \u2014 it breaks before the chain does, but has to be replaced after."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of fuses and circuit breakers in an aircraft electrical system?",
+      "choices": [
+        "To regulate voltage to connected avionics",
+        "To protect wiring and equipment from overcurrent that could cause fire or damage",
+        "To filter noise from the electrical bus",
+        "To disconnect the battery during engine shutdown"
+      ],
+      "correctIndex": 1,
+      "feedback": "Fuses and breakers are overcurrent protection \u2014 they protect the wire from carrying more current than its insulation can safely handle. Wire insulation failures from overcurrent are a primary cause of aircraft electrical fires."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What happens inside a fuse when current exceeds its rated value?",
+      "choices": [
+        "It trips a mechanical switch that can be reset",
+        "Its element melts, permanently opening the circuit to protect the wiring",
+        "It reduces the circuit voltage to safe levels",
+        "It redirects excess current to a ground bus"
+      ],
+      "correctIndex": 1,
+      "feedback": "A fuse's metal element melts when overcurrent occurs, permanently breaking the circuit. This protects the wiring from carrying current levels that would overheat the insulation. The fuse must then be replaced \u2014 it cannot be reset like a breaker."
+    }
+  ]
+}

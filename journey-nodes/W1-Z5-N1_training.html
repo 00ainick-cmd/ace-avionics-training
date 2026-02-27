@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — ESD-safe handling basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link active">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W1 // SAFETY // ESD/FOD DISCIPLINE</span>
+                <span>NODE: W1-Z5-N1</span>
+            </div>
+            <h1>ESD-safe handling basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Define Electrostatic Discharge (ESD) and explain why it is uniquely dangerous to modern avionics.</li>
+        <li>Differentiate between a catastrophic failure and a latent failure caused by ESD.</li>
+        <li>Don and verify the two mandatory components of an ESD-protected workstation.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/esd_wrist_strap.png" alt="A technician wearing a blue ESD wrist strap grounded to an ESD bench mat while handling a circuit board" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A technician wearing a blue ESD wrist strap grounded to an ESD bench mat while handling a circuit board</figcaption>
+                </figure>
+        <p class="body-text">A technician removes a GPS receiver printed circuit board (PCB) from a Line Replaceable Unit (LRU) to inspect a solder joint. They are not wearing a wrist strap, and the bench has no ESD rubber mat. They feel absolutely nothing unusual. But the static discharge from their fingertip — an invisible arc far too small to feel — just cratered a microscopic CMOS gate on the processor. The board passes a quick bench operational check, but fails in flight six weeks later at 35,000 feet, plunging the cockpit into a navigation downgrade. ESD damage is invisible, cumulative, and often delayed. That is what makes it catastrophic.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <p class="body-text"><strong>Electrostatic Discharge (ESD)</strong> is the sudden, uncontrolled transfer of static electricity between two objects at different electrical potentials. In avionics, ESD is one of the leading root causes of unexplainable, intermittent component failures.</p>
+        <h3 class="content-h3">The Invisible Threat</h3>
+        <ul class="content-list">
+        <li>A human body walking across a floor can accumulate up to <strong>25,000 volts</strong> of static charge.</li>
+        <li>Most humans cannot feel a static shock until the discharge reaches approximately <strong>3,500 volts</strong>.</li>
+        <li>Many modern CMOS and semiconductor components used in avionics processors can be permanently destroyed by <strong>as little as 100 volts</strong>.</li>
+        </ul>
+        <p class="body-text">This means you can easily destroy a $20,000 avionics board without ever seeing, hearing, or feeling a spark.</p>
+        <h3 class="content-h3">Latent vs. Catastrophic Failures</h3>
+        <ul class="content-list">
+        <li><strong>Catastrophic Failure:</strong> The ESD event completely destroys the component. The unit fails immediately on the bench and is caught before installation.</li>
+        <li><strong>Latent Failure:</strong> The dangerous outcome. The ESD event partially damages the internal silicon structure. The component still &quot;works&quot; and passes bench tests, but it will prematurely fail weeks or months later under thermal or vibrational stress in the aircraft.</li>
+        </ul>
+        <h3 class="content-h3">Mandatory ESD Protection</h3>
+        <p class="body-text">To prevent ESD damage, voltage potentials between you, the bench, and the component must be equalized. Two protective measures are <strong>always required together</strong>:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>A properly grounded anti-static wrist strap</strong> — Worn directly against bare skin (no gloves), this continuously drains accumulating static charge from your body to electrical ground.</li>
+        <li><strong>2.</strong> <strong>An ESD-protected workstation</strong> — A bench equipped with a grounded dissipative rubber mat, dedicated ground bonding points, and the use of ESD-safe anti-static shielding bags for component transport.</li>
+        </ol>
+        <p class="body-text">A wrist strap without an ESD mat is insufficient. An ESD mat without a wrist strap is insufficient. They must be utilized as a complete system.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 1.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Task Requires Handling Bare PCB/LRU] --> B[Verify Bench ESD Mat is Grounded]
+    B --> C[Don Anti-Static Wrist Strap snugly on bare skin]
+    C --> D[Connect Wrist Strap to Ground Monitor Point]
+    D --> E{Did Ground Monitor beep/fail?}
+    E -- Yes --> F[Stop! Test Strap/Cord. Replace if defective.]
+    E -- No --> G[Safe to Remove PCB from Anti-Static Bag]
+    G --> H[Handle PCB by Edges Only]
+    H --> I[Execute Task]
+    I --> J[Place PCB back in Anti-Static Bag before disconnecting]
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>Before you crack open any LRU case or touch any exposed circuit board, verify two things: your wrist strap is tightly connected to your bare skin and plugged into ground, and your dissipative bench mat is connected to ground. Test your wrist strap with a continuity checker every morning. These 10 seconds of preparation protect tens of thousands of dollars in avionics and prevent inflight emergencies.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 1.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ESD Prevention Practice</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ESD Prevention Practice</div>
+                            <p>To prevent ESD damage to avionics: (1) use a properly grounded anti-static wrist strap, and (2) handle components ONLY at ESD-protected workstations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ESD (Electrostatic Discharge)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ESD (Electrostatic Discharge)</div>
+                            <p>A sudden flow of static electricity between two objects, capable of instantly destroying semiconductor components.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Latent Failure</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Latent Failure</div>
+                            <p>ESD damage that does not cause immediate malfunction but degrades the internal silicon, leading to failure later under operational stress.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Anti-Static Wrist Strap</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Anti-Static Wrist Strap</div>
+                            <p>A conductive strap worn snugly around the wrist that continuously drains static charge from the technician&#x27;s body to ground.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ESD-Protected Workstation</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ESD-Protected Workstation</div>
+                            <p>A work area equipped with grounded dissipative mats and bonding points to equalize electrical potential and prevent static damage.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="2" data-feedback="ESD damage can be caused by static discharge too small to feel. A grounded wrist strap and ESD-protected workstation are both required to safely handle CMOS and other static-sensitive components.">
+                <div class="kc-header">Knowledge Verification [1/1]</div>
+                <div class="kc-question">A technician needs to remove a CMOS processor board from an avionics LRU. Which protective practice is required?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">Wear latex gloves and hold the board by its edges</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">Work quickly to minimize exposure time to ambient static</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">Use a properly grounded anti-static wrist strap and work only at an ESD-protected station</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">Ground the LRU chassis only — the board does not need additional protection</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Always use a grounded wrist strap AND an grounded ESD-protected mat — both are required, every single time, no exceptions.</strong>
+
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W1-Z4-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W1-Z5-N2_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W1-Z5-N1';
+        const TOTAL_KCS = 1;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

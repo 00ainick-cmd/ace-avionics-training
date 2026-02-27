@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Routing &amp; protection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link active">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W5 // WIRING // HARNESS FAB/ROUTING</span>
+                <span>NODE: W5-Z3-N2</span>
+            </div>
+            <h1>Routing &amp; protection</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Identify the primary environmental and structural hazards that dictate wire routing paths.</li>
+        <li>Explain the physical requirement of installing strain relief near connector bulkheads.</li>
+        <li>Describe the mandatory protection procedures for wire bundles routed near moving flight controls.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/wire_routing_chafing.png" alt="A thick white aircraft wire bundle routing cleanly through an aluminum bulkhead hole, protected by a rubber grommet and secured by an Adel clamp" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A thick white aircraft wire bundle routing cleanly through an aluminum bulkhead hole, protected by a rubber grommet and secured by an Adel clamp</figcaption>
+                </figure>
+        <p class="body-text">During an extensive 100-hour inspection, a sharp-eyed technician spots a sleek new wire bundle resting gently against an elevator control cable sector bracket in the aft tailcone. Looking closely, the constant motion of the control surface has sawed cleanly through the wire&#x27;s outer Teflon jacket, and the raw copper conductor is visibly exposed, mere millimeters from shorting out against the steel bracket. One more aggressive flight could have resulted in a dead short circuit immediately adjacent to a primary moving flight control. Meticulous wire routing is not a cosmetic exercise — it is a life-saving structural discipline.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">Routing Priority — Separation from Hazards</h3>
+        <p class="body-text">The absolute highest priority when laying out a wire routing path is physically maintaining maximum separation from four primary hazards:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Heat Sources:</strong> Exhaust stacks, environmental heating ducts, and high-temp engine blocks. (Radiant heat destroys insulation integrity).</li>
+        <li><strong>2.</strong> <strong>Moving Parts:</strong> Aileron, elevator, and rudder control cables, spinning actuator screws, and rotating propeller shafts.</li>
+        <li><strong>3.</strong> <strong>Sharp Edges:</strong> Exposed structural ribs, lightning-hole raw edges, bracket corners, and protruding bolt threads.</li>
+        <li><strong>4.</strong> <strong>Fluid Lines:</strong> Fuel lines, high-pressure hydraulic manifolds, oxygen lines, and oil returns. (Wiring must always be routed physically *above* fluid lines to prevent dripping flammable fluids from tracking down the wire harness).</li>
+        </ol>
+        <h3 class="content-h3">The Necessity of Strain Relief</h3>
+        <p class="body-text"><strong>Strain relief</strong> is the practice of solidly anchoring the wire bundle immediately before it enters a physical connector or a delicate component.</p>
+        <ul class="content-list">
+        <li>It absorbs the massive mechanical tension generated by airframe flex and G-forces.</li>
+        <li>It prevents the total weight of the heavy bundle from pulling directly on the fragile soldered joints or micro-crimped pins inside the connector.</li>
+        <li>Without it, vibration will rapidly fatigue the terminations, causing intermittent system dropouts.</li>
+        </ul>
+        <h3 class="content-h3">Routing Near Flight Controls (Critical Danger)</h3>
+        <p class="body-text">If engineering dictates a wire bundle must be routed near moving flight control cables or mechanical linkages, absolute restrictions apply:</p>
+        <ul class="content-list">
+        <li>The bundle must be encased in <strong>approved protective conduit</strong> or heavy-duty spiral wrap.</li>
+        <li>The bundle must possess <strong>sufficient mechanical slack</strong> ensuring that at absolute zero point during the control&#x27;s maximum deflection geometry can the cable pull tight, bind the mechanism, or restrict movement.</li>
+        <li>Wires must <strong>never</strong> be zip-tied or clamped directly to moving flight control cables under any circumstance.</li>
+        </ul>
+        <h3 class="content-h3">Chafed Wire Bundle — Mandatory Procedure</h3>
+        <p class="body-text">When inspecting a routing path and discovering a chafed bundle:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Immediate Action:</strong> Remove all power from the affected circuits. Tag out the breakers.</li>
+        <li><strong>2.</strong> <strong>Investigation:</strong> Assess the full, 360-degree extent of the damage. Disassemble the bundle if necessary to inspect internal wires.</li>
+        <li><strong>3.</strong> <strong>Rectification:</strong> Follow uncompromising repair procedures dictated by the manufacturer&#x27;s maintenance manual or AC 43.13-1B. (If the copper conductor is nicked, the wire <strong>must</strong> be cut and repaired; tape over exposed copper is illegal).</li>
+        <li><strong>4.</strong> <strong>Root Cause:</strong> Address the routing flaw that caused the chafe before signing off the repair. Add an Adel clamp or reroute.</li>
+        </ol>
+        <h3 class="content-h3">Routing Conflicts</h3>
+        <p class="body-text">If a dense wire bundle simply does not fit through the designated engineering routing path hole:</p>
+        <ul class="content-list">
+        <li><strong>Do NOT force or yank it.</strong> Heavy pulling aggressively stretches the conductors and shears the insulation.</li>
+        <li><strong>Do NOT trim out structural material</strong> to make the hole bigger without engineering approval.</li>
+        <li><strong>Consult the installation engineering manual</strong> to request an approved alternate deviation route.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 5.2A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Design Wire Routing Path] --> B{Does harness cross a fluid line?}
+    B -->|Yes| C[Route harness ABOVE fluid line]
+    B -->|No| D[Check next hazard]
+    
+    C --> D
+    
+    D --> E{Is harness near an aluminum bulkhead?}
+    E -->|Yes| F[Install rubber edge grommet hole]
+    E -->|No| G[Check next hazard]
+    
+    F --> G
+    
+    G --> H{Does harness pass Flight Control mechanism?}
+    H -->|Yes| I[Install physical conduit barrier & verify slack]
+    
+    I --> J[Anchor with Adel Clamp 2 inches before connector]
+    J --> K[Perfectly Strain-Relieved, Hazard-Isolated Routing]
+    
+    style K fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>During every single installation, inspection, or panel closure, physically run your bare hand gently along the wire harness. You will feel for proximity to sharp structural edges, engine heat sources, or moving mechanical parts far better than you can see them deep in the airframe. Verify that every Adel clamp is torqued and that the routing path is completely clear of the flight control sweep envelope. A five-minute physical routing verification prevents catastrophic in-flight electrical fires.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 5.2 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Strain Relief</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Strain Relief</div>
+                            <p>A strain relief is a clamping or support device attached near a connector that absorbs mechanical tension on the wire, preventing that tension from being transmitted to the connector pins or solder joints.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Wire Routing Priority</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Wire Routing Priority</div>
+                            <p>The most important wire routing consideration is separation from: heat sources (exhaust, heating ducts), moving parts (cables, actuators), sharp edges (structural members, brackets), and fluid lines (fuel, hydraulic, oil) — all of which can damage insulation and cause failures.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Wire Bundle Routing Conflict</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Wire Bundle Routing Conflict</div>
+                            <p>When a wire bundle does not fit a designated routing path, the correct action is to consult the installation manual for an approved alternate route — never force the bundle (damages insulation) or trim/omit wires (alters the certified design).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Chafed Wire Bundle — Correct Procedure</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Chafed Wire Bundle — Correct Procedure</div>
+                            <p>When a wire bundle is found chafed by a metal edge: (1) remove all power from affected circuits, (2) assess the full extent of damage (examine the entire contact area, not just the visible portion), (3) follow only approved repair procedures from the applicable maintenance manual or FAA AC 43.13.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Wire Routing Near Flight Controls</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Wire Routing Near Flight Controls</div>
+                            <p>Wire bundles routed near flight control cables or linkages must be protected with approved conduit or spiral wrap AND have sufficient slack to prevent the bundle from being pulled taut or restricting control movement at any control surface position.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Nicked Coaxial Center Conductor</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Nicked Coaxial Center Conductor</div>
+                            <p>A nicked coaxial cable center conductor must result in complete cable replacement — not repair. A nick changes the local impedance (causing signal reflection), reduces mechanical strength (causing fatigue failure), and cannot be reliably repaired to original specification.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Chafing</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Chafing</div>
+                            <p>The aggressive, friction-based destruction of wire insulation caused by vibration-induced contact with a sharp edge or rough structural surface.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Bulkhead Grommet</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Bulkhead Grommet</div>
+                            <p>A rubber or nylon protective ring inserted into a hole cut in sheet metal, preventing the knife-like edge from slicing through wires routed through it.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="1" data-feedback="Strain relief absorbs mechanical tension, ensuring that movement of the wire does not pull on the connector pins or solder joints — the primary cause of intermittent connection failures.">
+                <div class="kc-header">Knowledge Verification [1/6]</div>
+                <div class="kc-question">What is the primary purpose of strain relief in an aircraft wiring installation?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">To provide electrical insulation at connector entry points</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">To prevent tension on the wire from transferring to connector pins or solder joints</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">To seal the connector against moisture entry at the wire entry port</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">To ensure the wire maintains its minimum bend radius inside the connector</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="0" data-feedback="The four hazards — heat, moving parts, sharp edges, and fluid lines — can all damage wire insulation and cause shorts, opens, or fire. Routing away from these hazards is the primary wire routing requirement.">
+                <div class="kc-header">Knowledge Verification [2/6]</div>
+                <div class="kc-question">What is the most important consideration when routing wire bundles in an aircraft?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">Routing wires away from heat sources, moving parts, sharp edges, and fuel/fluid lines to prevent chafing and damage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">Keeping wire bundles as short as possible to reduce weight</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">Routing all wire bundles along the same path to simplify inspection</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">Ensuring all wires run parallel to the fuselage centerline</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="3" data-feedback="Forcing a bundle can damage insulation; removing or rerouting wires without approval alters the certified design. The installation manual must be consulted for an approved alternate route.">
+                <div class="kc-header">Knowledge Verification [3/6]</div>
+                <div class="kc-question">A wire bundle is too large to fit through the designated routing path in the aircraft structure. What is the correct action?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">Force the bundle through the path by compressing it to fit — the harness will expand back to shape</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">Remove wires from the bundle to reduce its diameter, splicing them back in after routing</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">Trim the cable ties to allow the bundle to spread and route through multiple adjacent holes</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">Consult the installation manual for an approved alternate routing path before modifying the bundle or the structure</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="3" data-feedback="Power removal prevents arcing during assessment. Full damage assessment reveals the true extent. Only approved repair procedures (maintenance manual, AC 43.13) ensure the repair meets airworthiness standards.">
+                <div class="kc-header">Knowledge Verification [4/6]</div>
+                <div class="kc-question">A wire bundle is found chafed against a structural member during an inspection. What is the correct procedure?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0">
+                        <div class="kc-option-text">Wrap the chafed area with electrical tape and add a note to the next inspection</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1">
+                        <div class="kc-option-text">Apply heat shrink tubing over the chafed section and mark the installation as repaired</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2">
+                        <div class="kc-option-text">Reroute the bundle immediately without removing power to minimize aircraft downtime</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3">
+                        <div class="kc-option-text">Remove power from all affected circuits, assess the full extent of damage, and repair using approved procedures from the maintenance manual or FAA AC 43.13</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="2" data-feedback="Bundles near flight controls must be protected (conduit/spiral wrap) and have sufficient slack so they cannot bind, pinch, or restrict the controls through their full deflection range — a flight safety requirement.">
+                <div class="kc-header">Knowledge Verification [5/6]</div>
+                <div class="kc-question">What is required when routing a wire bundle near moving flight control linkages?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0">
+                        <div class="kc-option-text">Route the bundle as close as possible to the controls to minimize length</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1">
+                        <div class="kc-option-text">Attach the bundle directly to the flight control cable to move with it</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2">
+                        <div class="kc-option-text">Use approved conduit or spiral wrap and provide sufficient slack so the bundle cannot contact or restrict control movement at any position</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3">
+                        <div class="kc-option-text">Route the bundle on the opposite side of the fuselage from the flight controls</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="0" data-feedback="A nicked coaxial center conductor cannot be reliably repaired. The nick changes local impedance (creating reflections that degrade RF performance) and reduces mechanical strength (promoting fatigue failure). Replace the run.">
+                <div class="kc-header">Knowledge Verification [6/6]</div>
+                <div class="kc-question">An avionics technician finds a nick in the center conductor of an NAV/COM antenna coaxial cable during inspection. What is the correct action?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0">
+                        <div class="kc-option-text">Replace the entire cable run — a nicked center conductor compromises both impedance and mechanical integrity and cannot be reliably repaired</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1">
+                        <div class="kc-option-text">Solder fill the nick to restore conductor cross-section, then continue using the cable</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2">
+                        <div class="kc-option-text">Wrap the nicked area with coaxial repair tape and conduct a VSWR check before approving the cable</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3">
+                        <div class="kc-option-text">Trim the cable back to the nick point and install a coaxial splice connector</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Route harnesses completely clear of heat, moving parts, sharp edges, and highly flammable fluid lines — protect bundles intensely near flight controls with conduit, and immediately anchor bundles preceding all connectors to provide absolute strain relief.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W5-Z3-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W5-Z3-N3_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W5-Z3-N2';
+        const TOTAL_KCS = 6;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

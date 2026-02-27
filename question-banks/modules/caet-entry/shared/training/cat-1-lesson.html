@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  ACE Training — Category 1: Maintenance Regulations & Docs      ║
+  ║  Self-contained interactive lesson (no RISE/S3 dependency)      ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Regulations &amp; Documentation | ACE Training</title>
+  <link rel="icon" type="image/png" href="../../../../shared/ace-sprites/ace-48-happy.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../shared/ace-theme.css">
+
+  <style>
+    /* ── Base reset ─────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Training topbar ───────────────────────────────────── */
+    .training-topbar {
+      position: sticky; top: 0; z-index: 100;
+      height: 52px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; gap: 16px;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 14px;
+      cursor: pointer; transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-back:hover { border-color: var(--gold); color: var(--text-primary); text-decoration: none; }
+    .module-title {
+      font-size: 13px; font-weight: 600; color: var(--text-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 400px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .reading-progress {
+      font-size: 12px; font-weight: 500; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .btn-theme {
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 8px; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s ease; color: var(--text-secondary);
+      font-size: 15px; cursor: pointer;
+    }
+    .btn-theme:hover { border-color: var(--gold); color: var(--text-primary); }
+
+    /* ── Progress bar ──────────────────────────────────────── */
+    .progress-line {
+      position: sticky; top: 52px; z-index: 99;
+      height: 3px; background: var(--surface-2);
+    }
+    .progress-line-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--gold), #E8C36A);
+      transition: width 0.3s ease;
+    }
+
+    /* ── Content area ──────────────────────────────────────── */
+    .training-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 100px;
+    }
+
+    /* ── Lesson header ─────────────────────────────────────── */
+    .lesson-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .lesson-category {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--gold); margin-bottom: 8px;
+    }
+    .lesson-title {
+      font-size: 28px; font-weight: 800; color: var(--text-primary);
+      line-height: 1.2; margin-bottom: 12px;
+    }
+    .lesson-desc {
+      font-size: 15px; color: var(--text-muted); line-height: 1.6;
+    }
+    .lesson-meta {
+      display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .lesson-meta-item {
+      font-size: 12px; color: var(--text-muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .lesson-meta-item svg { width: 14px; height: 14px; color: var(--text-muted); }
+
+    /* ── Section ───────────────────────────────────────────── */
+    .training-section {
+      margin-bottom: 48px;
+    }
+    .training-section h2 {
+      font-size: 20px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+      display: inline-block;
+    }
+    .training-section h3 {
+      font-size: 16px; font-weight: 600; color: var(--text-primary);
+      margin: 24px 0 12px;
+    }
+    .training-section p {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .training-section ul, .training-section ol {
+      margin: 0 0 16px 20px;
+      font-size: 15px; color: var(--text-secondary); line-height: 1.7;
+    }
+    .training-section li { margin-bottom: 6px; }
+
+    /* ── Key concept box ───────────────────────────────────── */
+    .key-concept {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .key-concept-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--gold); margin-bottom: 8px;
+    }
+    .key-concept p { margin-bottom: 8px; }
+    .key-concept p:last-child { margin-bottom: 0; }
+
+    /* ── Example box ───────────────────────────────────────── */
+    .example-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .example-box-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .example-box p { margin-bottom: 8px; font-size: 14px; }
+    .example-box p:last-child { margin-bottom: 0; }
+
+    /* ── Warning / important callout ───────────────────────── */
+    .callout-warning {
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-left: 4px solid var(--warning);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .callout-warning-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--warning); margin-bottom: 6px;
+    }
+    .callout-warning p { font-size: 14px; margin-bottom: 0; }
+
+    /* ── ACE tip / analogy ─────────────────────────────────── */
+    .ace-tip {
+      background: var(--gold-soft);
+      border: 1px solid rgba(212, 168, 83, 0.2);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .ace-tip-avatar {
+      width: 40px; height: 40px; flex-shrink: 0;
+      image-rendering: pixelated; image-rendering: crisp-edges;
+      border-radius: 50%;
+    }
+    .ace-tip-content { flex: 1; min-width: 0; }
+    .ace-tip-name {
+      font-size: 11px; font-weight: 700; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .ace-tip-text {
+      font-size: 14px; color: var(--text-primary);
+      line-height: 1.6; font-style: italic;
+    }
+
+    /* ── Term definition ───────────────────────────────────── */
+    .term-def {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .term-word {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; font-weight: 600;
+      color: var(--gold);
+      background: var(--gold-soft);
+      padding: 4px 10px; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .term-meaning {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* ── Quick check ───────────────────────────────────────── */
+    .quick-check {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 32px 0;
+    }
+    .qc-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px;
+    }
+    .qc-badge {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 3px 10px; border-radius: 999px;
+      background: rgba(75,139,245,0.12); color: #4B8BF5;
+    }
+    .qc-question {
+      font-size: 15px; font-weight: 600; color: var(--text-primary);
+      line-height: 1.5; margin-bottom: 16px;
+    }
+    .qc-options { display: flex; flex-direction: column; gap: 8px; }
+    .qc-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer; transition: all 0.15s ease;
+      font-size: 14px; color: var(--text-secondary);
+    }
+    .qc-option:hover { border-color: var(--gold); color: var(--text-primary); }
+    .qc-option.correct { border-color: var(--success); background: rgba(52,211,153,0.1); color: var(--success); pointer-events: none; }
+    .qc-option.incorrect { border-color: var(--danger); background: rgba(248,113,113,0.08); color: var(--danger); pointer-events: none; }
+    .qc-option.dimmed { opacity: 0.5; pointer-events: none; }
+    .qc-letter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; font-weight: 700;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .qc-option.correct .qc-letter { background: rgba(52,211,153,0.2); border-color: var(--success); color: var(--success); }
+    .qc-option.incorrect .qc-letter { background: rgba(248,113,113,0.15); border-color: var(--danger); color: var(--danger); }
+    .qc-feedback {
+      margin-top: 12px; padding: 12px 16px;
+      border-radius: 8px; font-size: 13px; line-height: 1.6;
+      display: none;
+    }
+    .qc-feedback.show-correct {
+      display: block;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.2);
+      color: var(--text-secondary);
+    }
+    .qc-feedback.show-incorrect {
+      display: block;
+      background: rgba(248,113,113,0.06);
+      border: 1px solid rgba(248,113,113,0.15);
+      color: var(--text-secondary);
+    }
+
+    /* ── Expandable details ─────────────────────────────────── */
+    details.expand-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    details.expand-section summary {
+      padding: 14px 20px;
+      font-size: 14px; font-weight: 600; color: var(--text-primary);
+      cursor: pointer; user-select: none;
+      list-style: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    details.expand-section summary::before {
+      content: '\203A';
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px; color: var(--text-muted);
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+    details.expand-section[open] summary::before { transform: rotate(90deg); }
+    details.expand-section .expand-body {
+      padding: 0 20px 16px;
+      font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+    }
+
+    /* ── Completion footer ─────────────────────────────────── */
+    .training-complete {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      text-align: center;
+    }
+    .complete-divider { height: 1px; background: var(--border); margin-bottom: 32px; }
+    .complete-message { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .complete-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .btn-complete {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--gold), #C49540);
+      border: none; border-radius: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      color: #080C1A; cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-complete:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(212,168,83,0.25); }
+    .btn-complete.done { background: var(--success); cursor: default; }
+    .btn-complete.done:hover { transform: none; box-shadow: none; }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .training-content { padding: 24px 16px 80px; }
+      .lesson-title { font-size: 22px; }
+      .module-title { max-width: 180px; }
+      .ace-tip { flex-direction: column; align-items: center; text-align: center; }
+      .term-def { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TOPBAR
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="training-topbar">
+    <div class="topbar-left">
+      <a href="#" class="btn-back" id="btnBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back
+      </a>
+      <span class="module-title">Maintenance Regulations &amp; Documentation</span>
+    </div>
+    <div class="topbar-right">
+      <span class="reading-progress" id="readingProgress">0%</span>
+      <button class="btn-theme" id="btnTheme" title="Toggle theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="progress-line">
+    <div class="progress-line-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LESSON CONTENT
+  ═══════════════════════════════════════════════════════ -->
+  <main class="training-content">
+
+    <!-- Lesson Header -->
+    <div class="lesson-header">
+      <div class="lesson-category">Category 1 &mdash; MRD</div>
+      <h1 class="lesson-title">Maintenance Regulations &amp; Documentation</h1>
+      <p class="lesson-desc">Master the regulatory framework that governs every FAA-certificated repair station. This module covers 14 CFR Parts 43 and 145, required documentation, maintenance classifications, and the compliance standards you need for CAET certification.</p>
+      <div class="lesson-meta">
+        <span class="lesson-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          25 min
+        </span>
+        <span class="lesson-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          6 sections
+        </span>
+        <span class="lesson-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          31 objectives
+        </span>
+      </div>
+    </div>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 1: The Regulatory Framework
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="1">
+      <h2>1. The Regulatory Framework</h2>
+
+      <p>Every piece of maintenance performed on a certificated aircraft in the United States is governed by the Federal Aviation Regulations (FARs). As an avionics technician working in a repair station, you need to understand which regulations apply to <em>you</em>, which apply to <em>the shop</em>, and which apply to <em>the work itself</em>.</p>
+
+      <h3>14 CFR Part 145 &mdash; The Repair Station</h3>
+
+      <div class="term-def">
+        <span class="term-word">Part 145</span>
+        <span class="term-meaning">The FAA regulation that establishes performance rules and certification requirements for repair stations performing maintenance on aircraft and aircraft components.</span>
+      </div>
+
+      <p>Part 145 governs the repair station as an <strong>organization</strong>. It covers the station's certification, required personnel, facilities, equipment, quality control systems, and operational standards. If you are working in an FAA-certificated repair station, Part 145 is the regulation that defines your shop's authority and obligations.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Think of Part 145 like a restaurant health code &mdash; it sets the mandatory operating standards a shop must meet to stay certified. Without it, you cannot legally open for business.</div>
+        </div>
+      </div>
+
+      <p>A Part 145 station may only perform work within its <strong>specific ratings and classes</strong> listed in its operations specifications. Work outside those ratings is not authorized, regardless of how qualified individual technicians may be.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">A licensed electrician cannot perform plumbing work just because they are in the same building. Same principle &mdash; your station's ratings define your scope.</div>
+        </div>
+      </div>
+
+      <h3>14 CFR Part 43 &mdash; The Work Itself</h3>
+
+      <div class="term-def">
+        <span class="term-word">Part 43</span>
+        <span class="term-meaning">The FAA regulation governing performance rules for aircraft maintenance, preventive maintenance, rebuilding, and alterations &mdash; applying to any authorized person performing this work.</span>
+      </div>
+
+      <p>While Part 145 governs the station, <strong>Part 43 governs the work</strong>. It applies to everyone touching the aircraft &mdash; whether they work in a repair station, airline, or even an owner-operator performing preventive maintenance.</p>
+
+      <div class="key-concept">
+        <div class="key-concept-label">Key Distinction</div>
+        <p><strong>Part 145</strong> = rules for the <em>shop</em> (organization)</p>
+        <p><strong>Part 43</strong> = rules for the <em>work</em> (maintenance performance)</p>
+      </div>
+
+      <h3>FAA Definition of Maintenance</h3>
+
+      <div class="term-def">
+        <span class="term-word">Maintenance</span>
+        <span class="term-meaning">Per FAA regulations: inspection, overhaul, repair, preservation, and replacement of parts &mdash; explicitly excluding preventive maintenance, which is a separate regulatory category.</span>
+      </div>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Maintenance is like a full car service package covering inspections and repairs. Preventive maintenance is the DIY oil change the owner does themselves &mdash; separate category, separate rules.</div>
+        </div>
+      </div>
+
+      <p><strong>Preventive maintenance</strong> under Part 43 is limited to certificated pilots on aircraft they own or operate, and only for simple tasks explicitly listed in Part 43 Appendix A.</p>
+
+      <!-- Quick Check 1 -->
+      <div class="quick-check" data-correct="2">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">Which regulation governs the performance rules for the repair station as an organization?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> 14 CFR Part 43</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> 14 CFR Part 91</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> 14 CFR Part 145</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> 14 CFR Part 65</div>
+        </div>
+        <div class="qc-feedback">Part 145 governs the repair station organization. Part 43 governs the maintenance work itself. Part 91 covers aircraft operating rules. Part 65 covers airmen certification.</div>
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 2: Documentation & Record-Keeping
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="2">
+      <h2>2. Documentation &amp; Record-Keeping</h2>
+
+      <p>Documentation is the backbone of aviation maintenance. Every piece of work must be recorded completely and accurately. Incomplete records can ground an aircraft, void warranties, and create serious legal liability.</p>
+
+      <h3>Maintenance Records &mdash; 14 CFR &sect;43.9</h3>
+
+      <div class="term-def">
+        <span class="term-word">&sect;43.9 Record</span>
+        <span class="term-meaning">Per 14 CFR &sect;43.9, a maintenance record must include: description of work performed, date completed, name of person performing work, certificate number, and a return-to-service signature.</span>
+      </div>
+
+      <p>These five elements are <strong>non-negotiable</strong>. Every maintenance entry must contain all of them:</p>
+      <ol>
+        <li><strong>Description of work</strong> performed (and parts used)</li>
+        <li><strong>Date</strong> completed</li>
+        <li><strong>Name</strong> of person performing the work</li>
+        <li><strong>Certificate number</strong> of the technician</li>
+        <li><strong>Return-to-service</strong> signature/statement</li>
+      </ol>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Think of it like a doctor's note after surgery &mdash; it must say what was done, when, by whom with their license number, and that the patient is cleared to go.</div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-box-label">Scenario</div>
+        <p>A tech completes an avionics installation and writes: <em>"Installed GPS unit per STC. Aircraft N12345. Signed, J. Smith."</em></p>
+        <p><strong>What's missing?</strong> The date, the certificate number, and the return-to-service statement. Three of five required elements are absent. The aircraft N-number, while useful, is not a &sect;43.9 requirement.</p>
+      </div>
+
+      <h3>FAA Form 8130-3 &mdash; The Airworthiness Approval Tag</h3>
+
+      <div class="term-def">
+        <span class="term-word">Form 8130-3</span>
+        <span class="term-meaning">An Airworthiness Approval Tag used to certify that an aircraft part or component meets airworthiness standards and to trace its origin and maintenance history.</span>
+      </div>
+
+      <p>When a part arrives at the shop with an 8130-3 attached, it tells you two critical things: the part has been <strong>certified as airworthy</strong> and its <strong>origin is traceable</strong>. This is essential for parts traceability on certificated aircraft.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Think of an 8130-3 as a birth certificate and health record combined &mdash; it proves where the part came from and that it has been properly vetted.</div>
+        </div>
+      </div>
+
+      <h3>Technical Data Requirements</h3>
+
+      <p>Being on the capability list authorizes the <em>type</em> of work, but Part 145 <strong>also</strong> requires the current revision of the manufacturer's maintenance manual before work begins. Both authorization and current data are required.</p>
+
+      <div class="callout-warning">
+        <div class="callout-warning-label">Important</div>
+        <p>If the current revision of the manufacturer's maintenance manual is not available in the shop, maintenance <strong>cannot legally proceed</strong> &mdash; even if the work is on your capability list.</p>
+      </div>
+
+      <p>The <strong>Quality Control department and accountable manager</strong> are responsible for ensuring current technical data is available and used during maintenance. This is a systemic responsibility, not just an individual practitioner's burden.</p>
+
+      <!-- Quick Check 2 -->
+      <div class="quick-check" data-correct="3">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">Which of these is a required element of a maintenance record per 14 CFR &sect;43.9?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> Aircraft's flight hours</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> Aircraft registration number</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> Work order reference number</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> Technician's certificate number</div>
+        </div>
+        <div class="qc-feedback">The five required elements are: description of work, date, name, certificate number, and return-to-service statement. Flight hours, registration number, and work order number are not &sect;43.9 requirements.</div>
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 3: Major vs. Minor — Classifications
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="3">
+      <h2>3. Maintenance Classifications</h2>
+
+      <p>The FAA distinguishes between major and minor alterations and repairs. This classification determines the documentation requirements, who can approve the work, and what data is needed.</p>
+
+      <h3>Major Alteration (Part 43 Appendix A)</h3>
+
+      <div class="term-def">
+        <span class="term-word">Major Alteration</span>
+        <span class="term-meaning">A change to type design that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities &mdash; and is not listed in the aircraft specifications or type certificate data sheet.</span>
+      </div>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">A major alteration is like a structural renovation that changes a building's load-bearing capacity &mdash; it needs engineering review and a permit. Replacing a light fixture? That's minor.</div>
+        </div>
+      </div>
+
+      <h3>STC Installations</h3>
+
+      <div class="term-def">
+        <span class="term-word">STC</span>
+        <span class="term-meaning">A Supplemental Type Certificate &mdash; an FAA approval that permits modification of a type-certificated aircraft in a manner not covered by the original type certificate.</span>
+      </div>
+
+      <p>An STC installation that includes a <strong>flight manual supplement</strong> is classified as a major alteration, regardless of whether the part itself holds a TSO. Why? Because it changes the aircraft's approved operating limitations or procedures.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">A TSO on the part is like a UL listing on an appliance &mdash; the part is approved. But modifying your home's electrical panel to install it still requires a permit.</div>
+        </div>
+      </div>
+
+      <h3>TSO-for-TSO Replacement</h3>
+
+      <p>Replacing a TSO part with another TSO part of the same type, done per approved data, is generally <strong>not</strong> a major alteration. The type design is not changed in a way that appreciably affects airworthiness.</p>
+
+      <!-- Quick Check 3 -->
+      <div class="quick-check" data-correct="1">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">An STC installation includes a flight manual supplement. How is this classified?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> Minor alteration &mdash; if the part has a TSO</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> Major alteration &mdash; regardless of TSO status</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> Preventive maintenance</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> It depends on the aircraft type</div>
+        </div>
+        <div class="qc-feedback">An STC installation with a flight manual supplement is always a major alteration because it changes the aircraft's approved operating limitations. The TSO status of the part is irrelevant to this classification.</div>
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 4: Inspections & Testing Requirements
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="4">
+      <h2>4. Inspections &amp; Testing Requirements</h2>
+
+      <p>Certain avionics systems require periodic testing by authorized facilities. Understanding which regulations govern these inspections &mdash; and what documentation is required &mdash; is essential.</p>
+
+      <h3>Pitot-Static &amp; Transponder Inspections</h3>
+
+      <div class="term-def">
+        <span class="term-word">91.411</span>
+        <span class="term-meaning">Governs altimeter and pitot-static system testing. Appropriately rated repair stations are authorized to perform these inspections.</span>
+      </div>
+
+      <div class="term-def">
+        <span class="term-word">91.413</span>
+        <span class="term-meaning">Governs transponder testing and inspection. Required every 24 calendar months for aircraft operating in transponder-required airspace.</span>
+      </div>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Like a specialty clinic authorized for specific procedures &mdash; the facility's rating matters, not just the individual practitioner's credentials. And like a mandatory vehicle safety inspection, it's on a 24-month calendar cycle regardless of usage.</div>
+        </div>
+      </div>
+
+      <h3>Test Documentation</h3>
+
+      <p>Per Part 43, altimeter and transponder test records must include:</p>
+      <ul>
+        <li><strong>Test date</strong></li>
+        <li><strong>Equipment used</strong> (with calibration status)</li>
+        <li><strong>Test results</strong></li>
+        <li><strong>Return-to-service statement</strong></li>
+      </ul>
+
+      <h3>Test Equipment Calibration</h3>
+
+      <p>Before use in a Part 145 shop, specialized test equipment must have a <strong>current calibration label</strong> showing it is within its calibration interval. Out-of-calibration equipment produces invalid results and non-compliant records.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Verify calibration like verifying a thermometer against a known reference &mdash; if the tool is inaccurate, your measurements are meaningless.</div>
+        </div>
+      </div>
+
+      <!-- Quick Check 4 -->
+      <div class="quick-check" data-correct="2">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">How often does 14 CFR 91.413 require transponder testing?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> Every 12 calendar months</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> Every 100 flight hours</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> Every 24 calendar months</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> Only after a maintenance event</div>
+        </div>
+        <div class="qc-feedback">14 CFR 91.413 requires transponder testing every 24 calendar months. It's a calendar-based requirement, not flight-hour-based, and applies regardless of how much the aircraft has been flown.</div>
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 5: Shop Practices & Standards
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="5">
+      <h2>5. Shop Practices &amp; Standards</h2>
+
+      <p>Beyond the regulatory requirements, a Part 145 avionics shop must follow specific standards and best practices to maintain safety, quality, and compliance.</p>
+
+      <h3>Wiring Standards</h3>
+
+      <div class="term-def">
+        <span class="term-word">AC 43.13-1B</span>
+        <span class="term-meaning">Advisory Circular covering acceptable methods, techniques, and practices for aircraft inspection and repair. Chapter 11 is the primary wiring standard for avionics installation.</span>
+      </div>
+
+      <p>AC 43.13-1B (or the aircraft manufacturer's wiring data when it exists) is the primary standard for avionics wiring installation. When manufacturer-specific data exists, it takes precedence.</p>
+
+      <h3>Connector Pin Work</h3>
+
+      <p>Terminated wires must be inserted into or removed from circular connectors using the <strong>proper manufacturer-specified insertion and extraction tools</strong>. Improvised tools damage pins and create intermittent faults that are extremely difficult to troubleshoot.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Like removing a SIM card with the proper eject tool &mdash; the right tool protects the socket from damage that would be difficult to see and even harder to troubleshoot.</div>
+        </div>
+      </div>
+
+      <h3>Troubleshooting Methodology</h3>
+
+      <p>In a Part 145 shop, the <strong>first step</strong> when troubleshooting any fault is to consult the manufacturer's maintenance manual. Approved data must guide the diagnostic procedure before any components are replaced.</p>
+
+      <div class="example-box">
+        <div class="example-box-label">Scenario</div>
+        <p>An intermittent NAV flag appears on a VOR receiver. A new tech suggests swapping the receiver immediately.</p>
+        <p><strong>Correct approach:</strong> Consult the manufacturer's maintenance manual first. The manual's troubleshooting tree may identify a wiring issue or antenna problem without replacing any LRUs.</p>
+      </div>
+
+      <h3>FOD &amp; Workplace Safety</h3>
+
+      <p>Keeping walkways and work areas free of clutter prevents FOD (Foreign Object Damage/Debris), trip hazards, and tool loss &mdash; all of which directly affect airworthiness and safety.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Think of it like a hospital operating room floor &mdash; a dropped screw creates both a personnel hazard and a risk of ending up somewhere it should never be.</div>
+        </div>
+      </div>
+
+      <!-- Quick Check 5 -->
+      <div class="quick-check" data-correct="0">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">What is the first step when troubleshooting a fault in a Part 145 shop?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> Consult the manufacturer's maintenance manual</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> Replace the suspect LRU</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> Run a self-test on the unit</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> Check the circuit breaker panel</div>
+        </div>
+        <div class="qc-feedback">Approved data must guide the diagnostic procedure. Always start with the manufacturer's maintenance manual &mdash; it defines the approved troubleshooting methodology and may reveal the root cause without replacing any components.</div>
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════
+         SECTION 6: Safety, Compliance & Personnel
+    ═════════════════════════════════════════════════════ -->
+    <section class="training-section" data-section="6">
+      <h2>6. Safety, Compliance &amp; Personnel</h2>
+
+      <p>A Part 145 shop's compliance obligations extend beyond the aircraft to include personnel requirements, workplace safety, and hazardous material management.</p>
+
+      <h3>Pre-Employment Drug Testing</h3>
+
+      <p>A technician must pass a <strong>pre-employment drug test</strong> before performing safety-sensitive functions if the repair station's FAA-approved drug testing program requires it. No clearance, no work on aircraft.</p>
+
+      <h3>Recurrent Training</h3>
+
+      <p>Most Part 145 repair station manuals require recurrent training for maintenance personnel at least every <strong>24 months</strong>. This ensures skills and knowledge stay current with evolving standards and procedures.</p>
+
+      <h3>Hazardous Materials &mdash; Safety Data Sheets</h3>
+
+      <div class="term-def">
+        <span class="term-word">SDS</span>
+        <span class="term-meaning">Safety Data Sheet &mdash; the document required to be readily available for each hazardous material used in the shop, covering hazards, PPE requirements, first aid, and disposal procedures.</span>
+      </div>
+
+      <h3>Fire Safety</h3>
+
+      <div class="term-def">
+        <span class="term-word">Class C Fire</span>
+        <span class="term-meaning">A fire involving energized electrical equipment. Non-conductive agents (CO&#8322;, dry chemical) must be used &mdash; never water, which conducts electricity.</span>
+      </div>
+
+      <h3>Hearing Protection</h3>
+
+      <p>Hearing protection is critical in an avionics shop because noise-induced hearing loss is <strong>cumulative and permanent</strong>. Each unprotected exposure adds to total damage, even when individual exposures seem tolerable.</p>
+
+      <div class="ace-tip">
+        <img src="../../../../shared/ace-sprites/ace-48-happy.png" alt="ACE" class="ace-tip-avatar">
+        <div class="ace-tip-content">
+          <div class="ace-tip-name">ACE Says</div>
+          <div class="ace-tip-text">Think of hearing protection like sunscreen for your ears &mdash; you don't feel the damage happening, but it accumulates with every unprotected exposure.</div>
+        </div>
+      </div>
+
+      <h3>Quick Diagnostic Skills</h3>
+
+      <details class="expand-section">
+        <summary>Stuck Microphone Diagnosis</summary>
+        <div class="expand-body">
+          <p>A constant tone on a comm frequency instead of ATC voice responses indicates a <strong>stuck PTT (Push-To-Talk)</strong> &mdash; a microphone transmitting continuously, blocking the frequency for all users. It's like someone holding down a walkie-talkie transmit button.</p>
+        </div>
+      </details>
+
+      <details class="expand-section">
+        <summary>Parasitic Draw Diagnosis</summary>
+        <div class="expand-body">
+          <p>To confirm a faulty switch as the source of a parasitic draw, place an <strong>ammeter in series</strong> with the circuit and activate the suspect switch while monitoring current. A current increase confirms the switch is the source. It's like checking which faucet is draining your water pressure &mdash; turn them on one at a time while watching the flow meter.</p>
+        </div>
+      </details>
+
+      <details class="expand-section">
+        <summary>Mono Audio in GA Aircraft</summary>
+        <div class="expand-body">
+          <p>Mono (single-channel) audio is typically used in general aviation aircraft for intercom communications and speaker monitoring &mdash; a single audio channel routed to all headsets and speakers. Unlike stereo, there is no distinct left/right separation.</p>
+        </div>
+      </details>
+
+      <!-- Quick Check 6 -->
+      <div class="quick-check" data-correct="1">
+        <div class="qc-header"><span class="qc-badge">Quick Check</span></div>
+        <div class="qc-question">What document must be readily available for each hazardous material in a Part 145 shop?</div>
+        <div class="qc-options">
+          <div class="qc-option" data-idx="0"><span class="qc-letter">A</span> Material Safety Compliance Certificate</div>
+          <div class="qc-option" data-idx="1"><span class="qc-letter">B</span> Safety Data Sheet (SDS)</div>
+          <div class="qc-option" data-idx="2"><span class="qc-letter">C</span> EPA Disposal Authorization Form</div>
+          <div class="qc-option" data-idx="3"><span class="qc-letter">D</span> FAA Form 8130-3</div>
+        </div>
+        <div class="qc-feedback">The Safety Data Sheet (SDS) is required for every hazardous material. It covers hazards, PPE requirements, first aid procedures, and disposal requirements. It must be readily accessible to anyone working with the material.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════
+       COMPLETION FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="training-complete" id="completionFooter">
+    <div class="complete-divider"></div>
+    <div class="complete-message">Module Complete!</div>
+    <div class="complete-sub">You've covered all 31 learning objectives for Maintenance Regulations &amp; Documentation.</div>
+    <button class="btn-complete" id="btnComplete" onclick="markComplete()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      Mark Complete &amp; Return
+    </button>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE JS
+  ═══════════════════════════════════════════════════════ -->
+  <script>
+  /* ── URL params ── */
+  const params = new URLSearchParams(window.location.search);
+  const backUrl = params.get('back') || '../../cat-1-maintenance-regs/index.html';
+  const catId   = params.get('cat')  || 'cat-1';
+  const modId   = params.get('mod')  || 'maintenance-regs';
+
+  /* ── Back button ── */
+  document.getElementById('btnBack').href = backUrl;
+
+  /* ── Theme toggle ── */
+  const htmlEl = document.documentElement;
+  const btnTheme = document.getElementById('btnTheme');
+  const themeIcon = document.getElementById('themeIcon');
+  const SUN_PATH  = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+  const MOON_PATH = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function applyTheme(t) {
+    htmlEl.setAttribute('data-theme', t);
+    themeIcon.innerHTML = t === 'dark' ? MOON_PATH : SUN_PATH;
+    try { localStorage.setItem('ace_theme', JSON.stringify(t)); } catch(e) {}
+  }
+  btnTheme.addEventListener('click', () => {
+    applyTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  try {
+    const saved = localStorage.getItem('ace_theme');
+    if (saved) applyTheme(JSON.parse(saved));
+  } catch(e) {}
+
+  /* ── Reading progress ── */
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(Math.round((scrollTop / docHeight) * 100), 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('readingProgress').textContent = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  /* ── Quick check interaction ── */
+  document.querySelectorAll('.quick-check').forEach(qc => {
+    const correctIdx = parseInt(qc.dataset.correct, 10);
+    const options = qc.querySelectorAll('.qc-option');
+    const feedback = qc.querySelector('.qc-feedback');
+    let answered = false;
+
+    options.forEach((opt, idx) => {
+      opt.addEventListener('click', () => {
+        if (answered) return;
+        answered = true;
+
+        options.forEach((o, i) => {
+          if (i === correctIdx) {
+            o.classList.add('correct');
+          } else if (i === idx && i !== correctIdx) {
+            o.classList.add('incorrect');
+          } else {
+            o.classList.add('dimmed');
+          }
+        });
+
+        if (feedback) {
+          feedback.classList.add(idx === correctIdx ? 'show-correct' : 'show-incorrect');
+        }
+      });
+    });
+  });
+
+  /* ── Mark started ── */
+  try {
+    localStorage.setItem(`ace_cat_${catId}_training_${modId}_started`, 'true');
+  } catch(e) {}
+
+  /* ── Check if already complete ── */
+  (function checkCompletion() {
+    const isComplete = localStorage.getItem(`ace_cat_${catId}_training_${modId}_complete`) === 'true';
+    if (isComplete) {
+      const btn = document.getElementById('btnComplete');
+      btn.classList.add('done');
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Completed &mdash; Return to Hub';
+      btn.onclick = function() { window.location.href = backUrl; };
+    }
+  })();
+
+  /* ── Mark complete ── */
+  function markComplete() {
+    const btn = document.getElementById('btnComplete');
+    if (btn.classList.contains('done')) {
+      window.location.href = backUrl;
+      return;
+    }
+    try {
+      localStorage.setItem(`ace_cat_${catId}_training_${modId}_complete`, 'true');
+    } catch(e) {}
+    btn.classList.add('done');
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Complete! Returning...';
+    setTimeout(() => { window.location.href = backUrl; }, 800);
+  }
+  </script>
+</body>
+</html>

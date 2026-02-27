@@ -1,0 +1,413 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    .ohm-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: #020617;
+        /* Very dark slate */
+        padding: 30px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ohm-header {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #fca5a5;
+        /* Red hue for DC */
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(252, 165, 165, 0.4);
+        margin-bottom: 5px;
+    }
+
+    .ohm-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 25px;
+    }
+
+    @media (max-width: 768px) {
+        .ohm-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .ohm-canvas-wrap {
+        position: relative;
+        width: 100%;
+        height: 350px;
+        background: #0f172a;
+        border: 2px solid #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.05);
+        /* Slight red tint */
+    }
+
+    #ohm-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .ohm-panel {
+        background: #0f172a;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ohm-slider-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .ohm-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ohm-val {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.1rem;
+        color: #f8fafc;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    .slider-v::-webkit-slider-thumb {
+        background: #ef4444 !important;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.8) !important;
+    }
+
+    .slider-r::-webkit-slider-thumb {
+        background: #eab308 !important;
+        box-shadow: 0 0 10px rgba(234, 179, 8, 0.8) !important;
+    }
+
+    .ohm-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+        border-top: 1px solid #1e293b;
+        padding-top: 15px;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #020617;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #1e293b;
+    }
+
+    .stat-name {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+    }
+
+    .stat-number {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .color-amps {
+        color: #3b82f6;
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    .color-watts {
+        color: #10b981;
+        text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Math block */
+    .math-block {
+        font-family: 'Share Tech Mono', monospace;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 4px;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .math-block span {
+        color: #f8fafc;
+    }
+</style>
+
+<div class="ohm-container">
+    <div>
+        <div class="ohm-header">DC Ohm's Law & Power visualizer</div>
+        <p style="text-align:center; color:#64748b; font-size:0.9rem; margin-top:5px;">Interactive DC Circuit. Adjust
+            Voltage (Push) and Resistance (Restriction) to observe changes in Current (Flow) and Power (Work).</p>
+    </div>
+
+    <div class="ohm-layout">
+        <div class="ohm-canvas-wrap">
+            <canvas id="ohm-canvas"></canvas>
+        </div>
+
+        <div class="ohm-panel">
+            <div class="ohm-slider-group">
+                <div class="ohm-label">
+                    <span>Source Voltage (V)</span>
+                    <span class="ohm-val" style="color:#ef4444;" id="val-v">24 V</span>
+                </div>
+                <input type="range" id="slider-v" class="slider-v" min="1" max="50" value="24" step="1">
+            </div>
+
+            <div class="ohm-slider-group">
+                <div class="ohm-label">
+                    <span>Load Resistance (R)</span>
+                    <span class="ohm-val" style="color:#eab308;" id="val-r">12 Ω</span>
+                </div>
+                <input type="range" id="slider-r" class="slider-r" min="1" max="100" value="12" step="1">
+            </div>
+
+            <div class="ohm-stats">
+                <div class="stat-row" style="border-left: 3px solid #3b82f6;">
+                    <div class="stat-name">Current Flow (I)</div>
+                    <div class="stat-number color-amps" id="stat-amps">2.00 A</div>
+                </div>
+                <div class="stat-row" style="border-left: 3px solid #10b981;">
+                    <div class="stat-name">Power Dissipated (P)</div>
+                    <div class="stat-number color-watts" id="stat-watts">48.0 W</div>
+                </div>
+            </div>
+
+            <div class="math-block">
+                I = <span>V / R</span> &nbsp;|&nbsp; P = <span>I * V</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('ohm-canvas');
+        const ctx = canvas.getContext('2d');
+        const sliderV = document.getElementById('slider-v');
+        const sliderR = document.getElementById('slider-r');
+
+        const valV = document.getElementById('val-v');
+        const valR = document.getElementById('val-r');
+        const statA = document.getElementById('stat-amps');
+        const statW = document.getElementById('stat-watts');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let volts = 24;
+        let ohms = 12;
+        let amps = 2;
+        let watts = 48;
+
+        let electronOffset = 0;
+
+        // Circuit coordinates
+        let cx, cy, cw, ch;
+
+        function calculate() {
+            volts = parseFloat(sliderV.value);
+            ohms = parseFloat(sliderR.value);
+
+            amps = volts / ohms;
+            watts = volts * amps;
+
+            valV.innerText = volts + " V";
+            valR.innerText = ohms + " Ω";
+            statA.innerText = amps.toFixed(2) + " A";
+            statW.innerText = watts.toFixed(1) + " W";
+        }
+
+        sliderV.addEventListener('input', calculate);
+        sliderR.addEventListener('input', calculate);
+
+        function drawComponentBattery(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            // Battery symbol
+            ctx.strokeStyle = "#ef4444";
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#ef4444";
+
+            // Long positive plate (top)
+            ctx.beginPath(); ctx.moveTo(-20, -10); ctx.lineTo(20, -10); ctx.stroke();
+            // Short negative plate (bottom)
+            ctx.beginPath(); ctx.moveTo(-10, 10); ctx.lineTo(10, 10); ctx.stroke();
+
+            // Plus sign
+            ctx.font = "bold 16px monospace";
+            ctx.fillStyle = "#ef4444";
+            ctx.fillText("+", 25, -5);
+
+            ctx.restore();
+        }
+
+        function drawComponentResistor(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Heat glow based on wattage
+            const glowIntensity = Math.min(watts / 100, 1); // 0 to 1
+
+            ctx.strokeStyle = "#eab308";
+            ctx.lineWidth = 3;
+            if (glowIntensity > 0) {
+                ctx.shadowBlur = 10 + (glowIntensity * 20);
+                ctx.shadowColor = `rgba(234, 179, 8, ${glowIntensity + 0.2})`;
+            }
+
+            ctx.beginPath();
+            // Zig zag resistor
+            ctx.moveTo(0, -30);
+            ctx.lineTo(15, -20);
+            ctx.lineTo(-15, -10);
+            ctx.lineTo(15, 0);
+            ctx.lineTo(-15, 10);
+            ctx.lineTo(15, 20);
+            ctx.lineTo(0, 30);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function animate(time) {
+            // Clear background
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(0, 0, width, height);
+
+            // Center rectangular circuit layout
+            cw = width * 0.6;
+            ch = height * 0.5;
+            cx = (width - cw) / 2;
+            cy = (height - ch) / 2;
+
+            const leftX = cx;
+            const rightX = cx + cw;
+            const topY = cy;
+            const botY = cy + ch;
+
+            // Draw basic wire frame
+            ctx.beginPath();
+            ctx.strokeStyle = "#334155";
+            ctx.lineWidth = 4;
+            ctx.moveTo(leftX, cy + ch / 2 + 10); // from bottom of battery
+            ctx.lineTo(leftX, botY); // down
+            ctx.lineTo(rightX, botY); // right
+            ctx.lineTo(rightX, cy + ch / 2 + 30); // up to bottom of resistor
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(rightX, cy + ch / 2 - 30); // from top of resistor
+            ctx.lineTo(rightX, topY); // up
+            ctx.lineTo(leftX, topY); // left
+            ctx.lineTo(leftX, cy + ch / 2 - 10); // down to top of battery
+            ctx.stroke();
+
+            // Draw Electron Flow (blue dots)
+            // Speed proportional to Amps! (0.5A is slow, 50A is very fast)
+            // Range of amps: Min (1/100 = 0.01A), Max (50/1 = 50A)
+            const speedMultiplier = Math.max(0.5, Math.min(amps * 1.5, 20));
+            electronOffset += (speedMultiplier);
+
+            ctx.fillStyle = "#3b82f6";
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "#3b82f6";
+
+            const pathLength = (cw * 2) + (ch * 2);
+            const numElectrons = 25;
+            const spacing = pathLength / numElectrons;
+
+            for (let i = 0; i < numElectrons; i++) {
+                // Calculate distance along path (conventional current: positive to negative)
+                // Starts top of battery -> right -> down -> left -> up to bottom of battery
+                let d = (i * spacing + electronOffset) % pathLength;
+
+                let ex, ey;
+
+                if (d < ch / 2) {
+                    // Moving up from battery to top-left corner
+                    ex = leftX;
+                    ey = cy + ch / 2 - d;
+                } else if (d < ch / 2 + cw) {
+                    // Moving right across top
+                    ex = leftX + (d - ch / 2);
+                    ey = topY;
+                } else if (d < ch / 2 + cw + ch) {
+                    // Moving down across right
+                    ex = rightX;
+                    ey = topY + (d - (ch / 2 + cw));
+                } else if (d < ch / 2 + cw * 2 + ch) {
+                    // Moving left across bottom
+                    ex = rightX - (d - (ch / 2 + cw + ch));
+                    ey = botY;
+                } else {
+                    // Moving up to negative battery terminal
+                    ex = leftX;
+                    ey = botY - (d - (ch / 2 + cw * 2 + ch));
+                }
+
+                // Don't draw if inside components
+                if ((ex === leftX && ey > cy + ch / 2 - 15 && ey < cy + ch / 2 + 15) ||
+                    (ex === rightX && ey > cy + ch / 2 - 35 && ey < cy + ch / 2 + 35)) {
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+
+            // Draw components over wires
+            drawComponentBattery(leftX, cy + ch / 2);
+            drawComponentResistor(rightX, cy + ch / 2);
+
+            // Voltage readouts
+            ctx.font = "bold 14px 'Share Tech Mono'";
+            ctx.fillStyle = "#ef4444";
+            ctx.textAlign = "right";
+            ctx.fillText(`+${volts.toFixed(1)}V`, leftX - 15, cy + ch / 2 - 20);
+            ctx.fillStyle = "#3b82f6";
+            ctx.fillText(`0V`, leftX - 15, cy + ch / 2 + 25);
+            ctx.textAlign = "left";
+
+            requestAnimationFrame(animate);
+        }
+
+        calculate();
+        requestAnimationFrame(animate);
+    });
+</script>

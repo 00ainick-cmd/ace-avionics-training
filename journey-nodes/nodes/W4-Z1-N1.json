@@ -1,0 +1,95 @@
+{
+  "id": "W4-Z1-N1",
+  "title": "Hand tools & precision basics",
+  "world": "Tools & Test Equipment",
+  "zone": "Hand tools",
+  "objectiveKeys": [
+    "q1",
+    "q2",
+    "q146",
+    "q170"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Hand tools & precision basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Use common hand tools correctly; avoid damage."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Center Punch",
+          "definition": "A center punch is a hardened steel tool struck with a hammer to create a precise conical indentation in metal; the indentation seats the drill bit tip, preventing it from skating across the work surface and ensuring accurate hole placement.",
+          "analogy": "A center punch is like making a thumbprint in clay before poking a hole \u2014 the depression gives the drill bit a starting point so it doesn't slide sideways before cutting."
+        },
+        {
+          "term": "Center Punch",
+          "definition": "A center punch is a hardened steel tool struck with a hammer to create a precise conical indentation in metal; the indentation seats the drill bit tip, preventing it from skating across the work surface and ensuring accurate hole placement.",
+          "analogy": "A center punch is like making a thumbprint in clay before poking a hole \u2014 the depression gives the drill bit a starting point so it doesn't slide sideways before cutting."
+        },
+        {
+          "term": "Micrometer Measurement Procedure",
+          "definition": "For accurate micrometer measurements: (1) clean both measuring surfaces (spindle and anvil) to remove debris, (2) zero the micrometer (close on nothing \u2014 verify it reads zero), (3) apply gentle, consistent pressure using the thimble ratchet (if equipped) \u2014 excessive pressure deforms the workpiece.",
+          "analogy": "Using a micrometer properly is like calibrating a scale: clean the pan (clean surfaces), check it reads zero with nothing on it (zero check), then place items with the same gentle touch each time (consistent pressure)."
+        },
+        {
+          "term": "Screwdriver Sizing and Cam-Out",
+          "definition": "Cam-out occurs when a screwdriver slips out of the screw head under torque, damaging the head and potentially the surrounding surface. Using a properly sized screwdriver that fully fills and engages the screw head recess is the primary prevention \u2014 an undersized blade has less contact area and cams out more easily.",
+          "analogy": "Using a screwdriver that's too small is like trying to turn a deadbolt with a toothpick \u2014 the toothpick will snap out under pressure because it doesn't fully engage the mechanism. A proper key fills the slot completely."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of a center punch in an avionics repair shop?",
+      "choices": [
+        "To remove stuck fasteners by driving them from the back side",
+        "To create a precise indentation that guides the drill bit and prevents wandering during drilling",
+        "To mark scribe lines on sheet metal for cutting",
+        "To test the hardness of a metal surface before drilling"
+      ],
+      "correctIndex": 1,
+      "feedback": "A center punch creates an indentation that seats the drill tip, preventing it from sliding when drilling begins. Without this, the drill wanders and holes are misplaced."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of a center punch in an avionics repair shop?",
+      "choices": [
+        "To remove stuck fasteners by driving them from the back side",
+        "To create a precise indentation that guides the drill bit and prevents wandering during drilling",
+        "To mark scribe lines on sheet metal for cutting",
+        "To test the hardness of a metal surface before drilling"
+      ],
+      "correctIndex": 1,
+      "feedback": "A center punch creates an indentation that seats the drill tip, preventing it from sliding when drilling begins. Without this, the drill wanders and holes are misplaced."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the correct steps for taking an accurate micrometer measurement?",
+      "choices": [
+        "Lubricate the spindle, set to expected range, take three rapid readings and average",
+        "Clean the measuring surfaces, zero the micrometer before use, and apply consistent gentle pressure when taking the reading",
+        "Apply oil to the workpiece, close the micrometer firmly, and read the display",
+        "Lock the barrel before closing on the workpiece to prevent overshooting"
+      ],
+      "correctIndex": 1,
+      "feedback": "Micrometer accuracy requires: clean surfaces (no contamination affecting the gap), verified zero (no baseline offset), and consistent gentle pressure (not deforming the workpiece or getting different readings based on force)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the most important factor when selecting a manual screwdriver to prevent cam-out?",
+      "choices": [
+        "The screwdriver should be as long as possible to provide maximum torque leverage",
+        "The screwdriver should be harder than the screw material to prevent wear",
+        "The screwdriver blade or bit should be properly sized to fully engage the screw head",
+        "The screwdriver should be rated for maximum torque exceeding the fastener specification"
+      ],
+      "correctIndex": 2,
+      "feedback": "Full engagement is the primary cam-out prevention measure. A correctly sized bit/blade fills the recess completely, maximizing the contact area that resists the tendency to cam out under torque."
+    }
+  ]
+}

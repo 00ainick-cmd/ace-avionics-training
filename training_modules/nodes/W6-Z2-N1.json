@@ -1,0 +1,149 @@
+{
+  "id": "W6-Z2-N1",
+  "title": "ARINC 429 architecture basics",
+  "world": "Digital Databus Systems",
+  "zone": "ARINC 429 architecture",
+  "objectiveKeys": [
+    "q7",
+    "q97",
+    "q104",
+    "q192",
+    "q208",
+    "q212",
+    "q221"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ARINC 429 architecture basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize ARINC 429 topology and unidirectional model."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ARINC 429",
+          "definition": "A unidirectional, two-wire (shielded twisted pair) serial data bus standard used in general aviation and commercial avionics; one transmitter sends data to one or more receivers in a point-to-point or broadcast configuration.",
+          "analogy": "ARINC 429 is like a one-way radio broadcast \u2014 one announcer (transmitter) sends data that multiple listeners (receivers) can hear, but no listener can talk back on the same wire."
+        },
+        {
+          "term": "ARINC 429 Topology",
+          "definition": "ARINC 429 uses a point-to-point or broadcast topology: one transmitter on a shielded twisted-pair bus, sending to one or multiple receivers. No receiver can transmit back on the same bus.",
+          "analogy": "Like a TV broadcast \u2014 the transmitter sends to all TVs tuned to its frequency, but no TV can 'reply' on the same broadcast channel."
+        },
+        {
+          "term": "ARINC 429 \u2014 Industry Standard",
+          "definition": "ARINC 429 is the industry-standard aircraft digital data bus for general aviation and commercial avionics, defined by Aeronautical Radio Incorporated (ARINC), and used by the majority of avionics manufacturers.",
+          "analogy": "ARINC 429 is the 'common language' of aviation electronics \u2014 just as English is widely used in international aviation communication, ARINC 429 is the common digital language for avionics."
+        },
+        {
+          "term": "ARINC 429 \u2014 Common Avionics Standard",
+          "definition": "ARINC 429 is one of the most widely used digital data bus standards in aviation, found in the majority of general aviation glass-cockpit avionics and commercial transport aircraft systems.",
+          "analogy": "ARINC 429 is to avionics what USB is to personal computers \u2014 the go-to standard interface that most devices support."
+        },
+        {
+          "term": "ARINC 429 \u2014 Unidirectional Serial Standard",
+          "definition": "ARINC 429 is a unidirectional serial data bus standard where digital data flows in one direction only \u2014 from a single source transmitter to one or more receiving LRUs.",
+          "analogy": "A one-way street where traffic only flows in one direction \u2014 no two-way travel, no U-turns. Data travels only from the transmitter to the receiver(s)."
+        },
+        {
+          "term": "ARINC 429 Bus Topology",
+          "definition": "ARINC 429 uses a single-transmitter-to-multiple-receivers (or point-to-point) topology: one LRU is the designated transmitter for each bus, and up to 20 receivers can be connected to the same two-wire bus.",
+          "analogy": "One radio station broadcasting on a frequency that many radios can receive simultaneously \u2014 only one transmitter, many receivers, all on the same channel."
+        },
+        {
+          "term": "ARINC 429 Primary Purpose",
+          "definition": "ARINC 429 provides a standardized method for digital data exchange between avionics Line Replaceable Units (LRUs), ensuring interoperability between equipment from different manufacturers.",
+          "analogy": "ARINC 429 is like a universal USB standard \u2014 different manufacturers build to the same interface spec, so any compliant LRU can communicate with any other without custom adapters."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does ARINC 429 data flow between avionics LRUs?",
+      "choices": [
+        "Bidirectionally on a single cable with a bus controller managing traffic",
+        "Unidirectionally from one transmitter to one or more receivers on a two-wire bus",
+        "Via a token-ring topology where each LRU passes a transmission token",
+        "Through a central switch that routes packets between any two LRUs"
+      ],
+      "correctIndex": 1,
+      "feedback": "ARINC 429 is strictly unidirectional \u2014 one transmitter, one or more receivers \u2014 on a shielded twisted-pair. For two-way communication, two separate buses are needed."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which statement best describes ARINC 429 physical architecture?",
+      "choices": [
+        "Two transmitters share a bidirectional shielded cable using a time-division scheme",
+        "Each LRU has its own dedicated coaxial cable for full-duplex data exchange",
+        "Multiple transmitters are managed by a central bus controller on a single shielded cable",
+        "One transmitter sends on shielded twisted-pair to one or more receivers; all flow is unidirectional"
+      ],
+      "correctIndex": 3,
+      "feedback": "ARINC 429: one transmitter, shielded twisted-pair wire, one or more receivers. The bus is strictly unidirectional \u2014 only the transmitter can send on that bus."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which organization defines the ARINC 429 standard, and in what aviation sector is it most widely used?",
+      "choices": [
+        "Aeronautical Radio Incorporated (ARINC) defines it; used across general aviation and commercial avionics",
+        "MIL-SPEC defines it; primarily used in military avionics",
+        "FAA defines it; required only for IFR certified avionics",
+        "RTCA defines it; used only in transport category aircraft"
+      ],
+      "correctIndex": 0,
+      "feedback": "ARINC (Aeronautical Radio Incorporated) defines ARINC 429. It is used across general aviation glass-cockpit systems and commercial transport avionics \u2014 the de facto standard."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "In the avionics industry, which data bus standard is most commonly encountered by general aviation technicians?",
+      "choices": [
+        "ARINC 429 \u2014 the widely used GA and commercial avionics databus standard",
+        "MIL-STD-1553 \u2014 the universal avionics bus standard",
+        "RS-232 \u2014 the standard interface for all avionics LRU communication",
+        "ARINC 664 (AFDX) \u2014 used in all modern aircraft"
+      ],
+      "correctIndex": 0,
+      "feedback": "ARINC 429 is the most common databus standard in general aviation and commercial avionics. MIL-STD-1553 is primarily military. RS-232 is used for maintenance loader interfaces. AFDX is newer and primarily transport category."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which statement correctly describes ARINC 429 data flow?",
+      "choices": [
+        "Data flows bidirectionally between two LRUs using alternating half-duplex protocol",
+        "Data transfer is initiated by the receiving LRU which polls the transmitter when needed",
+        "Data is exchanged simultaneously in both directions using separate transmit and receive wires",
+        "Data flows unidirectionally from one source LRU to one or more receiving LRUs in a serial bit stream"
+      ],
+      "correctIndex": 3,
+      "feedback": "ARINC 429 unidirectional: the transmitter continuously sends data serially; receivers listen passively. There is no acknowledgment or return path on an ARINC 429 bus."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How is an ARINC 429 bus architecturally organized?",
+      "choices": [
+        "Multiple transmitters share the bus using collision detection",
+        "One transmitter broadcasts on the bus while one or more receivers listen",
+        "A central switch routes data between any two connected LRUs on demand",
+        "All LRUs can both transmit and receive using a master-slave negotiation"
+      ],
+      "correctIndex": 1,
+      "feedback": "ARINC 429 architecture: one transmitter sends data continuously; one or more receivers are connected to the same bus pair and receive all transmitted words."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of the ARINC 429 standard?",
+      "choices": [
+        "To define the physical shape and connector pinout of all avionics LRUs",
+        "To specify maximum electrical power consumption for each class of avionics unit",
+        "To provide a standardized method for digital data exchange between avionics line replaceable units",
+        "To define the test procedures required for avionics TSO approval"
+      ],
+      "correctIndex": 2,
+      "feedback": "ARINC 429 standardizes digital data communication between LRUs \u2014 defining the electrical characteristics, word structure, and data labels so equipment from different manufacturers can reliably exchange data."
+    }
+  ]
+}

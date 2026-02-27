@@ -1,0 +1,41 @@
+{
+  "id": "W2-Z5-N2",
+  "title": "Calibration label check (cross-link)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Standards & calibration awareness",
+  "objectiveKeys": [
+    "q152"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Calibration label check (cross-link)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Verify tool/test equipment calibration status before use."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Test Equipment Calibration",
+          "definition": "Before use in a Part 145 shop, specialized test equipment must have a current calibration label showing it is within its calibration interval. Out-of-calibration equipment produces invalid results and non-compliant records.",
+          "analogy": "Like verifying a thermometer against a known reference before using it in a critical process \u2014 if the tool is inaccurate, your measurements are meaningless."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Before using a pitot-static test set in a Part 145 shop, what must a technician verify?",
+      "choices": [
+        "That the equipment has a current calibration label and is within its calibration interval",
+        "That the equipment has been used on the same aircraft type previously",
+        "That the equipment is specifically listed on the shop's capability list",
+        "That the software version meets the avionics manufacturer's minimum requirements"
+      ],
+      "correctIndex": 0,
+      "feedback": "Part 145 requires test equipment to be calibrated and within interval before use. Out-of-calibration equipment produces invalid readings and may create non-compliant maintenance records. Capability list, prior use, and software version are not the primary verification."
+    }
+  ]
+}

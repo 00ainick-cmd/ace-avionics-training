@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z1-N1",
+  "title": "Parts 145/43/91 basics (recognition)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Regulatory framework",
+  "objectiveKeys": [
+    "q8",
+    "q100"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Parts 145/43/91 basics (recognition)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize which regulation bucket applies and what that implies (manual-first, documentation, scope)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "14 CFR Part 145",
+          "definition": "The FAA regulation that establishes performance rules and certification requirements for repair stations performing maintenance on aircraft and aircraft components.",
+          "analogy": "Like a restaurant health code \u2014 it sets the mandatory operating standards a shop must meet to stay certified."
+        },
+        {
+          "term": "14 CFR Part 43",
+          "definition": "The FAA regulation governing performance rules for aircraft maintenance, preventive maintenance, rebuilding, and alterations \u2014 applying to any authorized person performing this work, not just repair stations.",
+          "analogy": "If Part 145 is the rulebook for the repair station as an organization, Part 43 is the rulebook for the work itself \u2014 it applies to everyone touching the aircraft."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A new hire asks which regulation the shop operates under as an FAA-certificated repair station. What is the correct answer?",
+      "choices": [
+        "14 CFR Part 145",
+        "14 CFR Part 91",
+        "14 CFR Part 65",
+        "14 CFR Part 43"
+      ],
+      "correctIndex": 0,
+      "feedback": "14 CFR Part 145 is the governing regulation for certificated repair stations. Part 43 sets maintenance performance standards broadly for anyone performing maintenance \u2014 it governs the work, not the shop's certification. Part 91 covers aircraft operations. Part 65 covers airmen certification."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which regulation establishes the performance rules for aircraft maintenance, preventive maintenance, and alterations?",
+      "choices": [
+        "14 CFR Part 91",
+        "14 CFR Part 145",
+        "14 CFR Part 43",
+        "14 CFR Part 65"
+      ],
+      "correctIndex": 2,
+      "feedback": "Part 43 covers how maintenance must be performed \u2014 standards, record-keeping, return-to-service requirements \u2014 for all authorized persons. Part 145 covers repair station certification. Part 91 covers operations. Part 65 covers airmen certificates."
+    }
+  ]
+}

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Transponder basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link active">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W7 // CNS // SURVEILLANCE</span>
+            </div>
+            <h1>Transponder basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Contrast the fundamentally distinct data sets transmitted in Mode A, Mode C, and Mode S operations.</li>
+        <li>Detail the exact interrogation and reply frequencies composing transponder radar architecture.</li>
+        <li>Explain the role of the 24-bit ICAO address in modern Mode S surveillance environments.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                <p class="body-text">*Note: Visual illustration omitted; refer to system diagram for structural flow.*</p>
+        <p class="body-text">Following a heavy maintenance check, a regional jet departs the airspace but Air Traffic Control immediately radios the crew, demanding to know why their radar screen is blank regarding the aircraft&#x27;s altitude. The technician had inadvertently bumped the transponder control panel from the &quot;ALT&quot; position down to the &quot;ON&quot; position during cockpit cleaning. The transponder was happily pinging back identity codes (Mode A), but was completely failing to transmit altitude data (Mode C). Understanding the distinct operational modes of transponders is critical to deciphering radar failure reports and preventing pilot deviations.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">The Core Radar Physics</h3>
+        <p class="body-text">A transponder is the avionics foundation of the Air Traffic Control <strong>Secondary Surveillance Radar (SSR)</strong> system. Unlike primary radar, which stupidly bounces massive microwaves off the metal skin of an aircraft, SSR is an intelligent conversation between two computers:</p>
+        <ul class="content-list">
+        <li><strong>The Interrogation (1030 MHz):</strong> The rotating ATC ground radar sweep actively commands: &quot;Who are you?&quot;</li>
+        <li><strong>The Reply (1090 MHz):</strong> The aircraft transponder instantly fires a high-powered digital burst back saying: &quot;I am Flight 123 at 14,000 feet.&quot;</li>
+        </ul>
+        <h3 class="content-h3">The Three Operational Modes</h3>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Mode A (Identity Only):</strong> The most basic legacy mode. The transponder replies exclusively with its 4-digit octal assigned <strong>Squawk Code</strong> (e.g., 1200 for VFR, 7700 for Emergency). ATC sees a dot on the screen with a code name, but has absolutely no idea how high the aircraft is.</li>
+        <li><strong>2.</strong> <strong>Mode C (Identity + Altitude):</strong> The mandatory standard for controlled airspace. The transponder reaches out to an onboard blind altitude encoder or air data computer, grabs the current uncorrected pressure altitude (e.g., Flight Level 240), and transmits it seamlessly alongside the Mode A squawk code.</li>
+        <li><strong>3.</strong> <strong>Mode S (Selective Intelligences):</strong> The modern global standard. Instead of blindly blasting replies to every radar sweep, it incorporates a deeply interwoven data link and a unique microchip identifier.</li>
+        </ol>
+        <h3 class="content-h3">The Power of Mode S and the ICAO Address</h3>
+        <p class="body-text">Every single Mode S aircraft is hard-coded with a mathematically globally unique <strong>24-bit ICAO address</strong> (essentially a permanent MAC address for the airplane).</p>
+        <ul class="content-list">
+        <li><strong>Because of this unique address, ATC can perform Selective Interrogation.</strong> The radar can ask &quot;Only aircraft 10101011, what is your status?&quot; and all other aircraft instantly remain silent, massively cleaning up global radio congestion.</li>
+        <li>Mode S transponders can also stream massive amounts of internal flight data (heading, airspeed, roll angle) down to advanced ATC computers.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[ATC Ground Radar interrogates at 1030 MHz] --> B{Aircraft Transponder Selected Mode}
+    
+    B -->|Selected ON - Mode A| C[Transmits 4-Digit Squawk Code ONLY at 1090 MHz]
+    C --> D[ATC Screen: Identity shown, Altitude BLANK]
+    
+    B -->|Selected ALT - Mode C| E[Reaches out to Air Data Computer]
+    E --> F[Transmits Squawk Code + Pressure Altitude at 1090 MHz]
+    F --> G[ATC Screen: Identity and exactly 14,500ft shown]
+    
+    B -->|Mode S Equipped| H[Utilizes permanent 24-bit ICAO Address]
+    H --> I[ATC selectively interrogates only that specific aircraft]
+    I --> J[Massively reduces RF frequency congestion on 1090 MHz]
+    
+    style D fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style G fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+    style J fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When heavily installing or troubleshooting a Mode S transponder system, the single most critical configuration step is manually programming the 24-bit ICAO address (usually coded in Hexadecimal via the front panel menus) to perfectly match the aircraft&#x27;s FAA registration matrix. If you mistype a single character in the Hex code during installation, ATC systems will wildly misidentify the aircraft, safety systems like TCAS will fail to resolve conflicts, and the FAA will flag the airframe for immediate grounding due to data corruption.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transponder squawk code</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transponder squawk code</div>
+                            <p>A squawk code is a 4-digit octal number (0000–7777, excluding some) assigned by ATC to identify a specific aircraft on radar. The transponder replies to radar interrogations with the code, allowing controllers to correlate the radar return with the specific flight.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transponder primary purpose</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transponder primary purpose</div>
+                            <p>The transponder replies to Secondary Surveillance Radar (SSR) interrogations from ATC ground stations. SSR interrogates at 1030 MHz; transponder replies at 1090 MHz with squawk code and altitude. This allows ATC to positively identify and track the aircraft on radar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transponder antenna installation requirements</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transponder antenna installation requirements</div>
+                            <p>Transponder antennas operate at 1030/1090 MHz. Installation: (1) verify 50Ω impedance match, (2) use appropriate coax (low-loss type at ~1 GHz, e.g., RG-400 or similar), (3) torque TNC or BNC connectors per spec, (4) verify SWR after installation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Mode S 24-bit ICAO address</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Mode S 24-bit ICAO address</div>
+                            <p>Mode S assigns each aircraft a unique 24-bit ICAO address (set during manufacture/registration). ATC systems use this to selectively interrogate specific aircraft (not all-call interrogation like Mode A/C). Enables data link, reduces RF congestion, and supports ADS-B Out transmission.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Mode C transponder</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Mode C transponder</div>
+                            <p>Mode C replies include Mode A squawk code PLUS pressure altitude (Gillham code from encoding altimeter or ADC). Altitude is transmitted in 100-ft increments referenced to 29.92 inHg (standard pressure). ATC can see both aircraft identity and altitude on their display.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transponder antenna</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transponder antenna</div>
+                            <p>Transponder antennas are low-profile blade or stub antennas tuned to 1030/1090 MHz (L-band). Mounted on the belly (bottom of fuselage) and/or top of fuselage. Low profile to minimize drag. 50Ω impedance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Mode C — combined ID and altitude</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Mode C — combined ID and altitude</div>
+                            <p>Mode C is the standard operating mode for IFR flight, providing both Mode A squawk code (identity) and pressure altitude in a single transponder reply. Most ATC radar requires Mode C in controlled airspace above 10,000 MSL and near Class B/C airports.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transponder</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transponder</div>
+                            <p>A critical surveillance transceiver that actively replies to ground radar interrogations with robust identity and altitude data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Squawk Code</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Squawk Code</div>
+                            <p>A specific 4-digit octal identifier explicitly assigned by Air Traffic Control to correlate a radar dot with a specific flight plan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Mode C</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Mode C</div>
+                            <p>The operational transponder mode that actively intertwines raw pressure altitude data alongside the squawk code reply.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Mode S</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Mode S</div>
+                            <p>Advanced selective-interrogation transponders utilizing a permanent 24-bit global address to drastically reduce radio frequency clutter.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>SSR (Secondary Surveillance Radar)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">SSR (Secondary Surveillance Radar)</div>
+                            <p>The modern ATC radar system heavily reliant on active aircraft transponder replies rather than passive skin reflections.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="1" data-feedback="The squawk code is an identification tool — it lets ATC correlate a specific radar return with a specific flight. Without squawk, the radar shows only anonymous returns; with squawk, ATC can say &#x27;that&#x27;s N12345&#x27; and track it with callsign, altitude, and flight data attached.">
+                <div class="kc-header">Knowledge Verification [1/7]</div>
+                <div class="kc-question">What is the purpose of a transponder squawk code?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">To encode the aircraft&#x27;s altitude in binary for TCAS processing</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">To allow ATC radar to identify and track a specific aircraft among other traffic</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">To broadcast GPS position data to nearby aircraft via ADS-B</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">To encrypt the transponder reply to prevent spoofing</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="3" data-feedback="The transponder is fundamentally a reply device — it listens for SSR interrogations and responds with coded information (squawk code in Mode A, altitude in Mode C, data link in Mode S). This allows ATC secondary radar to create the labeled radar display controllers use for separation.">
+                <div class="kc-header">Knowledge Verification [2/7]</div>
+                <div class="kc-question">What is the primary purpose of an aircraft transponder?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">To broadcast GPS position data to other aircraft</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">To encrypt aircraft identification data for security purposes</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">To monitor other transponder-equipped aircraft for collision avoidance</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">To reply to ATC secondary surveillance radar interrogations for identification and tracking</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="0" data-feedback="All three are required: impedance match ensures proper power transfer and minimal reflection; correct coax minimizes loss at ~1 GHz (standard RG-58 has too much loss); proper connector torque ensures electrical contact and weatherproofing. Ignoring any of these risks poor transponder performance or compliance failure.">
+                <div class="kc-header">Knowledge Verification [3/7]</div>
+                <div class="kc-question">What must be verified when installing a transponder antenna?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0" data-remediation="">
+                        <div class="kc-option-text">Antenna impedance match, correct coaxial cable type, and connector torque to specification</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1" data-remediation="">
+                        <div class="kc-option-text">Only that the physical mounting is secure — RF performance self-adjusts</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2" data-remediation="">
+                        <div class="kc-option-text">That the antenna is co-located with the VOR antenna for shared ground plane</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3" data-remediation="">
+                        <div class="kc-option-text">Only the coax length — connector type doesn&#x27;t matter at transponder frequencies</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="1" data-feedback="The 24-bit address enables selective interrogation — ATC can query a specific aircraft&#x27;s transponder rather than broadcasting to all. This reduces RF congestion in busy airspace and enables two-way data link communication (used for ACAS coordination, ATIS data, and future applications).">
+                <div class="kc-header">Knowledge Verification [4/7]</div>
+                <div class="kc-question">What does the 24-bit ICAO address in a Mode S transponder enable?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0" data-remediation="">
+                        <div class="kc-option-text">Encoding of aircraft registration number in audio Morse code</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1" data-remediation="">
+                        <div class="kc-option-text">Selective interrogation of specific aircraft by ATC systems</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2" data-remediation="">
+                        <div class="kc-option-text">Automatic frequency selection for the most congested sector</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3" data-remediation="">
+                        <div class="kc-option-text">Encryption of altitude data to prevent spoofing</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="3" data-feedback="Mode C = Mode A (squawk code) + pressure altitude. The altitude comes from an encoding altimeter (mechanical Gillham code output) or air data computer, transmitted in 100-ft increments at standard pressure (29.92). ATC sees altitude tagged to each radar return.">
+                <div class="kc-header">Knowledge Verification [5/7]</div>
+                <div class="kc-question">What does a Mode C transponder transmit in addition to the squawk code?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0" data-remediation="">
+                        <div class="kc-option-text">GPS-derived latitude and longitude position</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1" data-remediation="">
+                        <div class="kc-option-text">Aircraft registration number in ICAO format</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2" data-remediation="">
+                        <div class="kc-option-text">Groundspeed computed from GPS data</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3" data-remediation="">
+                        <div class="kc-option-text">Pressure altitude encoded from an encoding altimeter</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="0" data-feedback="Transponders operate in the L-band at 1030 MHz (interrogation) and 1090 MHz (reply). Low-profile blade or stub antennas are standard — they provide the omni pattern needed for ATC line-of-sight while minimizing drag. V-shaped dipoles are VOR; loops are ADF; patch antennas are GPS.">
+                <div class="kc-header">Knowledge Verification [6/7]</div>
+                <div class="kc-question">What type of antenna does a transponder use and at what frequencies?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0" data-remediation="">
+                        <div class="kc-option-text">Low-profile blade or stub antenna at 1030/1090 MHz</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1" data-remediation="">
+                        <div class="kc-option-text">Loop antenna at 190–535 kHz</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2" data-remediation="">
+                        <div class="kc-option-text">V-shaped bent dipole at 108–118 MHz</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3" data-remediation="">
+                        <div class="kc-option-text">Patch antenna at 1575 MHz</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc7" style="display: none; margin:0;" data-correct="1" data-feedback="Mode C = Mode A identity (squawk code) + automatic pressure altitude from encoding altimeter. This combination is what allows ATC radar displays to show both the labeled aircraft identity and its altitude — the minimum information needed for basic radar separation services.">
+                <div class="kc-header">Knowledge Verification [7/7]</div>
+                <div class="kc-question">What combination of information does Mode C provide?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="0" data-remediation="">
+                        <div class="kc-option-text">GPS position and velocity only</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="1" data-remediation="">
+                        <div class="kc-option-text">Both the Mode A squawk code (identification) and pressure altitude reporting</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="2" data-remediation="">
+                        <div class="kc-option-text">Pressure altitude only, with no identification</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="3" data-remediation="">
+                        <div class="kc-option-text">Pilot-entered flight plan data and squawk code</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc7" disabled onclick="checkAnswer('kc7')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc7"></div>
+                <button class="kc-next-btn" id="next-kc7" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(6)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Transponders violently reply to 1030 MHz radar sweeps on 1090 MHz; Mode C layers critical altitude onto the Mode A squawk code, while Mode S cleans up skies via unique 24-bit selective interrogation.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W7-Z4-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W7-Z5-N2_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W7-Z5-N1';
+        const NODE_LOS = ["q12", "q83", "q106", "q117", "q126", "q153", "q191"];
+        const TOTAL_KCS = 7;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'CNS',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

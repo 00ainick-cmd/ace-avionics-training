@@ -1,0 +1,515 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    .dme-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background: #020617;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .dme-header {
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #38bdf8;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        margin-bottom: 5px;
+    }
+
+    .dme-canvas-wrap {
+        position: relative;
+        width: 100%;
+        height: 320px;
+        background: radial-gradient(circle at center bottom, #0f172a 0%, #020617 100%);
+        border: 2px solid #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.1);
+    }
+
+    #dme-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .dme-scanline {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(16, 185, 129, 0.1) 50%, rgba(16, 185, 129, 0.1));
+        background-size: 100% 4px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.3;
+    }
+
+    .dme-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #0f172a;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        gap: 30px;
+    }
+
+    .dme-slider-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dme-slider-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: #38bdf8;
+        cursor: pointer;
+        margin-top: -8px;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        cursor: pointer;
+        background: #334155;
+        border-radius: 2px;
+    }
+
+    .dme-btn {
+        background: transparent;
+        color: #38bdf8;
+        border: 2px solid #38bdf8;
+        padding: 12px 24px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.1rem;
+        transition: all 0.2s;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2), inset 0 0 10px rgba(56, 189, 248, 0.1);
+        text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+    }
+
+    .dme-btn:hover:not(:disabled) {
+        background: rgba(56, 189, 248, 0.1);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .dme-btn:disabled {
+        border-color: #475569;
+        color: #475569;
+        box-shadow: none;
+        text-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .dme-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .dme-stat-box {
+        background: #0f172a;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dme-stat-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+    }
+
+    .box-alt::before {
+        background: #94a3b8;
+    }
+
+    .box-gnd::before {
+        background: #38bdf8;
+    }
+
+    .box-slt::before {
+        background: #10b981;
+        box-shadow: 0 0 10px #10b981;
+    }
+
+    .box-tme::before {
+        background: #f59e0b;
+    }
+
+    .dme-stat-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #64748b;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .dme-stat-val {
+        font-size: 1.6rem;
+        color: #f8fafc;
+        font-family: 'Share Tech Mono', monospace;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .val-slt {
+        color: #34d399;
+        text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+    }
+
+    .val-tme {
+        color: #fbbf24;
+        text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+</style>
+
+<div class="dme-container">
+    <div>
+        <div class="dme-header">DME Slant Range MFD</div>
+        <p style="text-align:center; color:#64748b; font-size:0.9rem; margin-top:5px;">Distance Measuring Equipment
+            multi-function display. Visualizes trigonometric slant range error.</p>
+    </div>
+
+    <div class="dme-stats">
+        <div class="dme-stat-box box-alt">
+            <div class="dme-stat-label">Altitude (Fixed)</div>
+            <div class="dme-stat-val">FL360</div>
+        </div>
+        <div class="dme-stat-box box-gnd">
+            <div class="dme-stat-label">Ground Dist</div>
+            <div class="dme-stat-val" id="dme-ground">0 NM</div>
+        </div>
+        <div class="dme-stat-box box-slt"
+            style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16,185,129,0.3);">
+            <div class="dme-stat-label" style="color:#34d399;">Slant Range</div>
+            <div class="dme-stat-val val-slt" id="dme-slant">0 NM</div>
+        </div>
+        <div class="dme-stat-box box-tme">
+            <div class="dme-stat-label">Round Trip Time</div>
+            <div class="dme-stat-val val-tme" id="dme-time">0 µs</div>
+        </div>
+    </div>
+
+    <div class="dme-canvas-wrap">
+        <div class="dme-scanline"></div>
+        <canvas id="dme-canvas"></canvas>
+    </div>
+
+    <div class="dme-controls">
+        <div class="dme-slider-container">
+            <div class="dme-slider-label">
+                <span>Aircraft Position (Ground Distance)</span>
+                <span style="color:#38bdf8;" id="dme-slider-val">40 NM</span>
+            </div>
+            <input type="range" id="dme-slider" min="0" max="60" value="40" step="0.5">
+        </div>
+        <button class="dme-btn" id="dme-fire">Transmit Interrogation</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('dme-canvas');
+        const ctx = canvas.getContext('2d');
+        const btnFire = document.getElementById('dme-fire');
+        const slider = document.getElementById('dme-slider');
+
+        const valGround = document.getElementById('dme-ground');
+        const valSlant = document.getElementById('dme-slant');
+        const valTime = document.getElementById('dme-time');
+        const valSlider = document.getElementById('dme-slider-val');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Simulation State
+        const station = { x: 0, y: 0 };
+        const plane = { x: 0, y: 0 };
+
+        const alt_ft = 36000;
+        const nm_to_ft = 6076.12;
+        const alt_nm = alt_ft / nm_to_ft; // ~5.92 NM
+
+        let currentGroundNM = parseFloat(slider.value);
+        let currentSlantNM = 0;
+
+        let isFiring = false;
+        let pulsePhase = 0; // 0=out, 1=delay, 2=back
+        let pulseProgress = 0;
+        let lastTime = 0;
+
+        let scanAngle = 0;
+
+        function calculateRanges() {
+            currentGroundNM = parseFloat(slider.value);
+            currentSlantNM = Math.sqrt(Math.pow(currentGroundNM, 2) + Math.pow(alt_nm, 2));
+
+            valSlider.innerText = currentGroundNM.toFixed(1) + " NM";
+            valGround.innerText = currentGroundNM.toFixed(1) + " NM";
+            valSlant.innerText = currentSlantNM.toFixed(1) + " NM";
+
+            if (!isFiring) {
+                valTime.innerText = "STANDBY";
+                valTime.style.color = "#64748b";
+                valTime.style.textShadow = "none";
+            }
+
+            const nmPixels = width / 140; // max width 140nm
+            station.x = width / 2;
+            station.y = height - 30;
+
+            plane.x = station.x - (currentGroundNM * nmPixels);
+            plane.y = 50;
+        }
+
+        slider.addEventListener('input', calculateRanges);
+
+        btnFire.addEventListener('click', () => {
+            if (isFiring) return;
+            isFiring = true;
+            pulsePhase = 0;
+            pulseProgress = 0;
+            btnFire.disabled = true;
+            lastTime = performance.now();
+            valTime.style.color = "#fbbf24";
+            valTime.style.textShadow = "0 0 10px rgba(251,191,36,0.5)";
+        });
+
+        function drawAircraft(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(currentGroundNM < 0 ? Math.PI : 0); // point towards station
+
+            // Sleek delta wing
+            ctx.fillStyle = "#f8fafc";
+            ctx.beginPath();
+            ctx.moveTo(20, 0); // nose
+            ctx.lineTo(-15, 12);
+            ctx.lineTo(-10, 0);
+            ctx.lineTo(-15, -12);
+            ctx.closePath();
+            ctx.fill();
+
+            // Engine glow
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#38bdf8";
+            ctx.fillStyle = "#38bdf8";
+            ctx.beginPath();
+            ctx.arc(-12, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawStation(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Base
+            ctx.fillStyle = "#1e293b";
+            ctx.beginPath();
+            ctx.moveTo(-15, 20);
+            ctx.lineTo(15, 20);
+            ctx.lineTo(5, -15);
+            ctx.lineTo(-5, -15);
+            ctx.closePath();
+            ctx.fill();
+
+            // Antenna orb
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#10b981";
+            ctx.fillStyle = "#34d399";
+            ctx.beginPath();
+            ctx.arc(0, -15, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function animatePulse(time) {
+            if (!lastTime) lastTime = time;
+            const dt = time - lastTime;
+            lastTime = time;
+
+            // Background radar scan rotation
+            scanAngle += 0.02;
+
+            if (isFiring) {
+                const pulseSpeed = 0.0015; // smooth speed
+
+                if (pulsePhase === 0) {
+                    pulseProgress += pulseSpeed * dt;
+                    valTime.innerText = "TX: 1034 MHz";
+                    if (pulseProgress >= 1) { pulsePhase = 1; pulseProgress = 0; }
+                } else if (pulsePhase === 1) {
+                    pulseProgress += (pulseSpeed * 0.8) * dt;
+                    valTime.innerText = "DLY: 50 µs";
+                    if (pulseProgress >= 1) { pulsePhase = 2; pulseProgress = 0; }
+                } else if (pulsePhase === 2) {
+                    pulseProgress += pulseSpeed * dt;
+                    valTime.innerText = "RX: 1097 MHz";
+                    if (pulseProgress >= 1) { pulsePhase = 3; }
+                } else if (pulsePhase === 3) {
+                    isFiring = false;
+                    btnFire.disabled = false;
+                    const totalMicroseconds = (currentSlantNM * 12.359) + 50;
+                    valTime.innerText = Math.round(totalMicroseconds) + " µs";
+
+                    // Flash slant range green
+                    const sltBox = document.querySelector('.box-slt');
+                    sltBox.style.background = 'rgba(16, 185, 129, 0.2)';
+                    setTimeout(() => { sltBox.style.background = 'rgba(16, 185, 129, 0.05)'; }, 500);
+                }
+            }
+
+            drawFrame();
+            requestAnimationFrame(animatePulse);
+        }
+
+        function drawFrame() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Radar range rings (from station)
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.1)";
+            ctx.lineWidth = 1;
+            const nmPixels = width / 140;
+            for (let r = 10; r <= 100; r += 10) {
+                ctx.beginPath();
+                ctx.arc(station.x, station.y, r * nmPixels, Math.PI, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Radar Sweep
+            ctx.save();
+            ctx.translate(station.x, station.y);
+            ctx.rotate(Math.PI + Math.abs(Math.sin(scanAngle)) * Math.PI); // sweeping back and forth over the top half
+            const grad = ctx.createLinearGradient(0, 0, width, 0);
+            grad.addColorStop(0, "rgba(56,189,248,0.2)");
+            grad.addColorStop(1, "transparent");
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.arc(0, 0, width, 0, 0.2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+
+            // Ground line
+            ctx.strokeStyle = "#38bdf8";
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#38bdf8";
+            ctx.beginPath();
+            ctx.moveTo(0, station.y + 20);
+            ctx.lineTo(width, station.y + 20);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Line of sight
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.4)";
+            ctx.setLineDash([8, 8]);
+            ctx.beginPath();
+            ctx.moveTo(plane.x, plane.y);
+            ctx.lineTo(station.x, station.y - 15);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Animated Pulse
+            if (isFiring) {
+                let px, py;
+                ctx.lineWidth = 3;
+
+                if (pulsePhase === 0) { // Interrogation (Plane -> Station)
+                    px = plane.x + (station.x - plane.x) * pulseProgress;
+                    py = plane.y + (station.y - 15 - plane.y) * pulseProgress;
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, 15, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#a855f7"; // Purple
+                    ctx.shadowBlur = 15; ctx.shadowColor = "#a855f7";
+                    ctx.stroke();
+
+                } else if (pulsePhase === 1) { // 50us Delay
+                    ctx.beginPath();
+                    ctx.arc(station.x, station.y - 15, 20 + Math.sin(pulseProgress * 20) * 10, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#10b981"; // Green
+                    ctx.shadowBlur = 20; ctx.shadowColor = "#10b981";
+                    ctx.stroke();
+
+                } else if (pulsePhase === 2) { // Reply (Station -> Plane)
+                    px = station.x + (plane.x - station.x) * pulseProgress;
+                    py = (station.y - 15) + (plane.y - (station.y - 15)) * pulseProgress;
+
+                    // Expanding rings
+                    ctx.beginPath();
+                    ctx.arc(station.x, station.y - 15, currentSlantNM * nmPixels * pulseProgress, Math.PI, Math.PI * 2);
+                    ctx.strokeStyle = "rgba(245, 158, 11, 0.5)"; // Amber
+                    ctx.lineWidth = 8;
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, 15, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#f59e0b"; // Amber
+                    ctx.shadowBlur = 15; ctx.shadowColor = "#f59e0b";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+                ctx.shadowBlur = 0;
+            }
+
+            drawStation(station.x, station.y);
+            drawAircraft(plane.x, plane.y);
+        }
+
+        calculateRanges();
+        requestAnimationFrame(animatePulse);
+    });
+</script>

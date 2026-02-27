@@ -1,0 +1,517 @@
+{
+  "metadata": {
+    "courseId": "caet-entry-w2",
+    "title": "Maintenance Regulations & Documentation (Entry scope)",
+    "description": "Micro-training generated for W2: Maintenance Regulations & Documentation (Entry scope)"
+  },
+  "lessons": [
+    {
+      "id": "W2-Z1-N1",
+      "title": "Parts 145/43/91 basics (recognition)",
+      "zone": "Regulatory framework",
+      "objectiveKeys": [
+        "q8",
+        "q100"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Parts 145/43/91 basics (recognition)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize which regulation bucket applies and what that implies (manual-first, documentation, scope)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "14 CFR Part 145",
+              "definition": "The FAA regulation that establishes performance rules and certification requirements for repair stations performing maintenance on aircraft and aircraft components.",
+              "analogy": "Like a restaurant health code \u2014 it sets the mandatory operating standards a shop must meet to stay certified."
+            },
+            {
+              "term": "14 CFR Part 43",
+              "definition": "The FAA regulation governing performance rules for aircraft maintenance, preventive maintenance, rebuilding, and alterations \u2014 applying to any authorized person performing this work, not just repair stations.",
+              "analogy": "If Part 145 is the rulebook for the repair station as an organization, Part 43 is the rulebook for the work itself \u2014 it applies to everyone touching the aircraft."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A new hire asks which regulation the shop operates under as an FAA-certificated repair station. What is the correct answer?",
+          "choices": [
+            "14 CFR Part 145",
+            "14 CFR Part 91",
+            "14 CFR Part 65",
+            "14 CFR Part 43"
+          ],
+          "correctIndex": 0,
+          "feedback": "14 CFR Part 145 is the governing regulation for certificated repair stations. Part 43 sets maintenance performance standards broadly for anyone performing maintenance \u2014 it governs the work, not the shop's certification. Part 91 covers aircraft operations. Part 65 covers airmen certification."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which regulation establishes the performance rules for aircraft maintenance, preventive maintenance, and alterations?",
+          "choices": [
+            "14 CFR Part 91",
+            "14 CFR Part 145",
+            "14 CFR Part 43",
+            "14 CFR Part 65"
+          ],
+          "correctIndex": 2,
+          "feedback": "Part 43 covers how maintenance must be performed \u2014 standards, record-keeping, return-to-service requirements \u2014 for all authorized persons. Part 145 covers repair station certification. Part 91 covers operations. Part 65 covers airmen certificates."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z1-N2",
+      "title": "Maintenance vs preventive maintenance (recognition)",
+      "zone": "Regulatory framework",
+      "objectiveKeys": [
+        "q71",
+        "q202"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Maintenance vs preventive maintenance (recognition)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize maintenance and preventive maintenance concepts at CAET entry level."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Maintenance (FAA Definition)",
+              "definition": "Per FAA regulations: inspection, overhaul, repair, preservation, and replacement of parts \u2014 explicitly excluding preventive maintenance, which is a separate regulatory category.",
+              "analogy": "Like a car service package covering inspections and repairs \u2014 but not the DIY tasks the owner is allowed to perform themselves."
+            },
+            {
+              "term": "Preventive Maintenance (Part 43)",
+              "definition": "Under 14 CFR Part 43, preventive maintenance is limited to certificated pilots on aircraft they own or operate \u2014 restricted to simple tasks explicitly listed in Part 43 Appendix A.",
+              "analogy": "Like a homeowner being allowed to replace their own light switches but not wire a subpanel \u2014 a defined, limited scope for non-professionals on their own property."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "According to FAA regulations, which activity is explicitly EXCLUDED from the definition of 'maintenance'?",
+          "choices": [
+            "Inspection",
+            "Preservation",
+            "Preventive maintenance",
+            "Parts replacement"
+          ],
+          "correctIndex": 2,
+          "feedback": "The FAA definition of maintenance lists inspection, overhaul, repair, preservation, and replacement of parts. Preventive maintenance is carved out as a separate category that certificated pilots may perform on aircraft they own or operate."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Why is preventive maintenance under Part 43 limited to certificated pilots on aircraft they own or operate?",
+          "choices": [
+            "Because pilots receive basic maintenance training and can perform any simple task",
+            "Because Part 43 restricts all maintenance to aircraft owners regardless of certification level",
+            "Because it covers only simple tasks not requiring mechanic training, on the owner's aircraft only",
+            "Because the FAA determined pilots are more reliable than mechanics for owner-performed tasks"
+          ],
+          "correctIndex": 2,
+          "feedback": "Preventive maintenance covers simple tasks (oil changes, tire replacement, bulb changes) that don't require mechanic-level training. The owner/operator limitation ensures the person has a direct stake in the aircraft's airworthiness. Performing preventive maintenance on someone else's aircraft is not authorized."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z2-N1",
+      "title": "Ratings/capability limits (stay in your lane)",
+      "zone": "Scope & technical data",
+      "objectiveKeys": [
+        "q177"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Ratings/capability limits (stay in your lane)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize that work must stay within ratings/capabilities."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Part 145 Ratings & Scope",
+              "definition": "A Part 145 repair station may only perform work within its specific ratings and classes listed in its operations specifications. Work outside those ratings is not authorized regardless of individual technician qualifications.",
+              "analogy": "Like a contractor's license \u2014 a licensed electrician cannot perform plumbing work just because they are in the same building."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A Part 145 shop receives work for an aircraft component outside its current ratings. What is the correct action?",
+          "choices": [
+            "Perform the work if a certificated technician on staff holds the relevant A&P endorsement",
+            "Perform the work and document it under the closest applicable rating",
+            "Decline the work \u2014 the shop may only perform work within its specific ratings and classes",
+            "Accept the work and request an emergency rating expansion from the local FSDO"
+          ],
+          "correctIndex": 2,
+          "feedback": "Part 145 limits a shop to work within its Ops Specs ratings and classes. An individual tech's A&P certificate does not extend the shop's authorization. There is no emergency rating expansion process."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z2-N2",
+      "title": "Current manuals / technical data requirement",
+      "zone": "Scope & technical data",
+      "objectiveKeys": [
+        "q70",
+        "q183"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Current manuals / technical data requirement"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Stop work if required current technical data is missing; recognize responsibility concept."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Capability List + Current Tech Data",
+              "definition": "Being on the capability list authorizes the work type, but Part 145 also requires the current revision of the manufacturer's maintenance manual before maintenance begins. Both authorization and current data are required.",
+              "analogy": "Like a surgeon authorized for a procedure \u2014 they still must have the current protocol on hand. Credentials alone do not substitute for current guidance."
+            },
+            {
+              "term": "QC & Accountable Manager (Tech Data)",
+              "definition": "Under Part 145, the Quality Control department and accountable manager are responsible for ensuring current technical data is available and used during maintenance.",
+              "analogy": "Like a hospital's compliance officer and medical director being jointly responsible that all procedures use current protocols \u2014 systemic responsibility, not just individual practitioner responsibility."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A radio is on your shop's capability list, but only an outdated manual is available. What must happen before maintenance begins?",
+          "choices": [
+            "Proceed \u2014 capability list listing is sufficient authorization for the work",
+            "Contact the FAA for a field approval to use the outdated manual revision",
+            "Obtain the current revision of the manufacturer's maintenance manual first",
+            "Have the IA sign off in advance to authorize proceeding without current data"
+          ],
+          "correctIndex": 2,
+          "feedback": "Part 145 requires both authorization (capability list) and current technical data. An IA authorization does not substitute for required technical data. The FAA does not issue field approvals to use outdated manufacturer manuals."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Under Part 145, who is responsible for ensuring that current technical data is available and used during maintenance?",
+          "choices": [
+            "Each individual technician performing the specific work",
+            "The FAA inspector assigned to conduct surveillance of the station",
+            "The Quality Control department and accountable manager",
+            "The aircraft owner or operator who brought the work in"
+          ],
+          "correctIndex": 2,
+          "feedback": "Part 145 places systemic responsibility for current technical data on the QC department and accountable manager. While individual technicians must use current data, the organizational responsibility for ensuring it is provided and maintained belongs to QC and the accountable manager."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z2-N3",
+      "title": "Manual-first troubleshooting start point",
+      "zone": "Scope & technical data",
+      "objectiveKeys": [
+        "q82"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Manual-first troubleshooting start point"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Choose consult-manual as the correct first step in troubleshooting."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "VOR Troubleshooting First Step",
+              "definition": "In a Part 145 shop, the first step when troubleshooting any fault is to consult the manufacturer's maintenance manual \u2014 approved data must guide the diagnostic procedure before any components are replaced.",
+              "analogy": "Like calling tech support before replacing your router \u2014 diagnosis first, hardware swap last."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A VOR receiver shows an intermittent NAV flag. What is the correct first step in a Part 145 shop?",
+          "choices": [
+            "Consult the manufacturer's maintenance manual before replacing any components",
+            "Swap the receiver with a known-good spare to quickly isolate the fault to the LRU",
+            "Check the antenna coax for continuity \u2014 it is the most common cause of intermittent flags",
+            "Document the fault and return the aircraft to service pending parts availability"
+          ],
+          "correctIndex": 0,
+          "feedback": "Approved technical data must guide all maintenance in a Part 145 shop. The manual defines the diagnostic procedure \u2014 it may direct checking the antenna first or running a self-test. Jumping to a swap without the manual is a regulatory violation regardless of technician experience."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z3-N1",
+      "title": "Maintenance record elements (Part 43.9 level)",
+      "zone": "Documentation basics",
+      "objectiveKeys": [
+        "q20",
+        "q154"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Maintenance record elements (Part 43.9 level)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Identify required elements of a maintenance record/log entry."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Maintenance Record (\u00a743.9)",
+              "definition": "Per 14 CFR \u00a743.9, a maintenance record must include: description of work performed, date completed, name of person performing work, certificate number, and a return-to-service signature.",
+              "analogy": "Like a doctor's note after surgery \u2014 it must say what was done, when, by whom with their license number, and that the patient is cleared to go."
+            },
+            {
+              "term": "Avionics Repair Log Entry (Required Elements)",
+              "definition": "Required elements per \u00a743.9: description of work performed, parts used, date completed, technician name, certificate number, and return-to-service statement.",
+              "analogy": "Like a contractor's invoice that doubles as a warranty record \u2014 documenting exactly what was done, what was installed, when, and by whom with their license number."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Per 14 CFR \u00a743.9, which elements must be included in a maintenance record entry?",
+          "choices": [
+            "Description of work, date, name, certificate number, and return-to-service signature",
+            "Description of work, aircraft serial number, date, and inspector signature",
+            "Work order number, date, technician photo ID, and certificate number",
+            "Part numbers replaced, date, flight hours, and technician name"
+          ],
+          "correctIndex": 0,
+          "feedback": "\u00a743.9 requires five elements: description of work performed, date completed, name, certificate number, and return-to-service signature. Aircraft serial number, flight hours, and photo ID are not required elements."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which list correctly states all required elements of a maintenance log entry for an avionics repair?",
+          "choices": [
+            "Description of work performed, parts used, date completed, technician name, certificate number, and return-to-service statement",
+            "Description of work, aircraft serial number, date, and IA countersignature",
+            "Work order number, parts used, technician name, and shop authorization stamp",
+            "Description of work, date, parts used, and return-to-service signature only"
+          ],
+          "correctIndex": 0,
+          "feedback": "All six elements are required by \u00a743.9. Aircraft serial number and IA countersignature are not required elements. Work order number and shop stamp are administrative tools, not regulatory requirements."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z4-N1",
+      "title": "Major alteration basics",
+      "zone": "Approved data / changes",
+      "objectiveKeys": [
+        "q61",
+        "q86"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Major alteration basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize major alteration definition and common avionics examples."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Major Alteration (Part 43 Appendix A)",
+              "definition": "A change to type design that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities \u2014 and is not listed in the aircraft specifications or type certificate data sheet.",
+              "analogy": "Like a structural renovation changing a building's load-bearing capacity \u2014 it needs engineering review and a permit, unlike replacing a light fixture."
+            },
+            {
+              "term": "STC + Flight Manual Supplement = Major Alteration",
+              "definition": "An STC installation that includes a flight manual supplement is a major alteration \u2014 regardless of the part's TSO status \u2014 because it changes the aircraft's approved operating limitations or procedures.",
+              "analogy": "A TSO on the part is like a UL listing on an appliance \u2014 the part is approved, but modifying your home's electrical panel to install it still requires a permit."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Per 14 CFR Part 43 Appendix A, how is a major alteration defined?",
+          "choices": [
+            "Any repair costing more than $1,000 in parts and labor",
+            "Any alteration not specifically covered by the aircraft's POH",
+            "A change to type design that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities",
+            "Any repair requiring an IA to approve the return-to-service"
+          ],
+          "correctIndex": 2,
+          "feedback": "The regulatory definition focuses on the effect on airworthiness: a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities. Cost, POH coverage, and IA involvement are not the determining factors."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A shop installs an avionics system under an STC. The STC data package includes a flight manual supplement changing VFR-only to IFR-approved operations. This installation should be classified as:",
+          "choices": [
+            "A minor alteration \u2014 avionics do not affect structural strength",
+            "A major alteration \u2014 the flight manual supplement signals a change affecting airworthiness qualities",
+            "A line replacement \u2014 the part has a TSO so no alteration approval is needed",
+            "Preventive maintenance \u2014 pilots can perform STC installations on their own aircraft"
+          ],
+          "correctIndex": 1,
+          "feedback": "The flight manual supplement signals the change affects aircraft airworthiness qualities (operating limitations). That meets the Part 43 Appendix A major alteration definition. TSO approval on the part does not determine the classification of the installation."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z4-N2",
+      "title": "STC and TSO replacement basics",
+      "zone": "Approved data / changes",
+      "objectiveKeys": [
+        "q127",
+        "q179"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to STC and TSO replacement basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize STC meaning and TSO-for-TSO replacement reasoning."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "TSO-for-TSO Replacement",
+              "definition": "Replacing a TSO part with another TSO part of the same type, done per approved data, is generally NOT a major alteration \u2014 it does not change the type design in a way that appreciably affects airworthiness.",
+              "analogy": "Like replacing a UL-listed circuit breaker with another of the same rating per the panel specs \u2014 same approval class, done per the approved design data."
+            },
+            {
+              "term": "STC (Supplemental Type Certificate)",
+              "definition": "An FAA approval that permits modification of a type-certificated aircraft in a manner not covered by the original type certificate. The STC holder owns the approved data package for that specific modification.",
+              "analogy": "Like an officially approved aftermarket upgrade \u2014 sanctioned by the certifying authority, covering exactly the modification specified and no more."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A technician replaces a TSO-approved comm radio with a different brand but same TSO class unit, per the aircraft manufacturer's approved data. This is classified as:",
+          "choices": [
+            "A major alteration \u2014 any avionics change requires FAA Form 337",
+            "A major repair \u2014 comm systems are flight-critical installed equipment",
+            "Generally not a major alteration \u2014 it is a TSO-for-TSO replacement per approved data",
+            "Preventive maintenance \u2014 TSO equipment replacement is owner-authorized"
+          ],
+          "correctIndex": 2,
+          "feedback": "TSO-for-TSO replacement per approved data is generally not a major alteration because it does not appreciably change the aircraft's airworthiness qualities. Both qualifiers matter: same TSO class and done per approved data."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is an STC?",
+          "choices": [
+            "A required FAA inspection interval for modified aircraft systems",
+            "An FAA approval authorizing modification of a type-certificated aircraft beyond its original type certificate",
+            "A document recording the completion of a major repair on an aircraft",
+            "A manufacturer's approval for using a parts substitute on a certificated aircraft"
+          ],
+          "correctIndex": 1,
+          "feedback": "An STC is an FAA approval authorizing a specific modification to a specific aircraft type, including the approved data package. ADs mandate action. Form 337 documents work. PMA approves parts. Only an STC authorizes the original modification."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z5-N1",
+      "title": "Installation standards awareness (cross-link)",
+      "zone": "Standards & calibration awareness",
+      "objectiveKeys": [
+        "q128"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Installation standards awareness (cross-link)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize common installation standard references (wiring/install)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "AC 43.13-1B (Wiring Standard)",
+              "definition": "AC 43.13-1B Chapter 11 (or the aircraft manufacturer's wiring data when it exists) is the primary standard for avionics wiring installation in a Part 145 shop, covering acceptable methods and practices.",
+              "analogy": "Like the NEC (National Electrical Code) for building wiring \u2014 the governing standard that defines what acceptable practice means."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the most critical standard to follow when installing avionics wiring in a Part 145 environment?",
+          "choices": [
+            "RTCA DO-160G environmental testing requirements",
+            "The STC holder's equipment installation manual exclusively",
+            "AC 43.13-1B or the aircraft manufacturer's wiring data",
+            "RTCA DO-178C software development assurance standards"
+          ],
+          "correctIndex": 2,
+          "feedback": "AC 43.13-1B Chapter 11 is the governing standard for aircraft wiring acceptable methods and practices. Manufacturer-specific wiring data takes precedence when it exists. DO-160G covers environmental testing. DO-178C covers software \u2014 neither addresses physical wiring practices."
+        }
+      ]
+    },
+    {
+      "id": "W2-Z5-N2",
+      "title": "Calibration label check (cross-link)",
+      "zone": "Standards & calibration awareness",
+      "objectiveKeys": [
+        "q152"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Calibration label check (cross-link)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Verify tool/test equipment calibration status before use."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Test Equipment Calibration",
+              "definition": "Before use in a Part 145 shop, specialized test equipment must have a current calibration label showing it is within its calibration interval. Out-of-calibration equipment produces invalid results and non-compliant records.",
+              "analogy": "Like verifying a thermometer against a known reference before using it in a critical process \u2014 if the tool is inaccurate, your measurements are meaningless."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Before using a pitot-static test set in a Part 145 shop, what must a technician verify?",
+          "choices": [
+            "That the equipment has a current calibration label and is within its calibration interval",
+            "That the equipment has been used on the same aircraft type previously",
+            "That the equipment is specifically listed on the shop's capability list",
+            "That the software version meets the avionics manufacturer's minimum requirements"
+          ],
+          "correctIndex": 0,
+          "feedback": "Part 145 requires test equipment to be calibrated and within interval before use. Out-of-calibration equipment produces invalid readings and may create non-compliant maintenance records. Capability list, prior use, and software version are not the primary verification."
+        }
+      ]
+    }
+  ]
+}

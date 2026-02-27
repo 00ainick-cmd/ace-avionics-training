@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z4-N2",
+  "title": "STC and TSO replacement basics",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Approved data / changes",
+  "objectiveKeys": [
+    "q127",
+    "q179"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to STC and TSO replacement basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize STC meaning and TSO-for-TSO replacement reasoning."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "TSO-for-TSO Replacement",
+          "definition": "Replacing a TSO part with another TSO part of the same type, done per approved data, is generally NOT a major alteration \u2014 it does not change the type design in a way that appreciably affects airworthiness.",
+          "analogy": "Like replacing a UL-listed circuit breaker with another of the same rating per the panel specs \u2014 same approval class, done per the approved design data."
+        },
+        {
+          "term": "STC (Supplemental Type Certificate)",
+          "definition": "An FAA approval that permits modification of a type-certificated aircraft in a manner not covered by the original type certificate. The STC holder owns the approved data package for that specific modification.",
+          "analogy": "Like an officially approved aftermarket upgrade \u2014 sanctioned by the certifying authority, covering exactly the modification specified and no more."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician replaces a TSO-approved comm radio with a different brand but same TSO class unit, per the aircraft manufacturer's approved data. This is classified as:",
+      "choices": [
+        "A major alteration \u2014 any avionics change requires FAA Form 337",
+        "A major repair \u2014 comm systems are flight-critical installed equipment",
+        "Generally not a major alteration \u2014 it is a TSO-for-TSO replacement per approved data",
+        "Preventive maintenance \u2014 TSO equipment replacement is owner-authorized"
+      ],
+      "correctIndex": 2,
+      "feedback": "TSO-for-TSO replacement per approved data is generally not a major alteration because it does not appreciably change the aircraft's airworthiness qualities. Both qualifiers matter: same TSO class and done per approved data."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is an STC?",
+      "choices": [
+        "A required FAA inspection interval for modified aircraft systems",
+        "An FAA approval authorizing modification of a type-certificated aircraft beyond its original type certificate",
+        "A document recording the completion of a major repair on an aircraft",
+        "A manufacturer's approval for using a parts substitute on a certificated aircraft"
+      ],
+      "correctIndex": 1,
+      "feedback": "An STC is an FAA approval authorizing a specific modification to a specific aircraft type, including the approved data package. ADs mandate action. Form 337 documents work. PMA approves parts. Only an STC authorizes the original modification."
+    }
+  ]
+}

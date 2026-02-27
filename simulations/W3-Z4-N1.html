@@ -1,0 +1,294 @@
+<style>
+    .ac-container {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .ac-header {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .ac-scope {
+        background: #020617;
+        border: 2px solid #334155;
+        border-radius: 12px;
+        padding: 10px;
+        position: relative;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .ac-canvas-wrap {
+        width: 100%;
+        height: 250px;
+        background: #0f172a;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1);
+    }
+
+    #ac-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .ac-graticule {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+        background-size: 25px 25px;
+        background-position: center center;
+        pointer-events: none;
+    }
+
+    .ac-center-lines {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(59, 130, 246, 0.3);
+        pointer-events: none;
+    }
+
+    .ac-center-lines::after {
+        content: '';
+        position: absolute;
+        top: -125px;
+        left: 50%;
+        bottom: -125px;
+        width: 1px;
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .ac-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+    }
+
+    .ac-control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ac-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .ac-val {
+        color: #60a5fa;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+    }
+
+    .ac-stats {
+        display: flex;
+        justify-content: space-around;
+        background: #0b1120;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .ac-stat-box {
+        text-align: center;
+    }
+
+    .ac-stat-title {
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+    }
+
+    .ac-stat-data {
+        color: #f1f5f9;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="ac-container">
+    <div class="ac-header">Simulated Oscilloscope: AC Fundamentals</div>
+
+    <div class="ac-scope">
+        <div class="ac-canvas-wrap">
+            <div class="ac-graticule"></div>
+            <div class="ac-center-lines"></div>
+            <canvas id="ac-canvas"></canvas>
+        </div>
+        <div class="ac-stats">
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">V(Peak)</div>
+                <div class="ac-stat-data" id="ac-vp">115 V</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">V(RMS)</div>
+                <div class="ac-stat-data" id="ac-vrms" style="color:#10b981;">81.3 V</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">Frequency</div>
+                <div class="ac-stat-data" id="ac-freq-disp">400 Hz</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">Period</div>
+                <div class="ac-stat-data" id="ac-period">2.5 ms</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ac-controls">
+        <div class="ac-control-group">
+            <div class="ac-label">
+                <span>Peak Voltage (Amplitude)</span>
+                <span class="ac-val" id="val-volt">115 V</span>
+            </div>
+            <input type="range" id="ac-slider-volt" min="10" max="230" value="115">
+        </div>
+        <div class="ac-control-group">
+            <div class="ac-label">
+                <span>Frequency (Hz)</span>
+                <span class="ac-val" id="val-freq">400 Hz</span>
+            </div>
+            <input type="range" id="ac-slider-freq" min="50" max="800" value="400">
+        </div>
+    </div>
+
+    <div style="font-size:0.85rem; color:var(--text-muted); text-align:center;">
+        Notice how altering the Peak Voltage directly impacts the <strong>RMS Voltage</strong> (Root Mean Square), which
+        is the usable power equivalent to DC. Aircraft typically run on 115 VAC at 400 Hz to save weight on magnetic
+        cores like transformers or alternators.
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('ac-canvas');
+        const ctx = canvas.getContext('2d');
+        const sliderVolt = document.getElementById('ac-slider-volt');
+        const sliderFreq = document.getElementById('ac-slider-freq');
+
+        const valVolt = document.getElementById('val-volt');
+        const valFreq = document.getElementById('val-freq');
+        const statVp = document.getElementById('ac-vp');
+        const statVrms = document.getElementById('ac-vrms');
+        const statFreq = document.getElementById('ac-freq-disp');
+        const statPeriod = document.getElementById('ac-period');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let voltage = parseInt(sliderVolt.value);
+        let frequency = parseInt(sliderFreq.value);
+        let timeOffset = 0;
+
+        function updateStats() {
+            voltage = parseInt(sliderVolt.value);
+            frequency = parseInt(sliderFreq.value);
+
+            valVolt.innerText = voltage + " V";
+            valFreq.innerText = frequency + " Hz";
+
+            statVp.innerText = voltage + " V";
+            const vrms = (voltage * 0.707).toFixed(1);
+            statVrms.innerText = vrms + " V";
+
+            statFreq.innerText = frequency + " Hz";
+            const periodMs = (1000 / frequency).toFixed(2);
+            statPeriod.innerText = periodMs + " ms";
+        }
+
+        sliderVolt.addEventListener('input', updateStats);
+        sliderFreq.addEventListener('input', updateStats);
+
+        function drawWave(time) {
+            ctx.clearRect(0, 0, width, height);
+
+            // Scope settings
+            const centerY = height / 2;
+            // Map 230V max to 90% of half-height
+            const pixelsPerVolt = (height / 2 * 0.9) / 230;
+
+            // Let's say visual width represents exactly 10 milliseconds of time.
+            // 10ms at 400Hz = 4 full cycles.
+            const timeWindowMs = 10;
+
+            // Move wave based on real time to animate
+            timeOffset += (frequency * 0.00005);
+
+            ctx.beginPath();
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#3b82f6'; // Bright blue trace
+
+            for (let x = 0; x <= width; x++) {
+                // What time (ms) does this pixel represent?
+                const pixelTimeMs = (x / width) * timeWindowMs;
+
+                // value = Vp * sin(2 * PI * f * t + phase)
+                // t is in seconds: pixelTimeMs / 1000
+                const t = pixelTimeMs / 1000;
+                const yVal = voltage * Math.sin(2 * Math.PI * frequency * t - timeOffset);
+
+                const yPixel = centerY - (yVal * pixelsPerVolt);
+
+                if (x === 0) ctx.moveTo(x, yPixel);
+                else ctx.lineTo(x, yPixel);
+            }
+
+            // Glowing effect
+            ctx.shadowColor = '#60a5fa';
+            ctx.shadowBlur = 10;
+            ctx.stroke();
+
+            // Draw RMS lines
+            ctx.shadowBlur = 0; // turn off glow for RMS indicator
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; // Green
+            ctx.lineWidth = 1;
+            const vrms = voltage * 0.707;
+            const yTopRMS = centerY - (vrms * pixelsPerVolt);
+            const yBotRMS = centerY + (vrms * pixelsPerVolt);
+            ctx.moveTo(0, yTopRMS); ctx.lineTo(width, yTopRMS);
+            ctx.moveTo(0, yBotRMS); ctx.lineTo(width, yBotRMS);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            requestAnimationFrame(drawWave);
+        }
+
+        updateStats();
+        requestAnimationFrame(drawWave);
+    });
+</script>

@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Other nav basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link active">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W7 // CNS // NAVIGATION</span>
+            </div>
+            <h1>Other nav basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Clarify the geometric difference between horizontal ground distance and DME slant range.</li>
+        <li>Identify the fundamental accuracy and weather vulnerabilities associated with ADF systems.</li>
+        <li>Explain the operational theory behind passive lightning detection avionics.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                <p class="body-text">*Note: Visual illustration omitted; refer to system diagram for structural flow.*</p>
+        <p class="body-text">A pilot radios maintenance extremely confused: their panel DME (Distance Measuring Equipment) is actively showing 2.5 Nautical Miles to the station, but they are flying at 15,000 feet directly over the top of the physical VOR/DME antenna. They assume the receiver&#x27;s computing core is malfunctioning and requires replacement. In reality, the DME is operating flawlessly. By failing to understand that DME exclusively measures the angled &quot;slant range&quot; (the direct hypotenuse from the aircraft to the ground station), a technician might waste days swapping boxes instead of simply explaining Pythagorean geometry to the flight crew.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">DME (Distance Measuring Equipment)</h3>
+        <p class="body-text">DME is an active, pulse-ranging system operating in the UHF band that provides pilots with continuous distance readouts to a ground station.</p>
+        <ul class="content-list">
+        <li><strong>The Physics of the Ping:</strong> The aircraft&#x27;s DME actively transmits a highly structured interrogation pulse-pair down to the ground station. The ground station receives it, waits exactly 50 microseconds, and fires a reply pulse back. The aircraft receiver measures the total round-trip microsecond travel time of the light-speed radio waves and calculates the exact distance.</li>
+        <li><strong>The Slant Range Factor:</strong> DME absolutely does not measure horizontal ground distance. It measures <strong>slant range</strong>—the diagonal &quot;line of sight&quot; distance through the air from the aircraft directly to the station. If you are 6,000 feet directly above the station (zero horizontal distance), the DME will accurately display 1 Nautical Mile of slant-range distance.</li>
+        </ul>
+        <h3 class="content-h3">ADF (Automatic Direction Finder) and NDB</h3>
+        <p class="body-text">The NDB (Non-Directional Beacon) and ADF system is the oldest form of electronic air navigation, now mostly phased out but still present in legacy airframes and remote global regions.</p>
+        <ul class="content-list">
+        <li><strong>The Ground Station (NDB):</strong> A massively simple AM radio transmitter broadcasting continuously in the Low/Medium Frequency (LF/MF) band.</li>
+        <li><strong>The Receiver (ADF):</strong> The airborne receiver utilizes a combination of a directional loop antenna and a non-directional sense antenna to determine the exact magnetic bearing pointing <strong>TO</strong> the station.</li>
+        <li><strong>The Fatal Flaw:</strong> ADF operates in the AM radio band, making it acutely susceptible to massive electromagnetic interference—most notably thunderstorms. During severe weather, the ADF needle will wildly abandon the NDB station and snap to point directly at the most severe lightning strikes, leading an unaware pilot directly into the core of a lethal convective supercell.</li>
+        </ul>
+        <h3 class="content-h3">Lightning Detection Systems (Stormscope / Strike Finder)</h3>
+        <p class="body-text">Instead of being a flaw, modern passive lightning detectors (like L-3&#x27;s Stormscope) deliberately exploit thunderstorm electromagnetic interference to save lives.</p>
+        <ul class="content-list">
+        <li>They utilize incredibly sensitive passive antennas to sense the massive electromagnetic bursts generated by distant lightning strikes.</li>
+        <li>The computer immediately analyzes the signal shape to determine the strike&#x27;s exact bearing and relative intensity/distance.</li>
+        <li>It beautifully displays these strikes as tiny &quot;X&quot; marks on a cockpit screen, allowing crews to visualize and geometrically avoid the violently convective, hail-producing cores of embedded storm cells long before they encounter structural turbulence.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.3A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Aircraft located directly above a VOR/DME at 6,000 ft altitude] --> B{What does the DME Measure?}
+    
+    B -->|Calculates horizontal map distance| C[Displays 0.0 Nautical Miles]
+    C --> D[INCORRECT - This is not how DME works]
+    
+    B -->|Calculates direct hypotenuse distance| E[Displays 1.0 Nautical Miles]
+    E --> F[CORRECT - This is Slant Range]
+    
+    G[Lightning strikes near aircraft] --> H{How do systems react?}
+    H -->|ADF Receiver| I[Needle swings wildly to point at the lightning, abandoning navigation]
+    H -->|Stormscope System| J[Detects electromagnetic burst, plots an X on the weather display for avoidance]
+    
+    style E fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style J fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Interactive Simulation</span>
+                <h2 class="section-title">Interactive Lab</h2>
+                <div class="simulation-container" style="background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 30px 0; padding: 20px;">
+                    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    .dme-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background: #020617;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .dme-header {
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #38bdf8;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        margin-bottom: 5px;
+    }
+
+    .dme-canvas-wrap {
+        position: relative;
+        width: 100%;
+        height: 320px;
+        background: radial-gradient(circle at center bottom, #0f172a 0%, #020617 100%);
+        border: 2px solid #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.1);
+    }
+
+    #dme-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .dme-scanline {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(16, 185, 129, 0.1) 50%, rgba(16, 185, 129, 0.1));
+        background-size: 100% 4px;
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.3;
+    }
+
+    .dme-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #0f172a;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        gap: 30px;
+    }
+
+    .dme-slider-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .dme-slider-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        background: #38bdf8;
+        cursor: pointer;
+        margin-top: -8px;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        cursor: pointer;
+        background: #334155;
+        border-radius: 2px;
+    }
+
+    .dme-btn {
+        background: transparent;
+        color: #38bdf8;
+        border: 2px solid #38bdf8;
+        padding: 12px 24px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.1rem;
+        transition: all 0.2s;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2), inset 0 0 10px rgba(56, 189, 248, 0.1);
+        text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+    }
+
+    .dme-btn:hover:not(:disabled) {
+        background: rgba(56, 189, 248, 0.1);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .dme-btn:disabled {
+        border-color: #475569;
+        color: #475569;
+        box-shadow: none;
+        text-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .dme-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .dme-stat-box {
+        background: #0f172a;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dme-stat-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+    }
+
+    .box-alt::before {
+        background: #94a3b8;
+    }
+
+    .box-gnd::before {
+        background: #38bdf8;
+    }
+
+    .box-slt::before {
+        background: #10b981;
+        box-shadow: 0 0 10px #10b981;
+    }
+
+    .box-tme::before {
+        background: #f59e0b;
+    }
+
+    .dme-stat-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #64748b;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .dme-stat-val {
+        font-size: 1.6rem;
+        color: #f8fafc;
+        font-family: 'Share Tech Mono', monospace;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .val-slt {
+        color: #34d399;
+        text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+    }
+
+    .val-tme {
+        color: #fbbf24;
+        text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+</style>
+
+<div class="dme-container">
+    <div>
+        <div class="dme-header">DME Slant Range MFD</div>
+        <p style="text-align:center; color:#64748b; font-size:0.9rem; margin-top:5px;">Distance Measuring Equipment
+            multi-function display. Visualizes trigonometric slant range error.</p>
+    </div>
+
+    <div class="dme-stats">
+        <div class="dme-stat-box box-alt">
+            <div class="dme-stat-label">Altitude (Fixed)</div>
+            <div class="dme-stat-val">FL360</div>
+        </div>
+        <div class="dme-stat-box box-gnd">
+            <div class="dme-stat-label">Ground Dist</div>
+            <div class="dme-stat-val" id="dme-ground">0 NM</div>
+        </div>
+        <div class="dme-stat-box box-slt"
+            style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16,185,129,0.3);">
+            <div class="dme-stat-label" style="color:#34d399;">Slant Range</div>
+            <div class="dme-stat-val val-slt" id="dme-slant">0 NM</div>
+        </div>
+        <div class="dme-stat-box box-tme">
+            <div class="dme-stat-label">Round Trip Time</div>
+            <div class="dme-stat-val val-tme" id="dme-time">0 µs</div>
+        </div>
+    </div>
+
+    <div class="dme-canvas-wrap">
+        <div class="dme-scanline"></div>
+        <canvas id="dme-canvas"></canvas>
+    </div>
+
+    <div class="dme-controls">
+        <div class="dme-slider-container">
+            <div class="dme-slider-label">
+                <span>Aircraft Position (Ground Distance)</span>
+                <span style="color:#38bdf8;" id="dme-slider-val">40 NM</span>
+            </div>
+            <input type="range" id="dme-slider" min="0" max="60" value="40" step="0.5">
+        </div>
+        <button class="dme-btn" id="dme-fire">Transmit Interrogation</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('dme-canvas');
+        const ctx = canvas.getContext('2d');
+        const btnFire = document.getElementById('dme-fire');
+        const slider = document.getElementById('dme-slider');
+
+        const valGround = document.getElementById('dme-ground');
+        const valSlant = document.getElementById('dme-slant');
+        const valTime = document.getElementById('dme-time');
+        const valSlider = document.getElementById('dme-slider-val');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Simulation State
+        const station = { x: 0, y: 0 };
+        const plane = { x: 0, y: 0 };
+
+        const alt_ft = 36000;
+        const nm_to_ft = 6076.12;
+        const alt_nm = alt_ft / nm_to_ft; // ~5.92 NM
+
+        let currentGroundNM = parseFloat(slider.value);
+        let currentSlantNM = 0;
+
+        let isFiring = false;
+        let pulsePhase = 0; // 0=out, 1=delay, 2=back
+        let pulseProgress = 0;
+        let lastTime = 0;
+
+        let scanAngle = 0;
+
+        function calculateRanges() {
+            currentGroundNM = parseFloat(slider.value);
+            currentSlantNM = Math.sqrt(Math.pow(currentGroundNM, 2) + Math.pow(alt_nm, 2));
+
+            valSlider.innerText = currentGroundNM.toFixed(1) + " NM";
+            valGround.innerText = currentGroundNM.toFixed(1) + " NM";
+            valSlant.innerText = currentSlantNM.toFixed(1) + " NM";
+
+            if (!isFiring) {
+                valTime.innerText = "STANDBY";
+                valTime.style.color = "#64748b";
+                valTime.style.textShadow = "none";
+            }
+
+            const nmPixels = width / 140; // max width 140nm
+            station.x = width / 2;
+            station.y = height - 30;
+
+            plane.x = station.x - (currentGroundNM * nmPixels);
+            plane.y = 50;
+        }
+
+        slider.addEventListener('input', calculateRanges);
+
+        btnFire.addEventListener('click', () => {
+            if (isFiring) return;
+            isFiring = true;
+            pulsePhase = 0;
+            pulseProgress = 0;
+            btnFire.disabled = true;
+            lastTime = performance.now();
+            valTime.style.color = "#fbbf24";
+            valTime.style.textShadow = "0 0 10px rgba(251,191,36,0.5)";
+        });
+
+        function drawAircraft(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(currentGroundNM < 0 ? Math.PI : 0); // point towards station
+
+            // Sleek delta wing
+            ctx.fillStyle = "#f8fafc";
+            ctx.beginPath();
+            ctx.moveTo(20, 0); // nose
+            ctx.lineTo(-15, 12);
+            ctx.lineTo(-10, 0);
+            ctx.lineTo(-15, -12);
+            ctx.closePath();
+            ctx.fill();
+
+            // Engine glow
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#38bdf8";
+            ctx.fillStyle = "#38bdf8";
+            ctx.beginPath();
+            ctx.arc(-12, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawStation(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Base
+            ctx.fillStyle = "#1e293b";
+            ctx.beginPath();
+            ctx.moveTo(-15, 20);
+            ctx.lineTo(15, 20);
+            ctx.lineTo(5, -15);
+            ctx.lineTo(-5, -15);
+            ctx.closePath();
+            ctx.fill();
+
+            // Antenna orb
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#10b981";
+            ctx.fillStyle = "#34d399";
+            ctx.beginPath();
+            ctx.arc(0, -15, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function animatePulse(time) {
+            if (!lastTime) lastTime = time;
+            const dt = time - lastTime;
+            lastTime = time;
+
+            // Background radar scan rotation
+            scanAngle += 0.02;
+
+            if (isFiring) {
+                const pulseSpeed = 0.0015; // smooth speed
+
+                if (pulsePhase === 0) {
+                    pulseProgress += pulseSpeed * dt;
+                    valTime.innerText = "TX: 1034 MHz";
+                    if (pulseProgress >= 1) { pulsePhase = 1; pulseProgress = 0; }
+                } else if (pulsePhase === 1) {
+                    pulseProgress += (pulseSpeed * 0.8) * dt;
+                    valTime.innerText = "DLY: 50 µs";
+                    if (pulseProgress >= 1) { pulsePhase = 2; pulseProgress = 0; }
+                } else if (pulsePhase === 2) {
+                    pulseProgress += pulseSpeed * dt;
+                    valTime.innerText = "RX: 1097 MHz";
+                    if (pulseProgress >= 1) { pulsePhase = 3; }
+                } else if (pulsePhase === 3) {
+                    isFiring = false;
+                    btnFire.disabled = false;
+                    const totalMicroseconds = (currentSlantNM * 12.359) + 50;
+                    valTime.innerText = Math.round(totalMicroseconds) + " µs";
+
+                    // Flash slant range green
+                    const sltBox = document.querySelector('.box-slt');
+                    sltBox.style.background = 'rgba(16, 185, 129, 0.2)';
+                    setTimeout(() => { sltBox.style.background = 'rgba(16, 185, 129, 0.05)'; }, 500);
+                }
+            }
+
+            drawFrame();
+            requestAnimationFrame(animatePulse);
+        }
+
+        function drawFrame() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Radar range rings (from station)
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.1)";
+            ctx.lineWidth = 1;
+            const nmPixels = width / 140;
+            for (let r = 10; r <= 100; r += 10) {
+                ctx.beginPath();
+                ctx.arc(station.x, station.y, r * nmPixels, Math.PI, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Radar Sweep
+            ctx.save();
+            ctx.translate(station.x, station.y);
+            ctx.rotate(Math.PI + Math.abs(Math.sin(scanAngle)) * Math.PI); // sweeping back and forth over the top half
+            const grad = ctx.createLinearGradient(0, 0, width, 0);
+            grad.addColorStop(0, "rgba(56,189,248,0.2)");
+            grad.addColorStop(1, "transparent");
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.arc(0, 0, width, 0, 0.2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+
+            // Ground line
+            ctx.strokeStyle = "#38bdf8";
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#38bdf8";
+            ctx.beginPath();
+            ctx.moveTo(0, station.y + 20);
+            ctx.lineTo(width, station.y + 20);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Line of sight
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.4)";
+            ctx.setLineDash([8, 8]);
+            ctx.beginPath();
+            ctx.moveTo(plane.x, plane.y);
+            ctx.lineTo(station.x, station.y - 15);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Animated Pulse
+            if (isFiring) {
+                let px, py;
+                ctx.lineWidth = 3;
+
+                if (pulsePhase === 0) { // Interrogation (Plane -> Station)
+                    px = plane.x + (station.x - plane.x) * pulseProgress;
+                    py = plane.y + (station.y - 15 - plane.y) * pulseProgress;
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, 15, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#a855f7"; // Purple
+                    ctx.shadowBlur = 15; ctx.shadowColor = "#a855f7";
+                    ctx.stroke();
+
+                } else if (pulsePhase === 1) { // 50us Delay
+                    ctx.beginPath();
+                    ctx.arc(station.x, station.y - 15, 20 + Math.sin(pulseProgress * 20) * 10, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#10b981"; // Green
+                    ctx.shadowBlur = 20; ctx.shadowColor = "#10b981";
+                    ctx.stroke();
+
+                } else if (pulsePhase === 2) { // Reply (Station -> Plane)
+                    px = station.x + (plane.x - station.x) * pulseProgress;
+                    py = (station.y - 15) + (plane.y - (station.y - 15)) * pulseProgress;
+
+                    // Expanding rings
+                    ctx.beginPath();
+                    ctx.arc(station.x, station.y - 15, currentSlantNM * nmPixels * pulseProgress, Math.PI, Math.PI * 2);
+                    ctx.strokeStyle = "rgba(245, 158, 11, 0.5)"; // Amber
+                    ctx.lineWidth = 8;
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, 15, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#f59e0b"; // Amber
+                    ctx.shadowBlur = 15; ctx.shadowColor = "#f59e0b";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+                ctx.shadowBlur = 0;
+            }
+
+            drawStation(station.x, station.y);
+            drawAircraft(plane.x, plane.y);
+        }
+
+        calculateRanges();
+        requestAnimationFrame(animatePulse);
+    });
+</script>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When troubleshooting older Nav systems, never ignore the profound impact of environmental interference. If a pilot writes up an ADF as &quot;erratic operation,&quot; aggressively check the weather records for their flight path before tearing down the antenna array; it was likely just pointing at localized thunderstorm activity. For DME, utilize a sophisticated ramp test set capable of simulating extremely fast, precise interrogation/reply pulse timing to accurately verify the system&#x27;s calculating logic across various simulated slant ranges.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 7.3 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>DME (Distance Measuring Equipment)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">DME (Distance Measuring Equipment)</div>
+                            <p>DME measures slant-range distance to a ground station in nautical miles by measuring the time for a pulse to travel to the station and return. Slant range includes the diagonal — not purely horizontal distance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Lightning detection system (Stormscope/Strike Finder)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Lightning detection system (Stormscope/Strike Finder)</div>
+                            <p>Aircraft lightning detectors sense the electromagnetic discharge of lightning and display storm cell bearing and relative intensity on a cockpit display. They help crews identify and avoid areas of convective activity — particularly useful at night or in IMC.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ADF/NDB vs. VOR comparison</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ADF/NDB vs. VOR comparison</div>
+                            <p>NDB (Non-Directional Beacon) + ADF (Automatic Direction Finder): less accurate than VOR, susceptible to thunderstorm interference (lightning causes false bearings), and only provides bearing TO the station — no course deviation bar. VOR provides more accurate radial/course deviation data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Slant Range</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Slant Range</div>
+                            <p>The absolute direct diagonal distance measuring geometrically from the airborne aircraft to the ground station, fundamentally different from flat ground distance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ADF (Automatic Direction Finder)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ADF (Automatic Direction Finder)</div>
+                            <p>A legacy navigation receiver highly susceptible to erratic behavior initiated by atmospheric electromagnetic interference.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Lightning Detection</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Lightning Detection</div>
+                            <p>Advanced passive avionics that map the bearing and intensity of in-flight convective activity by triangulating severe electromagnetic weather bursts.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 6.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="3" data-feedback="DME is a pulse-echo system: the airborne unit interrogates the ground station, which replies after a fixed delay; the receiver measures total elapsed time, subtracts the known reply delay, and computes slant-range distance.">
+                <div class="kc-header">Knowledge Verification [1/3]</div>
+                <div class="kc-question">How does DME determine distance to a ground station?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">By measuring the phase difference between two signals</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">By receiving a continuous CW signal and measuring signal strength</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">By counting the number of VOR radials between two waypoints</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">By measuring the round-trip time of a pulse sent to and replied by the station</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="3" data-feedback="Lightning detectors display WHERE storms are (bearing from aircraft) and HOW ACTIVE they are (relative discharge intensity). They do not provide precise distance — just bearing and relative activity level for avoidance decision-making.">
+                <div class="kc-header">Knowledge Verification [2/3]</div>
+                <div class="kc-question">What information does an aircraft lightning detection system provide to the crew?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">Precise distance to storm cells in nautical miles</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">Wind shear intensity and recommended escape maneuvers</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">Turbulence severity based on G-load measurements</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">Bearing and relative intensity of storm cell electrical activity</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="0" data-feedback="NDB/ADF: lower frequency (LF/MF), less accurate, highly susceptible to thunderstorm interference (ADF needle points at lightning), and only shows bearing TO the station. VOR: VHF, more accurate, provides both bearing and course deviation indication.">
+                <div class="kc-header">Knowledge Verification [3/3]</div>
+                <div class="kc-question">Which statement best compares ADF/NDB navigation to VOR?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0" data-remediation="">
+                        <div class="kc-option-text">NDB is less accurate, more susceptible to interference, and only provides bearing without course deviation</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1" data-remediation="">
+                        <div class="kc-option-text">NDB and VOR are equally accurate but NDB has greater range</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2" data-remediation="">
+                        <div class="kc-option-text">NDB is more accurate than VOR and provides both bearing and course deviation</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3" data-remediation="">
+                        <div class="kc-option-text">NDB operates on VHF frequencies and is generally more reliable than VOR</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>DME calculates the diagonal slant range to a station using pulse timing, ADF systems are notoriously vulnerable to pointing at thunderstorms, and passive lightning detectors brilliantly exploit that same interference to plot dangerous weather cells.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W7-Z3-N2_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W7-Z4-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W7-Z3-N3';
+        const NODE_LOS = ["q60", "q132", "q150"];
+        const TOTAL_KCS = 3;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'CNS',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training — ESD-Safe Handling Basics</title>
+    <meta name="description"
+        content="Learn the fundamentals of Electrostatic Discharge (ESD) prevention in avionics maintenance. Covers ESD workstation setup, wrist straps, anti-static bags, and best practices.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #0b1120;
+            --bg-section: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-main: #f1f5f9;
+            --text-body: #cbd5e1;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --accent-2: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: rgba(148, 163, 184, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Hero ────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px 40px 50px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0b1120 0%, #111827 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse at 50% 40%, rgba(59, 130, 246, 0.12), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+            width: fit-content;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            color: var(--text-body);
+            font-size: 1.2rem;
+            margin-top: 16px;
+            max-width: 600px;
+            z-index: 1;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 28px;
+            margin-top: 30px;
+            z-index: 1;
+            justify-content: center;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-meta-item i {
+            color: var(--accent);
+        }
+
+        /* ── Sections ────────────────────────── */
+        .lesson-section {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .body-text {
+            color: var(--text-body);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .body-text strong {
+            color: var(--text-main);
+        }
+
+        /* ── Callout ─────────────────────────── */
+        .callout {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.03));
+            border-left: 4px solid var(--warning);
+            border-radius: 0 12px 12px 0;
+            padding: 24px 28px;
+            margin: 32px 0;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .callout p {
+            color: var(--text-body);
+            font-size: 1rem;
+        }
+
+        .callout.info {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.03));
+            border-left-color: var(--accent);
+        }
+
+        .callout.info .callout-title {
+            color: var(--accent);
+        }
+
+        .callout.danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.03));
+            border-left-color: var(--error);
+        }
+
+        .callout.danger .callout-title {
+            color: var(--error);
+        }
+
+        /* ── Stat Cards ──────────────────────── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* ── Image with Caption ──────────────── */
+        .image-block {
+            margin: 40px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .image-block img {
+            width: 100%;
+            display: block;
+        }
+
+        .image-caption {
+            background: var(--bg-card);
+            padding: 16px 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .image-caption i {
+            color: var(--accent);
+        }
+
+        /* ── Accordion ───────────────────────── */
+        .accordion {
+            margin: 32px 0;
+        }
+
+        .accordion-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .accordion-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .accordion-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .accordion-chevron {
+            margin-left: auto;
+            transition: transform 0.3s;
+            color: var(--text-muted);
+        }
+
+        .accordion-item.open .accordion-chevron {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 24px;
+        }
+
+        .accordion-item.open .accordion-body {
+            max-height: 600px;
+            padding: 0 24px 24px;
+        }
+
+        .accordion-body p {
+            color: var(--text-body);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* ── Tabs (Process Steps) ────────────── */
+        .process-tabs {
+            margin: 40px 0;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--border);
+            gap: 0;
+        }
+
+        .tab-btn {
+            padding: 14px 24px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .tab-panel {
+            display: none;
+            padding: 28px 0;
+            animation: fadeIn 0.4s;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .step-content h4 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .step-content p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
+        /* ── Flashcards ──────────────────────── */
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .flip-card {
+            height: 420px;
+            perspective: 1200px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(145deg, var(--bg-card), #162033);
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .flip-card-front:hover {
+            border-color: var(--accent-2);
+        }
+
+        .flip-card-front .fc-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .flip-card-front h3 {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .flip-card-front .fc-hint {
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(145deg, #162033, var(--bg-card));
+            border-bottom: 4px solid var(--success);
+            justify-content: flex-start;
+            align-items: flex-start;
+            text-align: left;
+            overflow-y: auto;
+            padding-top: 40px;
+        }
+
+        .flip-card-back .fc-def {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin-bottom: 16px;
+        }
+
+        .flip-card-back .fc-analogy {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 0.9rem;
+            color: #c4b5fd;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ── Knowledge Check ─────────────────── */
+        .kc-section {
+            background: var(--bg-section);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 40px;
+        }
+
+        .kc-inner {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .kc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .kc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+        }
+
+        .kc-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .kc-options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .kc-option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .kc-option:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        .kc-option.selected {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .kc-option input[type="radio"] {
+            margin-top: 4px;
+            accent-color: var(--accent);
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+        .kc-option-text {
+            font-size: 1.02rem;
+            line-height: 1.5;
+        }
+
+        .kc-submit {
+            margin-top: 28px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .kc-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .kc-submit:disabled {
+            background: var(--bg-card-hover);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .kc-feedback {
+            margin-top: 24px;
+            padding: 24px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .kc-feedback.correct {
+            display: block;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .kc-feedback.incorrect {
+            display: block;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .kc-feedback-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .kc-feedback.correct .kc-feedback-title {
+            color: var(--success);
+        }
+
+        .kc-feedback.incorrect .kc-feedback-title {
+            color: var(--error);
+        }
+
+        .kc-feedback p {
+            color: var(--text-body);
+            line-height: 1.7;
+        }
+
+        /* ── Summary / Key Takeaway ──────────── */
+        .takeaway-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 36px;
+            margin: 40px 0;
+        }
+
+        .takeaway-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .takeaway-box h3 i {
+            color: var(--accent);
+        }
+
+        .takeaway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .takeaway-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--text-body);
+            font-size: 1rem;
+        }
+
+        .takeaway-list li:last-child {
+            border-bottom: none;
+        }
+
+        .takeaway-list li i {
+            color: var(--success);
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ── Divider ────────────────────────── */
+        .section-divider {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-divider hr {
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Table ───────────────────────────── */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 28px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .styled-table thead th {
+            background: var(--bg-card);
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .styled-table tbody td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: var(--text-body);
+        }
+
+        .styled-table tbody tr:hover {
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge.green {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .badge.red {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+        }
+
+        .badge.yellow {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        /* ── Glossary Tooltips ────────────────── */
+        .glossary-term {
+            color: var(--accent);
+            border-bottom: 1px dashed rgba(59, 130, 246, 0.5);
+            cursor: help;
+            position: relative;
+            display: inline;
+        }
+
+        .glossary-term .glossary-tip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 20px;
+            width: 340px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.25s, visibility 0.25s;
+            pointer-events: none;
+        }
+
+        .glossary-term .glossary-tip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .glossary-term:hover .glossary-tip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .glossary-tip-title {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .glossary-tip-body {
+            color: var(--text-body);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* ── ESD Simulation ─────────────────────── */
+        .esd-sim-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 32px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .esd-sim-container h3 {
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+        }
+
+        .esd-sim-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .esd-sim-svg {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .esd-spark {
+            stroke: #f59e0b;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-dasharray: 8 6;
+            animation: sparkFlow 0.6s linear infinite;
+            opacity: 0;
+        }
+
+        .esd-sim-container:hover .esd-spark,
+        .esd-sim-container.playing .esd-spark {
+            opacity: 1;
+        }
+
+        @keyframes sparkFlow {
+            to {
+                stroke-dashoffset: -28;
+            }
+        }
+
+        .esd-charge-zone {
+            fill: rgba(239, 68, 68, 0.08);
+            stroke: var(--error);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+            rx: 8;
+        }
+
+        .esd-safe-zone {
+            fill: rgba(16, 185, 129, 0.08);
+            stroke: var(--success);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+            rx: 8;
+        }
+
+        .esd-sim-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .esd-sim-btn:hover {
+            background: rgba(245, 158, 11, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .esd-label {
+            font-size: 11px;
+            font-weight: 600;
+            fill: currentColor;
+        }
+
+        .esd-label-body {
+            fill: var(--text-body);
+        }
+
+        .esd-label-warn {
+            fill: var(--warning);
+        }
+
+        .esd-label-good {
+            fill: var(--success);
+        }
+
+        .esd-label-accent {
+            fill: var(--accent);
+        }
+
+        .esd-glow {
+            animation: chipGlow 1s ease-in-out infinite alternate;
+            opacity: 0;
+        }
+
+        .esd-sim-container.playing .esd-glow {
+            opacity: 1;
+        }
+
+        @keyframes chipGlow {
+            from {
+                fill: rgba(239, 68, 68, 0.1);
+            }
+
+            to {
+                fill: rgba(239, 68, 68, 0.5);
+            }
+        }
+
+        /* ── Scenario Timeline ──────────────────── */
+        .scenario-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 32px 0;
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .scenario-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(59, 130, 246, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .scenario-header h3 {
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+
+        .scenario-header .scenario-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 36px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-2), var(--success));
+            border-radius: 2px;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -29px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-base);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .timeline-step.caution .timeline-dot {
+            background: var(--warning);
+            box-shadow: 0 0 0 2px var(--warning);
+        }
+
+        .timeline-step.success .timeline-dot {
+            background: var(--success);
+            box-shadow: 0 0 0 2px var(--success);
+        }
+
+        .timeline-step h4 {
+            font-size: 1.02rem;
+            margin-bottom: 6px;
+        }
+
+        .timeline-step p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .timeline-step .step-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .step-tag.esd {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent);
+        }
+
+        .step-tag.safety {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .step-tag.verify {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        /* ── Footer ──────────────────────────── */
+        .lesson-footer {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-nav {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+    <section class="hero">
+        <div class="hero-badge" style="margin-left:auto;margin-right:auto;"><i class="fa-solid fa-shield-halved"></i> W1
+            · Safety · ESD/FOD Discipline</div>
+        <h1><span>ESD-Safe</span> Handling Basics</h1>
+        <p class="hero-subtitle">Learn to recognize ESD-sensitive avionics components and master the workstation
+            practices that prevent invisible, catastrophic damage.</p>
+        <div class="hero-meta">
+            <div class="hero-meta-item"><i class="fa-regular fa-clock"></i> ~8 min read</div>
+            <div class="hero-meta-item"><i class="fa-solid fa-signal"></i> Beginner</div>
+            <div class="hero-meta-item"><i class="fa-solid fa-bullseye"></i> Node W1-Z5-N1</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ LEARNING OBJECTIVES ═══════════════ -->
+    <section class="lesson-section" style="padding-bottom: 20px;">
+        <div class="takeaway-box" style="margin-top: 0;">
+            <h3><i class="fa-solid fa-bullseye"></i> Learning Objectives</h3>
+            <p class="body-text" style="margin-bottom: 16px;">After completing this module, you will be able to:</p>
+            <ul class="takeaway-list">
+                <li><i class="fa-solid fa-circle-check"></i> Identify ESD-sensitive avionics components and explain why
+                    they are vulnerable to electrostatic discharge.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Describe the elements of an ESD-protected workstation and
+                    the principle of equipotential bonding.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Demonstrate correct wrist strap usage, anti-static bag
+                    handling, and ESD-safe LRU removal procedures.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Explain how latent ESD damage can cause delayed, in-service
+                    failures and why ESD prevention is an airworthiness concern.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 1: WHY ESD MATTERS ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-bolt"></i> Section 1</div>
+        <h2 class="section-title">Why Does ESD Matter in Avionics?</h2>
+
+        <p class="body-text">
+            Every time you walk across a carpeted floor and touch a doorknob, you experience
+            <span class="glossary-term">Electrostatic Discharge (ESD)<span class="glossary-tip"><span
+                        class="glossary-tip-title">Electrostatic Discharge</span><span class="glossary-tip-body">A
+                        sudden, rapid transfer of static charge between two objects at different electrical potentials.
+                        The discharge occurs in nanoseconds and can reach tens of thousands of volts. In electronics,
+                        even small ESD events can permanently damage semiconductor junctions.</span></span></span>
+            — a rapid, uncontrolled equalization of electrical charge between two objects at different potentials. That
+            familiar "zap" you feel is typically between <strong>2,000 and 4,000 volts</strong>.
+        </p>
+
+        <p class="body-text">
+            <strong>How does static charge build up?</strong> The primary mechanism is called
+            <span class="glossary-term">triboelectric charging<span class="glossary-tip"><span
+                        class="glossary-tip-title">Triboelectric Charging</span><span class="glossary-tip-body">The
+                        generation of static electricity through friction between two dissimilar materials. When
+                        materials contact and separate, electrons transfer from one surface to the other, leaving one
+                        positively charged and the other negatively charged. Common culprits: synthetic clothing,
+                        Styrofoam, and plastic bags.</span></span></span>.
+            When two dissimilar materials rub together — such as your shoes on carpet, or your synthetic shirt against a
+            chair back — electrons transfer from one surface to the other. One material becomes positively charged, the
+            other negatively. This charge imbalance is what we call "static electricity." The charge accumulates on your
+            body until it finds a conductive path to equalize — such as a metal doorknob, or the exposed pins of an
+            avionics circuit board.
+        </p>
+
+        <p class="body-text">
+            Here's the critical problem for avionics technicians: the human body <strong>cannot perceive a discharge
+                below approximately 3,500 volts</strong>. You won't see a spark, hear a pop, or feel anything. But
+            modern
+            <span class="glossary-term">CMOS<span class="glossary-tip"><span class="glossary-tip-title">Complementary
+                        Metal-Oxide-Semiconductor</span><span class="glossary-tip-body">The dominant semiconductor
+                        technology used in modern digital ICs including microprocessors, memory, and logic gates. CMOS
+                        devices use extremely thin gate oxide layers (measured in nanometers) that are highly vulnerable
+                        to voltage spikes. The thinner the oxide, the lower the voltage needed to cause permanent
+                        breakdown.</span></span></span>
+            integrated circuits — the type used in nearly every digital avionics
+            <span class="glossary-term">LRU<span class="glossary-tip"><span class="glossary-tip-title">Line Replaceable
+                        Unit</span><span class="glossary-tip-body">A modular avionics component designed for quick
+                        removal and replacement on the flight line. Examples include GPS receivers, transponders, radio
+                        transceivers, and flight management computers. LRUs contain ESD-sensitive circuit boards and
+                        must be handled with full ESD precautions whenever removed from their protective rack or
+                        enclosure.</span></span></span>
+            — can be permanently destroyed by as little as <strong>100 volts</strong>. Some advanced components fail at
+            as low as <strong>20–30 volts</strong>. That means you can fatally damage a $15,000 navigation computer with
+            a discharge you will never see, hear, or feel.
+        </p>
+
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="stat-number">100V</div>
+                <div class="stat-label">Can destroy a CMOS chip</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3,500V</div>
+                <div class="stat-label">Minimum you can feel</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25,000V</div>
+                <div class="stat-label">Walking on carpet can generate</div>
+            </div>
+        </div>
+
+        <p class="body-text">
+            <strong>What actually happens inside the chip?</strong> A CMOS transistor's switching element is separated
+            from its control electrode by an incredibly thin layer of silicon dioxide — the
+            <span class="glossary-term">gate oxide<span class="glossary-tip"><span class="glossary-tip-title">Gate Oxide
+                        Layer</span><span class="glossary-tip-body">An ultrathin insulating layer of silicon dioxide
+                        (SiO₂) between the gate electrode and the channel of a MOSFET transistor. In modern ICs, this
+                        layer can be as thin as 1–5 nanometers. It controls whether current flows through the
+                        transistor. ESD voltage punches through this layer, creating a permanent conductive path that
+                        shorts the gate — the transistor can no longer switch on and off
+                        correctly.</span></span></span>.
+            In modern processors, this layer is only a few <strong>nanometers</strong> thick — thousands of times
+            thinner than a human hair. When an ESD event sends a voltage spike through this layer, it can punch a
+            microscopic hole through the oxide, creating a permanent short circuit. The transistor can no longer switch
+            states correctly, and the integrated circuit is destroyed.
+        </p>
+
+        <div class="callout danger">
+            <div class="callout-title"><i class="fa-solid fa-triangle-exclamation"></i> The Hidden Killer: Latent Damage
+            </div>
+            <p>Not all ESD damage causes immediate, detectable failure. A discharge can <strong>weaken</strong> the gate
+                oxide without fully puncturing it — this is called <strong>latent damage</strong>. The weakened oxide
+                develops microscopic stress fractures but still functions. The component passes all bench tests and is
+                returned to service. But the degraded oxide layer is now vulnerable to <strong>thermal stress,
+                    vibration, and voltage transients</strong>. Weeks or months later — often during a hot ramp day or
+                in-flight thermal cycling — the weakened junction finally breaks down and the unit fails. This is why
+                the avionics industry treats ESD prevention as an <strong>airworthiness</strong> issue, not merely a
+                cost-savings measure.</p>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <hr>
+    </div>
+
+    <!-- ═══════════════ SECTION 2: THE ESD WORKSTATION ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-desktop"></i> Section 2</div>
+        <h2 class="section-title">The ESD-Protected Workstation</h2>
+
+        <p class="body-text">
+            An ESD-protected workstation is a controlled environment where all conductive surfaces, tools, and the
+            technician's body are maintained at the <strong>same electrical potential</strong> — a concept called
+            <span class="glossary-term">equipotential bonding<span class="glossary-tip"><span
+                        class="glossary-tip-title">Equipotential Bonding</span><span class="glossary-tip-body">The
+                        practice of electrically connecting all conductive objects in a workspace to the same ground
+                        reference, so no voltage difference exists between them. If everything is at the same potential,
+                        charge cannot flow between objects — and charge flow is what causes ESD damage. This is the
+                        fundamental principle behind every piece of ESD protection equipment.</span></span></span>.
+            The goal is not to eliminate static — that's physically impossible in a working environment. The goal is to
+            ensure there is <strong>never a voltage difference</strong> between the technician, the workstation surface,
+            and the component being handled. If everything is at the same potential, charge cannot flow — and without
+            charge flow, there is no discharge event.
+        </p>
+
+        <p class="body-text">
+            This is achieved by connecting all protective elements — the
+            <span class="glossary-term">dissipative mat<span class="glossary-tip"><span
+                        class="glossary-tip-title">Static-Dissipative Material</span><span class="glossary-tip-body">A
+                        material with a surface resistivity between 10⁵ and 10¹² ohms per square. Unlike conductive
+                        materials (which allow rapid, uncontrolled charge transfer), dissipative materials bleed charge
+                        away slowly and safely. This controlled drain rate is critical — it prevents secondary ESD
+                        events that could occur if charge moved too quickly between objects.</span></span></span>,
+            the wrist strap, and the equipment chassis — to a single
+            <span class="glossary-term">common ground point (CGP)<span class="glossary-tip"><span
+                        class="glossary-tip-title">Common Ground Point</span><span class="glossary-tip-body">A dedicated
+                        connection point where all ESD protection elements converge. The CGP is typically a banana jack
+                        or stud bonded to the building's electrical safety ground (earth ground). By routing all ground
+                        paths through a single point, you eliminate ground loops and ensure true equipotential bonding
+                        across the entire workstation.</span></span></span>.
+            Each element in the system has a specific function. Click below to learn how each one works.
+        </p>
+
+        <div class="image-block">
+            <img src="esd_avionics_bench.png"
+                alt="A Part 145 avionics repair bench with a blue ESD mat, grounded wrist strap, and a Garmin GPS unit">
+            <div class="image-caption"><i class="fa-solid fa-camera"></i> A Part 145 avionics workbench with a blue
+                dissipative mat, grounded wrist strap cord, and a Garmin GPS navigation unit ready for installation.
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item open">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon" style="background: rgba(59,130,246,0.15); color: var(--accent);">
+                        <i class="fa-solid fa-1"></i>
+                    </div>
+                    Anti-Static Mat (Dissipative Surface)
+                    <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+                </div>
+                <div class="accordion-body">
+                    <p>The mat is made of a <strong>static-dissipative material</strong> (typically vinyl with carbon
+                        loading) that drains static charge slowly to the grounding point. It has a surface resistance of
+                        approximately <strong>10⁶ to 10⁹ ohms</strong> — high enough to limit current (so it doesn't
+                        create a shock hazard near energized equipment), but low enough to bleed off static charge in
+                        milliseconds. The mat covers the entire work surface and connects to the common ground point via
+                        a snap-on cord.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon" style="background: rgba(139,92,246,0.15); color: var(--accent-2);">
+                        <i class="fa-solid fa-2"></i>
+                    </div>
+                    Grounded Wrist Strap
+                    <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+                </div>
+                <div class="accordion-body">
+                    <p>The wrist strap is the <strong>single most important</strong> piece of ESD protection equipment.
+                        It maintains a continuous electrical bond between the technician's skin and the grounding point.
+                        A <strong>1-megohm resistor</strong> is built into the coiled cord — this limits current to safe
+                        levels (if you accidentally contact a live circuit, the resistor prevents shock) while still
+                        allowing static to drain within a fraction of a second. The strap must make firm, direct skin
+                        contact — wearing it over a sleeve defeats its purpose entirely.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon" style="background: rgba(16,185,129,0.15); color: var(--success);">
+                        <i class="fa-solid fa-3"></i>
+                    </div>
+                    Common Ground Point
+                    <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+                </div>
+                <div class="accordion-body">
+                    <p>All ESD protection elements — the mat cord, the wrist strap cord, and optionally, the equipment
+                        chassis — connect to a single <strong>common ground point (CGP)</strong>. This ensures
+                        everything is at the same potential. The CGP is typically bonded to the building's electrical
+                        safety ground. <strong>Never use a water pipe or random metal object</strong> as your ESD ground
+                        — it must be a verified, dedicated earth ground connection.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon" style="background: rgba(245,158,11,0.15); color: var(--warning);">
+                        <i class="fa-solid fa-4"></i>
+                    </div>
+                    Anti-Static Bags & Packaging
+                    <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+                </div>
+                <div class="accordion-body">
+                    <p>ESD-sensitive components must be stored and transported in <strong>anti-static (pink poly) or
+                            static-shielding (silver metallic) bags</strong>. Anti-static bags prevent <em>triboelectric
+                            charging</em> (charge buildup from friction). Static-shielding bags go further — they
+                        contain a conductive outer layer that acts as a
+                        <span class="glossary-term">Faraday cage<span class="glossary-tip"><span
+                                    class="glossary-tip-title">Faraday Cage</span><span class="glossary-tip-body">A
+                                    conductive enclosure that blocks external electric fields from reaching the
+                                    interior. Named after physicist Michael Faraday, the cage works because the external
+                                    charge distributes itself on the outer surface, canceling out inside. In ESD bags,
+                                    the metallic outer layer serves this function — external static fields cannot
+                                    penetrate to the component sealed inside.</span></span></span>,
+                        blocking external fields.
+                        <strong>Never place an ESD-sensitive board on top of a bag</strong> — the bag only protects
+                        what's <em>inside</em> it. The outside of a shielding bag is conductive and can actually
+                        transfer charge to a component resting on it.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <hr>
+    </div>
+
+    <!-- ═══════════════ SECTION 3: DO's AND DON'Ts ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-list-check"></i> Section 3</div>
+        <h2 class="section-title">ESD Handling: Do's and Don'ts</h2>
+
+        <p class="body-text">
+            Before reviewing the practice rules, it helps to understand <strong>how much static your daily environment
+                actually generates</strong>. The table below — adapted from ESD Association (ESDA) and military
+            standards — shows typical voltages generated by common actions under different humidity conditions.
+        </p>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Low Humidity (10-20% RH)</th>
+                    <th>High Humidity (65-90% RH)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Walking across carpet</td>
+                    <td><strong>35,000V</strong></td>
+                    <td>1,500V</td>
+                </tr>
+                <tr>
+                    <td>Walking across vinyl floor</td>
+                    <td><strong>12,000V</strong></td>
+                    <td>250V</td>
+                </tr>
+                <tr>
+                    <td>Picking up a poly bag from bench</td>
+                    <td><strong>20,000V</strong></td>
+                    <td>1,200V</td>
+                </tr>
+                <tr>
+                    <td>Sitting or shifting in a chair</td>
+                    <td><strong>18,000V</strong></td>
+                    <td>1,500V</td>
+                </tr>
+                <tr>
+                    <td>Removing a component from pink poly bag</td>
+                    <td><strong>6,000V</strong></td>
+                    <td>600V</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <div class="callout-title"><i class="fa-solid fa-chart-line"></i> Notice the pattern</div>
+            <p>Even <strong>high-humidity</strong> values exceed the 100V threshold that destroys sensitive CMOS.
+                <strong>There is no humidity level that makes it safe to skip ESD protection.</strong> Humidity helps —
+                but it is never sufficient on its own.
+            </p>
+        </div>
+
+        <p class="body-text">
+            The following table summarizes the critical behaviors that separate safe ESD handling from dangerous
+            shortcuts. Memorize the <strong>Don'ts</strong> — they represent the most common ways technicians
+            unknowingly destroy components.
+        </p>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Practice</th>
+                    <th>Status</th>
+                    <th>Why It Matters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Wear a grounded wrist strap before touching any board</td>
+                    <td><span class="badge green">DO</span></td>
+                    <td>Bonds you to ground, preventing charge buildup</td>
+                </tr>
+                <tr>
+                    <td>Place boards <em>inside</em> a shielding bag when not being worked on</td>
+                    <td><span class="badge green">DO</span></td>
+                    <td>Faraday cage effect blocks external static fields</td>
+                </tr>
+                <tr>
+                    <td>Test your wrist strap at the start of every shift</td>
+                    <td><span class="badge green">DO</span></td>
+                    <td>A broken cord or dirty contact = zero protection</td>
+                </tr>
+                <tr>
+                    <td>Touch a metal door frame to "discharge" yourself</td>
+                    <td><span class="badge red">DON'T</span></td>
+                    <td>Uncontrolled rapid discharge can arc to nearby components</td>
+                </tr>
+                <tr>
+                    <td>Set a board on top of a shielding bag</td>
+                    <td><span class="badge red">DON'T</span></td>
+                    <td>Conductive outer layer can transfer charge TO the board</td>
+                </tr>
+                <tr>
+                    <td>Wear a wrist strap over a long sleeve</td>
+                    <td><span class="badge red">DON'T</span></td>
+                    <td>Fabric insulates skin — the strap must touch bare skin</td>
+                </tr>
+                <tr>
+                    <td>Use Styrofoam cups or packing peanuts near the bench</td>
+                    <td><span class="badge red">DON'T</span></td>
+                    <td>Styrofoam is triboelectric — generates extreme static charge</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout info">
+            <div class="callout-title"><i class="fa-solid fa-lightbulb"></i> Pro Tip: Humidity Matters</div>
+            <p>Static charge builds up far more easily in <strong>low-humidity environments</strong> (below 30% RH). In
+                dry, air-conditioned shops or during winter months, the risk increases dramatically. Some Part 145 shops
+                use humidifiers or ionizers to keep relative humidity between 40–60% as an additional layer of ESD
+                protection.</p>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <hr>
+    </div>
+
+    <!-- ═══════════════ SECTION 3B: ESD SIMULATION ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-microchip"></i> Interactive Circuit Simulation</div>
+        <h2 class="section-title">ESD Discharge Path — Circuit Model</h2>
+
+        <p class="body-text">
+            This simulation models the human body as a <strong>100 pF capacitor</strong> charged to 4,000V — the
+            standard
+            <span class="glossary-term">Human Body Model (HBM)<span class="glossary-tip"><span
+                        class="glossary-tip-title">Human Body Model</span><span class="glossary-tip-body">The
+                        industry-standard ESD test model (ANSI/ESDA/JEDEC JS-001). It represents the human body as a 100
+                        pF capacitor discharged through a 1,500 Ω resistor. The HBM simulates the most common real-world
+                        ESD event: a charged person touching a grounded device. Components are rated by their HBM
+                        withstand voltage (e.g., Class 1A = 250–500V).</span></span></span>.
+            Toggle between scenarios to see how current flows — and why a wrist strap changes everything.
+        </p>
+
+        <div class="esd-sim-container" id="esdSim" style="padding: 24px;">
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap;">
+                <button class="esd-sim-btn" id="simToggle" onclick="toggleSimMode()" style="margin:0;">
+                    <i class="fa-solid fa-shield-halved"></i> <span id="simModeLabel">No Wrist Strap (Dangerous)</span>
+                </button>
+                <button class="esd-sim-btn" id="simPlayBtn" onclick="startSimulation()"
+                    style="margin:0; background:rgba(59,130,246,0.12); border-color:rgba(59,130,246,0.3); color:var(--accent);">
+                    <i class="fa-solid fa-play"></i> Simulate Discharge
+                </button>
+                <div style="margin-left:auto; display:flex; gap:20px; align-items:center;">
+                    <div style="font-size:0.8rem; color:var(--text-muted);">Body Voltage:</div>
+                    <div id="voltMeter"
+                        style="font-family:'Courier New',monospace; font-size:1.4rem; font-weight:700; color:var(--warning); min-width:100px;">
+                        4,000 V</div>
+                </div>
+            </div>
+            <canvas id="esdCanvas" width="740" height="400"
+                style="width:100%; border-radius:10px; background:#0d1117; border:1px solid rgba(148,163,184,0.15);"></canvas>
+            <div style="display:flex; justify-content:space-between; margin-top:16px; flex-wrap:wrap; gap:12px;">
+                <div id="simStatus"
+                    style="display:flex; align-items:center; gap:8px; font-size:0.9rem; color:var(--text-muted);">
+                    <i class="fa-solid fa-circle-info"></i> Click "Simulate Discharge" to begin
+                </div>
+                <div id="chipStatus" style="display:flex; align-items:center; gap:8px; font-size:0.9rem;">
+                    <span
+                        style="width:10px; height:10px; border-radius:50%; background:var(--success); display:inline-block;"
+                        id="chipDot"></span>
+                    <span id="chipLabel">CMOS Gate Oxide: Healthy</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout info" style="margin-top:24px;">
+            <div class="callout-title"><i class="fa-solid fa-graduation-cap"></i> Reading the circuit</div>
+            <p><strong>Left:</strong> Human body modeled as C<sub>body</sub> = 100 pF at +4,000V, discharged through
+                R<sub>body</sub> = 1,500Ω. <strong>Center:</strong> CMOS gate oxide as a thin-film capacitor (breakdown
+                ≈ 100V). <strong>Right (safe mode):</strong> The 1MΩ wrist strap resistor provides a controlled drain
+                path to ground — the gate oxide never sees a dangerous spike.</p>
+        </div>
+    </section>
+
+
+    <div class="section-divider">
+        <hr>
+    </div>
+    <!-- ═══════════════ SECTION 3C: PART 145 SCENARIO ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-plane-departure"></i> Real-World Scenario</div>
+        <h2 class="section-title">Part 145 Scenario: Installing a Garmin GTN 650Xi</h2>
+
+        <p class="body-text">
+            Let's walk through a realistic avionics shop scenario. You're a bench technician in a
+            <span class="glossary-term">14 CFR Part 145<span class="glossary-tip"><span class="glossary-tip-title">Part
+                        145 Repair Station</span><span class="glossary-tip-body">An FAA-certificated repair station
+                        authorized to perform maintenance, preventive maintenance, and alterations on aircraft,
+                        airframes, powerplants, propellers, instruments, and accessories. Part 145 stations must have
+                        documented procedures, qualified personnel, and approved quality systems — including ESD
+                        protection programs for avionics work.</span></span></span>
+            repair station. A customer aircraft (Cessna Citation CJ3+) has come in for an avionics upgrade: replacing
+            the legacy Garmin GNS 530W with a new <strong>Garmin GTN 650Xi</strong> touchscreen GPS/NAV/COMM navigator.
+            The work order references STC SA02506SE and an approved wiring diagram.
+        </p>
+
+        <div class="scenario-box">
+            <div class="scenario-header">
+                <div class="scenario-icon"><i class="fa-solid fa-wrench"></i></div>
+                <div>
+                    <h3>Work Order #WO-2026-0847</h3>
+                    <div class="scenario-subtitle">Garmin GTN 650Xi Installation — N542JB — Cessna Citation CJ3+</div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag esd">ESD Setup</span>
+                    <h4>Step 1: Prepare the ESD workstation</h4>
+                    <p>Before you even open the shipping box, verify your ESD mat is connected to the common ground
+                        point and the ground monitor shows green. Attach your wrist strap to bare skin and test it —
+                        document the test on the shop's daily ESD verification log. The new GTN 650Xi ships in a
+                        static-shielding bag inside a foam-padded box. Leave it sealed until you're ready.</p>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag safety">Safety</span>
+                    <h4>Step 2: Power down and isolate the aircraft avionics bus</h4>
+                    <p>At the aircraft, pull the avionics master switch OFF and confirm the NAV/COMM circuit breaker is
+                        pulled and collared. Verify zero voltage on the GNS 530W connector using a multimeter before
+                        touching any pins. Per the STC instructions, tag the circuit breaker "DO NOT CLOSE — Avionics
+                        Modification in Progress."</p>
+                </div>
+
+                <div class="timeline-step caution">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag esd">ESD Critical</span>
+                    <h4>Step 3: Remove the legacy GNS 530W</h4>
+                    <p>Attach a portable ESD wrist strap to the aircraft structure (a clean, unpainted ground stud on
+                        the instrument panel frame). Release the tray locking mechanism and gently slide the GNS 530W
+                        out of its rack. <strong>Immediately</strong> place it into a static-shielding bag — do not set
+                        it on the glareshield, a seat cushion, or the carpet. Seat cushions and carpet are triboelectric
+                        generators. Seal the bag and label it with the tail number and date.</p>
+                </div>
+
+                <div class="timeline-step caution">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag esd">ESD Critical</span>
+                    <h4>Step 4: Unpack and install the GTN 650Xi</h4>
+                    <p>Back at the ESD-protected bench, open the shipping box and remove the GTN 650Xi <strong>while
+                            still wearing your grounded wrist strap</strong>. Inspect the rear connector for bent pins
+                        or contamination. Carry the unit to the aircraft in its shielding bag. At the aircraft,
+                        re-attach your portable wrist strap to the aircraft ground stud, remove the unit from the bag,
+                        and slide it into the mounting tray. Do not force the connector — the D-sub pins should engage
+                        smoothly. Torque the hold-down screws per the installation manual.</p>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag verify">Verify</span>
+                    <h4>Step 5: Power up and functional test</h4>
+                    <p>Remove the circuit breaker collar. Push in the avionics master. Power on the GTN 650Xi and verify
+                        it enters self-test. Confirm GPS satellite acquisition, VHF COMM transmit/receive on 122.8 MHz,
+                        and VOR/ILS receiver lock on a ground-based test set. Compare the displayed database revision to
+                        the approved ICA. Log the successful installation in the aircraft maintenance records and sign
+                        the 8610-2 return-to-service tag.</p>
+                </div>
+
+                <div class="timeline-step success">
+                    <div class="timeline-dot"></div>
+                    <span class="step-tag verify">Complete</span>
+                    <h4>Step 6: Close out the work order</h4>
+                    <p>Return the removed GNS 530W (still in its shielding bag) to the customer or stock room. File the
+                        STC compliance paperwork. Note on the work order that all ESD precautions were followed per shop
+                        procedure QP-ESD-001. The aircraft is now ready for a customer acceptance flight and the
+                        avionics upgrade is complete.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-title"><i class="fa-solid fa-info-circle"></i> Why this matters</div>
+            <p>Notice how many times ESD protection was applied during a single unit swap: <strong>wrist strap
+                    verification, grounded mat, shielding bag at removal, shielding bag during transport, portable strap
+                    at the aircraft, shielding bag again for the new unit.</strong> Each of these steps eliminates a
+                potential discharge path. Skip any one of them and you risk destroying a $12,000 navigator with an
+                invisible 200-volt discharge.</p>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <hr>
+    </div>
+
+    <!-- ═══════════════ SECTION 4: STEP-BY-STEP PROCEDURE ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-shoe-prints"></i> Section 4</div>
+        <h2 class="section-title">Step-by-Step: Handling an ESD-Sensitive LRU</h2>
+
+        <p class="body-text">
+            Follow this exact procedure every time you remove, handle, or install an avionics Line Replaceable Unit
+            (LRU) containing ESD-sensitive components.
+        </p>
+
+        <div class="process-tabs">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-before')">Before Handling</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-during')">During Handling</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-after')">After Handling</button>
+            </div>
+
+            <div id="tab-before" class="tab-panel active">
+                <div class="step-row">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Verify your ESD workstation</h4>
+                        <p>Confirm the mat is connected to the common ground point. Visually inspect the cord for
+                            damage. If your shop has a ground monitor, check it shows a green (good) status.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Attach and test your wrist strap</h4>
+                        <p>Snap the wrist strap onto bare skin (never over a sleeve). Plug the cord into the CGP. Use a
+                            wrist strap tester to verify continuity and proper 1MΩ resistance. If the tester fails,
+                            replace the strap before proceeding.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Prepare anti-static packaging</h4>
+                        <p>Have a properly sized static-shielding bag (silver/metallic) open and ready on the mat. If
+                            replacing a unit, you'll transfer the removed LRU directly into this bag.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-during" class="tab-panel">
+                <div class="step-row">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Remove the LRU from its rack or connector</h4>
+                        <p>Disconnect power to the system first. Gently extract the unit, holding it by the chassis or
+                            non-sensitive edges. Never touch exposed pins, connectors, or bare circuit board traces.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Transport only in shielding bags</h4>
+                        <p>Immediately place the removed unit inside the shielding bag and seal it. Never carry an
+                            unbagged board across the shop — even a short walk can generate thousands of volts through
+                            triboelectric charging on your clothing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-after" class="tab-panel">
+                <div class="step-row">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Place the LRU on the ESD mat — never on a bare bench</h4>
+                        <p>When you need to inspect or test the unit, remove it from the bag and place it directly on
+                            the grounded anti-static mat. Never set it on a regular desk, cardboard box, or paper
+                            surface — all of which are insulative and will hold charge.</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h4>Re-bag when complete</h4>
+                        <p>Once work is finished, return the LRU to its shielding bag before transporting it back to the
+                            aircraft. Log any ESD-sensitive handling in the work order per your shop's quality system.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <hr>
+    </div>
+
+    <!-- ═══════════════ SECTION 5: FLASHCARDS ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-layer-group"></i> Review</div>
+        <h2 class="section-title">Key Terms — Tap to Flip</h2>
+
+        <div class="flashcard-grid">
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="fc-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>Electrostatic Discharge (ESD)</h3>
+                        <div class="fc-hint">Tap to reveal definition</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p class="fc-def">A sudden, rapid transfer of static charge between two objects at different
+                            electrical potentials. In avionics, it occurs when an improperly grounded technician touches
+                            an ESD-sensitive component, causing current to flow through delicate semiconductor
+                            junctions.</p>
+                        <div class="fc-analogy"><i class="fa-solid fa-quote-left" style="margin-right:8px"></i>Like
+                            lightning between a cloud and the ground — the charge equalizes instantly across the gap,
+                            and anything in the path gets damaged.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="fc-icon"><i class="fa-solid fa-link"></i></div>
+                        <h3>Wrist Strap (1MΩ)</h3>
+                        <div class="fc-hint">Tap to reveal definition</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p class="fc-def">A conductive band worn on bare skin, connected via a coiled cord with a
+                            built-in 1-megohm resistor to the common ground point. The resistor limits current to
+                            prevent shock if the technician accidentally contacts an energized circuit, while still
+                            allowing static charge to drain safely.</p>
+                        <div class="fc-analogy"><i class="fa-solid fa-quote-left" style="margin-right:8px"></i>Like a
+                            safety tether on a rock climber — it keeps you connected to safety ground without
+                            restricting your work.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="fc-icon"><i class="fa-solid fa-ghost"></i></div>
+                        <h3>Latent ESD Damage</h3>
+                        <div class="fc-hint">Tap to reveal definition</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p class="fc-def">Component damage caused by ESD that is severe enough to weaken internal
+                            structures (such as gate oxide layers in MOSFET transistors) but not severe enough to cause
+                            immediate failure. The component passes functional tests on the bench, is returned to
+                            service, but fails prematurely in the field — often under thermal or vibration stress.</p>
+                        <div class="fc-analogy"><i class="fa-solid fa-quote-left" style="margin-right:8px"></i>Like a
+                            hairline crack in a windshield — it looks fine at first, but vibration and temperature
+                            changes eventually cause it to shatter.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="fc-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                        <h3>Static-Shielding Bag</h3>
+                        <div class="fc-hint">Tap to reveal definition</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <p class="fc-def">A metallic-silver anti-static bag with a conductive outer layer that acts as a
+                            Faraday cage, blocking external electric fields from reaching the enclosed component. The
+                            inner layer is anti-static to prevent triboelectric charge generation inside the bag. Only
+                            provides protection when the component is <strong>inside</strong> the sealed bag.</p>
+                        <div class="fc-analogy"><i class="fa-solid fa-quote-left" style="margin-right:8px"></i>Like a
+                            suit of armor — it protects what's inside from external attacks, but setting something on
+                            top of the armor doesn't give that object any protection.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 6: KNOWLEDGE CHECKS ═══════════════ -->
+    <section class="kc-section">
+        <div class="kc-inner">
+            <div class="section-label"><i class="fa-solid fa-clipboard-check"></i> Assessment</div>
+            <h2 class="section-title">Check Your Understanding</h2>
+            <p class="body-text">Answer the following scenario-based questions to verify you can apply what you've
+                learned.</p>
+
+            <!-- KC 1 -->
+            <div class="kc-card" id="kc1">
+                <div class="kc-badge"><i class="fa-solid fa-clipboard-check"></i> Question 1 of 3</div>
+                <h3 class="kc-question">A technician needs to remove a CMOS processor board from an avionics LRU on the
+                    bench. Which protective practice is required?</h3>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">Wear latex gloves and hold the board by its non-conductive edges
+                            only</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">Work quickly so that ambient static has less time to generate a
+                            charge</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">Use a grounded wrist strap and handle the board at an ESD-protected
+                            station</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">Ground the LRU chassis to the bench frame before extracting the
+                            board</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled
+                    onclick="checkAnswer('kc1', 2, 'A grounded wrist strap keeps the technician at the same potential as the workstation, preventing charge from flowing through the board. Latex gloves actually insulate the technician and prevent charge from draining — increasing risk. Working quickly has no effect because static generates instantly on contact. Grounding the chassis alone does not protect the board once it is separated from the LRU.')">Submit
+                    Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+            </div>
+
+            <!-- KC 2 -->
+            <div class="kc-card" id="kc2">
+                <div class="kc-badge"><i class="fa-solid fa-clipboard-check"></i> Question 2 of 3</div>
+                <h3 class="kc-question">After removing a GPS receiver from an aircraft, a technician sets the unit on
+                    top of its silver static-shielding bag while filling out paperwork. Is this acceptable?</h3>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">Yes — the shielding bag creates a Faraday cage that protects
+                            anything near it</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">No — the bag's conductive outer layer can couple charge into the
+                            unit</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">Yes — but only if the technician is wearing a grounded wrist strap
+                            at the time</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">Yes — the anti-static inner layer extends protection to the bag's
+                            outer surface</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled
+                    onclick="checkAnswer('kc2', 1, 'A static-shielding bag has a conductive metallic outer layer that acts as a Faraday cage — but ONLY for items sealed inside. The outside surface is conductive, which means it can couple external static charge directly into a component resting on top of it. The unit must be placed INSIDE the bag or on the grounded ESD mat.')">Submit
+                    Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+            </div>
+
+            <!-- KC 3 -->
+            <div class="kc-card" id="kc3">
+                <div class="kc-badge"><i class="fa-solid fa-clipboard-check"></i> Question 3 of 3</div>
+                <h3 class="kc-question">An avionics unit passes all functional bench tests after a repair. Six weeks
+                    later, it fails in the aircraft during a hot day on the ramp. Assuming no new damage occurred during
+                    installation, what is the most likely explanation?</h3>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">The test equipment was out of calibration, masking a pre-existing
+                            hardware defect</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">Latent ESD damage weakened a junction that later failed under
+                            thermal stress</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">Excessive soldering heat during the repair degraded an internal
+                            component lead</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">An intermittent open in the aircraft harness only manifests at
+                            elevated temperatures</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled
+                    onclick="checkAnswer('kc3', 1, 'This is the textbook signature of latent ESD damage. A small, imperceptible static discharge during handling partially degraded a semiconductor junction. The weakened gate oxide passed bench testing but broke down under the additional thermal stress of a hot ramp environment. This delayed failure pattern is exactly why ESD prevention is treated as an airworthiness issue.')">Submit
+                    Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ KEY TAKEAWAYS ═══════════════ -->
+    <section class="lesson-section">
+        <div class="section-label"><i class="fa-solid fa-star"></i> Summary</div>
+        <h2 class="section-title">Key Takeaways</h2>
+
+        <div class="takeaway-box">
+            <h3><i class="fa-solid fa-graduation-cap"></i> What You Should Remember</h3>
+            <ul class="takeaway-list">
+                <li><i class="fa-solid fa-circle-check"></i> ESD can destroy avionics components at voltages far below
+                    what humans can feel (~100V vs. ~3,500V).</li>
+                <li><i class="fa-solid fa-circle-check"></i> The grounded wrist strap is the single most important ESD
+                    protection tool — it must make direct skin contact.</li>
+                <li><i class="fa-solid fa-circle-check"></i> All ESD elements (mat, strap, equipment) must connect to a
+                    single common ground point (CGP).</li>
+                <li><i class="fa-solid fa-circle-check"></i> Static-shielding bags only protect what's sealed
+                    <strong>inside</strong> them — never rest components on top.
+                </li>
+                <li><i class="fa-solid fa-circle-check"></i> Latent ESD damage is an airworthiness threat — damaged
+                    components may pass bench test but fail in flight.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Test your wrist strap at the start of every shift. A broken
+                    strap = zero protection.</li>
+            </ul>
+        </div>
+
+        <div class="lesson-footer">
+            <span>Node W1-Z5-N1 · ESD-Safe Handling Basics</span>
+            <a class="footer-nav" href="#">Next: FOD and Tool Accountability <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+    <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function selectOption(el, kcId) {
+            document.querySelectorAll(`#${kcId} .kc-option`).forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById(`btn-${kcId}`).disabled = false;
+        }
+
+        function checkAnswer(kcId, correctIndex, feedbackText) {
+            const container = document.getElementById(kcId);
+            const selected = container.querySelector(`input[name="${kcId}"]:checked`);
+            if (!selected) return;
+
+            const selectedIndex = parseInt(selected.value);
+            const isCorrect = selectedIndex === correctIndex;
+
+            // Disable all inputs
+            container.querySelectorAll('input').forEach(i => i.disabled = true);
+            container.querySelectorAll('.kc-option').forEach(o => o.style.pointerEvents = 'none');
+            document.getElementById(`btn-${kcId}`).style.display = 'none';
+
+            // Highlight correct/incorrect
+            const options = container.querySelectorAll('.kc-option');
+            options[correctIndex].style.borderColor = 'var(--success)';
+            options[correctIndex].style.backgroundColor = 'rgba(16,185,129,0.08)';
+
+            if (!isCorrect) {
+                options[selectedIndex].style.borderColor = 'var(--error)';
+                options[selectedIndex].style.backgroundColor = 'rgba(239,68,68,0.08)';
+            }
+
+            const feedbackEl = document.getElementById(`feedback-${kcId}`);
+            feedbackEl.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackEl.innerHTML = `
+                <div class="kc-feedback-title">
+                    <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
+                    ${isCorrect ? 'Correct!' : 'Not quite right'}
+                </div>
+                <p>${feedbackText}</p>
+            `;
+        }
+
+        // ═══════════════ ESD CIRCUIT SIMULATION ═══════════════
+        const canvas = document.getElementById('esdCanvas');
+        const ctx = canvas.getContext('2d');
+        let simMode = 'dangerous'; // 'dangerous' or 'safe'
+        let simRunning = false;
+        let simTime = 0;
+        let voltage = 4000;
+        let particles = [];
+        let animFrame = null;
+        let gateDestroyed = false;
+
+        // Colors
+        const C = {
+            wire: '#64748b', wireHi: '#94a3b8', label: '#cbd5e1', labelDim: '#475569',
+            cap: '#3b82f6', res: '#a78bfa', warn: '#f59e0b', danger: '#ef4444',
+            safe: '#10b981', bg: '#0d1117', node: '#e2e8f0', particle: '#fbbf24',
+            glow: 'rgba(239,68,68,0.35)', safeGlow: 'rgba(16,185,129,0.25)'
+        };
+
+        // Circuit node positions
+        const N = {
+            bodyTop: { x: 120, y: 60 }, bodyBot: { x: 120, y: 160 },
+            rTop: { x: 120, y: 180 }, rBot: { x: 120, y: 280 },
+            junc: { x: 300, y: 280 }, gateTop: { x: 300, y: 160 }, gateBot: { x: 300, y: 280 },
+            chipOut: { x: 300, y: 340 }, gnd1: { x: 300, y: 380 },
+            strapTop: { x: 520, y: 60 }, strapR1: { x: 520, y: 120 }, strapR2: { x: 520, y: 220 },
+            strapBot: { x: 520, y: 280 }, strapGnd: { x: 520, y: 380 },
+            touchPt: { x: 300, y: 60 }
+        };
+
+        function drawWire(x1, y1, x2, y2, color) {
+            ctx.strokeStyle = color || C.wire;
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        }
+
+        function drawResistor(x, y1, y2, label, color) {
+            const mid = (y1 + y2) / 2, h = (y2 - y1) * 0.35;
+            drawWire(x, y1, x, mid - h);
+            drawWire(x, mid + h, x, y2);
+            // Zigzag
+            ctx.strokeStyle = color || C.res;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            const segments = 6, segH = (h * 2) / segments, w = 10;
+            ctx.moveTo(x, mid - h);
+            for (let i = 0; i < segments; i++) {
+                const dir = i % 2 === 0 ? 1 : -1;
+                ctx.lineTo(x + w * dir, mid - h + segH * (i + 0.5));
+            }
+            ctx.lineTo(x, mid + h);
+            ctx.stroke();
+            // Label
+            ctx.fillStyle = C.label; ctx.font = '600 11px Inter,sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(label, x + 16, mid + 4);
+        }
+
+        function drawCapacitor(x, y1, y2, label, color, glow) {
+            const mid = (y1 + y2) / 2, gap = 8;
+            drawWire(x, y1, x, mid - gap);
+            drawWire(x, mid + gap, x, y2);
+            // Plates
+            ctx.strokeStyle = color || C.cap;
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(x - 18, mid - gap); ctx.lineTo(x + 18, mid - gap); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x - 18, mid + gap); ctx.lineTo(x + 18, mid + gap); ctx.stroke();
+            // Glow effect
+            if (glow) {
+                ctx.fillStyle = glow;
+                ctx.fillRect(x - 22, mid - gap - 4, 44, gap * 2 + 8);
+            }
+            // Label
+            ctx.fillStyle = C.label; ctx.font = '600 11px Inter,sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(label, x + 24, mid + 4);
+        }
+
+        function drawGround(x, y) {
+            ctx.strokeStyle = C.wire; ctx.lineWidth = 2;
+            drawWire(x, y - 15, x, y);
+            ctx.beginPath(); ctx.moveTo(x - 14, y); ctx.lineTo(x + 14, y); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x - 9, y + 5); ctx.lineTo(x + 9, y + 5); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x - 4, y + 10); ctx.lineTo(x + 4, y + 10); ctx.stroke();
+        }
+
+        function drawNode(x, y, color) {
+            ctx.fillStyle = color || C.node;
+            ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+        }
+
+        function drawLabel(text, x, y, color, align, font) {
+            ctx.fillStyle = color || C.label;
+            ctx.font = font || '600 11px Inter,sans-serif';
+            ctx.textAlign = align || 'center';
+            ctx.fillText(text, x, y);
+        }
+
+        function drawCircuit() {
+            ctx.clearRect(0, 0, 740, 400);
+
+            // Title labels
+            drawLabel('HUMAN BODY MODEL (HBM)', 120, 25, C.warn, 'center', '700 12px Inter,sans-serif');
+            drawLabel('CMOS GATE', 300, 140, gateDestroyed ? C.danger : C.cap, 'center', '700 12px Inter,sans-serif');
+
+            // ── Body capacitor (left top) ──
+            drawCapacitor(120, 60, 160, 'Cbody = 100 pF', C.cap);
+
+            // Voltage indicator on capacitor
+            const vColor = voltage > 2000 ? C.danger : voltage > 500 ? C.warn : C.safe;
+            drawLabel(`+${Math.round(voltage)}V`, 120, 55, vColor, 'center', '700 13px "Courier New",monospace');
+
+            // ── Body resistance (left bottom) ──
+            drawResistor(120, 180, 280, 'Rbody = 1,500Ω', C.res);
+
+            // Wire from body cap bottom to resistor top
+            drawWire(120, 160, 120, 180);
+
+            // Wire from resistor bottom to junction
+            drawWire(120, 280, 300, 280);
+
+            // Wire from body cap top across to touch point
+            drawWire(120, 60, 300, 60);
+            drawLabel('Touch Point →', 210, 50, C.labelDim, 'center', '11px Inter,sans-serif');
+
+            // Wire from touch point down to gate
+            drawWire(300, 60, 300, 160);
+
+            // ── CMOS Gate oxide capacitor (center) ──
+            const gateGlow = gateDestroyed ? C.glow : (simRunning && simMode === 'dangerous' ? 'rgba(239,68,68,' + (0.1 + Math.sin(simTime * 8) * 0.2) + ')' : null);
+            drawCapacitor(300, 160, 280, gateDestroyed ? 'DESTROYED!' : 'Gate oxide 3nm', gateDestroyed ? C.danger : C.cap, gateGlow);
+
+            // Wire from gate to ground
+            drawWire(300, 280, 300, 340);
+            drawGround(300, 355);
+            drawLabel('Circuit GND', 300, 390, C.labelDim, 'center', '10px Inter,sans-serif');
+
+            // Junction node
+            drawNode(300, 280, C.warn);
+
+            // ── Wrist strap path (right side) ──
+            if (simMode === 'safe') {
+                drawLabel('WRIST STRAP PATH', 520, 25, C.safe, 'center', '700 12px Inter,sans-serif');
+
+                // Wire from body cap top to strap
+                drawWire(120, 60, 520, 60, C.safe);
+                drawNode(120, 60, C.safe);
+
+                // Wrist strap connection label
+                drawLabel('Wrist Strap', 400, 50, C.safe, 'center', '11px Inter,sans-serif');
+
+                // Strap resistor
+                drawResistor(520, 120, 220, 'Rstrap = 1 MΩ', C.safe);
+
+                // Wire from top to resistor
+                drawWire(520, 60, 520, 120, C.safe);
+
+                // Wire from resistor to ground
+                drawWire(520, 220, 520, 350, C.safe);
+                drawGround(520, 365);
+                drawLabel('Earth GND', 520, 390, C.labelDim, 'center', '10px Inter,sans-serif');
+            } else {
+                drawLabel('NO WRIST STRAP', 520, 25, C.danger, 'center', '700 12px Inter,sans-serif');
+                // Draw disconnected strap with X
+                ctx.strokeStyle = 'rgba(239,68,68,0.3)';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([6, 6]);
+                ctx.beginPath(); ctx.moveTo(200, 60); ctx.lineTo(520, 60); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(520, 60); ctx.lineTo(520, 200); ctx.stroke();
+                ctx.setLineDash([]);
+
+                // X mark
+                ctx.strokeStyle = C.danger; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(510, 120); ctx.lineTo(530, 140); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(530, 120); ctx.lineTo(510, 140); ctx.stroke();
+                drawLabel('DISCONNECTED', 520, 160, C.danger, 'center', '600 10px Inter,sans-serif');
+            }
+
+            // Connection nodes
+            drawNode(120, 60);
+            drawNode(120, 160);
+            drawNode(120, 280);
+            drawNode(300, 60);
+
+            // Draw particles
+            particles.forEach(p => {
+                ctx.fillStyle = p.color || C.particle;
+                ctx.shadowColor = p.color || C.particle;
+                ctx.shadowBlur = 6;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        function createParticles(path, count, color) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    path: path,
+                    pathPos: i / count,
+                    speed: 0.008 + Math.random() * 0.004,
+                    color: color,
+                    x: path[0].x, y: path[0].y
+                });
+            }
+        }
+
+        function updateParticle(p) {
+            p.pathPos += p.speed;
+            if (p.pathPos >= 1) p.pathPos = 0;
+            const totalSegs = p.path.length - 1;
+            const seg = Math.min(Math.floor(p.pathPos * totalSegs), totalSegs - 1);
+            const t = (p.pathPos * totalSegs) - seg;
+            p.x = p.path[seg].x + (p.path[seg + 1].x - p.path[seg].x) * t;
+            p.y = p.path[seg].y + (p.path[seg + 1].y - p.path[seg].y) * t;
+        }
+
+        function animate() {
+            simTime += 0.016;
+
+            if (simRunning) {
+                // Decay voltage
+                const tau = simMode === 'safe' ? 0.1 : 0.000000015; // RC time constant
+                const decayRate = simMode === 'safe' ? 0.993 : 0.96;
+                voltage *= decayRate;
+                if (voltage < 1) voltage = 0;
+
+                // Update volt meter
+                document.getElementById('voltMeter').textContent = voltage > 1 ? Math.round(voltage).toLocaleString() + ' V' : '0 V';
+                document.getElementById('voltMeter').style.color = voltage > 2000 ? '#ef4444' : voltage > 500 ? '#f59e0b' : '#10b981';
+
+                // Update particles
+                particles.forEach(updateParticle);
+
+                // Gate destruction in dangerous mode
+                if (simMode === 'dangerous' && voltage < 3500 && !gateDestroyed) {
+                    gateDestroyed = true;
+                    document.getElementById('chipDot').style.background = '#ef4444';
+                    document.getElementById('chipLabel').textContent = 'CMOS Gate Oxide: DESTROYED';
+                    document.getElementById('chipLabel').style.color = '#ef4444';
+                    document.getElementById('simStatus').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:#ef4444"></i> <span style="color:#ef4444">Gate oxide punctured at ~100V — component permanently damaged</span>';
+                }
+
+                // Simulation end
+                if (voltage < 1) {
+                    simRunning = false;
+                    particles = [];
+                    document.getElementById('simPlayBtn').innerHTML = '<i class="fa-solid fa-rotate-right"></i> Reset & Replay';
+                    document.getElementById('simPlayBtn').style.pointerEvents = 'auto';
+                    if (simMode === 'safe') {
+                        document.getElementById('simStatus').innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10b981"></i> <span style="color:#10b981">Charge drained safely through wrist strap — no damage to gate oxide</span>';
+                    }
+                }
+            }
+
+            drawCircuit();
+            animFrame = requestAnimationFrame(animate);
+        }
+
+        function toggleSimMode() {
+            simMode = simMode === 'dangerous' ? 'safe' : 'dangerous';
+            const label = document.getElementById('simModeLabel');
+            const btn = document.getElementById('simToggle');
+            if (simMode === 'safe') {
+                label.textContent = 'Wrist Strap Connected (Safe)';
+                btn.style.background = 'rgba(16,185,129,0.12)';
+                btn.style.borderColor = 'rgba(16,185,129,0.3)';
+                btn.style.color = '#10b981';
+            } else {
+                label.textContent = 'No Wrist Strap (Dangerous)';
+                btn.style.background = 'rgba(245,158,11,0.12)';
+                btn.style.borderColor = 'rgba(245,158,11,0.3)';
+                btn.style.color = '#f59e0b';
+            }
+            resetSimulation();
+        }
+
+        function resetSimulation() {
+            simRunning = false;
+            voltage = 4000;
+            simTime = 0;
+            particles = [];
+            gateDestroyed = false;
+            document.getElementById('voltMeter').textContent = '4,000 V';
+            document.getElementById('voltMeter').style.color = '#f59e0b';
+            document.getElementById('chipDot').style.background = '#10b981';
+            document.getElementById('chipLabel').textContent = 'CMOS Gate Oxide: Healthy';
+            document.getElementById('chipLabel').style.color = '';
+            document.getElementById('simStatus').innerHTML = '<i class="fa-solid fa-circle-info"></i> Click "Simulate Discharge" to begin';
+            document.getElementById('simPlayBtn').innerHTML = '<i class="fa-solid fa-play"></i> Simulate Discharge';
+            document.getElementById('simPlayBtn').style.pointerEvents = 'auto';
+        }
+
+        function startSimulation() {
+            if (simRunning) return;
+            resetSimulation();
+            simRunning = true;
+
+            document.getElementById('simPlayBtn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Discharging…';
+            document.getElementById('simPlayBtn').style.pointerEvents = 'none';
+            document.getElementById('simStatus').innerHTML = '<i class="fa-solid fa-bolt" style="color:#f59e0b"></i> <span style="color:#f59e0b">Discharge in progress — watch the charge flow</span>';
+
+            if (simMode === 'dangerous') {
+                // Particles flow: body cap → touch point → gate oxide → ground
+                const dangerPath = [
+                    { x: 120, y: 60 }, { x: 300, y: 60 }, { x: 300, y: 160 }, { x: 300, y: 280 }, { x: 300, y: 340 }
+                ];
+                createParticles(dangerPath, 12, C.particle);
+            } else {
+                // Particles flow: body cap → wrist strap → ground (safe drain)
+                const safePath = [
+                    { x: 120, y: 60 }, { x: 520, y: 60 }, { x: 520, y: 120 }, { x: 520, y: 220 }, { x: 520, y: 350 }
+                ];
+                createParticles(safePath, 12, '#34d399');
+            }
+        }
+
+        // Initialize
+        drawCircuit();
+        animate();
+    </script>
+</body>
+
+</html>

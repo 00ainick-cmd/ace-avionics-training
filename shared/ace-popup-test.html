@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ace-root="../">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACE Popup — Component Test</title>
+  <link rel="icon" type="image/png" href="../shared/ace-sprites/ace-48-happy.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ace-theme.css">
+  <link rel="stylesheet" href="ace-popup.css">
+
+  <style>
+    .test-page {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    .test-section {
+      margin-bottom: 32px;
+    }
+    .test-section h2 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .test-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .test-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+      background: var(--gold-soft);
+    }
+    .test-btn.correct-btn {
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .test-btn.wrong-btn {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .checklist li::before {
+      content: '☐';
+      color: var(--text-muted);
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .log-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      min-height: 80px;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-page">
+    <h1>ACE Popup — Component Test</h1>
+    <p class="sub">Trigger the popup in different states and verify the pass criteria below.</p>
+
+    <!-- ── Correct answer scenarios ───────────────────────── -->
+    <div class="test-section">
+      <h2>Correct Answer</h2>
+      <div class="btn-row">
+        <button class="test-btn correct-btn" onclick="testCorrect()">Correct — auto comment</button>
+        <button class="test-btn correct-btn" onclick="testCorrectWithExplanation()">Correct — with explanation</button>
+      </div>
+    </div>
+
+    <!-- ── Wrong answer scenarios ────────────────────────── -->
+    <div class="test-section">
+      <h2>Wrong Answer</h2>
+      <div class="btn-row">
+        <button class="test-btn wrong-btn" onclick="testWrong()">Wrong — auto comment</button>
+        <button class="test-btn wrong-btn" onclick="testWrongFull()">Wrong — full (correct answer + explanation)</button>
+      </div>
+    </div>
+
+    <!-- ── Specific sprites ───────────────────────────────── -->
+    <div class="test-section">
+      <h2>Sprite Variations</h2>
+      <div class="btn-row">
+        <button class="test-btn" onclick="testSprite('happy')">happy</button>
+        <button class="test-btn" onclick="testSprite('proud')">proud</button>
+        <button class="test-btn" onclick="testSprite('thinking')">thinking</button>
+        <button class="test-btn" onclick="testSprite('concerned')">concerned</button>
+      </div>
+    </div>
+
+    <!-- ── Keyboard test ──────────────────────────────────── -->
+    <div class="test-section">
+      <h2>Keyboard Dismiss</h2>
+      <div class="btn-row">
+        <button class="test-btn" onclick="testKeyboard()">Open → press ESC, Space, or Enter</button>
+      </div>
+    </div>
+
+    <!-- ── Callback log ───────────────────────────────────── -->
+    <div class="test-section">
+      <h2>onNext Callback Log</h2>
+      <div class="log-box" id="callbackLog">Waiting for callbacks...</div>
+    </div>
+
+    <!-- ── Pass criteria checklist ───────────────────────── -->
+    <h2 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:12px;">Phase 2 Pass Criteria</h2>
+    <ul class="checklist">
+      <li>ACE sprite is visible, sized at ~80px, not blurry</li>
+      <li>Correct answers: green strip + green badge + green Continue button</li>
+      <li>Wrong answers: red strip + red badge + gold "Got it" button</li>
+      <li>Wrong answer shows "Correct Answer" box in green</li>
+      <li>Explanation shown when provided</li>
+      <li>Pressing ESC dismisses popup and fires onNext callback</li>
+      <li>Pressing Space/Enter dismisses popup and fires onNext callback</li>
+      <li>Clicking backdrop dismisses popup and fires onNext callback</li>
+      <li>ACE comment is short and not corny</li>
+      <li>Popup opens centered with smooth animation</li>
+      <li>Works in dark and light themes (use browser toggle)</li>
+    </ul>
+  </div>
+
+  <script src="ace-popup.js"></script>
+  <script>
+    let callCount = 0;
+
+    function log(msg) {
+      callCount++;
+      const el = document.getElementById('callbackLog');
+      const ts = new Date().toLocaleTimeString();
+      el.textContent = `[${callCount}] ${ts}: ${msg}\n` + el.textContent;
+    }
+
+    function testCorrect() {
+      AcePopup.show({
+        correct: true,
+        onNext: () => log('onNext fired (correct, no explanation)')
+      });
+    }
+
+    function testCorrectWithExplanation() {
+      AcePopup.show({
+        correct: true,
+        explanation: '14 CFR Part 43 governs maintenance practices and sets standards for who can perform maintenance and how it must be documented.',
+        onNext: () => log('onNext fired (correct + explanation)')
+      });
+    }
+
+    function testWrong() {
+      AcePopup.show({
+        correct: false,
+        onNext: () => log('onNext fired (wrong, no extras)')
+      });
+    }
+
+    function testWrongFull() {
+      AcePopup.show({
+        correct: false,
+        correctAnswer: '14 CFR Part 43 — Maintenance, Preventive Maintenance, Rebuilding, and Alteration',
+        explanation: 'Part 43 specifically governs who may perform maintenance on aircraft. Part 91 covers general operating rules. Part 145 covers repair stations.',
+        onNext: () => log('onNext fired (wrong + correct answer + explanation)')
+      });
+    }
+
+    function testSprite(name) {
+      AcePopup.show({
+        correct: true,
+        sprite: name,
+        aceComment: `Sprite: ${name}`,
+        onNext: () => log(`onNext fired (sprite: ${name})`)
+      });
+    }
+
+    function testKeyboard() {
+      AcePopup.show({
+        correct: false,
+        aceComment: 'Close me with ESC, Space, or Enter.',
+        onNext: () => log('onNext fired (keyboard dismiss)')
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,533 @@
+{
+  "metadata": {
+    "courseId": "caet-entry-w8",
+    "title": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "description": "Micro-training generated for W8: Flight Instruments & Pitot-Static (with Gyro/AHRS)"
+  },
+  "lessons": [
+    {
+      "id": "W8-Z1-N1",
+      "title": "Pitot-static components basics",
+      "zone": "Pitot-static fundamentals",
+      "objectiveKeys": [
+        "q143",
+        "q148",
+        "q188",
+        "q210"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Pitot-static components basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Identify pitot/static sources and pressures."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Standard Sea Level Pressure",
+              "definition": "Standard atmospheric pressure at sea level is 29.92 inches of mercury (inHg), equivalent to 1013.25 millibars (mb) or hectopascals (hPa).",
+              "analogy": "Think of 29.92 inHg as the 'sea level zero' reference \u2014 like setting a measuring tape to start at zero before measuring distance from the ground."
+            },
+            {
+              "term": "Pitot Tube Function",
+              "definition": "The pitot tube is an open-faced probe pointed into the airstream to sense and collect ram (impact) air pressure, which it delivers to the airspeed indicator and air data computer for airspeed computation.",
+              "analogy": "A pitot tube is like holding a tube into the wind \u2014 the faster the wind blows, the more pressure builds up inside, and that pressure is measured to determine speed."
+            },
+            {
+              "term": "Static Pressure System Instruments",
+              "definition": "The aircraft static pressure system collects ambient atmospheric pressure through flush-mounted static ports and supplies it to three flight instruments: the altimeter, vertical speed indicator (VSI), and airspeed indicator (ASI).",
+              "analogy": "The static port is like a shared water main \u2014 one tap feeds three separate fixtures (altimeter, VSI, ASI) all from the same source of ambient pressure."
+            },
+            {
+              "term": "Instruments Using Static Port",
+              "definition": "Three flight instruments depend on the static port for accurate readings: the altimeter (senses static pressure for altitude), the VSI (senses rate of static pressure change), and the airspeed indicator (uses static as the reference side of the pitot-static differential).",
+              "analogy": "The static port is like a shared electrical ground \u2014 it provides a common reference that three different instruments need to make accurate measurements."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the standard atmospheric pressure at sea level in the International Standard Atmosphere?",
+          "choices": [
+            "29.92 inHg (1013.25 mb)",
+            "30.15 inHg (1021 mb)",
+            "28.86 inHg (977 mb)",
+            "31.00 inHg (1050 mb)"
+          ],
+          "correctIndex": 0,
+          "feedback": "The ISA defines sea-level standard pressure as 29.92 inHg or 1013.25 mb/hPa. This is the reference for pressure altitude and standard altimeter setting (FL above transition altitude)."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the primary function of the pitot tube?",
+          "choices": [
+            "Measure ambient static pressure for the altimeter and VSI",
+            "Sense and deliver ram air pressure to the airspeed indicator and air data systems",
+            "Provide total air temperature data to the ADC for TAS computation",
+            "Generate angle-of-attack signals for stall warning systems"
+          ],
+          "correctIndex": 1,
+          "feedback": "The pitot tube senses ram (dynamic) pressure \u2014 the pressure created by the aircraft's forward motion through the air \u2014 and delivers this to the ASI and ADC."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which flight instruments receive static pressure from the aircraft's static port system?",
+          "choices": [
+            "Altimeter, VSI, and attitude indicator",
+            "Altimeter, attitude indicator, and turn coordinator",
+            "VSI, airspeed indicator, and heading indicator",
+            "Altimeter, VSI, and airspeed indicator"
+          ],
+          "correctIndex": 3,
+          "feedback": "The static system supplies three instruments: the altimeter (senses absolute static pressure for altitude), the VSI (senses rate of static pressure change), and the ASI (uses static as the reference side of the airspeed differential)."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which three instruments rely on the static port for accurate pressure readings?",
+          "choices": [
+            "Airspeed indicator, attitude indicator, and VSI",
+            "Altimeter, attitude indicator, and airspeed indicator",
+            "VSI, turn coordinator, and altimeter",
+            "Altimeter, VSI, and airspeed indicator"
+          ],
+          "correctIndex": 3,
+          "feedback": "The static port supplies ambient pressure to the altimeter (altitude), VSI (rate of altitude change), and ASI (reference side of the airspeed differential). All three fail or give erroneous readings with a blocked or leaking static port."
+        }
+      ]
+    },
+    {
+      "id": "W8-Z2-N1",
+      "title": "Altimeter/VSI/ASI basics",
+      "zone": "Instrument behavior",
+      "objectiveKeys": [
+        "q17",
+        "q68",
+        "q185",
+        "q190"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Altimeter/VSI/ASI basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Describe instrument indications and settings."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Altimeter Setting",
+              "definition": "The local barometric pressure in inches of mercury (inHg) entered into the altimeter's Kollsman window before flight so the instrument reads accurate altitude above mean sea level.",
+              "analogy": "Setting the altimeter is like zeroing a bathroom scale before weighing \u2014 without the correct reference baseline, every reading will be off by the same constant error."
+            },
+            {
+              "term": "Vertical Speed Indicator (VSI)",
+              "definition": "A flight instrument that measures and displays the rate of change of barometric altitude in feet per minute (fpm) by comparing the static pressure entering a chamber with a calibrated leak rate.",
+              "analogy": "A VSI is like a pressure change detector \u2014 it doesn't read pressure, it reads how fast pressure is changing, which corresponds to how fast you're climbing or descending."
+            },
+            {
+              "term": "Altimeter Operation",
+              "definition": "An altimeter measures barometric altitude by sensing changes in static (atmospheric) pressure through an aneroid capsule; as altitude increases, pressure decreases, and the capsule expands, rotating gears to display altitude in feet or meters referenced to the set datum.",
+              "analogy": "An altimeter is like a metal balloon inside a box \u2014 as you climb, outside pressure drops, the balloon expands, and a linked pointer shows how much it expanded, which corresponds to altitude."
+            },
+            {
+              "term": "Basic-T Instrument Arrangement",
+              "definition": "The FAA-standard 'Basic T' layout places four primary flight instruments in a T pattern: ASI (upper-left), AI (upper-center), ALT (upper-right), and heading indicator (lower-center).",
+              "analogy": "The 'T' arrangement is designed so a pilot's eye naturally scans from the center (AI) outward to the wings (ASI left, ALT right) then down to the stem (HI bottom) \u2014 like reading a plus sign from the center out."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Why must the altimeter be set to the current local barometric pressure before flight?",
+          "choices": [
+            "So the altimeter reads accurate altitude above sea level referenced to local atmospheric conditions",
+            "To prevent the static port from becoming blocked at altitude",
+            "To synchronize the altimeter with the air data computer",
+            "To set the transition altitude for pressurized aircraft"
+          ],
+          "correctIndex": 0,
+          "feedback": "Without the correct local pressure setting, the altimeter references an incorrect baseline, causing altitude errors equal to approximately 1,000 ft per inch of mercury difference."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What does the Vertical Speed Indicator measure and how is it expressed?",
+          "choices": [
+            "Absolute altitude above sea level, expressed in feet MSL",
+            "Dynamic pressure change, expressed in knots per minute",
+            "Rate of change of barometric altitude, expressed in feet per minute",
+            "Engine climb power setting, expressed in percent RPM"
+          ],
+          "correctIndex": 2,
+          "feedback": "The VSI measures the rate at which static pressure is changing and converts this into a vertical rate reading in feet per minute \u2014 positive for climb, negative for descent."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How does a conventional altimeter determine and display barometric altitude?",
+          "choices": [
+            "It measures ram pressure changes from the pitot tube and converts them to altitude",
+            "It calculates geometric altitude by triangulating GPS satellite signals",
+            "It senses static pressure through an aneroid capsule; pressure decreases with altitude, expanding the capsule to display altitude in feet",
+            "It receives digital altitude data from the ADC via a synchro motor system"
+          ],
+          "correctIndex": 2,
+          "feedback": "A conventional aneroid altimeter senses static (atmospheric) pressure changes. Decreasing pressure at higher altitude expands the aneroid capsule, and mechanical linkages convert the expansion to an altitude reading."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the standard 'Basic T' arrangement of primary flight instruments?",
+          "choices": [
+            "ASI upper-left, AI upper-center, ALT upper-right, HI lower-center",
+            "AI upper-left, ASI upper-center, ALT upper-right, HI lower-center",
+            "ASI upper-left, AI upper-center, HI upper-right, ALT lower-center",
+            "AI upper-left, HI upper-center, ASI upper-right, ALT lower-center"
+          ],
+          "correctIndex": 0,
+          "feedback": "The FAA Basic T: ASI (airspeed indicator) at upper-left, AI (attitude indicator) at upper-center, ALT (altimeter) at upper-right, and DI/HI (heading indicator) at lower-center."
+        }
+      ]
+    },
+    {
+      "id": "W8-Z3-N1",
+      "title": "Pitot/static blockage symptoms",
+      "zone": "Blockage scenarios",
+      "objectiveKeys": [
+        "q33",
+        "q65",
+        "q84",
+        "q110",
+        "q131",
+        "q199"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Pitot/static blockage symptoms"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Reason through blocked pitot/static patterns."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Effect of Blocked Pitot Tube",
+              "definition": "A completely blocked pitot tube removes ram air pressure input to the airspeed indicator; the ASI is the primary instrument affected because it requires the differential between ram pressure and static pressure to compute airspeed.",
+              "analogy": "Blocking the pitot tube is like covering one end of a differential pressure gauge \u2014 you lose the 'high side' reference, so the measurement becomes meaningless."
+            },
+            {
+              "term": "Blocked Pitot During Descent",
+              "definition": "During descent with a blocked pitot tube, static pressure increases while the trapped ram pressure stays constant; the ASI reads the increasing differential as increasing airspeed, showing a falsely high and increasing reading.",
+              "analogy": "Imagine a sealed container being pushed deeper underwater \u2014 the outside pressure rises but the inside stays the same, making the pressure difference appear larger than reality."
+            },
+            {
+              "term": "Effect of Blocked Static Port",
+              "definition": "A blocked static port traps pressure at the level where blockage occurred, causing the altimeter to freeze at that altitude and the VSI to read zero, because neither can detect changes in atmospheric pressure.",
+              "analogy": "It's like sealing a barometer inside a closed box \u2014 the pressure inside stays constant regardless of what happens outside, so you'll never see a change."
+            },
+            {
+              "term": "Blocked Pitot During Climb",
+              "definition": "During a climb with a blocked pitot tube, static pressure decreases while the trapped ram pressure stays constant; the ASI sees a growing pitot-minus-static differential and reads a falsely increasing airspeed.",
+              "analogy": "Like a sealed balloon rising \u2014 the outside pressure drops but the inside pressure stays the same, creating an increasing pressure difference that the ASI misinterprets as speed."
+            },
+            {
+              "term": "Consistently Low ASI Indication",
+              "definition": "An airspeed indicator that consistently reads below actual airspeed indicates reduced ram air pressure reaching the ASI, which can result from a partial pitot tube blockage or a leak in the pitot pressure plumbing.",
+              "analogy": "Like a kinked garden hose \u2014 a partial blockage or hole reduces the pressure reaching the end, so you measure less force than is actually there."
+            },
+            {
+              "term": "VSI Falsely Showing Descent",
+              "definition": "A VSI showing a constant descent rate in level flight indicates a leak in the static system that allows static pressure to equalize faster than the calibrated orifice; the VSI interprets this as a pressure increase (descent) even when the aircraft is level.",
+              "analogy": "The VSI is like a sealed jar with a tiny leak hole measuring pressure change rate. If you punch a bigger hole (leak), pressure equalizes too fast \u2014 the instrument thinks you're descending into higher pressure, even if you're not moving."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A pitot tube becomes completely blocked in flight. Which instrument is most directly and immediately affected?",
+          "choices": [
+            "Altimeter, because it also uses the pitot line for reference",
+            "Vertical speed indicator, because rate of climb depends on pitot pressure",
+            "Airspeed indicator, because it depends on ram air pressure that is now unavailable",
+            "Turn coordinator, because it uses pitot air to drive the gyro rotor"
+          ],
+          "correctIndex": 2,
+          "feedback": "Only the ASI uses the pitot (ram pressure) line. The altimeter and VSI use only the static line. The turn coordinator is typically electrically or vacuum driven."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "An aircraft descends with a completely blocked pitot tube. What will the airspeed indicator show?",
+          "choices": [
+            "A correctly decreasing airspeed consistent with actual speed",
+            "A falsely high and increasing airspeed as static pressure rises while pitot pressure remains trapped",
+            "Zero airspeed because no ram air pressure is available",
+            "An airspeed equal to stall speed due to minimum differential pressure"
+          ],
+          "correctIndex": 1,
+          "feedback": "During descent, atmospheric (static) pressure increases. Because the pitot is blocked, ram pressure is trapped at the level where the blockage occurred. The ASI senses a growing differential, indicating falsely increasing airspeed."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What happens to the altimeter and VSI when the static port becomes completely blocked?",
+          "choices": [
+            "The altimeter reads falsely high and the VSI reads maximum climb",
+            "The altimeter reads zero and the VSI shows maximum descent",
+            "Both instruments read the altitude from the last GPS fix",
+            "The altimeter freezes at the altitude where blockage occurred, and the VSI reads zero"
+          ],
+          "correctIndex": 3,
+          "feedback": "Both instruments require changing static pressure to function. A blocked port traps a fixed pressure, so the altimeter needle freezes and the VSI shows zero regardless of actual altitude changes."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "An aircraft climbs with a completely blocked pitot tube. What will the airspeed indicator show?",
+          "choices": [
+            "A correctly increasing airspeed consistent with actual aircraft speed",
+            "A falsely increasing airspeed because static pressure falls while trapped ram pressure stays constant",
+            "A falsely decreasing airspeed as static pressure falls",
+            "Zero airspeed because the pitot tube cannot sense any air movement"
+          ],
+          "correctIndex": 1,
+          "feedback": "In a climb, atmospheric pressure (static) falls. The blocked pitot traps constant ram pressure. The ASI measures the growing differential (constant pitot minus decreasing static) as increasing airspeed."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "An airspeed indicator consistently reads 15 knots below actual aircraft speed verified by other means. What is the most likely cause?",
+          "choices": [
+            "The static port is fully blocked, reducing reference pressure",
+            "The aircraft's true airspeed correction is not applied at this altitude",
+            "The altimeter calibration error is cross-affecting the ASI reading",
+            "A partial pitot blockage or a leak in the pitot pressure line is reducing the ram air pressure at the ASI"
+          ],
+          "correctIndex": 3,
+          "feedback": "Consistent under-reading means reduced ram pressure at the ASI. A partial pitot blockage reduces flow, and a leak allows some pressure to escape \u2014 both produce a persistently low reading."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A VSI indicates a constant 200 fpm descent while the aircraft is confirmed to be in level flight. The altimeter reads correctly. What is the most likely cause?",
+          "choices": [
+            "The altimeter is correct but the VSI aneroid capsule spring has weakened",
+            "A blockage in the pitot tube is causing backpressure that affects the VSI",
+            "A leak in the static system is allowing external pressure to enter faster than the calibrated orifice, making the VSI sense a false pressure rise (descent)",
+            "The VSI's calibrated orifice has become enlarged, making the instrument over-sensitive"
+          ],
+          "correctIndex": 2,
+          "feedback": "A static leak allows outside pressure to bleed into the static system faster than normal. The VSI compares the two sides of its differential \u2014 the faster pressure equalisation looks like a descent signal."
+        }
+      ]
+    },
+    {
+      "id": "W8-Z4-N1",
+      "title": "Gyro instruments basics",
+      "zone": "Gyro fundamentals",
+      "objectiveKeys": [
+        "q24",
+        "q35",
+        "q43",
+        "q89",
+        "q197"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Gyro instruments basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize gyro principles and common instruments."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Vacuum-Driven Gyro Operation",
+              "definition": "In a vacuum-driven attitude indicator, suction created by an engine-driven vacuum pump draws filtered air through a nozzle; the air jet impinges on buckets around the gyro rotor rim, spinning it at high RPM.",
+              "analogy": "It works like a water wheel \u2014 instead of water falling on paddles, a jet of air blows on rotor buckets to make the gyro spin fast enough to maintain rigidity."
+            },
+            {
+              "term": "Turn Coordinator vs Turn-and-Bank",
+              "definition": "The turn coordinator's gyro is canted at approximately 30\u00b0 to sense both roll rate and yaw rate; the turn-and-bank indicator's gyro is vertical (upright), sensing yaw rate only.",
+              "analogy": "Think of tilting a steering wheel at an angle \u2014 a canted wheel can detect turning AND leaning motions, while a straight-up wheel only detects turning."
+            },
+            {
+              "term": "Magnetic Compass",
+              "definition": "The only primary flight instrument not gyroscopically driven; it uses Earth's magnetic field to align a magnetic sensing element and provide directional reference.",
+              "analogy": "A magnetic compass is like a trail of iron filings aligning to a bar magnet \u2014 no motor or spin needed, just the Earth's natural magnetic field."
+            },
+            {
+              "term": "Vacuum-Powered Flight Instruments",
+              "definition": "The attitude indicator (AI) and directional gyro (DG/heading indicator) are the two primary flight instruments that rely on the aircraft vacuum system to spin their gyro rotors.",
+              "analogy": "Think of the vacuum pump as a fan that keeps two spinning tops (the AI and DG gyros) spinning fast enough to stay upright and point in a fixed direction."
+            },
+            {
+              "term": "Gyroscopic Rigidity in Space",
+              "definition": "The property of a spinning gyro rotor to resist any force that tries to change its plane of rotation; once spinning, the rotor axis remains pointed in a fixed direction in space, providing a stable attitude reference.",
+              "analogy": "A spinning top stays upright and resists being knocked over \u2014 the faster it spins, the more it resists tilting. Gyroscopic instruments rely on this same principle to hold a fixed reference."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How does the vacuum system provide power to spin the gyro rotor in an air-driven attitude indicator?",
+          "choices": [
+            "Positive pressure from the engine blower forces air directly into the gyro case",
+            "Engine vacuum draws air through a nozzle that directs a jet against rotor buckets, spinning the rotor",
+            "A venturi tube in the airstream creates suction to rotate a turbine connected to the rotor",
+            "Electrical solenoids modulate airflow to vary gyro speed as needed"
+          ],
+          "correctIndex": 1,
+          "feedback": "An engine-driven vacuum pump creates suction that draws air through a nozzle; the air jet impinges on bucket-shaped cutouts on the rotor periphery, spinning the gyro."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the key functional difference between a turn coordinator and a turn-and-bank indicator?",
+          "choices": [
+            "The turn coordinator is electrically driven while the turn-and-bank is vacuum driven",
+            "The turn coordinator uses a ball inclinometer while the turn-and-bank does not",
+            "The turn-and-bank shows coordinated flight while the turn coordinator only shows turn direction",
+            "The turn coordinator senses both roll and yaw rate; the turn-and-bank senses yaw rate only"
+          ],
+          "correctIndex": 3,
+          "feedback": "The critical difference is gyro orientation: the turn coordinator's canted gyro senses roll rate in addition to yaw, while the turn-and-bank's vertical gyro senses only yaw rate."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which primary flight instrument does NOT rely on gyroscopic principles for its operation?",
+          "choices": [
+            "Magnetic compass",
+            "Heading indicator (directional gyro)",
+            "Attitude indicator",
+            "Turn coordinator"
+          ],
+          "correctIndex": 0,
+          "feedback": "The magnetic compass operates on magnetic principles \u2014 it aligns to Earth's magnetic field. All the others (AI, DI, TC) use spinning gyroscopes."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which two flight instruments are commonly powered by the aircraft vacuum system?",
+          "choices": [
+            "Attitude indicator and directional gyro (heading indicator)",
+            "Airspeed indicator and altimeter",
+            "Turn coordinator and VSI",
+            "Magnetic compass and attitude indicator"
+          ],
+          "correctIndex": 0,
+          "feedback": "The attitude indicator and DG use vacuum-driven gyros. The pitot-static instruments (ASI, ALT, VSI) use air pressure, and the TC is usually electric."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What gyroscopic principle allows the attitude indicator to maintain a stable pitch and roll reference as the aircraft maneuvers?",
+          "choices": [
+            "Precession \u2014 the rotor tilts 90\u00b0 from applied force to provide resistance",
+            "Rigidity in space \u2014 the spinning rotor resists any force trying to change its orientation",
+            "Gyroscopic drift \u2014 the systematic error accumulated over time provides a reference",
+            "Transport wander \u2014 the latitude-dependent effect provides a stabilizing force"
+          ],
+          "correctIndex": 1,
+          "feedback": "Gyroscopic rigidity in space means the spinning rotor maintains its axis orientation regardless of aircraft movement. The aircraft moves around the gyro, and the gyro's resistance to change is what provides the attitude reference."
+        }
+      ]
+    },
+    {
+      "id": "W8-Z5-N1",
+      "title": "AHRS/PFD basics",
+      "zone": "AHRS/glass cockpit",
+      "objectiveKeys": [
+        "q5",
+        "q13",
+        "q16",
+        "q119"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to AHRS/PFD basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize AHRS/ADC roles and glass cockpit basics."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Air Data Computer (ADC)",
+              "definition": "A computer connected to the pitot-static system that processes ram air and static pressure to calculate airspeed and altitude data, supplying this information to the Primary Flight Display in a glass-cockpit system.",
+              "analogy": "The ADC is like a translator \u2014 it converts raw air pressures into digital numbers the PFD screen can display."
+            },
+            {
+              "term": "MEMS sensors in EFIS",
+              "definition": "Micro-Electro-Mechanical Systems (MEMS) gyroscopes and accelerometers used in Electronic Flight Instrument Systems to measure attitude, heading, and motion without moving mechanical parts.",
+              "analogy": "MEMS sensors are like motion sensors in a smartphone \u2014 tiny, solid-state chips that detect movement and orientation without any spinning parts."
+            },
+            {
+              "term": "Instruments Replaced by PFD",
+              "definition": "A modern Primary Flight Display (PFD) replaces six traditional instruments: airspeed indicator, attitude indicator, altimeter, vertical speed indicator, heading indicator, and turn coordinator.",
+              "analogy": "The PFD is like a smartphone replacing a watch, calculator, calendar, camera, map, and compass \u2014 six devices consolidated into one screen."
+            },
+            {
+              "term": "AHRS Sensor Suite",
+              "definition": "An Attitude and Heading Reference System (AHRS) uses three types of solid-state sensors: rate gyroscopes (angular rate), accelerometers (linear acceleration), and magnetometers (magnetic heading) \u2014 no spinning mechanical gyros.",
+              "analogy": "An AHRS is like your inner ear combined with a compass \u2014 rate gyros detect rotation, accelerometers detect tilting/movement, and magnetometers detect magnetic north, all without moving parts."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the primary function of the Air Data Computer in a glass-cockpit avionics suite?",
+          "choices": [
+            "Display navigation data on the moving map",
+            "Convert pitot-static pressure inputs into digital airspeed and altitude for the PFD",
+            "Provide GPS position updates to the flight plan",
+            "Drive the attitude indicator using gyroscopic data"
+          ],
+          "correctIndex": 1,
+          "feedback": "The ADC is connected to the pitot-static system and computes airspeed and altitude from pressure inputs, then outputs this data to the PFD."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What type of sensors does a modern EFIS typically use to determine aircraft attitude and heading?",
+          "choices": [
+            "Mechanical gyro rotors driven by engine vacuum",
+            "GPS antennas measuring position change over time",
+            "Solid-state MEMS gyroscopes and accelerometers",
+            "Pitot-static pressure transducers"
+          ],
+          "correctIndex": 2,
+          "feedback": "Modern EFIS attitude systems rely on solid-state MEMS technology \u2014 tiny gyroscopes and accelerometers on microchips \u2014 eliminating moving mechanical parts."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which set of instruments does a modern glass-cockpit Primary Flight Display replace?",
+          "choices": [
+            "Airspeed indicator, attitude indicator, altimeter, GPS, MFD, TCAS",
+            "Airspeed indicator, altimeter, VOR, ADF, heading indicator, turn coordinator",
+            "Attitude indicator, altimeter, DME, VSI, GPS, turn coordinator",
+            "Airspeed indicator, VSI, altimeter, attitude indicator, heading indicator, turn coordinator"
+          ],
+          "correctIndex": 3,
+          "feedback": "The PFD replaces the six classic 'six-pack' instruments: airspeed indicator, attitude indicator, altimeter, VSI, heading indicator (DI), and turn coordinator."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What three types of solid-state sensors does an AHRS use to replace traditional mechanical gyroscopes?",
+          "choices": [
+            "Pitot probes, static vents, and angle-of-attack sensors",
+            "GPS receivers, barometric sensors, and ADS-B transceivers",
+            "Rate gyroscopes, accelerometers, and magnetometers",
+            "MEMS gyros, strain gauges, and flux gate detectors"
+          ],
+          "correctIndex": 2,
+          "feedback": "A complete AHRS sensor suite uses rate gyroscopes for angular rate, accelerometers for linear acceleration and tilt, and magnetometers for magnetic heading reference."
+        }
+      ]
+    }
+  ]
+}

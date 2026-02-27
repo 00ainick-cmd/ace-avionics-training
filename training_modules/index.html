@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Prep Course Training Portal</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+            --success: #10b981;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        .world-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+        .world-title {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        .zone-title {
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .node-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .node-card {
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .node-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .node-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            background-color: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+        }
+        .node-card:hover::before {
+            opacity: 1;
+        }
+        .node-id {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+            margin-bottom: 8px;
+            background: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+        .node-name {
+            font-weight: 500;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .node-grid {
+                grid-template-columns: 1fr;
+            }
+            .world-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CAET Prep Course Portal</h1>
+        <div class="subtitle">Complete Technical Training Interactive Modules (Worlds 1-8)</div>
+        <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:12px 24px; margin-top: 25px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);">END SESSION / LOG DATA</button>
+    </header>
+    <div class="world-section">
+        <h2 class="world-title">Safety (Generic CAET overview)</h2>
+        <h3 class="zone-title">Safety mindset & reporting</h3>
+        <div class="node-grid">
+            <a href="W1-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z1-N1</span>
+                <span class="node-name">Hazard recognition (stop-work mindset)</span>
+            </a>
+            <a href="W1-Z1-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z1-N2</span>
+                <span class="node-name">Housekeeping & clean work area discipline</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Basic PPE</h3>
+        <div class="node-grid">
+            <a href="W1-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z2-N1</span>
+                <span class="node-name">Eye, hearing, and chemical glove basics</span>
+            </a>
+            <a href="W1-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z2-N2</span>
+                <span class="node-name">Electrical shock first action</span>
+            </a>
+            <a href="W1-Z2-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z2-N3</span>
+                <span class="node-name">Ramp/rotor awareness (optional)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">SDS / chemicals</h3>
+        <div class="node-grid">
+            <a href="W1-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z3-N1</span>
+                <span class="node-name">SDS / HazCom basics</span>
+            </a>
+            <a href="W1-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z3-N2</span>
+                <span class="node-name">Chemical handling/storage/disposal awareness (generic)</span>
+            </a>
+            <a href="W1-Z3-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z3-N3</span>
+                <span class="node-name">Solvent fumes / exposure awareness</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Fire safety basics</h3>
+        <div class="node-grid">
+            <a href="W1-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z4-N1</span>
+                <span class="node-name">Fire safety basics (no extinguisher classes)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">ESD/FOD discipline</h3>
+        <div class="node-grid">
+            <a href="W1-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z5-N1</span>
+                <span class="node-name">ESD-safe handling basics</span>
+            </a>
+            <a href="W1-Z5-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W1-Z5-N2</span>
+                <span class="node-name">FOD and tool accountability</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Maintenance Regulations & Documentation (Entry scope)</h2>
+        <h3 class="zone-title">Regulatory framework</h3>
+        <div class="node-grid">
+            <a href="W2-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z1-N1</span>
+                <span class="node-name">Parts 145/43/91 basics (recognition)</span>
+            </a>
+            <a href="W2-Z1-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z1-N2</span>
+                <span class="node-name">Maintenance vs preventive maintenance (recognition)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Scope & technical data</h3>
+        <div class="node-grid">
+            <a href="W2-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z2-N1</span>
+                <span class="node-name">Ratings/capability limits (stay in your lane)</span>
+            </a>
+            <a href="W2-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z2-N2</span>
+                <span class="node-name">Current manuals / technical data requirement</span>
+            </a>
+            <a href="W2-Z2-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z2-N3</span>
+                <span class="node-name">Manual-first troubleshooting start point</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Documentation basics</h3>
+        <div class="node-grid">
+            <a href="W2-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z3-N1</span>
+                <span class="node-name">Maintenance record elements (Part 43.9 level)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Approved data / changes</h3>
+        <div class="node-grid">
+            <a href="W2-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z4-N1</span>
+                <span class="node-name">Major alteration basics</span>
+            </a>
+            <a href="W2-Z4-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z4-N2</span>
+                <span class="node-name">STC and TSO replacement basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Standards & calibration awareness</h3>
+        <div class="node-grid">
+            <a href="W2-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z5-N1</span>
+                <span class="node-name">Installation standards awareness (cross-link)</span>
+            </a>
+            <a href="W2-Z5-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W2-Z5-N2</span>
+                <span class="node-name">Calibration label check (cross-link)</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Electrical Fundamentals & Aircraft Electrical Systems</h2>
+        <h3 class="zone-title">DC fundamentals</h3>
+        <div class="node-grid">
+            <a href="W3-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z1-N1</span>
+                <span class="node-name">Ohm’s Law basics</span>
+            </a>
+            <a href="W3-Z1-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z1-N2</span>
+                <span class="node-name">Power basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Circuit behavior</h3>
+        <div class="node-grid">
+            <a href="W3-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z2-N1</span>
+                <span class="node-name">Series/parallel circuit behavior</span>
+            </a>
+            <a href="W3-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z2-N2</span>
+                <span class="node-name">Circuit protection (fuses/breakers)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Aircraft DC systems</h3>
+        <div class="node-grid">
+            <a href="W3-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z3-N1</span>
+                <span class="node-name">Buses and distribution</span>
+            </a>
+            <a href="W3-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z3-N2</span>
+                <span class="node-name">Batteries and grounding/bonding</span>
+            </a>
+            <a href="W3-Z3-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z3-N3</span>
+                <span class="node-name">Power generation and regulation</span>
+            </a>
+        </div>
+        <h3 class="zone-title">AC fundamentals</h3>
+        <div class="node-grid">
+            <a href="W3-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W3-Z4-N1</span>
+                <span class="node-name">AC fundamentals (frequency/waveform/reactance/transformer)</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Tools & Test Equipment</h2>
+        <h3 class="zone-title">Hand tools</h3>
+        <div class="node-grid">
+            <a href="W4-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z1-N1</span>
+                <span class="node-name">Hand tools & precision basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Multimeters</h3>
+        <div class="node-grid">
+            <a href="W4-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z2-N1</span>
+                <span class="node-name">DMM basics (modes & connections)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Fault finding</h3>
+        <div class="node-grid">
+            <a href="W4-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z3-N1</span>
+                <span class="node-name">Voltage drop & resistance clues</span>
+            </a>
+            <a href="W4-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z3-N2</span>
+                <span class="node-name">Basic fault isolation (opens/shorts/parasitic)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Scope & specialty instruments</h3>
+        <div class="node-grid">
+            <a href="W4-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z4-N1</span>
+                <span class="node-name">Oscilloscope & specialty instruments awareness</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Tool governance</h3>
+        <div class="node-grid">
+            <a href="W4-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W4-Z5-N1</span>
+                <span class="node-name">Wattmeter basics (authoring gap)</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Aircraft Wiring & Harness</h2>
+        <h3 class="zone-title">Wire/cable fundamentals</h3>
+        <div class="node-grid">
+            <a href="W5-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z1-N1</span>
+                <span class="node-name">Wire types & insulation</span>
+            </a>
+            <a href="W5-Z1-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z1-N2</span>
+                <span class="node-name">Wire gauge sizing</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Terminations/connectors</h3>
+        <div class="node-grid">
+            <a href="W5-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z2-N1</span>
+                <span class="node-name">Crimping fundamentals</span>
+            </a>
+            <a href="W5-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z2-N2</span>
+                <span class="node-name">Connectors & backshells</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Harness fab/routing</h3>
+        <div class="node-grid">
+            <a href="W5-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z3-N1</span>
+                <span class="node-name">Harness fabrication basics</span>
+            </a>
+            <a href="W5-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z3-N2</span>
+                <span class="node-name">Routing & protection</span>
+            </a>
+            <a href="W5-Z3-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z3-N3</span>
+                <span class="node-name">Service loops & routing discipline</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Shielding & repairs</h3>
+        <div class="node-grid">
+            <a href="W5-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z4-N1</span>
+                <span class="node-name">Shielding & EMI basics</span>
+            </a>
+            <a href="W5-Z4-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z4-N2</span>
+                <span class="node-name">Soldering awareness</span>
+            </a>
+            <a href="W5-Z4-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z4-N3</span>
+                <span class="node-name">Heat shrink / solder sleeves (authoring gap)</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Inspection & prohibited</h3>
+        <div class="node-grid">
+            <a href="W5-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z5-N1</span>
+                <span class="node-name">Prohibited practices</span>
+            </a>
+            <a href="W5-Z5-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W5-Z5-N2</span>
+                <span class="node-name">Safety wire twist rate (optional)</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Digital Databus Systems</h2>
+        <h3 class="zone-title">Why digital buses</h3>
+        <div class="node-grid">
+            <a href="W6-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z1-N1</span>
+                <span class="node-name">Why digital databuses exist</span>
+            </a>
+        </div>
+        <h3 class="zone-title">ARINC 429 architecture</h3>
+        <div class="node-grid">
+            <a href="W6-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z2-N1</span>
+                <span class="node-name">ARINC 429 architecture basics</span>
+            </a>
+            <a href="W6-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z2-N2</span>
+                <span class="node-name">ARINC 429 word structure basics</span>
+            </a>
+            <a href="W6-Z2-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z2-N3</span>
+                <span class="node-name">ARINC 429 speed/timing awareness</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Other buses</h3>
+        <div class="node-grid">
+            <a href="W6-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z3-N1</span>
+                <span class="node-name">MIL-STD-1553 basics</span>
+            </a>
+            <a href="W6-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z3-N2</span>
+                <span class="node-name">RS-232 basics</span>
+            </a>
+            <a href="W6-Z3-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z3-N3</span>
+                <span class="node-name">RS-485/422 basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Databus troubleshooting</h3>
+        <div class="node-grid">
+            <a href="W6-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z4-N1</span>
+                <span class="node-name">Databus troubleshooting basics</span>
+            </a>
+            <a href="W6-Z4-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W6-Z4-N2</span>
+                <span class="node-name">Databus analyzer awareness (cross-link)</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">CNS Systems</h2>
+        <h3 class="zone-title">Audio & comm path</h3>
+        <div class="node-grid">
+            <a href="W7-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z1-N1</span>
+                <span class="node-name">Audio panel/intercom basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Communications</h3>
+        <div class="node-grid">
+            <a href="W7-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z2-N1</span>
+                <span class="node-name">VHF/HF comm basics</span>
+            </a>
+            <a href="W7-Z2-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z2-N2</span>
+                <span class="node-name">Antennas & RF safety basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Navigation</h3>
+        <div class="node-grid">
+            <a href="W7-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z3-N1</span>
+                <span class="node-name">VOR basics</span>
+            </a>
+            <a href="W7-Z3-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z3-N2</span>
+                <span class="node-name">ILS/marker basics</span>
+            </a>
+            <a href="W7-Z3-N3_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z3-N3</span>
+                <span class="node-name">Other nav basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">GPS/WAAS</h3>
+        <div class="node-grid">
+            <a href="W7-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z4-N1</span>
+                <span class="node-name">GPS/WAAS basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Surveillance</h3>
+        <div class="node-grid">
+            <a href="W7-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z5-N1</span>
+                <span class="node-name">Transponder basics</span>
+            </a>
+            <a href="W7-Z5-N2_training.html" class="node-card" target="_blank">
+                <span class="node-id">W7-Z5-N2</span>
+                <span class="node-name">ADS-B/TCAS basics</span>
+            </a>
+        </div>
+    </div>
+    <div class="world-section">
+        <h2 class="world-title">Flight Instruments & Pitot-Static (with Gyro/AHRS)</h2>
+        <h3 class="zone-title">Pitot-static fundamentals</h3>
+        <div class="node-grid">
+            <a href="W8-Z1-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W8-Z1-N1</span>
+                <span class="node-name">Pitot-static components basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Instrument behavior</h3>
+        <div class="node-grid">
+            <a href="W8-Z2-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W8-Z2-N1</span>
+                <span class="node-name">Altimeter/VSI/ASI basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Blockage scenarios</h3>
+        <div class="node-grid">
+            <a href="W8-Z3-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W8-Z3-N1</span>
+                <span class="node-name">Pitot/static blockage symptoms</span>
+            </a>
+        </div>
+        <h3 class="zone-title">Gyro fundamentals</h3>
+        <div class="node-grid">
+            <a href="W8-Z4-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W8-Z4-N1</span>
+                <span class="node-name">Gyro instruments basics</span>
+            </a>
+        </div>
+        <h3 class="zone-title">AHRS/glass cockpit</h3>
+        <div class="node-grid">
+            <a href="W8-Z5-N1_training.html" class="node-card" target="_blank">
+                <span class="node-id">W8-Z5-N1</span>
+                <span class="node-name">AHRS/PFD basics</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            let found = false;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                    found = true;
+                }
+            }
+            if (!found) console.log("None");
+            console.log("=========================================");
+            alert("Session data logged to console. Check DevTools.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "id": "W4-Z5-N1",
+  "title": "Wattmeter basics (authoring gap)",
+  "world": "Tools & Test Equipment",
+  "zone": "Tool governance",
+  "objectiveKeys": [],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Wattmeter basics (authoring gap)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain wattmeter use (power measurement) at a basic level."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "W2-Z2-N3",
+  "title": "Manual-first troubleshooting start point",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Scope & technical data",
+  "objectiveKeys": [
+    "q82"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Manual-first troubleshooting start point"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Choose consult-manual as the correct first step in troubleshooting."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "VOR Troubleshooting First Step",
+          "definition": "In a Part 145 shop, the first step when troubleshooting any fault is to consult the manufacturer's maintenance manual \u2014 approved data must guide the diagnostic procedure before any components are replaced.",
+          "analogy": "Like calling tech support before replacing your router \u2014 diagnosis first, hardware swap last."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A VOR receiver shows an intermittent NAV flag. What is the correct first step in a Part 145 shop?",
+      "choices": [
+        "Consult the manufacturer's maintenance manual before replacing any components",
+        "Swap the receiver with a known-good spare to quickly isolate the fault to the LRU",
+        "Check the antenna coax for continuity \u2014 it is the most common cause of intermittent flags",
+        "Document the fault and return the aircraft to service pending parts availability"
+      ],
+      "correctIndex": 0,
+      "feedback": "Approved technical data must guide all maintenance in a Part 145 shop. The manual defines the diagnostic procedure \u2014 it may direct checking the antenna first or running a self-test. Jumping to a swap without the manual is a regulatory violation regardless of technician experience."
+    }
+  ]
+}

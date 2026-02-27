@@ -1,0 +1,95 @@
+{
+  "id": "W8-Z1-N1",
+  "title": "Pitot-static components basics",
+  "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+  "zone": "Pitot-static fundamentals",
+  "objectiveKeys": [
+    "q143",
+    "q148",
+    "q188",
+    "q210"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Pitot-static components basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify pitot/static sources and pressures."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Standard Sea Level Pressure",
+          "definition": "Standard atmospheric pressure at sea level is 29.92 inches of mercury (inHg), equivalent to 1013.25 millibars (mb) or hectopascals (hPa).",
+          "analogy": "Think of 29.92 inHg as the 'sea level zero' reference \u2014 like setting a measuring tape to start at zero before measuring distance from the ground."
+        },
+        {
+          "term": "Pitot Tube Function",
+          "definition": "The pitot tube is an open-faced probe pointed into the airstream to sense and collect ram (impact) air pressure, which it delivers to the airspeed indicator and air data computer for airspeed computation.",
+          "analogy": "A pitot tube is like holding a tube into the wind \u2014 the faster the wind blows, the more pressure builds up inside, and that pressure is measured to determine speed."
+        },
+        {
+          "term": "Static Pressure System Instruments",
+          "definition": "The aircraft static pressure system collects ambient atmospheric pressure through flush-mounted static ports and supplies it to three flight instruments: the altimeter, vertical speed indicator (VSI), and airspeed indicator (ASI).",
+          "analogy": "The static port is like a shared water main \u2014 one tap feeds three separate fixtures (altimeter, VSI, ASI) all from the same source of ambient pressure."
+        },
+        {
+          "term": "Instruments Using Static Port",
+          "definition": "Three flight instruments depend on the static port for accurate readings: the altimeter (senses static pressure for altitude), the VSI (senses rate of static pressure change), and the airspeed indicator (uses static as the reference side of the pitot-static differential).",
+          "analogy": "The static port is like a shared electrical ground \u2014 it provides a common reference that three different instruments need to make accurate measurements."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the standard atmospheric pressure at sea level in the International Standard Atmosphere?",
+      "choices": [
+        "29.92 inHg (1013.25 mb)",
+        "30.15 inHg (1021 mb)",
+        "28.86 inHg (977 mb)",
+        "31.00 inHg (1050 mb)"
+      ],
+      "correctIndex": 0,
+      "feedback": "The ISA defines sea-level standard pressure as 29.92 inHg or 1013.25 mb/hPa. This is the reference for pressure altitude and standard altimeter setting (FL above transition altitude)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary function of the pitot tube?",
+      "choices": [
+        "Measure ambient static pressure for the altimeter and VSI",
+        "Sense and deliver ram air pressure to the airspeed indicator and air data systems",
+        "Provide total air temperature data to the ADC for TAS computation",
+        "Generate angle-of-attack signals for stall warning systems"
+      ],
+      "correctIndex": 1,
+      "feedback": "The pitot tube senses ram (dynamic) pressure \u2014 the pressure created by the aircraft's forward motion through the air \u2014 and delivers this to the ASI and ADC."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which flight instruments receive static pressure from the aircraft's static port system?",
+      "choices": [
+        "Altimeter, VSI, and attitude indicator",
+        "Altimeter, attitude indicator, and turn coordinator",
+        "VSI, airspeed indicator, and heading indicator",
+        "Altimeter, VSI, and airspeed indicator"
+      ],
+      "correctIndex": 3,
+      "feedback": "The static system supplies three instruments: the altimeter (senses absolute static pressure for altitude), the VSI (senses rate of static pressure change), and the ASI (uses static as the reference side of the airspeed differential)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which three instruments rely on the static port for accurate pressure readings?",
+      "choices": [
+        "Airspeed indicator, attitude indicator, and VSI",
+        "Altimeter, attitude indicator, and airspeed indicator",
+        "VSI, turn coordinator, and altimeter",
+        "Altimeter, VSI, and airspeed indicator"
+      ],
+      "correctIndex": 3,
+      "feedback": "The static port supplies ambient pressure to the altimeter (altitude), VSI (rate of altitude change), and ASI (reference side of the airspeed differential). All three fail or give erroneous readings with a blocked or leaking static port."
+    }
+  ]
+}

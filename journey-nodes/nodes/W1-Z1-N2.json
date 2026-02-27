@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z1-N2",
+  "title": "Housekeeping & clean work area discipline",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Safety mindset & reporting",
+  "objectiveKeys": [
+    "q59"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Housekeeping & clean work area discipline"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain why clean work areas prevent safety and quality issues (FOD/accidents)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "FOD & Trip Hazard Prevention",
+          "definition": "Keeping walkways and work areas clutter-free in a Part 145 shop prevents FOD (Foreign Object Damage/Debris), trip hazards for personnel, and tool loss \u2014 all of which directly affect airworthiness and safety.",
+          "analogy": "Like a hospital operating room floor \u2014 a dropped scalpel (or screw) creates both a personnel hazard and a risk of ending up somewhere it shouldn't."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why is keeping walkways and work areas free of clutter critical in a Part 145 repair station?",
+      "choices": [
+        "OSHA requires it primarily for general workplace aesthetics",
+        "It prevents FOD, trip hazards, and tool loss that could affect airworthiness and personnel safety",
+        "Clutter causes EMI interference with avionics test equipment calibration",
+        "It is only required during FAA surveillance visits and scheduled audits"
+      ],
+      "correctIndex": 1,
+      "feedback": "Clutter in an avionics shop creates three key risks: FOD (hardware, wire scraps, or tools entering aircraft systems), trip and fall hazards, and tool accountability failures. All three directly impact safety and airworthiness."
+    }
+  ]
+}

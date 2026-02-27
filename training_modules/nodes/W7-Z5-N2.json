@@ -1,0 +1,59 @@
+{
+  "id": "W7-Z5-N2",
+  "title": "ADS-B/TCAS basics",
+  "world": "CNS Systems",
+  "zone": "Surveillance",
+  "objectiveKeys": [
+    "q30",
+    "q123"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ADS-B/TCAS basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize ADS-B Out and TCAS purpose."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "TCAS (Traffic Collision Avoidance System)",
+          "definition": "TCAS interrogates nearby aircraft transponders and tracks their position. Issues: Traffic Advisories (TA) for awareness, and Resolution Advisories (RA) with specific vertical maneuver instructions to prevent mid-air collision. TCAS operates independently of ATC.",
+          "analogy": "Like a car's collision avoidance system that warns you and then says 'brake NOW' \u2014 it doesn't wait for a traffic light."
+        },
+        {
+          "term": "ADS-B Out \u2014 broadcast content",
+          "definition": "ADS-B Out broadcasts (1090ES or UAT): GPS position, GPS altitude, pressure altitude, groundspeed, track, identification (ICAO address + flight ID), and other state data. Transmitted automatically and continuously without interrogation. Required in most controlled airspace per 14 CFR 91.225.",
+          "analogy": "Like a ship's AIS transponder \u2014 continuously broadcasting who you are, where you are, and how fast you're going to anyone listening."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does TCAS do?",
+      "choices": [
+        "Displays ATC-assigned squawk codes from other aircraft on the ND",
+        "Transmits ADS-B position data to nearby aircraft",
+        "Monitors nearby transponder-equipped aircraft and provides RAs to prevent collision",
+        "Alerts crew when another aircraft is broadcasting an emergency squawk"
+      ],
+      "correctIndex": 2,
+      "feedback": "TCAS interrogates, tracks, computes threat, and advises. TAs warn of traffic; RAs instruct a specific vertical maneuver (climb or descend). TCAS coordinates with the intruder's TCAS (if equipped) to ensure complementary maneuvers \u2014 one climbs while the other descends."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What information does ADS-B Out broadcast?",
+      "choices": [
+        "Only squawk code and Mode C altitude identical to a standard transponder",
+        "Encrypted flight plan data to ATC ground stations only",
+        "GPS position, altitude, velocity, and aircraft identification, plus other state data",
+        "TCAS coordination data to nearby aircraft only"
+      ],
+      "correctIndex": 2,
+      "feedback": "ADS-B Out is far richer than Mode A/C: it broadcasts GPS-derived position (latitude/longitude), GPS and pressure altitude, groundspeed, track, ICAO address, flight ID, and other state parameters \u2014 all unsolicited and continuously. This gives ATC and other aircraft a GPS-precision picture of every equipped aircraft."
+    }
+  ]
+}

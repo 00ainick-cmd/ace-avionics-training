@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z1-N1",
+  "title": "Hazard recognition (stop-work mindset)",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Safety mindset & reporting",
+  "objectiveKeys": [
+    "q29"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Hazard recognition (stop-work mindset)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify unsafe conditions and choose the first safe action (stop, secure, report)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Near-Miss",
+          "definition": "An unplanned event that did NOT result in injury or damage but had the POTENTIAL to do so. Near-misses MUST be reported and investigated.",
+          "analogy": "A car that nearly runs a red light without hitting anything \u2014 the near-miss reveals a hazard that needs to be corrected before the next attempt isn't so lucky."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician slips on a wet floor but catches himself on a bench without falling. How should this event be classified and handled?",
+      "choices": [
+        "It can be ignored \u2014 no one was hurt",
+        "It is an OSHA recordable incident requiring workers' compensation filing",
+        "It is only reportable if the technician required medical attention",
+        "It is a near-miss and must be reported and investigated"
+      ],
+      "correctIndex": 3,
+      "feedback": "A near-miss is any unplanned event with potential for injury or damage, even if none occurred. Near-misses must be reported and investigated to prevent recurrence."
+    }
+  ]
+}

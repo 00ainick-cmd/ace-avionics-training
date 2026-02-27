@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z1-N2",
+  "title": "Maintenance vs preventive maintenance (recognition)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Regulatory framework",
+  "objectiveKeys": [
+    "q71",
+    "q202"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Maintenance vs preventive maintenance (recognition)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize maintenance and preventive maintenance concepts at CAET entry level."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Maintenance (FAA Definition)",
+          "definition": "Per FAA regulations: inspection, overhaul, repair, preservation, and replacement of parts \u2014 explicitly excluding preventive maintenance, which is a separate regulatory category.",
+          "analogy": "Like a car service package covering inspections and repairs \u2014 but not the DIY tasks the owner is allowed to perform themselves."
+        },
+        {
+          "term": "Preventive Maintenance (Part 43)",
+          "definition": "Under 14 CFR Part 43, preventive maintenance is limited to certificated pilots on aircraft they own or operate \u2014 restricted to simple tasks explicitly listed in Part 43 Appendix A.",
+          "analogy": "Like a homeowner being allowed to replace their own light switches but not wire a subpanel \u2014 a defined, limited scope for non-professionals on their own property."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "According to FAA regulations, which activity is explicitly EXCLUDED from the definition of 'maintenance'?",
+      "choices": [
+        "Inspection",
+        "Preservation",
+        "Preventive maintenance",
+        "Parts replacement"
+      ],
+      "correctIndex": 2,
+      "feedback": "The FAA definition of maintenance lists inspection, overhaul, repair, preservation, and replacement of parts. Preventive maintenance is carved out as a separate category that certificated pilots may perform on aircraft they own or operate."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why is preventive maintenance under Part 43 limited to certificated pilots on aircraft they own or operate?",
+      "choices": [
+        "Because pilots receive basic maintenance training and can perform any simple task",
+        "Because Part 43 restricts all maintenance to aircraft owners regardless of certification level",
+        "Because it covers only simple tasks not requiring mechanic training, on the owner's aircraft only",
+        "Because the FAA determined pilots are more reliable than mechanics for owner-performed tasks"
+      ],
+      "correctIndex": 2,
+      "feedback": "Preventive maintenance covers simple tasks (oil changes, tire replacement, bulb changes) that don't require mechanic-level training. The owner/operator limitation ensures the person has a direct stake in the aircraft's airworthiness. Performing preventive maintenance on someone else's aircraft is not authorized."
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "W4-Z2-N1",
+  "title": "DMM basics (modes & connections)",
+  "world": "Tools & Test Equipment",
+  "zone": "Multimeters",
+  "objectiveKeys": [
+    "q45",
+    "q78",
+    "q136",
+    "q145",
+    "q198",
+    "q233"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to DMM basics (modes & connections)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Operate a DMM safely for V/I/R/continuity checks."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Voltage measurement \u2014 multimeter connection",
+          "definition": "To measure voltage, connect the multimeter IN PARALLEL across the component (red probe to positive side, black to negative). Circuit must be POWERED ON. The meter's high internal resistance prevents it from affecting circuit operation.",
+          "analogy": "Like checking water pressure at a tap \u2014 you put the gauge across the pipe outlet without interrupting the flow."
+        },
+        {
+          "term": "Multimeter OL Indication",
+          "definition": "'OL' (over limit or overload) on a multimeter set to ohms means the resistance is greater than the meter's maximum measurable range on the selected scale \u2014 typically indicating an open circuit (broken wire, open fuse, or disconnected path) or a very high resistance.",
+          "analogy": "OL is like a bathroom scale reading 'ERR' when an elephant stands on it \u2014 the scale's range is exceeded. OL means the resistance is beyond the meter's limit, most often because the circuit is open (no path for current)."
+        },
+        {
+          "term": "Resistance measurement procedure",
+          "definition": "Before measuring resistance: (1) Turn circuit power OFF. (2) Discharge any capacitors in the circuit. Reason: applied voltage will damage the meter's ohmmeter circuit and give false readings. The DMM supplies its own small test current for resistance measurement.",
+          "analogy": "Like checking the temperature of a cup with your finger \u2014 you need to set it down first, you can't check it while it's on the stove."
+        },
+        {
+          "term": "Continuity Test",
+          "definition": "A continuity test uses a multimeter (typically in the ohms or continuity beep mode) to measure resistance between two ends of a conductor; near-zero resistance confirms a complete circuit, while 'OL' or infinite resistance confirms an open/broken wire.",
+          "analogy": "A continuity test is like testing whether a garden hose leaks by blowing through it \u2014 if air comes out the other end (near-zero resistance), the path is complete. If nothing comes out (OL), there's a break."
+        },
+        {
+          "term": "Multimeter",
+          "definition": "A multimeter (digital or analog) is a single instrument that measures multiple electrical quantities: voltage (volts AC and DC), current (amps AC and DC), and resistance (ohms) \u2014 replacing separate voltmeter, ammeter, and ohmmeter instruments.",
+          "analogy": "A multimeter is the Swiss Army knife of electrical test equipment \u2014 voltage meter, current meter, and ohmmeter all in one instrument, with a selector switch to choose which function you need."
+        },
+        {
+          "term": "Current measurement \u2014 ammeter connection",
+          "definition": "To measure current, connect the ammeter IN SERIES \u2014 break the circuit and insert the meter so all current flows through it. The ammeter has very low internal resistance so it doesn't significantly affect circuit operation. Never connect an ammeter in parallel \u2014 it will short-circuit the supply.",
+          "analogy": "Like measuring water flow by cutting the pipe and inserting a flow meter \u2014 the water must pass through the meter to be counted."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How should a multimeter be connected to measure voltage across an avionics component?",
+      "choices": [
+        "In series with the load, circuit off",
+        "In parallel with the load, circuit off",
+        "In series with the load, circuit on",
+        "In parallel with the load, circuit on"
+      ],
+      "correctIndex": 3,
+      "feedback": "Voltage is always measured in parallel (across the component) with the circuit powered on. A multimeter has very high internal resistance, so parallel connection doesn't significantly load the circuit."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A multimeter set to the 200-ohm range shows 'OL' when connected across a wire. What does this indicate?",
+      "choices": [
+        "The wire has exactly 200 ohms resistance \u2014 the display switches to OL at full scale",
+        "The measurement polarity is reversed and the leads must be swapped",
+        "The multimeter is damaged and cannot measure the circuit correctly",
+        "The resistance is greater than the 200-ohm range, most likely an open circuit (broken wire) or very high resistance"
+      ],
+      "correctIndex": 3,
+      "feedback": "'OL' on the 200-ohm range means resistance exceeds 200 ohms. For a wire, this almost certainly means an open circuit \u2014 no conductive path exists between the probe points."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which procedure must be followed before using a multimeter to measure resistance in an avionics circuit?",
+      "choices": [
+        "Ensure circuit power is on and set meter to AC range",
+        "Ensure circuit power is off and capacitors are discharged",
+        "Connect meter in series with the circuit powered on",
+        "Connect meter in parallel with circuit powered on"
+      ],
+      "correctIndex": 1,
+      "feedback": "Power must be OFF before measuring resistance \u2014 applied voltage damages the ohmmeter circuit and gives false readings. Capacitors must be discharged as they can hold a charge that masquerades as a voltage source."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A warning light is not illuminating. The lamp tests good. What test should the technician use to determine if a broken wire is the cause?",
+      "choices": [
+        "Perform a continuity test with a multimeter measuring resistance between the two ends of the suspect wire",
+        "Measure the voltage drop across the lamp with the circuit energized",
+        "Use an oscilloscope to check the lamp's activation signal waveform",
+        "Measure the current in the lamp circuit with an ammeter"
+      ],
+      "correctIndex": 0,
+      "feedback": "A continuity test directly tests wire integrity. With power OFF, measure resistance between wire ends: near-zero ohms = intact; OL = broken. This is the definitive test for a broken wire."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the three primary electrical quantities measured by a digital multimeter?",
+      "choices": [
+        "Frequency, power factor, and efficiency",
+        "Capacitance, inductance, and RF output",
+        "Impedance, reactance, and phase angle",
+        "Voltage, current, and resistance"
+      ],
+      "correctIndex": 3,
+      "feedback": "A multimeter's three primary measurements are voltage (V), current (A), and resistance (\u03a9). Modern DMMs often add capacitance, frequency, temperature, and diode test, but the three core functions are V, A, and \u03a9."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How must an ammeter be connected to measure current in an aircraft circuit?",
+      "choices": [
+        "In series with the load, circuit broken to insert meter",
+        "In parallel across the load, circuit off",
+        "In parallel across the load, circuit on",
+        "In series with the source only, load bypassed"
+      ],
+      "correctIndex": 0,
+      "feedback": "An ammeter must be in series so all circuit current flows through it. You must break the circuit to insert the meter. Never connect in parallel \u2014 the ammeter's near-zero resistance would create a short circuit."
+    }
+  ]
+}

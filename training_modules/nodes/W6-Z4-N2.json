@@ -1,0 +1,95 @@
+{
+  "id": "W6-Z4-N2",
+  "title": "Databus analyzer awareness (cross-link)",
+  "world": "Digital Databus Systems",
+  "zone": "Databus troubleshooting",
+  "objectiveKeys": [
+    "q107",
+    "q125",
+    "q133",
+    "q142"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Databus analyzer awareness (cross-link)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize when a protocol/databus analyzer is the right tool."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Digital Databus Analyzer",
+          "definition": "A digital databus (protocol) analyzer connects non-intrusively to a databus and captures, timestamps, and decodes bus traffic in real time \u2014 displaying individual data words with their labels, values, and error conditions, enabling verification of correct operation and diagnosis of communication faults.",
+          "analogy": "A databus analyzer is like a flight data recorder for the ARINC 429 bus \u2014 it captures everything that flows by, decodes it into readable form, and helps you understand what happened when things went wrong."
+        },
+        {
+          "term": "Tool for Intermittent Bus Failures",
+          "definition": "A digital databus analyzer (protocol analyzer) is the best tool for capturing intermittent bus failures \u2014 it monitors continuously and time-stamps all bus activity, capturing the failure event when it occurs even if it is brief and transient.",
+          "analogy": "An intermittent bus failure is like a car noise that only happens sometimes. A databus analyzer is the dashcam that records everything \u2014 when the noise finally happens, you have proof of what it was."
+        },
+        {
+          "term": "Databus Analyzer \u2014 Primary Purpose",
+          "definition": "A databus analyzer's primary troubleshooting purpose is to capture bus traffic in real time, decode individual data words (revealing label, value, and error status), and identify which transmissions are incorrect, corrupted, or missing entirely.",
+          "analogy": "Think of a databus analyzer like a network packet sniffer for avionics \u2014 it sees every data 'packet' (word) on the bus, decodes it from raw bits into readable labels and values, and flags anything that's wrong."
+        },
+        {
+          "term": "Protocol Analyzer \u2014 Common Name",
+          "definition": "A databus analyzer (also called a protocol analyzer) is the standard tool in avionics maintenance for capturing and analyzing digital databus traffic \u2014 available for ARINC 429, MIL-STD-1553, RS-232/485, and other protocols.",
+          "analogy": "Just as a mechanic has a scan tool for car computer diagnostics, an avionics technician has a protocol analyzer for databus diagnostics \u2014 the right specialized tool for the job."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary function of a digital databus analyzer in avionics maintenance?",
+      "choices": [
+        "To capture, display, and decode bus traffic to verify correct data transmission and diagnose communication faults",
+        "To measure the DC power supply voltage to each avionics LRU",
+        "To program ARINC 429 LRUs with their initial configuration settings",
+        "To measure the resistance of the bus termination resistors at each end"
+      ],
+      "correctIndex": 0,
+      "feedback": "A databus analyzer provides non-intrusive, real-time decoding of bus protocol data \u2014 showing what labels are being transmitted, their values, timing, and any errors \u2014 the essential tool for ARINC 429 and MIL-STD-1553 diagnosis."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which instrument is most useful for diagnosing an intermittent ARINC 429 bus failure that occurs unpredictably?",
+      "choices": [
+        "A digital multimeter measuring bus voltage",
+        "A digital databus (protocol) analyzer that continuously monitors and records all bus activity",
+        "An oscilloscope triggered on bus signal transitions",
+        "A megohmmeter measuring cable insulation resistance"
+      ],
+      "correctIndex": 1,
+      "feedback": "An intermittent failure by definition doesn't occur consistently. A databus analyzer continuously monitors and logs all bus activity, capturing the failure event with timestamp and context when it finally occurs."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "In avionics troubleshooting, what is the primary purpose of a digital databus analyzer?",
+      "choices": [
+        "To measure the AC impedance of the bus cable at various frequencies",
+        "To program replacement LRUs with the correct ARINC label configuration",
+        "To capture bus traffic in real time, decode data words, and identify incorrect or missing transmissions",
+        "To test bus cable shielding effectiveness against electromagnetic interference"
+      ],
+      "correctIndex": 2,
+      "feedback": "The databus analyzer is the window into what's actually happening on the bus: real-time capture, word-by-word decoding, and automatic flagging of errors or missing labels."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What instrument is commonly used in avionics maintenance to capture and analyze digital databus traffic?",
+      "choices": [
+        "Digital multimeter \u2014 the most versatile test instrument for all avionics measurements",
+        "Spectrum analyzer \u2014 for analyzing the frequency content of digital signals",
+        "Oscilloscope \u2014 the standard instrument for all digital signal analysis",
+        "Databus analyzer (protocol analyzer) \u2014 specialized for capturing and decoding digital bus communication"
+      ],
+      "correctIndex": 3,
+      "feedback": "A databus analyzer (protocol analyzer) is the specialized tool for ARINC 429, MIL-STD-1553, and other avionics bus analysis. Oscilloscopes show waveforms but don't decode protocol data; DMMs show only voltage."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z2-N2",
+  "title": "Current manuals / technical data requirement",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Scope & technical data",
+  "objectiveKeys": [
+    "q70",
+    "q183"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Current manuals / technical data requirement"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Stop work if required current technical data is missing; recognize responsibility concept."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Capability List + Current Tech Data",
+          "definition": "Being on the capability list authorizes the work type, but Part 145 also requires the current revision of the manufacturer's maintenance manual before maintenance begins. Both authorization and current data are required.",
+          "analogy": "Like a surgeon authorized for a procedure \u2014 they still must have the current protocol on hand. Credentials alone do not substitute for current guidance."
+        },
+        {
+          "term": "QC & Accountable Manager (Tech Data)",
+          "definition": "Under Part 145, the Quality Control department and accountable manager are responsible for ensuring current technical data is available and used during maintenance.",
+          "analogy": "Like a hospital's compliance officer and medical director being jointly responsible that all procedures use current protocols \u2014 systemic responsibility, not just individual practitioner responsibility."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A radio is on your shop's capability list, but only an outdated manual is available. What must happen before maintenance begins?",
+      "choices": [
+        "Proceed \u2014 capability list listing is sufficient authorization for the work",
+        "Contact the FAA for a field approval to use the outdated manual revision",
+        "Obtain the current revision of the manufacturer's maintenance manual first",
+        "Have the IA sign off in advance to authorize proceeding without current data"
+      ],
+      "correctIndex": 2,
+      "feedback": "Part 145 requires both authorization (capability list) and current technical data. An IA authorization does not substitute for required technical data. The FAA does not issue field approvals to use outdated manufacturer manuals."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Under Part 145, who is responsible for ensuring that current technical data is available and used during maintenance?",
+      "choices": [
+        "Each individual technician performing the specific work",
+        "The FAA inspector assigned to conduct surveillance of the station",
+        "The Quality Control department and accountable manager",
+        "The aircraft owner or operator who brought the work in"
+      ],
+      "correctIndex": 2,
+      "feedback": "Part 145 places systemic responsibility for current technical data on the QC department and accountable manager. While individual technicians must use current data, the organizational responsibility for ensuring it is provided and maintained belongs to QC and the accountable manager."
+    }
+  ]
+}

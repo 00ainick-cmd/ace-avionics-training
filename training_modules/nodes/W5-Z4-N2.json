@@ -1,0 +1,59 @@
+{
+  "id": "W5-Z4-N2",
+  "title": "Soldering awareness",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Shielding & repairs",
+  "objectiveKeys": [
+    "q38",
+    "q166"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Soldering awareness"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize basic soldering constraints/quality awareness."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Solder Joint Technique",
+          "definition": "For a proper solder joint, the iron must heat the WORK (wire and terminal) \u2014 not the solder. Solder is then applied to the heated joint, flowing into all gaps. Applying solder to the iron creates a cold joint.",
+          "analogy": "Soldering correctly is like heating a pan before adding oil \u2014 if the pan is cold, the oil sits on the surface. If you heat the pan first, it properly integrates. Heat the work, then add solder."
+        },
+        {
+          "term": "Avionics Solder Type",
+          "definition": "Avionics soldering uses 60/40 tin-lead (60% tin, 40% lead) or equivalent rosin-core solder; the rosin flux activates during soldering and leaves a benign residue. Acid-core solder is absolutely prohibited in avionics because its flux is corrosive and will attack copper conductors and connector contacts over time.",
+          "analogy": "Rosin-core solder is like cooking with vinegar that evaporates cleanly \u2014 it helps the process without leaving damage. Acid-core solder is like using muriatic acid \u2014 it works but destroys everything it touches afterward."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the critical technique for making a good solder joint in avionics work?",
+      "choices": [
+        "Heat the work (both the wire and the terminal) with the iron, then apply solder to the heated work so it flows into the joint",
+        "Apply solder to the tip of the iron, then touch the iron to the joint to transfer the solder",
+        "Apply solder first, then heat the joint until the solder melts and flows",
+        "Tin only the iron tip, not the wire, to prevent bridging between adjacent pins"
+      ],
+      "correctIndex": 0,
+      "feedback": "The fundamental rule: heat the work first, not the solder. Solder applied to hot work wets properly and flows into all gaps. Solder applied to the iron creates cold joints."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of solder is used in avionics work, and what type is prohibited?",
+      "choices": [
+        "60/40 tin-lead or equivalent rosin-core solder is used; acid-core solder is prohibited due to corrosive flux residue",
+        "Lead-free solder is required; tin-lead is prohibited due to RoHS regulations",
+        "Acid-core solder is preferred for faster flow; rosin-core is prohibited due to high viscosity",
+        "Solder is prohibited entirely in avionics \u2014 only crimp connections are allowed"
+      ],
+      "correctIndex": 0,
+      "feedback": "60/40 rosin-core solder is the avionics standard. Acid-core solder is strictly prohibited \u2014 the acidic flux corrodes copper over time, creating high-resistance joints and eventual open circuits."
+    }
+  ]
+}

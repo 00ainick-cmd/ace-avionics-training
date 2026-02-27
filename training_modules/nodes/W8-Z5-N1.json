@@ -1,0 +1,95 @@
+{
+  "id": "W8-Z5-N1",
+  "title": "AHRS/PFD basics",
+  "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+  "zone": "AHRS/glass cockpit",
+  "objectiveKeys": [
+    "q5",
+    "q13",
+    "q16",
+    "q119"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to AHRS/PFD basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize AHRS/ADC roles and glass cockpit basics."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Air Data Computer (ADC)",
+          "definition": "A computer connected to the pitot-static system that processes ram air and static pressure to calculate airspeed and altitude data, supplying this information to the Primary Flight Display in a glass-cockpit system.",
+          "analogy": "The ADC is like a translator \u2014 it converts raw air pressures into digital numbers the PFD screen can display."
+        },
+        {
+          "term": "MEMS sensors in EFIS",
+          "definition": "Micro-Electro-Mechanical Systems (MEMS) gyroscopes and accelerometers used in Electronic Flight Instrument Systems to measure attitude, heading, and motion without moving mechanical parts.",
+          "analogy": "MEMS sensors are like motion sensors in a smartphone \u2014 tiny, solid-state chips that detect movement and orientation without any spinning parts."
+        },
+        {
+          "term": "Instruments Replaced by PFD",
+          "definition": "A modern Primary Flight Display (PFD) replaces six traditional instruments: airspeed indicator, attitude indicator, altimeter, vertical speed indicator, heading indicator, and turn coordinator.",
+          "analogy": "The PFD is like a smartphone replacing a watch, calculator, calendar, camera, map, and compass \u2014 six devices consolidated into one screen."
+        },
+        {
+          "term": "AHRS Sensor Suite",
+          "definition": "An Attitude and Heading Reference System (AHRS) uses three types of solid-state sensors: rate gyroscopes (angular rate), accelerometers (linear acceleration), and magnetometers (magnetic heading) \u2014 no spinning mechanical gyros.",
+          "analogy": "An AHRS is like your inner ear combined with a compass \u2014 rate gyros detect rotation, accelerometers detect tilting/movement, and magnetometers detect magnetic north, all without moving parts."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary function of the Air Data Computer in a glass-cockpit avionics suite?",
+      "choices": [
+        "Display navigation data on the moving map",
+        "Convert pitot-static pressure inputs into digital airspeed and altitude for the PFD",
+        "Provide GPS position updates to the flight plan",
+        "Drive the attitude indicator using gyroscopic data"
+      ],
+      "correctIndex": 1,
+      "feedback": "The ADC is connected to the pitot-static system and computes airspeed and altitude from pressure inputs, then outputs this data to the PFD."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of sensors does a modern EFIS typically use to determine aircraft attitude and heading?",
+      "choices": [
+        "Mechanical gyro rotors driven by engine vacuum",
+        "GPS antennas measuring position change over time",
+        "Solid-state MEMS gyroscopes and accelerometers",
+        "Pitot-static pressure transducers"
+      ],
+      "correctIndex": 2,
+      "feedback": "Modern EFIS attitude systems rely on solid-state MEMS technology \u2014 tiny gyroscopes and accelerometers on microchips \u2014 eliminating moving mechanical parts."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which set of instruments does a modern glass-cockpit Primary Flight Display replace?",
+      "choices": [
+        "Airspeed indicator, attitude indicator, altimeter, GPS, MFD, TCAS",
+        "Airspeed indicator, altimeter, VOR, ADF, heading indicator, turn coordinator",
+        "Attitude indicator, altimeter, DME, VSI, GPS, turn coordinator",
+        "Airspeed indicator, VSI, altimeter, attitude indicator, heading indicator, turn coordinator"
+      ],
+      "correctIndex": 3,
+      "feedback": "The PFD replaces the six classic 'six-pack' instruments: airspeed indicator, attitude indicator, altimeter, VSI, heading indicator (DI), and turn coordinator."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What three types of solid-state sensors does an AHRS use to replace traditional mechanical gyroscopes?",
+      "choices": [
+        "Pitot probes, static vents, and angle-of-attack sensors",
+        "GPS receivers, barometric sensors, and ADS-B transceivers",
+        "Rate gyroscopes, accelerometers, and magnetometers",
+        "MEMS gyros, strain gauges, and flux gate detectors"
+      ],
+      "correctIndex": 2,
+      "feedback": "A complete AHRS sensor suite uses rate gyroscopes for angular rate, accelerometers for linear acceleration and tilt, and magnetometers for magnetic heading reference."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z4-N1",
+  "title": "Fire safety basics (no extinguisher classes)",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Fire safety basics",
+  "objectiveKeys": [
+    "q151"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Fire safety basics (no extinguisher classes)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Prevention + basic extinguisher readiness awareness + first actions (notify/follow local procedure)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Fire Extinguisher Readiness Check",
+          "definition": "To verify a fire extinguisher is ready: (1) pressure gauge in green zone, (2) safety pin intact with tamper seal, (3) no visible damage to body or hose, (4) annual inspection tag current.",
+          "analogy": "Like a pre-flight walkaround \u2014 you check each item methodically so that when you need it, it works."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which combination of checks confirms a fire extinguisher is ready for service in a GA avionics shop?",
+      "choices": [
+        "Verify the nozzle is unobstructed and the gauge reads any positive pressure",
+        "Weigh it to confirm charge weight only",
+        "Shake it to verify agent is loose inside",
+        "Pressure gauge in green, safety pin intact, no damage, annual tag current"
+      ],
+      "correctIndex": 3,
+      "feedback": "All four checks are required: gauge in green zone, intact pin/seal, no physical damage, and a current annual inspection tag \u2014 all must pass for the extinguisher to be considered serviceable."
+    }
+  ]
+}

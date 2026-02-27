@@ -1,0 +1,41 @@
+{
+  "id": "W5-Z5-N2",
+  "title": "Safety wire twist rate (optional)",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Inspection & prohibited",
+  "objectiveKeys": [
+    "q203"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Safety wire twist rate (optional)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize standard safety wire twist rate as general aviation hardware practice."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Safety Wire Twist Rate",
+          "definition": "The acceptable twist rate for the double-twist safety wire method is 6 to 8 twists per inch for standard aviation safety wiring applications.",
+          "analogy": "Like tightening a coil spring \u2014 too few twists and it's loose and ineffective; too many and it kinks and weakens. The 6\u20138 range hits the sweet spot for tension and integrity."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the acceptable twist rate for double-twist safety wire on aviation fasteners?",
+      "choices": [
+        "3 to 5 twists per inch",
+        "As tight as possible \u2014 maximum twists are always preferred",
+        "10 to 12 twists per inch",
+        "6 to 8 twists per inch"
+      ],
+      "correctIndex": 3,
+      "feedback": "6 to 8 twists per inch is the standard for double-twist safety wire. Too few twists (under 6) are loose and non-compliant; too many (over 8) may kink or weaken the wire."
+    }
+  ]
+}

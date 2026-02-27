@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Circuit protection (fuses/breakers)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link active">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W3 // ELECTRICAL // CIRCUIT BEHAVIOR</span>
+            </div>
+            <h1>Circuit protection<br><span class="doc-subtitle">fuses/breakers</span></h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>State the primary purpose of an aircraft circuit breaker or fuse.</li>
+        <li>Differentiate the operational characteristics of fuses and circuit breakers.</li>
+        <li>Identify the hazard of repeatedly resetting a tripped circuit breaker.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/aircraft_circuit_breakers.png" alt="A close-up of an aircraft circuit breaker panel showing several pulled breakers with white rings" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A close-up of an aircraft circuit breaker panel showing several pulled breakers with white rings</figcaption>
+                </figure>
+        <p class="body-text">An aging wire behind the instrument panel chafes against a sharp metal rib until the insulation wears through. The conductor touches the bare metal, creating a dead short to ground. Instantly, 50 amps of current surges through a wire rated for only 10 amps. The wire begins to rapidly heat, softening the insulation and preparing to ignite. The circuit breaker (or fuse) is the only component preventing an uncontrollable in-flight electrical fire.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <h3 class="content-h3">The Primary Purpose</h3>
+        <p class="body-text"><strong>Fuses and circuit breakers</strong> exist strictly to protect <strong>the aircraft wiring</strong> from overcurrent conditions.</p>
+        <p class="body-text">This is a critical distinction: they are installed to protect the wire, not the expensive avionics equipment at the end of the wire. Circuit protection devices are sized strictly to the <strong>current-carrying capacity of the wire gauge</strong>. If an 18-AWG wire can safely carry 10 amps, the breaker is rated at 10 amps — regardless of whether the connected radio draws 1 amp or 8 amps.</p>
+        <h3 class="content-h3">Fuses: One and Done</h3>
+        <p class="body-text">A <strong>fuse</strong> contains a calibrated metal element (link) designed to <strong>melt</strong> when current exceeds its specific rating.</p>
+        <ul class="content-list">
+        <li>The melted element permanently opens the circuit, halting current flow.</li>
+        <li>A fuse <strong>cannot be reset</strong> — it is destroyed by design and must be replaced.</li>
+        <li>Fuses are simple, highly reliable, and have no moving mechanical parts.</li>
+        </ul>
+        <h3 class="content-h3">Circuit Breakers: Mechanical Tripping</h3>
+        <p class="body-text">A <strong>circuit breaker (CB)</strong> is a mechanical thermal/magnetic switch that <strong>trips</strong> (springs open) when current exceeds its rating.</p>
+        <ul class="content-list">
+        <li>Breakers can be <strong>reset</strong> by pushing the button back in after the overcurrent condition is resolved and the thermal element cools.</li>
+        <li>Most aircraft circuit breakers are <strong>trip-free</strong>, meaning the internal mechanism will trip and stay open even if a desperate pilot forcibly holds the button pushed in.</li>
+        <li>In a Part 145 shop, a breaker that trips repeatedly on the bench is indicating a persistent hard fault (like a shorted diode or pinched wire). Do not keep resetting it.</li>
+        </ul>
+        <h3 class="content-h3">What Circuit Protection Does NOT Do</h3>
+        <p class="body-text">It is vital to understand their limitations. Fuses and breakers:</p>
+        <ul class="content-list">
+        <li>Do NOT regulate or step-down voltage.</li>
+        <li>Do NOT filter out electrical noise or transients.</li>
+        <li>Do NOT protect equipment against voltage spikes (over-voltage).</li>
+        <li>Usually cannot trip fast enough to save a sensitive microchip from an internal short.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.2A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Power Bus 28V] --> B[Circuit Breaker 10A]
+    B --> C[18-AWG Wire]
+    C --> D[Avionics Load]
+    D --> E[Short to Ground Occurs!]
+    E --> F[Current spikes to 50A]
+    F --> G{Is current > Breaker Rating?}
+    G -- Yes --> H[Breaker Trips / Pops Open]
+    H --> I[Current Stops. Wire is Saved from Fire.]
+    
+    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style E fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style H fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Interactive Simulation</span>
+                <h2 class="section-title">Interactive Lab</h2>
+                <div class="simulation-container" style="background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 30px 0; padding: 20px;">
+                    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    .ohm-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: #020617;
+        /* Very dark slate */
+        padding: 30px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ohm-header {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #fca5a5;
+        /* Red hue for DC */
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(252, 165, 165, 0.4);
+        margin-bottom: 5px;
+    }
+
+    .ohm-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 25px;
+    }
+
+    @media (max-width: 768px) {
+        .ohm-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .ohm-canvas-wrap {
+        position: relative;
+        width: 100%;
+        height: 350px;
+        background: #0f172a;
+        border: 2px solid #334155;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.05);
+        /* Slight red tint */
+    }
+
+    #ohm-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .ohm-panel {
+        background: #0f172a;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ohm-slider-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .ohm-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ohm-val {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.1rem;
+        color: #f8fafc;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    .slider-v::-webkit-slider-thumb {
+        background: #ef4444 !important;
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.8) !important;
+    }
+
+    .slider-r::-webkit-slider-thumb {
+        background: #eab308 !important;
+        box-shadow: 0 0 10px rgba(234, 179, 8, 0.8) !important;
+    }
+
+    .ohm-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+        border-top: 1px solid #1e293b;
+        padding-top: 15px;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #020617;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #1e293b;
+    }
+
+    .stat-name {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+    }
+
+    .stat-number {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .color-amps {
+        color: #3b82f6;
+        text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    .color-watts {
+        color: #10b981;
+        text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Math block */
+    .math-block {
+        font-family: 'Share Tech Mono', monospace;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 4px;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .math-block span {
+        color: #f8fafc;
+    }
+</style>
+
+<div class="ohm-container">
+    <div>
+        <div class="ohm-header">DC Ohm's Law & Power visualizer</div>
+        <p style="text-align:center; color:#64748b; font-size:0.9rem; margin-top:5px;">Interactive DC Circuit. Adjust
+            Voltage (Push) and Resistance (Restriction) to observe changes in Current (Flow) and Power (Work).</p>
+    </div>
+
+    <div class="ohm-layout">
+        <div class="ohm-canvas-wrap">
+            <canvas id="ohm-canvas"></canvas>
+        </div>
+
+        <div class="ohm-panel">
+            <div class="ohm-slider-group">
+                <div class="ohm-label">
+                    <span>Source Voltage (V)</span>
+                    <span class="ohm-val" style="color:#ef4444;" id="val-v">24 V</span>
+                </div>
+                <input type="range" id="slider-v" class="slider-v" min="1" max="50" value="24" step="1">
+            </div>
+
+            <div class="ohm-slider-group">
+                <div class="ohm-label">
+                    <span>Load Resistance (R)</span>
+                    <span class="ohm-val" style="color:#eab308;" id="val-r">12 Ω</span>
+                </div>
+                <input type="range" id="slider-r" class="slider-r" min="1" max="100" value="12" step="1">
+            </div>
+
+            <div class="ohm-stats">
+                <div class="stat-row" style="border-left: 3px solid #3b82f6;">
+                    <div class="stat-name">Current Flow (I)</div>
+                    <div class="stat-number color-amps" id="stat-amps">2.00 A</div>
+                </div>
+                <div class="stat-row" style="border-left: 3px solid #10b981;">
+                    <div class="stat-name">Power Dissipated (P)</div>
+                    <div class="stat-number color-watts" id="stat-watts">48.0 W</div>
+                </div>
+            </div>
+
+            <div class="math-block">
+                I = <span>V / R</span> &nbsp;|&nbsp; P = <span>I * V</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('ohm-canvas');
+        const ctx = canvas.getContext('2d');
+        const sliderV = document.getElementById('slider-v');
+        const sliderR = document.getElementById('slider-r');
+
+        const valV = document.getElementById('val-v');
+        const valR = document.getElementById('val-r');
+        const statA = document.getElementById('stat-amps');
+        const statW = document.getElementById('stat-watts');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let volts = 24;
+        let ohms = 12;
+        let amps = 2;
+        let watts = 48;
+
+        let electronOffset = 0;
+
+        // Circuit coordinates
+        let cx, cy, cw, ch;
+
+        function calculate() {
+            volts = parseFloat(sliderV.value);
+            ohms = parseFloat(sliderR.value);
+
+            amps = volts / ohms;
+            watts = volts * amps;
+
+            valV.innerText = volts + " V";
+            valR.innerText = ohms + " Ω";
+            statA.innerText = amps.toFixed(2) + " A";
+            statW.innerText = watts.toFixed(1) + " W";
+        }
+
+        sliderV.addEventListener('input', calculate);
+        sliderR.addEventListener('input', calculate);
+
+        function drawComponentBattery(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            // Battery symbol
+            ctx.strokeStyle = "#ef4444";
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#ef4444";
+
+            // Long positive plate (top)
+            ctx.beginPath(); ctx.moveTo(-20, -10); ctx.lineTo(20, -10); ctx.stroke();
+            // Short negative plate (bottom)
+            ctx.beginPath(); ctx.moveTo(-10, 10); ctx.lineTo(10, 10); ctx.stroke();
+
+            // Plus sign
+            ctx.font = "bold 16px monospace";
+            ctx.fillStyle = "#ef4444";
+            ctx.fillText("+", 25, -5);
+
+            ctx.restore();
+        }
+
+        function drawComponentResistor(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Heat glow based on wattage
+            const glowIntensity = Math.min(watts / 100, 1); // 0 to 1
+
+            ctx.strokeStyle = "#eab308";
+            ctx.lineWidth = 3;
+            if (glowIntensity > 0) {
+                ctx.shadowBlur = 10 + (glowIntensity * 20);
+                ctx.shadowColor = `rgba(234, 179, 8, ${glowIntensity + 0.2})`;
+            }
+
+            ctx.beginPath();
+            // Zig zag resistor
+            ctx.moveTo(0, -30);
+            ctx.lineTo(15, -20);
+            ctx.lineTo(-15, -10);
+            ctx.lineTo(15, 0);
+            ctx.lineTo(-15, 10);
+            ctx.lineTo(15, 20);
+            ctx.lineTo(0, 30);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function animate(time) {
+            // Clear background
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(0, 0, width, height);
+
+            // Center rectangular circuit layout
+            cw = width * 0.6;
+            ch = height * 0.5;
+            cx = (width - cw) / 2;
+            cy = (height - ch) / 2;
+
+            const leftX = cx;
+            const rightX = cx + cw;
+            const topY = cy;
+            const botY = cy + ch;
+
+            // Draw basic wire frame
+            ctx.beginPath();
+            ctx.strokeStyle = "#334155";
+            ctx.lineWidth = 4;
+            ctx.moveTo(leftX, cy + ch / 2 + 10); // from bottom of battery
+            ctx.lineTo(leftX, botY); // down
+            ctx.lineTo(rightX, botY); // right
+            ctx.lineTo(rightX, cy + ch / 2 + 30); // up to bottom of resistor
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(rightX, cy + ch / 2 - 30); // from top of resistor
+            ctx.lineTo(rightX, topY); // up
+            ctx.lineTo(leftX, topY); // left
+            ctx.lineTo(leftX, cy + ch / 2 - 10); // down to top of battery
+            ctx.stroke();
+
+            // Draw Electron Flow (blue dots)
+            // Speed proportional to Amps! (0.5A is slow, 50A is very fast)
+            // Range of amps: Min (1/100 = 0.01A), Max (50/1 = 50A)
+            const speedMultiplier = Math.max(0.5, Math.min(amps * 1.5, 20));
+            electronOffset += (speedMultiplier);
+
+            ctx.fillStyle = "#3b82f6";
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "#3b82f6";
+
+            const pathLength = (cw * 2) + (ch * 2);
+            const numElectrons = 25;
+            const spacing = pathLength / numElectrons;
+
+            for (let i = 0; i < numElectrons; i++) {
+                // Calculate distance along path (conventional current: positive to negative)
+                // Starts top of battery -> right -> down -> left -> up to bottom of battery
+                let d = (i * spacing + electronOffset) % pathLength;
+
+                let ex, ey;
+
+                if (d < ch / 2) {
+                    // Moving up from battery to top-left corner
+                    ex = leftX;
+                    ey = cy + ch / 2 - d;
+                } else if (d < ch / 2 + cw) {
+                    // Moving right across top
+                    ex = leftX + (d - ch / 2);
+                    ey = topY;
+                } else if (d < ch / 2 + cw + ch) {
+                    // Moving down across right
+                    ex = rightX;
+                    ey = topY + (d - (ch / 2 + cw));
+                } else if (d < ch / 2 + cw * 2 + ch) {
+                    // Moving left across bottom
+                    ex = rightX - (d - (ch / 2 + cw + ch));
+                    ey = botY;
+                } else {
+                    // Moving up to negative battery terminal
+                    ex = leftX;
+                    ey = botY - (d - (ch / 2 + cw * 2 + ch));
+                }
+
+                // Don't draw if inside components
+                if ((ex === leftX && ey > cy + ch / 2 - 15 && ey < cy + ch / 2 + 15) ||
+                    (ex === rightX && ey > cy + ch / 2 - 35 && ey < cy + ch / 2 + 35)) {
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+
+            // Draw components over wires
+            drawComponentBattery(leftX, cy + ch / 2);
+            drawComponentResistor(rightX, cy + ch / 2);
+
+            // Voltage readouts
+            ctx.font = "bold 14px 'Share Tech Mono'";
+            ctx.fillStyle = "#ef4444";
+            ctx.textAlign = "right";
+            ctx.fillText(`+${volts.toFixed(1)}V`, leftX - 15, cy + ch / 2 - 20);
+            ctx.fillStyle = "#3b82f6";
+            ctx.fillText(`0V`, leftX - 15, cy + ch / 2 + 25);
+            ctx.textAlign = "left";
+
+            requestAnimationFrame(animate);
+        }
+
+        calculate();
+        requestAnimationFrame(animate);
+    });
+</script>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When a breaker trips during testing, completely resist the urge to immediately reset it to &quot;see what happens.&quot; If it tripped, the circuit drew too much current. Stop. Ask: why did it trip? Check for short circuits, crushed harnesses, or incorrectly pinned connectors. A tripped breaker did its job — now you have to do yours to find the short.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.2 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Fuses and circuit breakers — purpose</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Fuses and circuit breakers — purpose</div>
+                            <p>Fuses and circuit breakers protect wiring and equipment from overcurrent. When current exceeds the rated value, they interrupt the circuit before the wire overheats and starts a fire. They protect the WIRE, not the equipment — sized to the wire&#x27;s current capacity.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Fuse — function</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Fuse — function</div>
+                            <p>A fuse contains a metal element that melts when current exceeds its rated value, permanently opening the circuit. Unlike a circuit breaker, a fuse cannot be reset — it must be replaced. It protects the wiring from overheating by interrupting excessive current.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Overcurrent</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Overcurrent</div>
+                            <p>An abnormal condition where current flow exceeds the safe thermal rating of the wire insulation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Circuit Breaker</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Circuit Breaker</div>
+                            <p>A resettable, mechanical protective device that opens when heated by excessive current.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Trip-Free</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Trip-Free</div>
+                            <p>A vital breaker design ensuring the circuit will open during a fault, even if the external actuator is forcibly held closed.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 6.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="1" data-feedback="Fuses and breakers are overcurrent protection — they protect the wire from carrying more current than its insulation can safely handle. Wire insulation failures from overcurrent are a primary cause of aircraft electrical fires.">
+                <div class="kc-header">Knowledge Verification [1/2]</div>
+                <div class="kc-question">What is the primary purpose of fuses and circuit breakers in an aircraft electrical system?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">To regulate voltage to connected avionics</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">To protect wiring and equipment from overcurrent that could cause fire or damage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">To filter noise from the electrical bus</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">To disconnect the battery during engine shutdown</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="1" data-feedback="A fuse&#x27;s metal element melts when overcurrent occurs, permanently breaking the circuit. This protects the wiring from carrying current levels that would overheat the insulation. The fuse must then be replaced — it cannot be reset like a breaker.">
+                <div class="kc-header">Knowledge Verification [2/2]</div>
+                <div class="kc-question">What happens inside a fuse when current exceeds its rated value?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">It trips a mechanical switch that can be reset</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">Its element melts, permanently opening the circuit to protect the wiring</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">It reduces the circuit voltage to safe levels</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">It redirects excess current to a ground bus</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Circuit protection exists solely to protect wiring from catching fire — fuses melt permanently, breakers trip mechanically, and neither should be ignored when activated.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W3-Z2-N1_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W3-Z3-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W3-Z2-N2';
+        const NODE_LOS = ["q51", "q102"];
+        const TOTAL_KCS = 2;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'Electrical',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

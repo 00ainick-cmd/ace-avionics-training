@@ -1,0 +1,95 @@
+{
+  "id": "W8-Z2-N1",
+  "title": "Altimeter/VSI/ASI basics",
+  "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+  "zone": "Instrument behavior",
+  "objectiveKeys": [
+    "q17",
+    "q68",
+    "q185",
+    "q190"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Altimeter/VSI/ASI basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Describe instrument indications and settings."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Altimeter Setting",
+          "definition": "The local barometric pressure in inches of mercury (inHg) entered into the altimeter's Kollsman window before flight so the instrument reads accurate altitude above mean sea level.",
+          "analogy": "Setting the altimeter is like zeroing a bathroom scale before weighing \u2014 without the correct reference baseline, every reading will be off by the same constant error."
+        },
+        {
+          "term": "Vertical Speed Indicator (VSI)",
+          "definition": "A flight instrument that measures and displays the rate of change of barometric altitude in feet per minute (fpm) by comparing the static pressure entering a chamber with a calibrated leak rate.",
+          "analogy": "A VSI is like a pressure change detector \u2014 it doesn't read pressure, it reads how fast pressure is changing, which corresponds to how fast you're climbing or descending."
+        },
+        {
+          "term": "Altimeter Operation",
+          "definition": "An altimeter measures barometric altitude by sensing changes in static (atmospheric) pressure through an aneroid capsule; as altitude increases, pressure decreases, and the capsule expands, rotating gears to display altitude in feet or meters referenced to the set datum.",
+          "analogy": "An altimeter is like a metal balloon inside a box \u2014 as you climb, outside pressure drops, the balloon expands, and a linked pointer shows how much it expanded, which corresponds to altitude."
+        },
+        {
+          "term": "Basic-T Instrument Arrangement",
+          "definition": "The FAA-standard 'Basic T' layout places four primary flight instruments in a T pattern: ASI (upper-left), AI (upper-center), ALT (upper-right), and heading indicator (lower-center).",
+          "analogy": "The 'T' arrangement is designed so a pilot's eye naturally scans from the center (AI) outward to the wings (ASI left, ALT right) then down to the stem (HI bottom) \u2014 like reading a plus sign from the center out."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why must the altimeter be set to the current local barometric pressure before flight?",
+      "choices": [
+        "So the altimeter reads accurate altitude above sea level referenced to local atmospheric conditions",
+        "To prevent the static port from becoming blocked at altitude",
+        "To synchronize the altimeter with the air data computer",
+        "To set the transition altitude for pressurized aircraft"
+      ],
+      "correctIndex": 0,
+      "feedback": "Without the correct local pressure setting, the altimeter references an incorrect baseline, causing altitude errors equal to approximately 1,000 ft per inch of mercury difference."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does the Vertical Speed Indicator measure and how is it expressed?",
+      "choices": [
+        "Absolute altitude above sea level, expressed in feet MSL",
+        "Dynamic pressure change, expressed in knots per minute",
+        "Rate of change of barometric altitude, expressed in feet per minute",
+        "Engine climb power setting, expressed in percent RPM"
+      ],
+      "correctIndex": 2,
+      "feedback": "The VSI measures the rate at which static pressure is changing and converts this into a vertical rate reading in feet per minute \u2014 positive for climb, negative for descent."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does a conventional altimeter determine and display barometric altitude?",
+      "choices": [
+        "It measures ram pressure changes from the pitot tube and converts them to altitude",
+        "It calculates geometric altitude by triangulating GPS satellite signals",
+        "It senses static pressure through an aneroid capsule; pressure decreases with altitude, expanding the capsule to display altitude in feet",
+        "It receives digital altitude data from the ADC via a synchro motor system"
+      ],
+      "correctIndex": 2,
+      "feedback": "A conventional aneroid altimeter senses static (atmospheric) pressure changes. Decreasing pressure at higher altitude expands the aneroid capsule, and mechanical linkages convert the expansion to an altitude reading."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the standard 'Basic T' arrangement of primary flight instruments?",
+      "choices": [
+        "ASI upper-left, AI upper-center, ALT upper-right, HI lower-center",
+        "AI upper-left, ASI upper-center, ALT upper-right, HI lower-center",
+        "ASI upper-left, AI upper-center, HI upper-right, ALT lower-center",
+        "AI upper-left, HI upper-center, ASI upper-right, ALT lower-center"
+      ],
+      "correctIndex": 0,
+      "feedback": "The FAA Basic T: ASI (airspeed indicator) at upper-left, AI (attitude indicator) at upper-center, ALT (altimeter) at upper-right, and DI/HI (heading indicator) at lower-center."
+    }
+  ]
+}

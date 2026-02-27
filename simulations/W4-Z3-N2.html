@@ -1,0 +1,357 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;700;800&display=swap');
+
+    .scenario-container {
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: #020617;
+        padding: 30px;
+        border-radius: 12px;
+        border: 2px solid #1e293b;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .scenario-header {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .scenario-header h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #38bdf8;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        margin: 0 0 5px 0;
+    }
+
+    .scenario-header p {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .scenario-box {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+    }
+
+    .writeup-box {
+        border-left: 4px solid #f59e0b;
+        /* Warning/Amber */
+    }
+
+    .outcome-box {
+        border-left: 4px solid #38bdf8;
+        /* Info/Blue */
+        margin-top: 15px;
+        display: none;
+    }
+
+    .success-box {
+        border-left: 4px solid #10b981;
+        /* Success/Green */
+        background: rgba(16, 185, 129, 0.05);
+        margin-top: 15px;
+        display: none;
+    }
+
+    .error-box {
+        border-left: 4px solid #ef4444;
+        /* Error/Red */
+        background: rgba(239, 68, 68, 0.05);
+        margin-top: 15px;
+        display: none;
+    }
+
+    .box-label {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.8rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .box-content {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #f8fafc;
+    }
+
+    .box-content strong {
+        color: #fde047;
+    }
+
+    .actions-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .action-btn {
+        background: #1e293b;
+        color: #cbd5e1;
+        border: 1px solid #475569;
+        padding: 15px 20px;
+        border-radius: 6px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .action-btn::before {
+        content: '▶';
+        font-family: 'Share Tech Mono', monospace;
+        color: #38bdf8;
+        font-size: 0.9rem;
+    }
+
+    .action-btn:hover {
+        background: #334155;
+        border-color: #38bdf8;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .action-btn.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .action-btn.selected {
+        background: rgba(56, 189, 248, 0.1);
+        border-color: #38bdf8;
+        color: #fff;
+    }
+
+    .scenario-footer {
+        text-align: center;
+        margin-top: 10px;
+        display: none;
+    }
+
+    .reset-btn {
+        background: transparent;
+        color: #94a3b8;
+        border: 1px dashed #64748b;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .reset-btn:hover {
+        color: #fff;
+        border-color: #cbd5e1;
+        background: #1e293b;
+    }
+</style>
+
+<div class="scenario-container">
+    <div class="scenario-header">
+        <h3>Diagnostic Simulator</h3>
+        <p>Choose Your Own Adventure: Basic Fault Isolation</p>
+    </div>
+
+    <div class="scenario-box writeup-box">
+        <div class="box-label" style="color:#f59e0b;">Pilot Write-up (Squawk)</div>
+        <div class="box-content">
+            "During pre-flight inspection, the <strong>right wing navigation light is completely INOP</strong>. The left
+            wing and tail navigation lights are operating normally. The NAV LIGHTS switch is ON."
+        </div>
+    </div>
+
+    <!-- Dynamic Output Area -->
+    <div id="sim-history"></div>
+
+    <!-- Active Choices Area -->
+    <div class="actions-grid" id="sim-choices">
+        <!-- Buttons injected here by JS -->
+    </div>
+
+    <div class="scenario-footer" id="sim-footer">
+        <button class="reset-btn" onclick="simInit()">Restart Scenario ↻</button>
+    </div>
+</div>
+
+<script>
+    const story = {
+        start: {
+            text: "You arrive at the aircraft. The battery is ON, the NAV LIGHT switch is ON. The left and tail lights are illuminated, but the right wing green light is out.",
+            type: "info",
+            choices: [
+                { text: "Check the NAV LIGHTS circuit breaker.", next: "check_cb" },
+                { text: "Measure voltage at the right wing bulb socket.", next: "measure_socket" },
+                { text: "Check continuity of the right wing bulb.", next: "check_bulb" }
+            ]
+        },
+        check_cb: {
+            text: "You inspect the circuit breaker panel. The NAV LIGHTS breaker is <strong>SET</strong> (in).",
+            type: "info",
+            choices: [
+                { text: "Measure voltage at the right wing bulb socket.", next: "measure_socket" },
+                { text: "Check continuity of the right wing bulb.", next: "check_bulb" },
+                { text: "Replace the NAV LIGHT switch.", next: "replace_switch" }
+            ]
+        },
+        replace_switch: {
+            text: "You spend 45 minutes removing the panel and replacing the NAV LIGHT switch. You turn it on. The left and tail lights illuminate. The right light is still INOP.",
+            type: "error",
+            choices: [
+                { text: "That was a bad guess. Let's measure voltage at the socket.", next: "measure_socket" },
+                { text: "Check continuity of the bulb instead.", next: "check_bulb" }
+            ]
+        },
+        check_bulb: {
+            text: "You remove the green glass cover, extract the bulb, and measure its resistance. It measures <strong>1.2 ohms</strong>. The filament is intact. It is a good bulb.",
+            type: "info",
+            choices: [
+                { text: "Measure voltage at the empty bulb socket.", next: "measure_socket" }
+            ]
+        },
+        measure_socket: {
+            text: "With the switch ON, you measure voltage between the center contact of the socket and the metal shell. Your DMM reads <strong>0.00 VDC</strong>.",
+            type: "info",
+            choices: [
+                { text: "Measure continuity from the socket shell to airframe ground.", next: "check_ground" },
+                { text: "Check voltage upstream at the wing-root disconnect plug.", next: "check_wing_root" }
+            ]
+        },
+        check_ground: {
+            text: "You measure resistance from the socket shell to a bare metal point on the wing structure. It reads <strong>0.1 ohms</strong>. The ground path is solid.",
+            type: "info",
+            choices: [
+                { text: "Check voltage upstream at the wing-root disconnect plug.", next: "check_wing_root" }
+            ]
+        },
+        check_wing_root: {
+            text: "You open the access panel at the right wing root. You disconnect the harness plug and measure the supply pin for the NAV light. Your DMM reads <strong>28.1 VDC</strong>.",
+            type: "info",
+            choices: [
+                { text: "Analyze the findings to isolate the fault.", next: "finish_success" },
+                { text: "Replace the entire wing root connector.", next: "replace_connector" }
+            ]
+        },
+        replace_connector: {
+            text: "You cut off both ends of the connector and spend 2 hours crimping a new one. After reconnecting, you still have 0V at the socket.",
+            type: "error",
+            choices: [
+                { text: "Analyze the previous voltage findings instead.", next: "finish_success" }
+            ]
+        },
+        finish_success: {
+            text: "<strong>FAULT ISOLATED!</strong><br><br>You have 28V at the wing root, but 0V at the socket. The ground is good. Therefore, the fault is an <strong>OPEN CIRCUIT</strong> in the positive wire running through the right wing leading edge. <br><br>You inspect the wire loom and find it chafed completely through against a rib. You repair the wire, and the light illuminates.",
+            type: "success",
+            choices: []
+        }
+    };
+
+    const historyEl = document.getElementById('sim-history');
+    const choicesEl = document.getElementById('sim-choices');
+    const footerEl = document.getElementById('sim-footer');
+
+    function createBox(text, type, stateId) {
+        const box = document.createElement('div');
+        let cssClass = 'outcome-box';
+        let labelColor = '#38bdf8';
+        let labelText = 'Diagnostic Finding';
+
+        if (type === 'error') {
+            cssClass = 'error-box';
+            labelColor = '#ef4444';
+            labelText = 'Incorrect Action';
+        } else if (type === 'success') {
+            cssClass = 'success-box';
+            labelColor = '#10b981';
+            labelText = 'Maintenance Resolved';
+        } else if (stateId === 'start') {
+            labelText = 'Initial State';
+        }
+
+        box.className = `scenario-box ${cssClass}`;
+        box.style.display = 'block';
+
+        box.innerHTML = `
+            <div class="box-label" style="color:${labelColor};">${labelText}</div>
+            <div class="box-content">${text}</div>
+        `;
+        return box;
+    }
+
+    function renderState(stateId) {
+        choicesEl.innerHTML = '';
+        const state = story[stateId];
+
+        // Animate in the new outcome box
+        const newBox = createBox(state.text, state.type, stateId);
+        newBox.style.opacity = '0';
+        newBox.style.transform = 'translateY(10px)';
+        newBox.style.transition = 'all 0.4s ease';
+        historyEl.appendChild(newBox);
+
+        // Trigger reflow to ensure animation runs
+        void newBox.offsetWidth;
+        newBox.style.opacity = '1';
+        newBox.style.transform = 'translateY(0)';
+
+        if (state.choices.length === 0) {
+            // End of scenario. Award XP via the main page function if available.
+            footerEl.style.display = 'block';
+            if (typeof awardXP === 'function' && !window.scenarioCompleted) {
+                window.scenarioCompleted = true; // prevent double awarding
+                awardXP(150, 'Troubleshooting Scenario Completed');
+            }
+            return;
+        }
+
+        state.choices.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.className = 'action-btn';
+            btn.innerHTML = choice.text;
+            btn.onclick = () => {
+                // Dim all buttons, highlight selected
+                Array.from(choicesEl.children).forEach(b => b.classList.add('disabled'));
+                btn.classList.add('selected');
+                btn.classList.remove('disabled');
+
+                // Show choice briefly, then advance
+                setTimeout(() => {
+                    choicesEl.innerHTML = '';
+                    renderState(choice.next);
+                }, 500);
+            };
+            choicesEl.appendChild(btn);
+        });
+    }
+
+    function simInit() {
+        historyEl.innerHTML = '';
+        choicesEl.innerHTML = '';
+        footerEl.style.display = 'none';
+        window.scenarioCompleted = false;
+        renderState('start');
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', simInit);
+</script>

@@ -1,0 +1,95 @@
+{
+  "id": "W6-Z2-N2",
+  "title": "ARINC 429 word structure basics",
+  "world": "Digital Databus Systems",
+  "zone": "ARINC 429 architecture",
+  "objectiveKeys": [
+    "q40",
+    "q113",
+    "q137",
+    "q238"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ARINC 429 word structure basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Understand 32-bit words and basic encoding."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ARINC 429 Word Length",
+          "definition": "An ARINC 429 data word is 32 bits long, consisting of a label (8 bits), status/source destination identifier (2 bits), data field (19 bits), and sign/status matrix or parity bit (1 bit each).",
+          "analogy": "Think of the 32-bit ARINC 429 word as a standardized form with exactly 32 checkboxes \u2014 each is always filled, always in the same order, regardless of what data is being transmitted."
+        },
+        {
+          "term": "ARINC 429 Logic Levels",
+          "definition": "ARINC 429 uses tri-state encoding: binary '1' = +10V (A high, B low); NULL = 0V; binary '0' = -10V (A low, B high). The voltage differential between the A and B lines determines the bit value.",
+          "analogy": "Think of lines A and B as two sides of a see-saw: when A is up (+10V), it's a '1'; when A is down (-10V) relative to B, it's a '0'; and when both are level (0V), it's a NULL space between words."
+        },
+        {
+          "term": "Bit (Binary Digit)",
+          "definition": "A bit is the most fundamental unit of digital information, representing one of two possible states: 0 or 1. All digital data in avionics systems is stored, processed, and transmitted as groups of bits.",
+          "analogy": "A bit is like a single light switch \u2014 it has only two states (on/off = 1/0). Everything digital is built from combinations of these simple switches."
+        },
+        {
+          "term": "Binary Number System",
+          "definition": "The binary (base-2) number system uses only two digits \u2014 0 and 1 \u2014 to represent all data in digital systems. Every digital avionics value (altitude, airspeed, heading) is ultimately stored and transmitted as a sequence of binary digits.",
+          "analogy": "Binary is like Morse code with only dots and dashes \u2014 two simple symbols that, combined in different patterns, can represent any number, letter, or instruction."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How many bits are in an ARINC 429 data word?",
+      "choices": [
+        "8 bits (one byte)",
+        "32 bits",
+        "16 bits",
+        "64 bits"
+      ],
+      "correctIndex": 1,
+      "feedback": "ARINC 429 transmits data in fixed-length 32-bit words. This standardized word length ensures consistent encoding and decoding across all compliant LRUs."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How is a binary '1' encoded in an ARINC 429 signal?",
+      "choices": [
+        "A voltage of -10V on the A line with B at 0V",
+        "A differential of approximately +10V between the A and B lines (A positive, B negative)",
+        "A voltage of +5V on both A and B lines simultaneously",
+        "A zero-voltage NULL state between B line transitions"
+      ],
+      "correctIndex": 1,
+      "feedback": "ARINC 429 uses differential encoding: +10V between A and B (A high relative to B) represents binary '1'. NULL (0V) separates words; -10V represents binary '0'."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the fundamental building block of all digital systems?",
+      "choices": [
+        "A byte \u2014 the standard 8-bit unit used by all computers",
+        "A word \u2014 the standard 32-bit unit used in ARINC 429",
+        "A bit (binary digit) \u2014 the smallest unit of digital information representing a 0 or 1",
+        "A label \u2014 the ARINC 429 unit that identifies each data type"
+      ],
+      "correctIndex": 2,
+      "feedback": "A bit is the smallest, most fundamental unit \u2014 a single binary digit that can be 0 or 1. Bytes, words, and all higher structures are just groups of bits."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What number system is fundamental to all digital avionics data processing?",
+      "choices": [
+        "Decimal (base-10), because avionics displays show decimal numbers",
+        "Octal (base-8), as defined in the ARINC 429 label specification",
+        "Hexadecimal (base-16), because avionics computers use 16-bit processors",
+        "Binary (base-2), where all data is represented as combinations of 0s and 1s"
+      ],
+      "correctIndex": 3,
+      "feedback": "All digital data processing is ultimately binary \u2014 0s and 1s. Decimal or hex are just human-friendly representations of underlying binary values."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "W1-Z3-N1",
+  "title": "SDS / HazCom basics",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "SDS / chemicals",
+  "objectiveKeys": [
+    "q3",
+    "q4",
+    "q91"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to SDS / HazCom basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify what an SDS is, when to check it, and what it provides."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "SDS Accessibility Requirement",
+          "definition": "Safety Data Sheets for shop chemicals must be kept in an accessible location readily available to ALL personnel who work with or near hazardous materials.",
+          "analogy": "Like a first-aid kit that must be visible and reachable by anyone who might need it \u2014 not locked away where only supervisors can access it."
+        },
+        {
+          "term": "SDS In-Shop Accessibility",
+          "definition": "Safety Data Sheets for shop chemicals must be kept in an accessible location in the shop, readily available to ALL personnel who work with or near hazardous materials.",
+          "analogy": "Like an emergency exit map posted inside the building \u2014 it must be physically present in the space where people work, not stored in another building."
+        },
+        {
+          "term": "Safety Data Sheet (SDS)",
+          "definition": "The document containing specific safety information about a chemical, including hazards, handling procedures, first-aid measures, and emergency response \u2014 required for every hazardous chemical in the shop.",
+          "analogy": "The SDS is the chemical's complete 'owner's manual and warning label' \u2014 it tells you exactly what you're dealing with and what to do if something goes wrong."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Where must Safety Data Sheets (SDS) for shop chemicals be stored?",
+      "choices": [
+        "In the supervisor's office for security",
+        "In an accessible location available to all personnel working with or near hazardous materials",
+        "In a locked cabinet accessible only to certified technicians",
+        "Digitally only, on the company intranet"
+      ],
+      "correctIndex": 1,
+      "feedback": "SDS must be readily accessible to ALL personnel who may be exposed \u2014 not restricted to supervisors or specific roles."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Where specifically must Safety Data Sheets (SDS) be kept for shop chemicals?",
+      "choices": [
+        "In the corporate safety office across the facility",
+        "On a shared network drive accessible from any computer",
+        "In an accessible location in the shop, readily available to all personnel who work with or near hazardous materials",
+        "In the supervisor's desk drawer for safekeeping"
+      ],
+      "correctIndex": 2,
+      "feedback": "SDS must be physically accessible within the shop itself \u2014 not in a remote office or restricted location. All personnel who work with or near the chemicals must be able to reach them without delay."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician needs to know the health hazards and first-aid steps for a chemical solvent. Which document should they consult?",
+      "choices": [
+        "The product label only \u2014 it contains all required information",
+        "The shop's tool inventory log",
+        "The OSHA 300 injury log",
+        "The Safety Data Sheet (SDS) for that chemical"
+      ],
+      "correctIndex": 3,
+      "feedback": "The SDS contains comprehensive safety information for each chemical: hazards, handling procedures, PPE requirements, and first-aid measures \u2014 the product label alone is insufficient."
+    }
+  ]
+}

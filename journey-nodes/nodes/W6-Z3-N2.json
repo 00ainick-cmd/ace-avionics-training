@@ -1,0 +1,59 @@
+{
+  "id": "W6-Z3-N2",
+  "title": "RS-232 basics",
+  "world": "Digital Databus Systems",
+  "zone": "Other buses",
+  "objectiveKeys": [
+    "q130",
+    "q147"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to RS-232 basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize RS-232 characteristics and use cases."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "RS-232 Characteristics",
+          "definition": "RS-232 is a point-to-point, asynchronous serial interface using single-ended voltage levels (\u00b13V to \u00b115V) with a practical cable length limit of approximately 15 meters (50 feet).",
+          "analogy": "RS-232 is like a tin-can telephone \u2014 two cans, one string, very short range, and it's a one-on-one conversation only."
+        },
+        {
+          "term": "RS-232 Signal Type",
+          "definition": "RS-232 uses single-ended (referenced to a common ground) serial communication with asynchronous timing; logic high is typically -3V to -15V and logic low is +3V to +15V (inverted logic convention).",
+          "analogy": "Single-ended means only one wire carries the signal \u2014 like a single garden hose where the water level (voltage) tells you whether it's a '1' or '0', with the ground being the reference."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which characteristics best describe the RS-232 serial interface?",
+      "choices": [
+        "Bidirectional multi-drop differential bus supporting up to 32 devices",
+        "Command-response bus with a central controller managing all connected devices",
+        "Point-to-point asynchronous serial with single-ended voltages, limited to approximately 15 meters",
+        "Unidirectional broadcast with differential voltages and shielded twisted pair"
+      ],
+      "correctIndex": 2,
+      "feedback": "RS-232 is point-to-point (two devices only), asynchronous, uses single-ended (not differential) voltages, and is limited to ~15m because the single-ended nature makes it susceptible to noise over long runs."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of signaling does RS-232 use?",
+      "choices": [
+        "Differential balanced using two wires per signal for noise rejection",
+        "Current-loop serial at 20 mA to provide noise immunity",
+        "Optical fiber to eliminate electrical noise entirely",
+        "Single-ended serial using voltage levels relative to a common ground to represent logic states"
+      ],
+      "correctIndex": 3,
+      "feedback": "RS-232 uses single-ended signaling \u2014 each signal line references to a common ground. This makes it susceptible to ground noise and limits its range compared to differential standards."
+    }
+  ]
+}

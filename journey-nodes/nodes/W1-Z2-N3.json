@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z2-N3",
+  "title": "Ramp/rotor awareness (optional)",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Basic PPE",
+  "objectiveKeys": [
+    "q92"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Ramp/rotor awareness (optional)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Optional awareness of safe behavior around running aircraft/rotor systems."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Rotorcraft Ground Safety",
+          "definition": "Around a running helicopter: (1) stay clear of the tail rotor at all times, (2) approach only from the front within the pilot's field of view, (3) never approach until the pilot signals it is safe.",
+          "analogy": "Like approaching a running industrial fan \u2014 you never walk around the back where you can't see the blades clearly, and you always wait for someone to signal it's safe."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "When approaching a running helicopter on the ramp, what is the correct practice?",
+      "choices": [
+        "Stay clear of the tail rotor, approach from the front, and wait for the pilot's signal",
+        "Approach from the rear where ground wash is least, staying low",
+        "Approach from either side \u2014 the main rotor is the only real hazard",
+        "Approach only after the engine is at idle power regardless of pilot signal"
+      ],
+      "correctIndex": 0,
+      "feedback": "The tail rotor is nearly invisible when spinning and is a lethal hazard. You must approach from the front where the pilot can see you, and only after receiving the go-ahead signal."
+    }
+  ]
+}

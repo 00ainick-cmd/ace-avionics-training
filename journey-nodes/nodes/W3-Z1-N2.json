@@ -1,0 +1,77 @@
+{
+  "id": "W3-Z1-N2",
+  "title": "Power basics",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "DC fundamentals",
+  "objectiveKeys": [
+    "q99",
+    "q108",
+    "q196"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Power basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Use P=V\u00d7I and interpret power in simple electrical scenarios."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Power formula: P = V x I",
+          "definition": "Electrical power in watts equals voltage multiplied by current: P = V x I. At 12 volts and 2 amperes, the power is 24 watts.",
+          "analogy": "Power is work rate \u2014 voltage is like the height of a waterfall (potential energy per unit), current is the volume of water flowing, and power is how fast total energy is delivered."
+        },
+        {
+          "term": "Power on 28V bus at 25A",
+          "definition": "P = V x I = 28V x 25A = 700 watts. Calculating bus power is essential in aircraft electrical system load analysis to ensure generator capacity is not exceeded.",
+          "analogy": "A 28V bus drawing 25A is like 700 one-watt bulbs all lit simultaneously \u2014 a significant load that must be accounted for in the aircraft's electrical budget."
+        },
+        {
+          "term": "Power quadrupling effect",
+          "definition": "Power = V x I. If both voltage and current double simultaneously, power quadruples: (2V) x (2I) = 4(V x I). Each quantity doubling multiplies the power by its own factor.",
+          "analogy": "If you double both the flow rate and the pressure in a hydraulic system, the total power (rate of work) increases by four \u2014 each factor independently multiplies the result."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An avionics unit is powered by a 12-volt bus and draws 2 amperes. What is the power consumption of the unit?",
+      "choices": [
+        "24 watts",
+        "6 watts",
+        "10 watts",
+        "144 watts"
+      ],
+      "correctIndex": 0,
+      "feedback": "P = V x I = 12V x 2A = 24 watts. Understanding power consumption is essential for electrical load analysis \u2014 ensuring that installed avionics do not exceed the aircraft's generator and bus capacity."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "During a load analysis, the total current draw from a 28VDC bus is measured at 25 amps. What is the total electrical power being consumed?",
+      "choices": [
+        "700 watts",
+        "196 watts",
+        "53 watts",
+        "25 watts"
+      ],
+      "correctIndex": 0,
+      "feedback": "P = V x I = 28V x 25A = 700 watts. This is a standard aircraft electrical load calculation. Most general aviation alternators are rated in watts or amps at 28V; knowing the total load in watts allows direct comparison to the alternator's rated output."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A circuit originally operates at 6 volts and 2 amps. Both the voltage and the current are then doubled to 12 volts and 4 amps. What happens to the power dissipation?",
+      "choices": [
+        "It doubles from 12W to 24W",
+        "It triples from 12W to 36W",
+        "It increases by 4W, from 12W to 16W",
+        "It quadruples from 12W to 48W"
+      ],
+      "correctIndex": 3,
+      "feedback": "Original power: P = 6V x 2A = 12W. New power: P = 12V x 4A = 48W. That is exactly 4 times the original \u2014 power quadruples when both voltage and current double. This demonstrates why overcurrent faults are destructive: heat in a conductor scales with I\u00b2, and if voltage also rises, power scales even faster."
+    }
+  ]
+}

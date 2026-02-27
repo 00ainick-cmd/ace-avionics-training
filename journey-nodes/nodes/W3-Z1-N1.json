@@ -1,0 +1,167 @@
+{
+  "id": "W3-Z1-N1",
+  "title": "Ohm\u2019s Law basics",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "DC fundamentals",
+  "objectiveKeys": [
+    "q18",
+    "q114",
+    "q21",
+    "q225",
+    "q90",
+    "q88",
+    "q229",
+    "q159"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Ohm\u2019s Law basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Use V=IR relationships to reason about current/voltage/resistance changes."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Ohm's Law (current form)",
+          "definition": "Current (I) equals voltage (V) divided by resistance (R): I = V / R. This fundamental law relates the three primary quantities in any DC circuit.",
+          "analogy": "Think of a garden hose: voltage is water pressure, resistance is how narrow the hose is, and current is the flow rate \u2014 more pressure with the same hose gives you more flow."
+        },
+        {
+          "term": "Ohm's Law (voltage form)",
+          "definition": "Voltage equals current multiplied by resistance: V = I x R. This form is used when current and resistance are known and voltage is the unknown quantity.",
+          "analogy": "Voltage is the 'push' a circuit needs. The more current you want to force through a given resistance, the more voltage you must apply \u2014 they multiply together."
+        },
+        {
+          "term": "Current calculation (24V / 12\u03a9)",
+          "definition": "Applying I = V / R: with 24 volts and 12 ohms of resistance, the circuit current is 2 amperes. This is a direct application of Ohm's Law.",
+          "analogy": "If a water pipe delivers 24 units of pressure through a valve with 12 units of restriction, the flow rate is exactly 2 units \u2014 the restriction cuts the flow proportionally."
+        },
+        {
+          "term": "Current calculation (12V / 6\u03a9)",
+          "definition": "I = V / R = 12V / 6\u03a9 = 2 amps. This straightforward application of Ohm's Law confirms that a 12-volt supply drives 2 amperes through 6 ohms of total circuit resistance.",
+          "analogy": "A 12-unit pressure source pushing through a 6-unit restriction delivers exactly 2 units of flow \u2014 halving the resistance compared to 12 ohms doubles the 1-amp result you would expect there."
+        },
+        {
+          "term": "Resistance calculation (14V / 7A)",
+          "definition": "Using R = V / I: with 14 volts across a component and 7 amperes through it, the resistance is 2 ohms. This form of Ohm's Law identifies unknown resistance from measured quantities.",
+          "analogy": "If you know how hard you pushed (voltage) and how fast the result came (current), you can calculate how much friction was in the system (resistance)."
+        },
+        {
+          "term": "Current-voltage proportionality",
+          "definition": "When resistance is held constant, current is directly proportional to voltage. If voltage doubles, current doubles: I = V / R means I scales linearly with V.",
+          "analogy": "Doubling the water pressure in a pipe with the same valve opening forces twice as much water through \u2014 the flow is directly proportional to pressure."
+        },
+        {
+          "term": "Current-resistance inverse proportionality",
+          "definition": "When voltage is constant, current is inversely proportional to resistance (I = V / R). Doubling resistance halves current; halving resistance doubles current.",
+          "analogy": "If you partially close a valve in a pipe while keeping the same upstream pressure, flow rate drops \u2014 double the restriction, half the flow."
+        },
+        {
+          "term": "Voltage-current proportionality",
+          "definition": "When resistance is constant, voltage is directly proportional to current (V = I x R). Doubling the current through a fixed resistance doubles the voltage across it.",
+          "analogy": "Double the flow through the same pipe restriction and the back-pressure (voltage) doubles \u2014 the restriction (resistance) amplifies the pressure effect proportionally."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which equation correctly states Ohm's Law when solving for current?",
+      "choices": [
+        "I = V / R",
+        "I = V + R",
+        "I = R / V",
+        "I = V x R"
+      ],
+      "correctIndex": 0,
+      "feedback": "Ohm's Law states that current (I) equals voltage (V) divided by resistance (R): I = V / R. The other forms \u2014 V = I x R and R = V / I \u2014 are algebraic rearrangements of the same relationship. A common error is inverting the fraction, giving R / V instead of V / R."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which equation correctly states Ohm's Law when voltage is the unknown?",
+      "choices": [
+        "V = I + R",
+        "V = I x R",
+        "V = I / R",
+        "V = R - I"
+      ],
+      "correctIndex": 1,
+      "feedback": "V = I x R is the voltage form of Ohm's Law. It is used to predict the voltage developed across a known resistance when current is given \u2014 for example, calculating voltage drop across a wire or connector resistance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A circuit is powered by a 24-volt battery and has a total resistance of 12 ohms. What is the current flowing through the circuit?",
+      "choices": [
+        "0.5 amps",
+        "12 amps",
+        "24 amps",
+        "2 amps"
+      ],
+      "correctIndex": 3,
+      "feedback": "Using I = V / R: I = 24V / 12\u03a9 = 2 amps. Multiplying voltage by resistance (24 x 12 = 288) or confusing units are common errors. Always divide voltage by resistance to find current."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A 12-volt battery is the sole power source in a circuit with a total resistance of 6 ohms. What is the circuit current?",
+      "choices": [
+        "0.5 amps",
+        "6 amps",
+        "72 amps",
+        "2 amps"
+      ],
+      "correctIndex": 3,
+      "feedback": "I = V / R = 12V / 6\u03a9 = 2 amps. This is a direct Ohm's Law calculation. Selecting 6 amps is a common error where the student uses the resistance value as the current answer. Selecting 0.5 amps results from dividing R by V instead of V by R."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A multimeter measures 14 volts across a circuit element, and a clamp meter reads 7 amps through the same element. What is the element's resistance?",
+      "choices": [
+        "98 ohms",
+        "0.5 ohms",
+        "7 ohms",
+        "2 ohms"
+      ],
+      "correctIndex": 3,
+      "feedback": "R = V / I = 14V / 7A = 2 ohms. This rearrangement of Ohm's Law is used when both voltage and current can be measured but resistance is not directly readable. It is commonly used to verify connector and switch contact resistance in aircraft wiring audits."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A circuit has a fixed resistance of 10 ohms. The voltage is increased from 12V to 24V. What happens to the circuit current?",
+      "choices": [
+        "Current doubles because current is directly proportional to voltage",
+        "Current stays the same because resistance did not change",
+        "Current is halved because voltage and current are inversely related",
+        "Current quadruples because power increases with the square of voltage"
+      ],
+      "correctIndex": 0,
+      "feedback": "Using I = V / R: at 12V, I = 1.2A; at 24V, I = 2.4A \u2014 exactly double. When resistance is constant, current is directly proportional to voltage. Doubling voltage doubles current. This linear relationship is central to predicting how a circuit responds to bus voltage changes."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A 28V circuit normally carries 4 amps through a 7-ohm load. The load is replaced with a 14-ohm component. The voltage stays at 28V. What is the new current?",
+      "choices": [
+        "8 amps \u2014 doubling resistance doubles current",
+        "2 amps \u2014 doubling resistance halves current",
+        "4 amps \u2014 current is determined solely by voltage",
+        "1 amp \u2014 current is quartered when resistance doubles"
+      ],
+      "correctIndex": 1,
+      "feedback": "At 7\u03a9: I = 28/7 = 4A. At 14\u03a9: I = 28/14 = 2A. Doubling resistance halves the current when voltage is constant \u2014 an inverse relationship. This is why an undersized resistor (lower R) allows more current than intended and can overheat."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Current through a 10-ohm resistor increases from 1 amp to 2 amps. What happens to the voltage across the resistor?",
+      "choices": [
+        "Voltage decreases from 10V to 5V",
+        "Voltage stays constant at 10V",
+        "Voltage increases from 10V to 100V",
+        "Voltage increases from 10V to 20V"
+      ],
+      "correctIndex": 3,
+      "feedback": "V = I x R. At 1A: V = 1 x 10 = 10V. At 2A: V = 2 x 10 = 20V. The voltage doubles because current doubled with resistance held constant. This linear proportionality is a direct consequence of Ohm's Law."
+    }
+  ]
+}

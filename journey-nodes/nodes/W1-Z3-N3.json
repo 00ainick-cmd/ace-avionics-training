@@ -1,0 +1,59 @@
+{
+  "id": "W1-Z3-N3",
+  "title": "Solvent fumes / exposure awareness",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "SDS / chemicals",
+  "objectiveKeys": [
+    "q201",
+    "q213"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Solvent fumes / exposure awareness"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize basic exposure response and ventilation awareness."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Flammable Liquid Storage Requirements",
+          "definition": "Flammable liquids must be stored in: (1) approved, labeled, self-closing safety containers, (2) inside a dedicated flammable storage cabinet, (3) away from all ignition sources.",
+          "analogy": "Like storing gunpowder \u2014 it needs its own isolated container in its own isolated cabinet, not sitting next to a spark source on an open shelf."
+        },
+        {
+          "term": "Solvent Fume Overexposure Response",
+          "definition": "If a technician feels dizzy from solvent fumes: (1) leave the area immediately, (2) move to fresh air, (3) notify a supervisor, (4) report the incident per safety procedures \u2014 before returning to work.",
+          "analogy": "Like a scuba diver whose air runs low \u2014 surface immediately (leave the area), get to safety (fresh air), report to your dive master (supervisor), and log the incident before going back in."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How must flammable liquids be stored in a GA avionics shop?",
+      "choices": [
+        "In any sealed container on the general tool shelving",
+        "In open cans under the bench to allow vapors to dissipate",
+        "In approved, labeled, self-closing safety containers in a dedicated flammable storage cabinet away from ignition sources",
+        "In any cabinet as long as it is labeled 'Flammable'"
+      ],
+      "correctIndex": 2,
+      "feedback": "Flammable liquid storage requires three elements: approved self-closing containers, a dedicated flammable storage cabinet, and separation from ignition sources."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician begins to feel dizzy while using a cleaning solvent in the shop. What is the correct course of action?",
+      "choices": [
+        "Immediately leave the area, move to fresh air, notify a supervisor, and report the incident before returning",
+        "Open a window, put on a respirator, and continue the job",
+        "Take a short break at the bench and let the dizziness pass before continuing",
+        "Only notify a supervisor if the dizziness persists for more than 30 minutes"
+      ],
+      "correctIndex": 0,
+      "feedback": "Dizziness from solvent fumes indicates overexposure to toxic vapors. Immediate removal from the area and fresh air is the first priority, followed by supervisor notification and incident reporting."
+    }
+  ]
+}

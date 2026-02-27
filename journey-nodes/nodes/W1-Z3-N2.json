@@ -1,0 +1,95 @@
+{
+  "id": "W1-Z3-N2",
+  "title": "Chemical handling/storage/disposal awareness (generic)",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "SDS / chemicals",
+  "objectiveKeys": [
+    "q25",
+    "q111",
+    "q234",
+    "q94"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Chemical handling/storage/disposal awareness (generic)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize safe handling, storage, and disposal awareness; follow local procedures."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Hazmat Disposal Rule",
+          "definition": "Hazardous materials must be disposed of by following EPA and local regulations, using licensed disposal vendors, and NEVER pouring chemicals down drains or into regular trash.",
+          "analogy": "Like recycling electronics \u2014 you can't toss a laptop in the garbage; it must go through a certified e-waste vendor."
+        },
+        {
+          "term": "NiCd Battery Disposal",
+          "definition": "Nickel-Cadmium (NiCd) batteries must be disposed of by following local hazardous materials regulations \u2014 they CANNOT be discarded in regular trash because cadmium is a toxic heavy metal.",
+          "analogy": "Like old paint \u2014 you can't toss it in the garbage. It must go through an approved hazmat collection event or licensed disposal service."
+        },
+        {
+          "term": "Safety Data Sheet (SDS)",
+          "definition": "The document required to be readily available for each hazardous material used in a Part 145 avionics shop \u2014 covering hazards, PPE requirements, first aid, and disposal procedures.",
+          "analogy": "Like a medication package insert required by law \u2014 it must be on hand and tells you exactly what you are working with and what to do if something goes wrong."
+        },
+        {
+          "term": "Hydraulic Fluid Spill Response",
+          "definition": "For a hydraulic fluid spill near avionics equipment: (1) contain immediately with absorbent materials, (2) remove power from nearby equipment, (3) clean up following shop hazmat procedures.",
+          "analogy": "Like a kitchen grease fire \u2014 contain it first, cut the ignition source (power), then clean up properly."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which method is acceptable for disposing of used solvent in a GA avionics shop?",
+      "choices": [
+        "Pour it down the utility sink drain",
+        "Absorb it and place in regular trash",
+        "Use a licensed hazardous waste disposal vendor per EPA and local regulations",
+        "Evaporate it outside away from the building"
+      ],
+      "correctIndex": 2,
+      "feedback": "Hazardous chemicals must go through licensed disposal vendors following EPA and local regulations \u2014 drains and regular trash are prohibited."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An aircraft NiCd battery has reached end-of-life. What is the correct disposal procedure?",
+      "choices": [
+        "Discharge fully and place in regular trash \u2014 it is inert when empty",
+        "Puncture the cells for safe venting before disposal",
+        "Follow local hazardous materials disposal regulations \u2014 do not put in regular trash",
+        "Return it to the original manufacturer only \u2014 no other method is allowed"
+      ],
+      "correctIndex": 2,
+      "feedback": "Cadmium is a toxic heavy metal \u2014 NiCd batteries must go through regulated hazmat disposal channels regardless of state of charge. Regular trash disposal is prohibited."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What document must be readily available for each hazardous material used in a Part 145 avionics shop?",
+      "choices": [
+        "The product's manufacturer warranty documentation",
+        "The FAA type certificate for the specific material",
+        "The shop's hazmat storage insurance documentation",
+        "The Safety Data Sheet (SDS)"
+      ],
+      "correctIndex": 3,
+      "feedback": "OSHA's Hazard Communication Standard requires SDS documents to be readily accessible for all hazardous chemicals in the workplace. This applies to solvents, conformal coatings, flux, and other chemicals. No FAA type certificate exists for chemicals."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Hydraulic fluid spills onto the avionics bench area. What is the correct immediate response?",
+      "choices": [
+        "Wipe it up quickly with shop rags and continue work",
+        "Contain the spill with absorbent materials, remove power from nearby equipment, then clean up per hazmat procedures",
+        "Dilute the spill with water to reduce fire risk before cleaning",
+        "Only clean up after the current job is completed to avoid work interruption"
+      ],
+      "correctIndex": 1,
+      "feedback": "Hydraulic fluid is flammable and corrosive. You must contain it first, remove electrical power (ignition hazard), then follow established hazmat cleanup procedures."
+    }
+  ]
+}

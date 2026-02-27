@@ -1,0 +1,167 @@
+{
+  "id": "W4-Z3-N2",
+  "title": "Basic fault isolation (opens/shorts/parasitic)",
+  "world": "Tools & Test Equipment",
+  "zone": "Fault finding",
+  "objectiveKeys": [
+    "q47",
+    "q81",
+    "q141",
+    "q171",
+    "q207",
+    "q223",
+    "q232"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Basic fault isolation (opens/shorts/parasitic)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Apply basic fault isolation logic (opens/shorts/breaker trips/parasitic draw)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Parasitic current draw \u2014 common causes",
+          "definition": "Three main causes: (1) faulty relay contacts that remain closed when they should open, (2) stuck switches that don't fully disconnect a circuit, (3) incorrect avionics installation wiring that leaves circuits energized. All drain the battery when the master is off.",
+          "analogy": "Like a house where a light switch is broken and the light stays on \u2014 something that should be off is staying on and draining power."
+        },
+        {
+          "term": "Unstable within-limits voltage",
+          "definition": "Voltage that fluctuates but stays within acceptable limits points to an intermittent ground connection or a failing voltage regulator \u2014 not a hard fault. Both cause varying resistance in the return/regulation path.",
+          "analogy": "Like a dimmer switch that flickers but doesn't go out \u2014 the connection is there but inconsistent."
+        },
+        {
+          "term": "0V across component \u2014 diagnosis",
+          "definition": "If you measure 0V across a component in an active circuit, there is an open circuit UPSTREAM. No current flows through the component so no voltage appears across it. Check: blown fuse, tripped breaker, broken wire, or open switch upstream of the component.",
+          "analogy": "If a section of a highway is completely blocked, no cars reach the exit \u2014 the exit measures 'zero traffic' not because it's broken, but because nothing is getting through upstream."
+        },
+        {
+          "term": "Parasitic current draw",
+          "definition": "Current consumed by a circuit or component when the aircraft master switch is OFF. Even small amounts (50\u2013100 mA) will drain a battery in hours or days. Causes: stuck relay contacts, latched switches, always-on avionics wiring.",
+          "analogy": "A slow leak in a water tank \u2014 you come back after a week and it's empty even though you 'turned off' the supply."
+        },
+        {
+          "term": "Breaker trips immediately on reset",
+          "definition": "A circuit breaker that trips immediately when reset indicates a hard fault \u2014 almost always a short circuit or failed heating element. Do NOT reset repeatedly. Each reset attempt forces current through the fault, worsening damage. Isolate and inspect before further action.",
+          "analogy": "Like a safety valve that keeps tripping the moment you reset it \u2014 the valve is working correctly; the problem is the pressure it's protecting against."
+        },
+        {
+          "term": "New avionics won't power up \u2014 first checks",
+          "definition": "First three checks for new avionics that won't power on: (1) Circuit breaker is set (not tripped), (2) power wiring is connected to the correct bus, (3) ground wire is properly terminated with good contact to airframe. These cover 90% of new installation no-power faults.",
+          "analogy": "First checks when a new appliance doesn't work: Is it plugged in? Is the outlet switch on? Is the outlet actually live?"
+        },
+        {
+          "term": "Parasitic Draw Diagnosis",
+          "definition": "To confirm a faulty switch as a parasitic draw source, place an ammeter in series with the circuit and activate the suspect switch while monitoring current. A current increase confirms the switch is the source.",
+          "analogy": "Like checking which faucet is draining your water pressure \u2014 turn them on one at a time while watching the flow meter."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which of the following is a common cause of parasitic current draw in general aviation aircraft?",
+      "choices": [
+        "Excessive wire gauge for the circuit",
+        "Faulty relay contacts that remain closed",
+        "High battery internal resistance",
+        "Overcharged alternator output"
+      ],
+      "correctIndex": 1,
+      "feedback": "Faulty relay contacts that fail to open keep circuits energized after master shutdown, draining the battery. Wire gauge, battery resistance, and alternator output don't cause parasitic draw on their own.",
+      "remediation": [
+        "Incorrect. Wire gauge affects current capacity and weight, but it does not cause a circuit to draw power when switched off.",
+        "",
+        "Incorrect. Internal battery resistance affects cranking amps and charging efficiency, not parasitic draw.",
+        "Incorrect. An overcharged alternator can boil a battery or damage avionics when running, but it doesn't cause a draw when the aircraft is off."
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Avionics voltage is measured as unstable \u2014 fluctuating slightly but never going out of spec. What is the most likely cause?",
+      "choices": [
+        "Blown fuse in the circuit",
+        "Open circuit upstream",
+        "Intermittent ground or failing voltage regulator",
+        "Overloaded bus with too many parallel loads"
+      ],
+      "correctIndex": 2,
+      "feedback": "A blown fuse or open circuit would cause zero voltage. An overloaded bus would cause consistently low (not fluctuating) voltage. Intermittent ground connections and failing regulators produce the characteristic unstable-but-within-limits pattern.",
+      "remediation": [
+        "Incorrect. A blown fuse causes a total loss of voltage (0V), not a fluctuating voltage.",
+        "Incorrect. An open circuit upstream means no current flows, which results in 0V across downstream components.",
+        "",
+        "Incorrect. An overloaded bus generally results in a steady, consistently low voltage drop, rather than erratic fluctuation."
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "With the circuit powered on, a technician measures 0V across a component. The circuit breaker appears set. What is the most likely cause?",
+      "choices": [
+        "The component is drawing too much current",
+        "There is a short circuit at the component's output",
+        "An open circuit upstream \u2014 broken wire, blown fuse, or tripped breaker",
+        "The bus voltage is too low to appear at the component"
+      ],
+      "correctIndex": 2,
+      "feedback": "Zero volts across a component in a live circuit means no current is flowing \u2014 which requires an open path upstream. Even if the breaker appears set, it may have tripped internally. A blown fuse or broken wire upstream would also produce 0V.",
+      "remediation": [
+        "Incorrect. Drawing too much current would blow a fuse or trip a breaker, leading to 0V because of an upstream open, but the excessive current itself doesn't cause 0V across the component.",
+        "Incorrect. A short circuit at the output would trip the breaker or pull the bus voltage down, but you would still measure some voltage before the component unless the breaker opened.",
+        "",
+        "Incorrect. While extremely low bus voltage is possible, measuring exactly 0V is almost always indicative of a complete open circuit preventing any flow to that point."
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is parasitic current draw?",
+      "choices": [
+        "Current drawn during engine start that exceeds normal levels",
+        "Current consumed by a component when the master switch is off, draining the battery",
+        "Extra current drawn by avionics during warm-up",
+        "Current flowing back from the bus to the battery during charging"
+      ],
+      "correctIndex": 1,
+      "feedback": "Parasitic draw occurs when master is off but current still flows \u2014 from stuck relays, faulty switches, or improperly wired avionics. Over hours or days, even 100mA will discharge an aircraft battery."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A pitot heat circuit breaker trips the moment it is reset. What is the correct procedure?",
+      "choices": [
+        "Reset it one more time \u2014 breakers sometimes need two resets after a thermal trip",
+        "Replace the breaker with a 5-amp higher-rated unit and reset",
+        "Do not reset again; isolate the circuit and inspect for a short circuit or failed element",
+        "Apply full bus voltage and measure the current spike to identify the fault"
+      ],
+      "correctIndex": 2,
+      "feedback": "Immediate tripping on reset means the fault is still present \u2014 a short or failed element is drawing excessive current the instant power is applied. Do not reset again; isolate the circuit and perform a proper inspection before any further action."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A newly installed GPS/NAV/COMM fails to power on during initial test. What should be checked first?",
+      "choices": [
+        "Antenna SWR and impedance matching",
+        "Circuit breaker, correct bus connection, and ground wire termination",
+        "Software version compatibility with the panel system",
+        "Cooling fan operation and avionics bay temperature"
+      ],
+      "correctIndex": 1,
+      "feedback": "The vast majority of new-install no-power situations trace to one of three basic issues: tripped or unset breaker, wire connected to wrong bus, or ground wire not making solid contact. Check these before suspecting the unit itself."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How do you confirm a faulty switch is the source of a parasitic draw in an aircraft circuit?",
+      "choices": [
+        "Place an ammeter in series with the circuit and activate the suspect switch while monitoring current",
+        "Measure voltage across the switch terminals with the circuit energized",
+        "Measure resistance across the switch with the circuit de-energized and power off",
+        "Pull the circuit breaker and check if the battery drain stops to isolate the branch"
+      ],
+      "correctIndex": 0,
+      "feedback": "Parasitic draw is current, so an ammeter in series is required. Activating the suspect switch while watching current directly confirms whether that switch is the draw source. Voltage measurement identifies a drop, not draw. Pulling the breaker isolates the circuit but does not identify the specific faulty component."
+    }
+  ]
+}

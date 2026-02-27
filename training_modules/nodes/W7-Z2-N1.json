@@ -1,0 +1,131 @@
+{
+  "id": "W7-Z2-N1",
+  "title": "VHF/HF comm basics",
+  "world": "CNS Systems",
+  "zone": "Communications",
+  "objectiveKeys": [
+    "q44",
+    "q53",
+    "q135",
+    "q211",
+    "q224",
+    "q226"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to VHF/HF comm basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize VHF range, squelch, HF long-range basics."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "VHF comm antenna placement",
+          "definition": "Optimal locations: bottom of fuselage (belly) for ground-to-air and below-horizon communications, or top of fuselage for air-to-air. Must be away from other antennas and large metal structures to avoid shadowing (signal blockage) that reduces effective range.",
+          "analogy": "Like positioning a wireless router away from metal appliances \u2014 nearby metal blocks signals in specific directions."
+        },
+        {
+          "term": "Squelch control",
+          "definition": "Squelch sets the minimum signal strength required to open (unmute) the audio output. When no transmission is present, weak background noise stays below the squelch threshold and the headset is silent. A strong incoming signal opens the squelch and audio passes through.",
+          "analogy": "Like a noise gate on an audio mixer \u2014 it only lets sound through when the level exceeds a set threshold."
+        },
+        {
+          "term": "VHF comm frequency range",
+          "definition": "Aviation VHF communication: 118.0 MHz to 136.975 MHz. 25 kHz channel spacing in the US; 8.33 kHz in Europe/high-density airspace. AM modulation. Guard frequency: 121.5 MHz (emergency). Military guard: 243.0 MHz (UHF).",
+          "analogy": "Like a specific band on a radio dial reserved exclusively for aviation \u2014 118 to 137 MHz belongs to air traffic."
+        },
+        {
+          "term": "Stuck microphone (stuck mic)",
+          "definition": "A stuck mic occurs when the PTT switch fails in the closed (keyed) position, keeping the transmitter continuously active. This blocks ALL reception on the frequency \u2014 you cannot hear ATC. Also blocks other aircraft from transmitting (the whole frequency is 'full'). Symptom: continuous sidetone, no ATC reception.",
+          "analogy": "Like holding down a talk button on a walkie-talkie \u2014 no one else can get through, and you can't hear anything back."
+        },
+        {
+          "term": "Stuck Microphone (Constant Tone)",
+          "definition": "A constant tone on a comm frequency instead of ATC voice responses indicates a stuck PTT \u2014 a microphone transmitting continuously and blocking the frequency for all users.",
+          "analogy": "Like someone holding down a walkie-talkie transmit button \u2014 nobody else can get through until that button is released."
+        },
+        {
+          "term": "HF communication in aviation",
+          "definition": "HF (High Frequency, 2\u201330 MHz) uses ionospheric skip propagation to achieve ranges of thousands of miles \u2014 beyond VHF line-of-sight. Used primarily for oceanic and remote area communications where VHF has no coverage. SELCAL is often used with HF for crew alerting.",
+          "analogy": "VHF is like a flashlight \u2014 works great nearby but stops at the horizon. HF is like bouncing light off the ceiling \u2014 it goes much farther by reflecting off the ionosphere."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Where should a VHF communication antenna be mounted for optimal performance?",
+      "choices": [
+        "Low on the belly or on top of the fuselage, away from other antennas and metal structures",
+        "Adjacent to the GPS antenna to share the same ground plane",
+        "Inside a radome for protection from rain and ice",
+        "On the nose of the aircraft pointing forward for maximum forward range"
+      ],
+      "correctIndex": 0,
+      "feedback": "VHF antennas need clear line-of-sight to communicate. Belly-mounted antennas serve ground communications; top-mounted serve air-to-air. Both must be separated from other antennas (interference) and metal structures (shadowing). Inside a radome or near obstructions degrades performance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does the squelch control on a VHF radio do?",
+      "choices": [
+        "Sets the audio volume for headset output",
+        "Sets the threshold below which received noise is muted when no signal is present",
+        "Adjusts the transmitter power output level",
+        "Controls the SIDETONE level for microphone monitoring"
+      ],
+      "correctIndex": 1,
+      "feedback": "Squelch mutes the receiver audio until a signal exceeds the set threshold. Too little squelch: constant static. Too much squelch: weak but valid signals are cut off. Proper squelch setting provides a quiet background with clean response to incoming transmissions."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the frequency range for VHF communication in general aviation?",
+      "choices": [
+        "108.0 to 117.95 MHz",
+        "118.0 to 136.975 MHz",
+        "329 to 335 MHz",
+        "960 to 1215 MHz"
+      ],
+      "correctIndex": 1,
+      "feedback": "VHF communication in aviation occupies 118.0\u2013136.975 MHz. This is adjacent to but distinct from the navigation band (108\u2013118 MHz). All aviation voice communications with ATC, ATIS, UNICOM, and other aircraft use this frequency range."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A pilot reports hearing a constant tone in the headset and is unable to receive any ATC transmissions. What is the most likely cause?",
+      "choices": [
+        "The squelch is set too high, blocking all incoming signals",
+        "The volume control is set too low to hear ATC",
+        "The receiver has failed \u2014 the constant tone is from the squelch circuit hunting",
+        "A stuck microphone PTT is keeping the transmitter keyed, blocking reception"
+      ],
+      "correctIndex": 3,
+      "feedback": "Constant sidetone with no received audio is the signature of a stuck PTT/mic. The transmitter is locked on \u2014 you hear your own side tone continuously, and the receiver cannot receive because the radio is in transmit mode. Other aircraft on the frequency will also report the frequency being 'stepped on' with a continuous tone."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A pilot reports hearing only a constant tone on the ATC frequency \u2014 no voice responses at all. The most likely diagnosis is:",
+      "choices": [
+        "The ATC facility's ground transmitter has failed",
+        "The aircraft's receiver squelch control is adjusted too tight",
+        "A stuck microphone on the frequency is blocking all transmissions",
+        "The COM radio is receiving on the wrong sideband mode"
+      ],
+      "correctIndex": 2,
+      "feedback": "A constant tone replacing all voice traffic is the classic stuck mic symptom. Squelch failure causes noise or silence, not a tone. ATC transmitter failure causes silence. Wrong sideband causes garbled audio, not a pure blocking tone."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why is HF communication used in aviation for oceanic flights?",
+      "choices": [
+        "HF uses ionospheric skip propagation to achieve ranges of thousands of miles beyond VHF coverage",
+        "HF antennas are lighter than VHF antennas, reducing fuel burn",
+        "HF has higher audio quality than VHF for long-haul flights",
+        "HF is encrypted by default, providing security for international routes"
+      ],
+      "correctIndex": 0,
+      "feedback": "HF propagates via ionospheric skip \u2014 signals bounce off the ionosphere and return to earth thousands of miles away. This allows communication far beyond the line-of-sight horizon that limits VHF. Over the Pacific or Atlantic, VHF ground stations simply don't exist \u2014 HF or SATCOM fill the gap."
+    }
+  ]
+}

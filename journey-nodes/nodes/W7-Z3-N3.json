@@ -1,0 +1,77 @@
+{
+  "id": "W7-Z3-N3",
+  "title": "Other nav basics",
+  "world": "CNS Systems",
+  "zone": "Navigation",
+  "objectiveKeys": [
+    "q60",
+    "q132",
+    "q150"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Other nav basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize DME/ADF concepts and other nav aids."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "DME (Distance Measuring Equipment)",
+          "definition": "DME measures slant-range distance to a ground station in nautical miles by measuring the time for a pulse to travel to the station and return. Slant range includes the diagonal \u2014 not purely horizontal distance.",
+          "analogy": "Like sonar on a submarine \u2014 send a ping, time the echo, calculate distance."
+        },
+        {
+          "term": "Lightning detection system (Stormscope/Strike Finder)",
+          "definition": "Aircraft lightning detectors sense the electromagnetic discharge of lightning and display storm cell bearing and relative intensity on a cockpit display. They help crews identify and avoid areas of convective activity \u2014 particularly useful at night or in IMC.",
+          "analogy": "Like a seismic sensor that maps earthquake activity \u2014 it shows where lightning is happening so you can route around it."
+        },
+        {
+          "term": "ADF/NDB vs. VOR comparison",
+          "definition": "NDB (Non-Directional Beacon) + ADF (Automatic Direction Finder): less accurate than VOR, susceptible to thunderstorm interference (lightning causes false bearings), and only provides bearing TO the station \u2014 no course deviation bar. VOR provides more accurate radial/course deviation data.",
+          "analogy": "NDB is like a campfire you navigate toward \u2014 you can tell direction but storms and other fires can confuse you. VOR is a precise lighthouse beam you can track exactly."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does DME determine distance to a ground station?",
+      "choices": [
+        "By measuring the phase difference between two signals",
+        "By receiving a continuous CW signal and measuring signal strength",
+        "By counting the number of VOR radials between two waypoints",
+        "By measuring the round-trip time of a pulse sent to and replied by the station"
+      ],
+      "correctIndex": 3,
+      "feedback": "DME is a pulse-echo system: the airborne unit interrogates the ground station, which replies after a fixed delay; the receiver measures total elapsed time, subtracts the known reply delay, and computes slant-range distance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What information does an aircraft lightning detection system provide to the crew?",
+      "choices": [
+        "Precise distance to storm cells in nautical miles",
+        "Wind shear intensity and recommended escape maneuvers",
+        "Turbulence severity based on G-load measurements",
+        "Bearing and relative intensity of storm cell electrical activity"
+      ],
+      "correctIndex": 3,
+      "feedback": "Lightning detectors display WHERE storms are (bearing from aircraft) and HOW ACTIVE they are (relative discharge intensity). They do not provide precise distance \u2014 just bearing and relative activity level for avoidance decision-making."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which statement best compares ADF/NDB navigation to VOR?",
+      "choices": [
+        "NDB is less accurate, more susceptible to interference, and only provides bearing without course deviation",
+        "NDB and VOR are equally accurate but NDB has greater range",
+        "NDB is more accurate than VOR and provides both bearing and course deviation",
+        "NDB operates on VHF frequencies and is generally more reliable than VOR"
+      ],
+      "correctIndex": 0,
+      "feedback": "NDB/ADF: lower frequency (LF/MF), less accurate, highly susceptible to thunderstorm interference (ADF needle points at lightning), and only shows bearing TO the station. VOR: VHF, more accurate, provides both bearing and course deviation indication."
+    }
+  ]
+}

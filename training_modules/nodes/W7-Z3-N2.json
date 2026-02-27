@@ -1,0 +1,59 @@
+{
+  "id": "W7-Z3-N2",
+  "title": "ILS/marker basics",
+  "world": "CNS Systems",
+  "zone": "Navigation",
+  "objectiveKeys": [
+    "q63",
+    "q181"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ILS/marker basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize ILS guidance and marker beacons."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Marker Beacon",
+          "definition": "Marker beacons transmit 75 MHz vertical fan-shaped signals at fixed points along an ILS approach. Outer marker: slow dashes, blue light. Middle marker: alternating dots/dashes, amber light. Inner marker: fast dots, white light.",
+          "analogy": "Like mile markers on a highway \u2014 fixed reference points that tell you exactly where you are on the approach."
+        },
+        {
+          "term": "ILS components",
+          "definition": "ILS = Localizer (horizontal/lateral guidance to runway centerline) + Glideslope (vertical guidance, nominally 3\u00b0 descent path). Together they guide the aircraft to the runway in low visibility. ILS is a precision approach system.",
+          "analogy": "Like railroad tracks leading into a tunnel \u2014 two rails (lateral and vertical guidance) that narrow to the exact landing point."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What does the marker beacon system provide during an ILS approach?",
+      "choices": [
+        "Coded audio tones and light indications at fixed distance points on the approach",
+        "Vertical glidepath guidance at 3 degrees",
+        "Lateral course deviation guidance to the runway centerline",
+        "Wind shear warnings based on airspeed fluctuations"
+      ],
+      "correctIndex": 0,
+      "feedback": "Marker beacons are position-fix systems only \u2014 they tell you WHERE you are on the ILS, not how to correct your course. Localizer provides lateral guidance; glideslope provides vertical guidance. Markers add situational awareness at known distance points."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What two guidance signals does an ILS provide during a precision approach?",
+      "choices": [
+        "Bearing and distance to the runway",
+        "Vertical and lateral wind shear alerts",
+        "Horizontal (localizer) and vertical (glideslope) guidance",
+        "Groundspeed and altitude above touchdown zone"
+      ],
+      "correctIndex": 2,
+      "feedback": "ILS provides exactly two navigation axes: localizer (horizontal, lateral \u2014 keeps you on the runway centerline extended) and glideslope (vertical \u2014 keeps you on the ~3\u00b0 descent path). These together define the precise 3D flight path to the runway."
+    }
+  ]
+}

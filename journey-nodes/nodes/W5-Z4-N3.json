@@ -1,0 +1,17 @@
+{
+  "id": "W5-Z4-N3",
+  "title": "Heat shrink / solder sleeves (authoring gap)",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Shielding & repairs",
+  "objectiveKeys": [],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Heat shrink / solder sleeves (authoring gap)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain heat shrink/solder sleeve usage (basic)."
+    }
+  ]
+}

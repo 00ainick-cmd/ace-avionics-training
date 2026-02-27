@@ -1,0 +1,59 @@
+{
+  "id": "W7-Z4-N1",
+  "title": "GPS/WAAS basics",
+  "world": "CNS Systems",
+  "zone": "GPS/WAAS",
+  "objectiveKeys": [
+    "q22",
+    "q79"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to GPS/WAAS basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize GPS requirements and WAAS concept."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "GPS 3D navigation requirement",
+          "definition": "A GPS receiver needs at least 4 satellites to compute 3D position (latitude, longitude, and altitude). WAAS augments this for precision approach accuracy \u2014 horizontal and vertical.",
+          "analogy": "Three satellites give you a flat X/Y fix; the fourth satellite adds altitude \u2014 like a fourth wall that completes a box."
+        },
+        {
+          "term": "WAAS (Wide Area Augmentation System)",
+          "definition": "An FAA ground-based correction system that broadcasts GPS correction data via geostationary satellites, improving GPS accuracy to approximately 1 meter horizontally and 1.5 meters vertically \u2014 sufficient for LPV precision approach guidance.",
+          "analogy": "Like a spell-checker for GPS \u2014 it identifies and corrects signal errors in real time, making the answer more precise."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How many satellites must a GPS receiver track to compute 3D navigation with WAAS?",
+      "choices": [
+        "2",
+        "4",
+        "3",
+        "8"
+      ],
+      "correctIndex": 1,
+      "feedback": "Four satellites are the minimum for 3D GPS: three to solve the 2D position and one additional to solve for altitude. WAAS provides ground-based differential correction to improve the accuracy of that 3D fix."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is WAAS and what does it do for GPS navigation?",
+      "choices": [
+        "An airborne sensor that detects satellite failures and alerts the crew",
+        "A military encryption system that restricts GPS accuracy for civilian use",
+        "A ground-based correction system that improves GPS accuracy for precision approach guidance",
+        "A backup navigation system that operates independently of GPS satellites"
+      ],
+      "correctIndex": 2,
+      "feedback": "WAAS is an FAA ground network (not airborne) that corrects GPS signal errors. The corrections are uplinked to geostationary satellites and broadcast to suitably equipped aircraft, enabling sub-meter accuracy for LPV and other precision RNAV approaches."
+    }
+  ]
+}

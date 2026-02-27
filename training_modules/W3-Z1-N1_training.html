@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Ohm’s Law basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link active">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W3 // ELECTRICAL // DC FUNDAMENTALS</span>
+            </div>
+            <h1>Ohm’s Law basics</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Define the relationship between voltage, current, and resistance.</li>
+        <li>Calculate an unknown electrical quantity using the three variations of Ohm&#x27;s Law.</li>
+        <li>Predict circuit behavior when voltage or resistance is proportionally changed.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/ohms_law_multimeter.png" alt="A close-up of a technician measuring voltage on a circuit board with &#x27;V = I x R&#x27; noted nearby" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A close-up of a technician measuring voltage on a circuit board with &#x27;V = I x R&#x27; noted nearby</figcaption>
+                </figure>
+        <p class="body-text">A technician measures 14 volts across a Nav radio power connector and 7 amps through its supply wire. Is that normal? The only way to answer is Ohm&#x27;s Law — the single most important mathematical relationship you will ever use in avionics troubleshooting. Every voltage reading, every current measurement, and every &quot;is this right?&quot; diagnostic question on the bench or in the aircraft starts and ends with V = I × R.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <p class="body-text"><strong>Ohm&#x27;s Law</strong> defines the absolute physical relationship between three fundamental electrical quantities: voltage (V), current (I), and resistance (R). It has three algebraic forms, each solving for one unknown:</p>
+        <h3 class="content-h3">The Three Forms</h3>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>I = V / R</strong> — Current equals voltage divided by resistance.</li>
+        </ol>
+        <p class="body-text">   - *Use case:* You know the supply voltage and the load resistance, and you need to find out how many amps the circuit will draw to size a wire/breaker.</p>
+        <ol class="content-list">
+        <li><strong>2.</strong> <strong>V = I × R</strong> — Voltage equals current multiplied by resistance.</li>
+        </ol>
+        <p class="body-text">   - *Use case:* You are measuring 2 amps of current flowing through a corroded ground terminal that has 3 ohms of resistance. 2A × 3Ω = a 6-volt drop across that bad connection.</p>
+        <ol class="content-list">
+        <li><strong>3.</strong> <strong>R = V / I</strong> — Resistance equals voltage divided by current.</li>
+        </ol>
+        <p class="body-text">   - *Use case:* You measure 28V across a landing light and measure 10 amps flowing through it. The resistance of the bulb must be 2.8 ohms.</p>
+        <h3 class="content-h3">Proportionality Rules (The Intuitive Check)</h3>
+        <p class="body-text">You should understand how the three quantities relate when one is held constant, without having to calculate the math every time:</p>
+        <ul class="content-list">
+        <li><strong>Voltage increases, resistance constant</strong> → Current increases proportionally. Doubling voltage doubles current. *(Direct proportionality)*</li>
+        <li><strong>Resistance increases, voltage constant</strong> → Current decreases proportionally. Doubling resistance halves current. *(Inverse proportionality)*</li>
+        <li><strong>Current increases, resistance constant</strong> → Voltage drop across the resistor increases proportionally. Doubling current doubles voltage drop. *(Direct proportionality)*</li>
+        </ul>
+        <p class="body-text">These proportionality rules are how you instantly predict what happens in a circuit when conditions change during troubleshooting.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Ohm's Law Triangle] --> B[V / I * R]
+    C[Need Voltage?] --> D[Cover V: I x R]
+    E[Need Current?] --> F[Cover I: V / R]
+    G[Need Resistance?] --> H[Cover R: V / I]
+    
+    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When you measure a voltage and a current on the bench, divide the voltage by the current and you instantly know the resistance. When a wire shows higher-than-expected resistance (corroded connector, damaged splice), Ohm&#x27;s Law tells you exactly how much voltage is being lost and how much current is being reduced. This is the foundation of every troubleshooting technique you will employ.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Ohm&#x27;s Law (current form)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Ohm&#x27;s Law (current form)</div>
+                            <p>Current (I) equals voltage (V) divided by resistance (R): I = V / R. This fundamental law relates the three primary quantities in any DC circuit.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Ohm&#x27;s Law (voltage form)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Ohm&#x27;s Law (voltage form)</div>
+                            <p>Voltage equals current multiplied by resistance: V = I x R. This form is used when current and resistance are known and voltage is the unknown quantity.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Current calculation (24V / 12Ω)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Current calculation (24V / 12Ω)</div>
+                            <p>Applying I = V / R: with 24 volts and 12 ohms of resistance, the circuit current is 2 amperes. This is a direct application of Ohm&#x27;s Law.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Current calculation (12V / 6Ω)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Current calculation (12V / 6Ω)</div>
+                            <p>I = V / R = 12V / 6Ω = 2 amps. This straightforward application of Ohm&#x27;s Law confirms that a 12-volt supply drives 2 amperes through 6 ohms of total circuit resistance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Resistance calculation (14V / 7A)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Resistance calculation (14V / 7A)</div>
+                            <p>Using R = V / I: with 14 volts across a component and 7 amperes through it, the resistance is 2 ohms. This form of Ohm&#x27;s Law identifies unknown resistance from measured quantities.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Current-voltage proportionality</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Current-voltage proportionality</div>
+                            <p>When resistance is held constant, current is directly proportional to voltage. If voltage doubles, current doubles: I = V / R means I scales linearly with V.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Current-resistance inverse proportionality</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Current-resistance inverse proportionality</div>
+                            <p>When voltage is constant, current is inversely proportional to resistance (I = V / R). Doubling resistance halves current; halving resistance doubles current.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Voltage-current proportionality</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Voltage-current proportionality</div>
+                            <p>When resistance is constant, voltage is directly proportional to current (V = I x R). Doubling the current through a fixed resistance doubles the voltage across it.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Voltage (V)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Voltage (V)</div>
+                            <p>Electrical &quot;pressure&quot; or electromotive force that pushes current through a circuit. Measured in volts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Current (I)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Current (I)</div>
+                            <p>The actual flow rate of electrons through a conductor. Measured in amperes (amps).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Resistance (R)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Resistance (R)</div>
+                            <p>The physical opposition to current flow. Measured in ohms (Ω).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Ohm&#x27;s Law</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Ohm&#x27;s Law</div>
+                            <p>The fundamental relationship: V = I × R.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="0" data-feedback="Ohm&#x27;s Law states that current (I) equals voltage (V) divided by resistance (R): I = V / R. The other forms — V = I x R and R = V / I — are algebraic rearrangements of the same relationship. A common error is inverting the fraction, giving R / V instead of V / R.">
+                <div class="kc-header">Knowledge Verification [1/8]</div>
+                <div class="kc-question">Which equation correctly states Ohm&#x27;s Law when solving for current?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">I = V / R</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">I = V + R</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">I = R / V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">I = V x R</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="1" data-feedback="V = I x R is the voltage form of Ohm&#x27;s Law. It is used to predict the voltage developed across a known resistance when current is given — for example, calculating voltage drop across a wire or connector resistance.">
+                <div class="kc-header">Knowledge Verification [2/8]</div>
+                <div class="kc-question">Which equation correctly states Ohm&#x27;s Law when voltage is the unknown?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">V = I + R</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">V = I x R</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">V = I / R</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">V = R - I</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="3" data-feedback="Using I = V / R: I = 24V / 12Ω = 2 amps. Multiplying voltage by resistance (24 x 12 = 288) or confusing units are common errors. Always divide voltage by resistance to find current.">
+                <div class="kc-header">Knowledge Verification [3/8]</div>
+                <div class="kc-question">A circuit is powered by a 24-volt battery and has a total resistance of 12 ohms. What is the current flowing through the circuit?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0" data-remediation="">
+                        <div class="kc-option-text">0.5 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1" data-remediation="">
+                        <div class="kc-option-text">12 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2" data-remediation="">
+                        <div class="kc-option-text">24 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3" data-remediation="">
+                        <div class="kc-option-text">2 amps</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="3" data-feedback="I = V / R = 12V / 6Ω = 2 amps. This is a direct Ohm&#x27;s Law calculation. Selecting 6 amps is a common error where the student uses the resistance value as the current answer. Selecting 0.5 amps results from dividing R by V instead of V by R.">
+                <div class="kc-header">Knowledge Verification [4/8]</div>
+                <div class="kc-question">A 12-volt battery is the sole power source in a circuit with a total resistance of 6 ohms. What is the circuit current?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0" data-remediation="">
+                        <div class="kc-option-text">0.5 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1" data-remediation="">
+                        <div class="kc-option-text">6 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2" data-remediation="">
+                        <div class="kc-option-text">72 amps</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3" data-remediation="">
+                        <div class="kc-option-text">2 amps</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="3" data-feedback="R = V / I = 14V / 7A = 2 ohms. This rearrangement of Ohm&#x27;s Law is used when both voltage and current can be measured but resistance is not directly readable. It is commonly used to verify connector and switch contact resistance in aircraft wiring audits.">
+                <div class="kc-header">Knowledge Verification [5/8]</div>
+                <div class="kc-question">A multimeter measures 14 volts across a circuit element, and a clamp meter reads 7 amps through the same element. What is the element&#x27;s resistance?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0" data-remediation="">
+                        <div class="kc-option-text">98 ohms</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1" data-remediation="">
+                        <div class="kc-option-text">0.5 ohms</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2" data-remediation="">
+                        <div class="kc-option-text">7 ohms</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3" data-remediation="">
+                        <div class="kc-option-text">2 ohms</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="0" data-feedback="Using I = V / R: at 12V, I = 1.2A; at 24V, I = 2.4A — exactly double. When resistance is constant, current is directly proportional to voltage. Doubling voltage doubles current. This linear relationship is central to predicting how a circuit responds to bus voltage changes.">
+                <div class="kc-header">Knowledge Verification [6/8]</div>
+                <div class="kc-question">A circuit has a fixed resistance of 10 ohms. The voltage is increased from 12V to 24V. What happens to the circuit current?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0" data-remediation="">
+                        <div class="kc-option-text">Current doubles because current is directly proportional to voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1" data-remediation="">
+                        <div class="kc-option-text">Current stays the same because resistance did not change</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2" data-remediation="">
+                        <div class="kc-option-text">Current is halved because voltage and current are inversely related</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3" data-remediation="">
+                        <div class="kc-option-text">Current quadruples because power increases with the square of voltage</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc7" style="display: none; margin:0;" data-correct="1" data-feedback="At 7Ω: I = 28/7 = 4A. At 14Ω: I = 28/14 = 2A. Doubling resistance halves the current when voltage is constant — an inverse relationship. This is why an undersized resistor (lower R) allows more current than intended and can overheat.">
+                <div class="kc-header">Knowledge Verification [7/8]</div>
+                <div class="kc-question">A 28V circuit normally carries 4 amps through a 7-ohm load. The load is replaced with a 14-ohm component. The voltage stays at 28V. What is the new current?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="0" data-remediation="">
+                        <div class="kc-option-text">8 amps — doubling resistance doubles current</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="1" data-remediation="">
+                        <div class="kc-option-text">2 amps — doubling resistance halves current</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="2" data-remediation="">
+                        <div class="kc-option-text">4 amps — current is determined solely by voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="3" data-remediation="">
+                        <div class="kc-option-text">1 amp — current is quartered when resistance doubles</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc7" disabled onclick="checkAnswer('kc7')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc7"></div>
+                <button class="kc-next-btn" id="next-kc7" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(6)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc8" style="display: none; margin:0;" data-correct="3" data-feedback="V = I x R. At 1A: V = 1 x 10 = 10V. At 2A: V = 2 x 10 = 20V. The voltage doubles because current doubled with resistance held constant. This linear proportionality is a direct consequence of Ohm&#x27;s Law.">
+                <div class="kc-header">Knowledge Verification [8/8]</div>
+                <div class="kc-question">Current through a 10-ohm resistor increases from 1 amp to 2 amps. What happens to the voltage across the resistor?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="0" data-remediation="">
+                        <div class="kc-option-text">Voltage decreases from 10V to 5V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="1" data-remediation="">
+                        <div class="kc-option-text">Voltage stays constant at 10V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="2" data-remediation="">
+                        <div class="kc-option-text">Voltage increases from 10V to 100V</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="3" data-remediation="">
+                        <div class="kc-option-text">Voltage increases from 10V to 20V</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc8" disabled onclick="checkAnswer('kc8')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc8"></div>
+                <button class="kc-next-btn" id="next-kc8" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(7)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>I = V / R, V = I × R, R = V / I — memorize all three forms and intuitively understand that doubling voltage doubles current, while doubling resistance halves current.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W2-Z5-N2_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W3-Z1-N2_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W3-Z1-N1';
+        const NODE_LOS = ["q18", "q114", "q21", "q225", "q90", "q88", "q229", "q159"];
+        const TOTAL_KCS = 8;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'Electrical',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

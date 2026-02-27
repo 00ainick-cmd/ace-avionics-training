@@ -1,0 +1,95 @@
+{
+  "id": "W5-Z1-N1",
+  "title": "Wire types & insulation",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Wire/cable fundamentals",
+  "objectiveKeys": [
+    "q41",
+    "q85",
+    "q149",
+    "q180"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Wire types & insulation"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify wire types/insulation and selection factors."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "PTFE / MIL-W-22759 Wire",
+          "definition": "PTFE (polytetrafluoroethylene, brand name Teflon) insulated wire, designated MIL-W-22759 series, is the most common wire insulation in modern GA aircraft. It offers excellent temperature resistance (-65\u00b0C to +200\u00b0C), light weight, low dielectric loss, and chemical/abrasion resistance.",
+          "analogy": "PTFE wire is the non-stick pan of aircraft wiring \u2014 nothing sticks to it (chemicals slide off), it handles high heat, and it's durable under harsh conditions."
+        },
+        {
+          "term": "High-Temperature Wire Types",
+          "definition": "Near aircraft engines and other high-temperature zones, MIL-W-22759/16 (PTFE/Teflon-insulated, rated to ~200\u00b0C) or fiberglass-insulated wire is required; standard PVC or nylon-insulated wire cannot withstand engine bay temperatures.",
+          "analogy": "Using standard wire near an aircraft engine is like using a regular plastic bag next to an oven \u2014 it will melt. You need a heat-rated container (PTFE or fiberglass wire) for the heat zone."
+        },
+        {
+          "term": "Wire Insulation Selection",
+          "definition": "Wire insulation must be matched to its installation environment on three criteria: temperature rating (must exceed maximum local temperature), chemical resistance (must resist fluids present \u2014 fuel, oil, hydraulic fluid), and abrasion resistance (must withstand routing conditions \u2014 conduit, structure contact).",
+          "analogy": "Choosing wire insulation is like selecting outdoor clothing \u2014 match the material to the weather (temperature), terrain (abrasion), and potential wet conditions (chemical resistance). One-size-fits-all doesn't work."
+        },
+        {
+          "term": "Stripping Teflon Wire",
+          "definition": "PTFE (Teflon) insulation is thin and tightly bonded to the conductor. Automatic strippers must have the blade depth precisely set for the wire gauge \u2014 too deep nicks the conductor (structural weakness), too shallow leaves insulation residue (insulation contamination of the connection).",
+          "analogy": "Stripping Teflon wire is like peeling a thin-skinned fruit with a sharp knife \u2014 set the blade too deep and you cut into the flesh (conductor); too shallow and you leave peel (insulation) behind."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of wire insulation is most commonly used in modern general aviation aircraft?",
+      "choices": [
+        "PVC (polyvinyl chloride) insulation \u2014 low cost and widely available",
+        "PTFE (Teflon) or MIL-W-22759 series \u2014 light weight, temperature resistant, and durable",
+        "Rubber insulation \u2014 flexible and impact resistant",
+        "Fiberglass insulation \u2014 used for highest temperature applications only"
+      ],
+      "correctIndex": 1,
+      "feedback": "PTFE (Teflon) wire per MIL-W-22759 is the industry standard for modern GA aircraft. PVC and rubber are too heavy and have limited temperature ranges. Fiberglass is for extreme heat zones only."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What type of wire insulation is required in high-temperature areas near aircraft engines?",
+      "choices": [
+        "Standard PVC insulation rated to 60\u00b0C",
+        "High-temperature wire such as PTFE (MIL-W-22759/16) or fiberglass-insulated wire",
+        "Nylon-jacketed wire with a temperature rating of 80\u00b0C",
+        "Rubber-insulated wire with a braided cotton outer jacket"
+      ],
+      "correctIndex": 1,
+      "feedback": "Engine bay temperatures can exceed 150\u00b0C or more. Only high-temperature insulations (PTFE at ~200\u00b0C, fiberglass at 400\u00b0C+) are suitable. PVC, nylon, and rubber insulations would melt or degrade."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary consideration when selecting wire insulation material for an aircraft installation?",
+      "choices": [
+        "Selecting the insulation with the lowest dielectric constant to minimize signal loss",
+        "Choosing the thinnest insulation available to reduce wire harness diameter",
+        "Matching the insulation's temperature rating, chemical resistance, and abrasion resistance to the installation environment",
+        "Using the same insulation type throughout the aircraft for maintenance simplicity"
+      ],
+      "correctIndex": 2,
+      "feedback": "Insulation must match the environment in three ways: temperature rating (for the local heat), chemical resistance (for fluids present), and abrasion resistance (for routing conditions). Failure in any one of these leads to insulation breakdown."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the key precaution when using automatic wire strippers on PTFE (Teflon) insulated wire?",
+      "choices": [
+        "Heat the wire first to soften the insulation before using automatic strippers",
+        "Apply lubricant to the blade to reduce friction and prevent insulation tearing",
+        "Always use manual strippers for Teflon wire \u2014 automatic strippers cannot handle PTFE insulation",
+        "Verify the blade depth is correctly set for the wire gauge to avoid nicking the conductor strands"
+      ],
+      "correctIndex": 3,
+      "feedback": "PTFE insulation is thin \u2014 blade depth must be exact. Too deep nicks the conductor; nicked strands create a stress concentration and will break under vibration. Correct blade depth for the gauge is essential."
+    }
+  ]
+}

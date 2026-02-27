@@ -1,0 +1,131 @@
+{
+  "id": "W6-Z1-N1",
+  "title": "Why digital databuses exist",
+  "world": "Digital Databus Systems",
+  "zone": "Why digital buses",
+  "objectiveKeys": [
+    "q39",
+    "q73",
+    "q98",
+    "q193",
+    "q187",
+    "q182"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Why digital databuses exist"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain purpose/benefits and basic hardware context."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Digital Databus Purpose",
+          "definition": "A digital databus in avionics enables reliable, standardized transfer of data between multiple LRUs (Line Replaceable Units) over a shared communication medium, replacing individual point-to-point analog wiring.",
+          "analogy": "A databus is like a shared office network \u2014 instead of running a separate cable between every two computers, all computers share one network cable using a standard protocol."
+        },
+        {
+          "term": "Digital Bus Noise Immunity",
+          "definition": "Digital data buses offer significantly greater noise immunity than analog signals because they transmit discrete logic states (0 or 1) that can be reliably detected even in the presence of electrical interference, while analog signals degrade continuously with noise.",
+          "analogy": "Digital is like a light switch \u2014 it's either on or off, and small vibrations don't matter. Analog is like a dimmer \u2014 any vibration or noise shifts the reading by some amount."
+        },
+        {
+          "term": "Digital Bus \u2014 Wiring Reduction Benefit",
+          "definition": "Using a digital databus instead of individual analog connections reduces wiring complexity by replacing multiple point-to-point analog cables with a single shared bus, improving reliability, maintainability, and system integration.",
+          "analogy": "Without a databus, connecting 10 avionics boxes to each other would require up to 45 separate cables. With a shared databus, all 10 connect to one cable \u2014 like switching from individual landlines to a conference call."
+        },
+        {
+          "term": "Shielded Twisted Pair (STP)",
+          "definition": "Shielded twisted-pair wire consists of two insulated conductors twisted together (reduces magnetic field emissions and susceptibility) with an overall conductive shield (reduces capacitive coupling with external signals); it is the standard cable for avionics digital data buses including ARINC 429.",
+          "analogy": "Twisted pair is like braiding two ropes together \u2014 twisting cancels out noise by making each loop pick up equal and opposite interference. The shield is like a metal jacket blocking external signals."
+        },
+        {
+          "term": "BITE (Built-In Test Equipment)",
+          "definition": "BITE is a self-diagnostic system built into avionics LRUs that continuously monitors the unit's internal health, performs power-on self-tests, and stores fault codes and event records retrievable during maintenance.",
+          "analogy": "BITE is like the 'check engine' light and OBD-II port in a modern car \u2014 the car continuously monitors itself, stores fault codes when something is wrong, and you can plug in a reader to see what happened."
+        },
+        {
+          "term": "Pre-Functional Check Verification",
+          "definition": "Before a digital autopilot functional check, verify: (1) all ARINC 429 bus connections are properly terminated, and (2) the autopilot is receiving valid sensor data on all required input buses \u2014 failure to do either will cause a false test failure.",
+          "analogy": "Before testing a car's cruise control, make sure the speedometer cable is connected and the car is running \u2014 testing without valid inputs will always give a false failure result."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of a digital avionics databus?",
+      "choices": [
+        "To enable reliable, standardized data transfer between multiple avionics units over a shared communication medium",
+        "To provide backup electrical power distribution during an LRU failure",
+        "To encrypt navigation data to prevent interception by hostile parties",
+        "To store flight data for retrieval by maintenance personnel after flight"
+      ],
+      "correctIndex": 0,
+      "feedback": "A databus provides a common, standardized communication medium so multiple LRUs can exchange data reliably without requiring dedicated point-to-point analog wiring between each pair."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is a key advantage of digital data buses over analog signals in avionics?",
+      "choices": [
+        "Digital buses have greater noise immunity because discrete logic states are not degraded by small amounts of electrical interference",
+        "Digital buses are cheaper to install and require less cable shielding",
+        "Digital buses can transmit more types of data because they support variable voltage levels",
+        "Digital buses eliminate the need for aircraft grounding and bonding"
+      ],
+      "correctIndex": 0,
+      "feedback": "Digital signals are binary \u2014 noise must exceed the noise margin to cause an error. Analog signals degrade proportionally with any noise, making digital buses far more resistant to EMI/RFI in aircraft environments."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary engineering justification for using digital data buses in modern avionics instead of individual analog connections?",
+      "choices": [
+        "Digital buses reduce wiring complexity and improve integration by providing a standardized shared medium for reliable data exchange between multiple LRUs",
+        "Analog connections are no longer supported by avionics manufacturers",
+        "Digital buses are required by FAA regulations for all transport category aircraft",
+        "Digital buses eliminate the need for EMC testing because they are inherently immune to all interference"
+      ],
+      "correctIndex": 0,
+      "feedback": "The key engineering benefit is reduced wiring complexity: a single bus replaces many analog cables, reducing weight, connector count, failure points, and improving maintainability."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What cable type is commonly used for ARINC 429 and other digital avionics data buses?",
+      "choices": [
+        "RG-58 coaxial cable for its low attenuation",
+        "Unshielded twisted pair to reduce cost and weight",
+        "Shielded twisted-pair wire to reduce electromagnetic interference",
+        "Multi-strand power cable for its high current capacity"
+      ],
+      "correctIndex": 2,
+      "feedback": "Shielded twisted-pair is the standard for digital avionics buses. The twisted construction provides differential noise cancellation and the shield prevents EMI coupling \u2014 critical in the electrically noisy aircraft environment."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the purpose of BITE in an avionics LRU?",
+      "choices": [
+        "To provide backup navigation data when the primary system fails",
+        "To continuously monitor unit health and store fault codes for maintenance retrieval and diagnosis",
+        "To calibrate sensor inputs automatically before each flight",
+        "To encrypt data on ARINC 429 buses to prevent unauthorized access"
+      ],
+      "correctIndex": 1,
+      "feedback": "BITE (Built-In Test Equipment) provides self-monitoring and fault code storage within the LRU \u2014 enabling technicians to identify failures quickly without full bench testing."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What two things should be verified before performing a functional check of a digital autopilot that uses ARINC 429 inputs?",
+      "choices": [
+        "All ARINC 429 connections are properly terminated and the autopilot receives valid sensor data on all input buses",
+        "The autopilot firmware version and the aircraft gross weight",
+        "The ARINC 429 bus speed is set to low speed and the autopilot power supply is within 0.1V",
+        "The circuit breaker is in and the ARINC 429 bus labels match the aircraft flight manual"
+      ],
+      "correctIndex": 0,
+      "feedback": "For a valid functional check: bus termination must be correct (ensures signal integrity) and all sensor data must be valid (ensures the autopilot has real inputs to respond to)."
+    }
+  ]
+}

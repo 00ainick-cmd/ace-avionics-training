@@ -1,0 +1,95 @@
+{
+  "id": "W5-Z2-N1",
+  "title": "Crimping fundamentals",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Terminations/connectors",
+  "objectiveKeys": [
+    "q26",
+    "q95",
+    "q96",
+    "q176"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Crimping fundamentals"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Perform crimping fundamentals conceptually (tool/die selection and quality)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Proper Aircraft Wire Termination",
+          "definition": "Aircraft wire termination requires type-approved, correctly sized crimp terminals applied with a calibrated ratcheting crimp tool \u2014 the ratcheting mechanism ensures the crimp cycle completes fully before releasing, guaranteeing a consistent, gas-tight connection.",
+          "analogy": "A calibrated ratcheting crimp tool is like a safety syringe that locks until the plunger fully depresses \u2014 you cannot release it halfway, ensuring every crimp is fully completed."
+        },
+        {
+          "term": "Connector Contact Tools",
+          "definition": "Installing contacts in aircraft connectors requires two tool types: a ratcheting crimp tool (to crimp the contact onto the wire) and contact insertion/extraction tools (to seat the contact in the connector insert or remove it without damage).",
+          "analogy": "Like a two-step process: a crimper presses the bullet into the cartridge (contact onto wire), and a specialized tool loads the cartridge into the gun (contact into connector). Different tools for different tasks."
+        },
+        {
+          "term": "Crimp Connection Mechanism",
+          "definition": "A crimp tool mechanically deforms the terminal barrel around wire strands under controlled force, creating a gas-tight zone where metal-to-metal contact occurs and oxidation cannot penetrate \u2014 resulting in a low-resistance, mechanically strong, permanent connection.",
+          "analogy": "Crimping is like pressing clay around a wire \u2014 the clay (terminal) deforms tightly around every strand, filling all gaps. Gas-tight means no air (no oxidation) can reach the wire-to-terminal interface."
+        },
+        {
+          "term": "Crimp Tool Die Selection",
+          "definition": "The correct crimp die must match both the terminal/contact type AND the wire gauge being terminated. Using the wrong die produces either an over-crimped (crushed, damaged) or under-crimped (loose, not gas-tight) connection \u2014 both of which will fail over time.",
+          "analogy": "Crimp dies are like shoe sizes \u2014 the right fit creates a perfect grip. Too big (under-crimp) and the shoe falls off; too small (over-crimp) and it crushes the foot. Only the right size works."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the most appropriate method for terminating aircraft wiring?",
+      "choices": [
+        "Solder the wire directly to the terminal using acid-core solder for a stronger bond",
+        "Use automotive-grade terminals with a standard pliers-type crimp tool",
+        "Use properly sized, type-approved crimped terminals installed with a calibrated ratcheting crimp tool",
+        "Wrap the wire around the terminal and secure with electrical tape"
+      ],
+      "correctIndex": 2,
+      "feedback": "The FAA-approved method for aircraft wire termination is type-approved crimp terminals with a calibrated ratcheting crimp tool \u2014 providing consistent, gas-tight, mechanically secure connections."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What tools are required for installing contacts in aircraft wiring connectors?",
+      "choices": [
+        "Soldering iron and needle-nose pliers",
+        "Non-ratcheting crimp tool and a flat-blade screwdriver",
+        "Ratcheting crimp tool and appropriate contact insertion/extraction tools",
+        "Heat gun and a knurled hex driver for the contact retention rings"
+      ],
+      "correctIndex": 2,
+      "feedback": "Proper connector work requires a calibrated ratcheting crimp tool (to terminate the wire to the contact) and the correct insertion/extraction tool set (to seat and remove contacts from the connector insert)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does a wire crimper create a reliable electrical connection?",
+      "choices": [
+        "By heating the terminal until it flows around the wire, forming a solder-like bond",
+        "By pressing a spring-loaded clamp onto the wire to hold it in place with clamping force",
+        "By compressing the wire strands until they fuse with the terminal through friction welding",
+        "By mechanically deforming the terminal barrel around the stripped wire end to create a gas-tight, low-resistance electrical and mechanical connection"
+      ],
+      "correctIndex": 3,
+      "feedback": "Mechanical deformation of the terminal creates gas-tight metal-to-metal contact. Gas-tight means oxidation cannot penetrate the interface, ensuring the connection remains low resistance over the life of the aircraft."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "When selecting a crimping tool and die for connector replacement, what two specifications must match?",
+      "choices": [
+        "Wire color and connector shell material",
+        "The insulation thickness and the connector pin count",
+        "The connector/contact type and the wire gauge (AWG size)",
+        "The wire run length and the circuit current level"
+      ],
+      "correctIndex": 2,
+      "feedback": "Correct crimp tool selection requires matching the die to both the contact type (determines die geometry) and the wire gauge (determines crimp depth). Mismatched dies produce under-crimp or over-crimp failures."
+    }
+  ]
+}

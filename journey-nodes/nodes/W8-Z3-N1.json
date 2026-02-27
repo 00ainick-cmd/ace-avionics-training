@@ -1,0 +1,131 @@
+{
+  "id": "W8-Z3-N1",
+  "title": "Pitot/static blockage symptoms",
+  "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+  "zone": "Blockage scenarios",
+  "objectiveKeys": [
+    "q33",
+    "q65",
+    "q84",
+    "q110",
+    "q131",
+    "q199"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Pitot/static blockage symptoms"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Reason through blocked pitot/static patterns."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Effect of Blocked Pitot Tube",
+          "definition": "A completely blocked pitot tube removes ram air pressure input to the airspeed indicator; the ASI is the primary instrument affected because it requires the differential between ram pressure and static pressure to compute airspeed.",
+          "analogy": "Blocking the pitot tube is like covering one end of a differential pressure gauge \u2014 you lose the 'high side' reference, so the measurement becomes meaningless."
+        },
+        {
+          "term": "Blocked Pitot During Descent",
+          "definition": "During descent with a blocked pitot tube, static pressure increases while the trapped ram pressure stays constant; the ASI reads the increasing differential as increasing airspeed, showing a falsely high and increasing reading.",
+          "analogy": "Imagine a sealed container being pushed deeper underwater \u2014 the outside pressure rises but the inside stays the same, making the pressure difference appear larger than reality."
+        },
+        {
+          "term": "Effect of Blocked Static Port",
+          "definition": "A blocked static port traps pressure at the level where blockage occurred, causing the altimeter to freeze at that altitude and the VSI to read zero, because neither can detect changes in atmospheric pressure.",
+          "analogy": "It's like sealing a barometer inside a closed box \u2014 the pressure inside stays constant regardless of what happens outside, so you'll never see a change."
+        },
+        {
+          "term": "Blocked Pitot During Climb",
+          "definition": "During a climb with a blocked pitot tube, static pressure decreases while the trapped ram pressure stays constant; the ASI sees a growing pitot-minus-static differential and reads a falsely increasing airspeed.",
+          "analogy": "Like a sealed balloon rising \u2014 the outside pressure drops but the inside pressure stays the same, creating an increasing pressure difference that the ASI misinterprets as speed."
+        },
+        {
+          "term": "Consistently Low ASI Indication",
+          "definition": "An airspeed indicator that consistently reads below actual airspeed indicates reduced ram air pressure reaching the ASI, which can result from a partial pitot tube blockage or a leak in the pitot pressure plumbing.",
+          "analogy": "Like a kinked garden hose \u2014 a partial blockage or hole reduces the pressure reaching the end, so you measure less force than is actually there."
+        },
+        {
+          "term": "VSI Falsely Showing Descent",
+          "definition": "A VSI showing a constant descent rate in level flight indicates a leak in the static system that allows static pressure to equalize faster than the calibrated orifice; the VSI interprets this as a pressure increase (descent) even when the aircraft is level.",
+          "analogy": "The VSI is like a sealed jar with a tiny leak hole measuring pressure change rate. If you punch a bigger hole (leak), pressure equalizes too fast \u2014 the instrument thinks you're descending into higher pressure, even if you're not moving."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A pitot tube becomes completely blocked in flight. Which instrument is most directly and immediately affected?",
+      "choices": [
+        "Altimeter, because it also uses the pitot line for reference",
+        "Vertical speed indicator, because rate of climb depends on pitot pressure",
+        "Airspeed indicator, because it depends on ram air pressure that is now unavailable",
+        "Turn coordinator, because it uses pitot air to drive the gyro rotor"
+      ],
+      "correctIndex": 2,
+      "feedback": "Only the ASI uses the pitot (ram pressure) line. The altimeter and VSI use only the static line. The turn coordinator is typically electrically or vacuum driven."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An aircraft descends with a completely blocked pitot tube. What will the airspeed indicator show?",
+      "choices": [
+        "A correctly decreasing airspeed consistent with actual speed",
+        "A falsely high and increasing airspeed as static pressure rises while pitot pressure remains trapped",
+        "Zero airspeed because no ram air pressure is available",
+        "An airspeed equal to stall speed due to minimum differential pressure"
+      ],
+      "correctIndex": 1,
+      "feedback": "During descent, atmospheric (static) pressure increases. Because the pitot is blocked, ram pressure is trapped at the level where the blockage occurred. The ASI senses a growing differential, indicating falsely increasing airspeed."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What happens to the altimeter and VSI when the static port becomes completely blocked?",
+      "choices": [
+        "The altimeter reads falsely high and the VSI reads maximum climb",
+        "The altimeter reads zero and the VSI shows maximum descent",
+        "Both instruments read the altitude from the last GPS fix",
+        "The altimeter freezes at the altitude where blockage occurred, and the VSI reads zero"
+      ],
+      "correctIndex": 3,
+      "feedback": "Both instruments require changing static pressure to function. A blocked port traps a fixed pressure, so the altimeter needle freezes and the VSI shows zero regardless of actual altitude changes."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An aircraft climbs with a completely blocked pitot tube. What will the airspeed indicator show?",
+      "choices": [
+        "A correctly increasing airspeed consistent with actual aircraft speed",
+        "A falsely increasing airspeed because static pressure falls while trapped ram pressure stays constant",
+        "A falsely decreasing airspeed as static pressure falls",
+        "Zero airspeed because the pitot tube cannot sense any air movement"
+      ],
+      "correctIndex": 1,
+      "feedback": "In a climb, atmospheric pressure (static) falls. The blocked pitot traps constant ram pressure. The ASI measures the growing differential (constant pitot minus decreasing static) as increasing airspeed."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An airspeed indicator consistently reads 15 knots below actual aircraft speed verified by other means. What is the most likely cause?",
+      "choices": [
+        "The static port is fully blocked, reducing reference pressure",
+        "The aircraft's true airspeed correction is not applied at this altitude",
+        "The altimeter calibration error is cross-affecting the ASI reading",
+        "A partial pitot blockage or a leak in the pitot pressure line is reducing the ram air pressure at the ASI"
+      ],
+      "correctIndex": 3,
+      "feedback": "Consistent under-reading means reduced ram pressure at the ASI. A partial pitot blockage reduces flow, and a leak allows some pressure to escape \u2014 both produce a persistently low reading."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A VSI indicates a constant 200 fpm descent while the aircraft is confirmed to be in level flight. The altimeter reads correctly. What is the most likely cause?",
+      "choices": [
+        "The altimeter is correct but the VSI aneroid capsule spring has weakened",
+        "A blockage in the pitot tube is causing backpressure that affects the VSI",
+        "A leak in the static system is allowing external pressure to enter faster than the calibrated orifice, making the VSI sense a false pressure rise (descent)",
+        "The VSI's calibrated orifice has become enlarged, making the instrument over-sensitive"
+      ],
+      "correctIndex": 2,
+      "feedback": "A static leak allows outside pressure to bleed into the static system faster than normal. The VSI compares the two sides of its differential \u2014 the faster pressure equalisation looks like a descent signal."
+    }
+  ]
+}

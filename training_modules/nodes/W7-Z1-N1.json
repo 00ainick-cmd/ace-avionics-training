@@ -1,0 +1,95 @@
+{
+  "id": "W7-Z1-N1",
+  "title": "Audio panel/intercom basics",
+  "world": "CNS Systems",
+  "zone": "Audio & comm path",
+  "objectiveKeys": [
+    "q56",
+    "q160",
+    "q167",
+    "q216"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Audio panel/intercom basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Describe audio routing and panel function."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Mono Audio (GA Use)",
+          "definition": "Mono (single-channel) audio is typically used in general aviation aircraft for intercom communications and speaker monitoring \u2014 a single audio channel routed to all headsets and speakers.",
+          "analogy": "Like an old AM radio \u2014 one audio channel broadcast to all listeners, versus stereo which has distinct left and right channels."
+        },
+        {
+          "term": "Audio panel impedance matching",
+          "definition": "Audio signals must have matched impedance between the audio panel output and connected avionics inputs. Mismatched impedance causes signal reflections, reduced level, and distortion. Standard aviation audio interfaces are typically 150\u03a9 or 600\u03a9 \u2014 must match throughout the system.",
+          "analogy": "Like water pipes of different diameters at a junction \u2014 a mismatch creates back pressure (reflections) and reduces flow (signal level)."
+        },
+        {
+          "term": "Audio panel primary purpose",
+          "definition": "The audio panel routes and selects audio from multiple radios (COM1, COM2, NAV1, NAV2, ADF, marker beacon, etc.) to the pilot headset, copilot headset, and cabin speaker. Allows each crewmember to independently select what they hear. Also handles push-to-talk routing.",
+          "analogy": "Like a mixing board in a recording studio \u2014 multiple input sources, independently routed to different outputs (headsets/speakers)."
+        },
+        {
+          "term": "Audio Control Panel (ACP) purpose",
+          "definition": "The Audio Control Panel (ACP) is the centralized interface for all aircraft audio: select which COM to transmit on, select which COM/NAV receivers to monitor (listen to), adjust intercom, and access PA (public address) system. All audio management from one panel.",
+          "analogy": "Like the switchboard at a telephone exchange \u2014 one central location to connect any input to any output."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the typical use of mono audio in general aviation aircraft audio systems?",
+      "choices": [
+        "Stereo entertainment for cabin passengers",
+        "Dedicated frequency isolation for pilot and co-pilot separately",
+        "Digital audio databus communications between avionics units",
+        "Single-channel intercom and speaker monitoring"
+      ],
+      "correctIndex": 3,
+      "feedback": "GA audio systems use mono (single-channel) audio for intercom and speaker monitoring. Stereo is unnecessary for ATC communications or crew intercom \u2014 the same audio signal goes to all headsets and speakers. Stereo entertainment and digital databuses are different systems."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the most important factor for clear audio when integrating an audio panel with avionics?",
+      "choices": [
+        "Using the shortest possible cable runs to all connected radios",
+        "Installing an audio panel from the same manufacturer as the radios",
+        "Proper impedance matching between the audio panel output and connected avionics",
+        "Shielding all audio cables with ferrite chokes to prevent RF interference"
+      ],
+      "correctIndex": 2,
+      "feedback": "Impedance matching is the foundational requirement for audio system integration. All other factors (cable length, shielding, manufacturer) are secondary. A well-matched audio chain delivers clean signals; a mismatched one produces distortion, low level, or oscillation regardless of cable quality."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of an audio panel in a general aviation aircraft?",
+      "choices": [
+        "Regulating electrical power to avionics from the main bus",
+        "Providing squelch control for all installed COM radios simultaneously",
+        "Combining GPS and VOR navigation data for display on the MFD",
+        "Routing and selecting comm and nav audio signals to pilot/copilot headsets and cockpit speakers"
+      ],
+      "correctIndex": 3,
+      "feedback": "The audio panel's core function is audio routing and selection \u2014 it receives audio from all installed comm and nav equipment and lets each crew position select which inputs to monitor. It also routes the outgoing mic/PTT signal to the selected transmitter."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of an Audio Control Panel (ACP)?",
+      "choices": [
+        "Enabling crew to select, monitor, and transmit on multiple comm and nav radios from one interface",
+        "Displaying traffic advisories from TCAS",
+        "Controlling the SELCAL alert system for oceanic operations only",
+        "Providing backup attitude reference when primary instruments fail"
+      ],
+      "correctIndex": 0,
+      "feedback": "The ACP centralizes audio management: choose which radio to transmit on (PTT routes to that COM), choose which radios/navs to listen to, and manage intercom and PA. This simplification of audio management reduces crew workload in complex multi-radio environments."
+    }
+  ]
+}

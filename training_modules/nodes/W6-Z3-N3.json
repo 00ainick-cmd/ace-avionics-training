@@ -1,0 +1,59 @@
+{
+  "id": "W6-Z3-N3",
+  "title": "RS-485/422 basics",
+  "world": "Digital Databus Systems",
+  "zone": "Other buses",
+  "objectiveKeys": [
+    "q158",
+    "q165"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to RS-485/422 basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize differential twisted-pair bus characteristics."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "RS-485 Wiring",
+          "definition": "RS-485 uses differential signaling on a twisted-pair cable, where the logic state is determined by the voltage difference between two wires rather than one wire versus ground, enabling multi-drop topologies over distances up to 1,200 meters with high noise immunity.",
+          "analogy": "RS-485 differential signaling is like two people pushing against each other \u2014 both pushing measures the 'difference' in force, and outside interference affects both equally and cancels out."
+        },
+        {
+          "term": "RS-485 Installation Requirements",
+          "definition": "RS-485 (and RS-422) installations require shielded twisted-pair cable and termination resistors at BOTH ends of the bus, matched to the cable's characteristic impedance (typically 120 \u03a9), to prevent signal reflections and ensure clean data.",
+          "analogy": "Termination resistors on a bus are like padding on the ends of a bowling lane \u2014 without them, the ball (signal) would bounce back and interfere with the next roll."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What wiring configuration makes RS-485 suitable for long-distance, multi-drop avionics communication?",
+      "choices": [
+        "Differential twisted-pair where data is the voltage difference between two wires",
+        "Single-ended coaxial with low-impedance termination",
+        "Optical fiber to eliminate electrical interference entirely",
+        "Shielded coaxial with 50-ohm characteristic impedance"
+      ],
+      "correctIndex": 0,
+      "feedback": "RS-485 differential twisted-pair: the receiver measures the voltage difference between the two wires. Common-mode noise affects both wires equally and cancels, giving superior noise immunity for multi-drop, long-distance use."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the two critical wiring requirements for a correctly installed RS-485 data bus?",
+      "choices": [
+        "Unshielded twisted-pair and termination at one end only",
+        "Shielded twisted-pair cable and termination resistors at both ends matching the characteristic impedance",
+        "Coaxial cable and no termination resistors",
+        "Shielded twisted-pair and termination at the transmitter end only"
+      ],
+      "correctIndex": 1,
+      "feedback": "RS-485 requires: (1) shielded twisted-pair for noise immunity and (2) termination at both physical ends of the bus to absorb signal energy and prevent reflections that cause data errors."
+    }
+  ]
+}

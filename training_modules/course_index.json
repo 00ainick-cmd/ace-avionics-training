@@ -1,0 +1,422 @@
+[
+  {
+    "id": "W1-Z1-N1",
+    "title": "Hazard recognition (stop-work mindset)",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Safety mindset & reporting"
+  },
+  {
+    "id": "W1-Z1-N2",
+    "title": "Housekeeping & clean work area discipline",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Safety mindset & reporting"
+  },
+  {
+    "id": "W1-Z2-N1",
+    "title": "Eye, hearing, and chemical glove basics",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Basic PPE"
+  },
+  {
+    "id": "W1-Z2-N2",
+    "title": "Electrical shock first action",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Basic PPE"
+  },
+  {
+    "id": "W1-Z3-N1",
+    "title": "SDS / HazCom basics",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "SDS / chemicals"
+  },
+  {
+    "id": "W1-Z3-N2",
+    "title": "Chemical handling/storage/disposal awareness (generic)",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "SDS / chemicals"
+  },
+  {
+    "id": "W1-Z3-N3",
+    "title": "Solvent fumes / exposure awareness",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "SDS / chemicals"
+  },
+  {
+    "id": "W1-Z4-N1",
+    "title": "Fire safety basics (no extinguisher classes)",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Fire safety basics"
+  },
+  {
+    "id": "W1-Z5-N1",
+    "title": "ESD-safe handling basics",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "ESD/FOD discipline"
+  },
+  {
+    "id": "W1-Z5-N2",
+    "title": "FOD and tool accountability",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "ESD/FOD discipline"
+  },
+  {
+    "id": "W1-Z2-N3",
+    "title": "Ramp/rotor awareness (optional)",
+    "world": "Safety (Generic CAET overview)",
+    "zone": "Basic PPE"
+  },
+  {
+    "id": "W2-Z1-N1",
+    "title": "Parts 145/43/91 basics (recognition)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Regulatory framework"
+  },
+  {
+    "id": "W2-Z1-N2",
+    "title": "Maintenance vs preventive maintenance (recognition)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Regulatory framework"
+  },
+  {
+    "id": "W2-Z2-N1",
+    "title": "Ratings/capability limits (stay in your lane)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Scope & technical data"
+  },
+  {
+    "id": "W2-Z2-N2",
+    "title": "Current manuals / technical data requirement",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Scope & technical data"
+  },
+  {
+    "id": "W2-Z2-N3",
+    "title": "Manual-first troubleshooting start point",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Scope & technical data"
+  },
+  {
+    "id": "W2-Z3-N1",
+    "title": "Maintenance record elements (Part 43.9 level)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Documentation basics"
+  },
+  {
+    "id": "W2-Z4-N1",
+    "title": "Major alteration basics",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Approved data / changes"
+  },
+  {
+    "id": "W2-Z4-N2",
+    "title": "STC and TSO replacement basics",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Approved data / changes"
+  },
+  {
+    "id": "W2-Z5-N1",
+    "title": "Installation standards awareness (cross-link)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Standards & calibration awareness"
+  },
+  {
+    "id": "W2-Z5-N2",
+    "title": "Calibration label check (cross-link)",
+    "world": "Maintenance Regulations & Documentation (Entry scope)",
+    "zone": "Standards & calibration awareness"
+  },
+  {
+    "id": "W3-Z1-N1",
+    "title": "Ohm\u2019s Law basics",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "DC fundamentals"
+  },
+  {
+    "id": "W3-Z1-N2",
+    "title": "Power basics",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "DC fundamentals"
+  },
+  {
+    "id": "W3-Z2-N1",
+    "title": "Series/parallel circuit behavior",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "Circuit behavior"
+  },
+  {
+    "id": "W3-Z2-N2",
+    "title": "Circuit protection (fuses/breakers)",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "Circuit behavior"
+  },
+  {
+    "id": "W3-Z3-N1",
+    "title": "Buses and distribution",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "Aircraft DC systems"
+  },
+  {
+    "id": "W3-Z3-N2",
+    "title": "Batteries and grounding/bonding",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "Aircraft DC systems"
+  },
+  {
+    "id": "W3-Z3-N3",
+    "title": "Power generation and regulation",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "Aircraft DC systems"
+  },
+  {
+    "id": "W3-Z4-N1",
+    "title": "AC fundamentals (frequency/waveform/reactance/transformer)",
+    "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+    "zone": "AC fundamentals"
+  },
+  {
+    "id": "W4-Z1-N1",
+    "title": "Hand tools & precision basics",
+    "world": "Tools & Test Equipment",
+    "zone": "Hand tools"
+  },
+  {
+    "id": "W4-Z2-N1",
+    "title": "DMM basics (modes & connections)",
+    "world": "Tools & Test Equipment",
+    "zone": "Multimeters"
+  },
+  {
+    "id": "W4-Z3-N1",
+    "title": "Voltage drop & resistance clues",
+    "world": "Tools & Test Equipment",
+    "zone": "Fault finding"
+  },
+  {
+    "id": "W4-Z3-N2",
+    "title": "Basic fault isolation (opens/shorts/parasitic)",
+    "world": "Tools & Test Equipment",
+    "zone": "Fault finding"
+  },
+  {
+    "id": "W4-Z4-N1",
+    "title": "Oscilloscope & specialty instruments awareness",
+    "world": "Tools & Test Equipment",
+    "zone": "Scope & specialty instruments"
+  },
+  {
+    "id": "W4-Z5-N1",
+    "title": "Wattmeter basics (authoring gap)",
+    "world": "Tools & Test Equipment",
+    "zone": "Tool governance"
+  },
+  {
+    "id": "W5-Z1-N1",
+    "title": "Wire types & insulation",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Wire/cable fundamentals"
+  },
+  {
+    "id": "W5-Z1-N2",
+    "title": "Wire gauge sizing",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Wire/cable fundamentals"
+  },
+  {
+    "id": "W5-Z2-N1",
+    "title": "Crimping fundamentals",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Terminations/connectors"
+  },
+  {
+    "id": "W5-Z2-N2",
+    "title": "Connectors & backshells",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Terminations/connectors"
+  },
+  {
+    "id": "W5-Z3-N1",
+    "title": "Harness fabrication basics",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Harness fab/routing"
+  },
+  {
+    "id": "W5-Z3-N2",
+    "title": "Routing & protection",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Harness fab/routing"
+  },
+  {
+    "id": "W5-Z3-N3",
+    "title": "Service loops & routing discipline",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Harness fab/routing"
+  },
+  {
+    "id": "W5-Z4-N1",
+    "title": "Shielding & EMI basics",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Shielding & repairs"
+  },
+  {
+    "id": "W5-Z4-N2",
+    "title": "Soldering awareness",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Shielding & repairs"
+  },
+  {
+    "id": "W5-Z4-N3",
+    "title": "Heat shrink / solder sleeves (authoring gap)",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Shielding & repairs"
+  },
+  {
+    "id": "W5-Z5-N1",
+    "title": "Prohibited practices",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Inspection & prohibited"
+  },
+  {
+    "id": "W5-Z5-N2",
+    "title": "Safety wire twist rate (optional)",
+    "world": "Aircraft Wiring & Harness",
+    "zone": "Inspection & prohibited"
+  },
+  {
+    "id": "W6-Z2-N1",
+    "title": "ARINC 429 architecture basics",
+    "world": "Digital Databus Systems",
+    "zone": "ARINC 429 architecture"
+  },
+  {
+    "id": "W6-Z2-N2",
+    "title": "ARINC 429 word structure basics",
+    "world": "Digital Databus Systems",
+    "zone": "ARINC 429 architecture"
+  },
+  {
+    "id": "W6-Z2-N3",
+    "title": "ARINC 429 speed/timing awareness",
+    "world": "Digital Databus Systems",
+    "zone": "ARINC 429 architecture"
+  },
+  {
+    "id": "W6-Z1-N1",
+    "title": "Why digital databuses exist",
+    "world": "Digital Databus Systems",
+    "zone": "Why digital buses"
+  },
+  {
+    "id": "W6-Z3-N1",
+    "title": "MIL-STD-1553 basics",
+    "world": "Digital Databus Systems",
+    "zone": "Other buses"
+  },
+  {
+    "id": "W6-Z3-N2",
+    "title": "RS-232 basics",
+    "world": "Digital Databus Systems",
+    "zone": "Other buses"
+  },
+  {
+    "id": "W6-Z3-N3",
+    "title": "RS-485/422 basics",
+    "world": "Digital Databus Systems",
+    "zone": "Other buses"
+  },
+  {
+    "id": "W6-Z4-N1",
+    "title": "Databus troubleshooting basics",
+    "world": "Digital Databus Systems",
+    "zone": "Databus troubleshooting"
+  },
+  {
+    "id": "W6-Z4-N2",
+    "title": "Databus analyzer awareness (cross-link)",
+    "world": "Digital Databus Systems",
+    "zone": "Databus troubleshooting"
+  },
+  {
+    "id": "W7-Z1-N1",
+    "title": "Audio panel/intercom basics",
+    "world": "CNS Systems",
+    "zone": "Audio & comm path"
+  },
+  {
+    "id": "W7-Z2-N1",
+    "title": "VHF/HF comm basics",
+    "world": "CNS Systems",
+    "zone": "Communications"
+  },
+  {
+    "id": "W7-Z2-N2",
+    "title": "Antennas & RF safety basics",
+    "world": "CNS Systems",
+    "zone": "Communications"
+  },
+  {
+    "id": "W7-Z3-N1",
+    "title": "VOR basics",
+    "world": "CNS Systems",
+    "zone": "Navigation"
+  },
+  {
+    "id": "W7-Z3-N2",
+    "title": "ILS/marker basics",
+    "world": "CNS Systems",
+    "zone": "Navigation"
+  },
+  {
+    "id": "W7-Z3-N3",
+    "title": "Other nav basics",
+    "world": "CNS Systems",
+    "zone": "Navigation"
+  },
+  {
+    "id": "W7-Z4-N1",
+    "title": "GPS/WAAS basics",
+    "world": "CNS Systems",
+    "zone": "GPS/WAAS"
+  },
+  {
+    "id": "W7-Z5-N1",
+    "title": "Transponder basics",
+    "world": "CNS Systems",
+    "zone": "Surveillance"
+  },
+  {
+    "id": "W7-Z5-N2",
+    "title": "ADS-B/TCAS basics",
+    "world": "CNS Systems",
+    "zone": "Surveillance"
+  },
+  {
+    "id": "W8-Z1-N1",
+    "title": "Pitot-static components basics",
+    "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "zone": "Pitot-static fundamentals"
+  },
+  {
+    "id": "W8-Z2-N1",
+    "title": "Altimeter/VSI/ASI basics",
+    "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "zone": "Instrument behavior"
+  },
+  {
+    "id": "W8-Z3-N1",
+    "title": "Pitot/static blockage symptoms",
+    "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "zone": "Blockage scenarios"
+  },
+  {
+    "id": "W8-Z4-N1",
+    "title": "Gyro instruments basics",
+    "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "zone": "Gyro fundamentals"
+  },
+  {
+    "id": "W8-Z5-N1",
+    "title": "AHRS/PFD basics",
+    "world": "Flight Instruments & Pitot-Static (with Gyro/AHRS)",
+    "zone": "AHRS/glass cockpit"
+  }
+]

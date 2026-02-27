@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z4-N1",
+  "title": "Major alteration basics",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Approved data / changes",
+  "objectiveKeys": [
+    "q61",
+    "q86"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Major alteration basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize major alteration definition and common avionics examples."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Major Alteration (Part 43 Appendix A)",
+          "definition": "A change to type design that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities \u2014 and is not listed in the aircraft specifications or type certificate data sheet.",
+          "analogy": "Like a structural renovation changing a building's load-bearing capacity \u2014 it needs engineering review and a permit, unlike replacing a light fixture."
+        },
+        {
+          "term": "STC + Flight Manual Supplement = Major Alteration",
+          "definition": "An STC installation that includes a flight manual supplement is a major alteration \u2014 regardless of the part's TSO status \u2014 because it changes the aircraft's approved operating limitations or procedures.",
+          "analogy": "A TSO on the part is like a UL listing on an appliance \u2014 the part is approved, but modifying your home's electrical panel to install it still requires a permit."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Per 14 CFR Part 43 Appendix A, how is a major alteration defined?",
+      "choices": [
+        "Any repair costing more than $1,000 in parts and labor",
+        "Any alteration not specifically covered by the aircraft's POH",
+        "A change to type design that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities",
+        "Any repair requiring an IA to approve the return-to-service"
+      ],
+      "correctIndex": 2,
+      "feedback": "The regulatory definition focuses on the effect on airworthiness: a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities. Cost, POH coverage, and IA involvement are not the determining factors."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A shop installs an avionics system under an STC. The STC data package includes a flight manual supplement changing VFR-only to IFR-approved operations. This installation should be classified as:",
+      "choices": [
+        "A minor alteration \u2014 avionics do not affect structural strength",
+        "A major alteration \u2014 the flight manual supplement signals a change affecting airworthiness qualities",
+        "A line replacement \u2014 the part has a TSO so no alteration approval is needed",
+        "Preventive maintenance \u2014 pilots can perform STC installations on their own aircraft"
+      ],
+      "correctIndex": 1,
+      "feedback": "The flight manual supplement signals the change affects aircraft airworthiness qualities (operating limitations). That meets the Part 43 Appendix A major alteration definition. TSO approval on the part does not determine the classification of the installation."
+    }
+  ]
+}

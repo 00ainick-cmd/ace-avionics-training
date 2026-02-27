@@ -1,0 +1,59 @@
+{
+  "id": "W5-Z5-N1",
+  "title": "Prohibited practices",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Inspection & prohibited",
+  "objectiveKeys": [
+    "q112",
+    "q172"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Prohibited practices"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify prohibited wiring practices and what not to do."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Prohibited Aircraft Wiring Practices",
+          "definition": "Three prohibited aircraft wiring practices: (1) soldering wires onto contacts designed for crimping \u2014 the solder can wick up the wire causing a stiff heat-affected zone, (2) using automotive-grade connectors \u2014 not rated or approved for aviation environments, (3) leaving unterminated wire ends unprotected \u2014 shorts, arcing, and corrosion hazard.",
+          "analogy": "These are aviation's equivalent of workplace safety violations \u2014 using the wrong tool (automotive parts), misapplying the right tool (soldering crimp contacts), and leaving a hazard unaddressed (open wire ends)."
+        },
+        {
+          "term": "Automotive vs Aviation Connectors",
+          "definition": "Automotive connectors are not approved for aircraft use because they are not rated for aviation temperature extremes, vibration levels, altitude pressure variations, or EMI environments, and do not meet FAA-approved material specifications required under 14 CFR Part 43.",
+          "analogy": "Using an automotive connector in an aircraft is like using a car tire on an airplane \u2014 it might physically fit, but it isn't certified for the load, speed, or environment it would encounter."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which of the following is a prohibited aircraft wiring practice?",
+      "choices": [
+        "Soldering wires to contacts designed for crimping, or using automotive-grade connectors not approved for aviation",
+        "Using PTFE wire rated MIL-W-22759 for avionics harnesses",
+        "Using a ratcheting crimp tool for all wire terminations",
+        "Performing a wiggle test after connector assembly to check for intermittents"
+      ],
+      "correctIndex": 0,
+      "feedback": "Prohibited practices include soldering onto crimp-only contacts (creates brittle solder wicking), using automotive connectors (not aviation-rated), and leaving unprotected wire ends. All approved methods \u2014 PTFE wire, ratcheting crimpers, wiggle tests \u2014 are acceptable."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why are automotive-grade connectors not acceptable in an aircraft avionics installation?",
+      "choices": [
+        "Automotive connectors cost more than aviation-grade connectors",
+        "They are not rated for aviation environments (temperature, vibration, altitude) and do not meet FAA-approved material standards required by Part 43",
+        "They have a different pin spacing that prevents mating with aviation LRU connectors",
+        "Automotive connectors are acceptable if they are the same physical size as aviation connectors"
+      ],
+      "correctIndex": 1,
+      "feedback": "Aviation maintenance must use FAA-approved materials per Part 43. Automotive connectors don't meet aviation temperature ranges (-65\u00b0C to +200\u00b0C), vibration levels, altitude de-rating, or EMC specifications."
+    }
+  ]
+}

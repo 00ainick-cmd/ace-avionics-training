@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z2-N2",
+  "title": "Electrical shock first action",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Basic PPE",
+  "objectiveKeys": [
+    "q175"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Electrical shock first action"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "State the first safe action before assisting a shocked person."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Electrical Shock First Aid",
+          "definition": "For an electrical shock victim: (1) FIRST ensure the area is safe, (2) disconnect the power source before touching the victim, (3) call for emergency assistance. Never touch a victim who may still be energized.",
+          "analogy": "Like a water rescue \u2014 you don't jump in and grab a drowning person who might pull you under. You neutralize the danger (throw a line, cut power) before making contact."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A coworker receives an electrical shock and is still in contact with the circuit. What is the correct FIRST action?",
+      "choices": [
+        "Immediately pull them away from the circuit with your hands",
+        "Ensure the area is safe and disconnect power before touching the victim",
+        "Shout for help while grabbing the victim to provide support",
+        "Begin CPR immediately while a coworker calls 911"
+      ],
+      "correctIndex": 1,
+      "feedback": "Touching an energized victim can electrocute the rescuer. The first step is to ensure YOUR safety, then disconnect power \u2014 only then is it safe to touch the victim and call for emergency help."
+    }
+  ]
+}

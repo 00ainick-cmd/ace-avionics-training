@@ -1,0 +1,52 @@
+{
+  "version": "3.83.31444.0",
+  "course_id": "5WCP6j9h98B",
+  "title": "Oscilloscopes",
+  "thumbnail": "story_content/thumbnail.jpg",
+  "scenes": [
+    {
+      "title": "AEATraining_AET Prep Course v.2"
+    }
+  ],
+  "slides": [
+    {
+      "id": "6OjcpIZhKKd",
+      "title": "Oscilloscopes",
+      "scene_index": "1.1"
+    },
+    {
+      "id": "6TwpSS6WZE5",
+      "title": "Oscilloscopes – Measuring Frequency",
+      "scene_index": "1.2"
+    },
+    {
+      "id": "6oVkUzynZpG",
+      "title": "Oscope Practice #1",
+      "scene_index": "1.3"
+    },
+    {
+      "id": "5VZe4Gjdxet",
+      "title": "Oscope Practice #2",
+      "scene_index": "1.4"
+    },
+    {
+      "id": "65dxc4he1i2",
+      "title": "Oscope Practice #4",
+      "scene_index": "1.5"
+    },
+    {
+      "id": "6crGAS40lFM",
+      "title": "Oscope Practice #3",
+      "scene_index": "1.6"
+    }
+  ],
+  "player": {
+    "name": "unified",
+    "width": 1220,
+    "height": 658
+  },
+  "stage": {
+    "width": 960,
+    "height": 540
+  }
+}

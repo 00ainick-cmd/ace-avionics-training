@@ -1,0 +1,41 @@
+{
+  "id": "W2-Z5-N1",
+  "title": "Installation standards awareness (cross-link)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Standards & calibration awareness",
+  "objectiveKeys": [
+    "q128"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Installation standards awareness (cross-link)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize common installation standard references (wiring/install)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "AC 43.13-1B (Wiring Standard)",
+          "definition": "AC 43.13-1B Chapter 11 (or the aircraft manufacturer's wiring data when it exists) is the primary standard for avionics wiring installation in a Part 145 shop, covering acceptable methods and practices.",
+          "analogy": "Like the NEC (National Electrical Code) for building wiring \u2014 the governing standard that defines what acceptable practice means."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the most critical standard to follow when installing avionics wiring in a Part 145 environment?",
+      "choices": [
+        "RTCA DO-160G environmental testing requirements",
+        "The STC holder's equipment installation manual exclusively",
+        "AC 43.13-1B or the aircraft manufacturer's wiring data",
+        "RTCA DO-178C software development assurance standards"
+      ],
+      "correctIndex": 2,
+      "feedback": "AC 43.13-1B Chapter 11 is the governing standard for aircraft wiring acceptable methods and practices. Manufacturer-specific wiring data takes precedence when it exists. DO-160G covers environmental testing. DO-178C covers software \u2014 neither addresses physical wiring practices."
+    }
+  ]
+}

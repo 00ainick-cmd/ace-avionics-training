@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  ACE CATEGORY HUB — College Edition template                    ║
+  ║  Copy to each cat-X-*/index.html and update CAT_CONFIG below    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MRD: Maintenance Regulations | ACE CAET Prep</title>
+  <link rel="icon" type="image/png" href="../../../../shared/ace-sprites/ace-48-happy.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN TOKENS — ACE College Edition
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1c2128;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-blue: #58a6ff;
+      --accent-blue-bg: rgba(88, 166, 255, 0.1);
+      --success: #3fb950;
+      --success-bg: rgba(63, 185, 80, 0.1);
+      --warning: #d29922;
+      --warning-bg: rgba(210, 153, 34, 0.1);
+      --danger: #f85149;
+      --danger-bg: rgba(248, 81, 73, 0.1);
+      --gold: #e3b341;
+      --cat-color: #58a6ff;
+      /* overridden per category */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: 0.15s ease;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --surface-2: #f0f2f4;
+      --border: #d0d7de;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #9198a1;
+      --accent-blue: #0066cc;
+      --accent-blue-bg: rgba(0, 102, 204, 0.08);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TOPBAR
+    ═══════════════════════════════════════════════════════════ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 56px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      gap: 16px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 7px 14px;
+      transition: all var(--transition);
+    }
+
+    .btn-back:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    .topbar-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: 1px solid var(--cat-color);
+      color: var(--cat-color);
+      border-radius: var(--radius-sm);
+      background: rgba(88, 166, 255, 0.08);
+    }
+
+    .btn-theme {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      width: 36px;
+      height: 36px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transition);
+      color: var(--text-secondary);
+    }
+
+    .btn-theme:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PAGE
+    ═══════════════════════════════════════════════════════════ */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════════ */
+    .cat-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      border-top: 3px solid var(--cat-color);
+    }
+
+    .cat-hero-num {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--cat-color);
+      margin-bottom: 6px;
+    }
+
+    .cat-hero-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .cat-hero-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 20px;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-stat-item {}
+
+    .hero-stat-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .hero-stat-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .progress-hero {
+      margin-top: 20px;
+    }
+
+    .progress-hero-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .progress-hero-lbl {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .progress-hero-pct {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cat-color);
+    }
+
+    .progress-track {
+      height: 8px;
+      background: var(--surface-2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--cat-color);
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ACTIVITY GRID
+    ═══════════════════════════════════════════════════════════ */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .activity-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      cursor: pointer;
+      transition: all var(--transition);
+      position: relative;
+    }
+
+    .activity-card:hover {
+      border-color: var(--cat-color);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .activity-card.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .act-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .act-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .act-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .act-status {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .status-complete {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-progress {
+      background: var(--accent-blue-bg);
+      color: var(--accent-blue);
+    }
+
+    .status-locked {
+      background: var(--surface-2);
+      color: var(--text-muted);
+    }
+
+    .act-xp {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .act-xp-icon {
+      color: var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ACTIVITY IFRAME OVERLAY
+    ═══════════════════════════════════════════════════════════ */
+    .activity-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--bg);
+      flex-direction: column;
+    }
+
+    .activity-overlay.active {
+      display: flex;
+    }
+
+    .overlay-topbar {
+      height: 48px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+
+    .overlay-close {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 5px 12px;
+      transition: all var(--transition);
+    }
+
+    .overlay-close:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .overlay-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .activity-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       TOPBAR
+  ════════════════════════════════════════ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="../../../../dashboard.html" class="btn-back">← Dashboard</a>
+      <span class="topbar-badge" id="topbarBadge">MRD</span>
+    </div>
+    <button class="btn-theme" id="btnTheme" title="Toggle theme">🌙</button>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       ACTIVITY OVERLAY (iframe)
+  ════════════════════════════════════════ -->
+  <div class="activity-overlay" id="activityOverlay">
+    <div class="overlay-topbar">
+      <button class="overlay-close" id="closeOverlay">✕ Close</button>
+      <span class="overlay-label" id="overlayLabel">Activity</span>
+    </div>
+    <iframe class="activity-frame" id="activityFrame" src="" allowfullscreen></iframe>
+  </div>
+
+
+  <div class="page">
+
+    <!-- ════════════════════════════════════════
+         HERO
+    ════════════════════════════════════════ -->
+    <div class="cat-hero">
+      <div class="cat-hero-num" id="heroNum">MRD</div>
+      <div class="cat-hero-title" id="heroTitle">Maintenance Regulations & Documentation</div>
+      <div class="cat-hero-desc" id="heroDesc">Master the regulatory framework, documentation requirements, and
+        compliance standards for CAET certification.</div>
+
+      <div class="hero-stats-row">
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroMastery">0%</div>
+          <div class="hero-stat-lbl">Mastery</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroXP">0 XP</div>
+          <div class="hero-stat-lbl">Earned</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-val" id="heroObjectives">—</div>
+          <div class="hero-stat-lbl">Objectives</div>
+        </div>
+      </div>
+
+      <div class="progress-hero">
+        <div class="progress-hero-row">
+          <span class="progress-hero-lbl">Overall mastery</span>
+          <span class="progress-hero-pct" id="progressPct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════
+         STUDY ACTIVITIES
+    ════════════════════════════════════════ -->
+    <div class="section-label">Study Activities</div>
+    <div class="activity-grid">
+
+      <div class="activity-card" onclick="launchActivity('flashcards', 'Flashcards')">
+        <div class="act-status" id="status-flashcards">– New</div>
+        <div class="act-icon">⚡</div>
+        <div class="act-title">Flashcards</div>
+        <div class="act-desc">SM-2 spaced repetition. Flip through key terms and definitions.</div>
+        <div class="act-xp"><span class="act-xp-icon">✦</span><span id="xp-flashcards">50 XP / session</span></div>
+      </div>
+
+      <div class="activity-card" onclick="launchActivity('practice', 'Practice')">
+        <div class="act-status" id="status-practice">– New</div>
+        <div class="act-icon">📝</div>
+        <div class="act-title">Practice</div>
+        <div class="act-desc">Free response questions with hangar door reveals. Deep understanding mode.</div>
+        <div class="act-xp"><span class="act-xp-icon">✦</span><span id="xp-practice">75 XP / session</span></div>
+      </div>
+
+      <div class="activity-card" onclick="launchActivity('practice-test', 'Practice Test')">
+        <div class="act-status" id="status-practice-test">– New</div>
+        <div class="act-icon">📋</div>
+        <div class="act-title">Practice Test</div>
+        <div class="act-desc">Timed multiple choice. Formal exam simulation with score breakdown.</div>
+        <div class="act-xp"><span class="act-xp-icon">✦</span><span id="xp-practice-test">100 XP / session</span></div>
+      </div>
+
+      <div class="activity-card" onclick="launchActivity('jeopardy', 'Jeopardy')">
+        <div class="act-status" id="status-jeopardy">– New</div>
+        <div class="act-icon">🎯</div>
+        <div class="act-title">Jeopardy</div>
+        <div class="act-desc">Battle Ace — a game-show format competitive review mode against ACE.</div>
+        <div class="act-xp"><span class="act-xp-icon">✦</span><span id="xp-jeopardy">150 XP / win</span></div>
+      </div>
+
+      <div class="activity-card" id="finalCard" onclick="launchActivity('final', 'Final Test')">
+        <div class="act-status" id="status-final">🔒 Locked</div>
+        <div class="act-icon">🏁</div>
+        <div class="act-title">Final Test</div>
+        <div class="act-desc">Certification readiness check. Unlocks when mastery reaches 80%.</div>
+        <div class="act-xp"><span class="act-xp-icon">✦</span><span id="xp-final">200 XP / pass</span></div>
+      </div>
+
+    </div>
+
+  </div><!-- /page -->
+
+
+  <script>
+    /* ════════════════════════════════════════════════════════════
+       ██  CATEGORY CONFIG — update this per category
+    ════════════════════════════════════════════════════════════ */
+    const CAT_CONFIG = {
+      id: 'cat-1',
+      num: 'MRD',
+      title: 'Maintenance Regulations & Documentation',
+      description: 'Master the regulatory framework, documentation requirements, and compliance standards for CAET certification.',
+      color: '#58a6ff',
+      objectives: 31,    // number of learning objectives
+      activities: {
+        flashcards: 'flashcards.html',
+        practice: 'practice.html',
+        'practice-test': 'practice-test.html',
+        jeopardy: 'jeopardy.html',
+        final: 'final.html',
+      }
+    };
+
+    /* ════════════════════════════════════════════════════════════
+       APPLY CAT CONFIG TO PAGE
+    ════════════════════════════════════════════════════════════ */
+    document.title = `${CAT_CONFIG.num}: ${CAT_CONFIG.title} | ACE CAET Prep`;
+    document.getElementById('heroNum').textContent = CAT_CONFIG.num;
+    document.getElementById('heroTitle').textContent = CAT_CONFIG.title;
+    document.getElementById('heroDesc').textContent = CAT_CONFIG.description;
+    document.getElementById('heroObjectives').textContent = CAT_CONFIG.objectives;
+    document.getElementById('topbarBadge').textContent = CAT_CONFIG.num;
+    document.getElementById('topbarBadge').style.borderColor = CAT_CONFIG.color;
+    document.getElementById('topbarBadge').style.color = CAT_CONFIG.color;
+    document.documentElement.style.setProperty('--cat-color', CAT_CONFIG.color);
+
+    /* ════════════════════════════════════════════════════════════
+       LOCALSTORAGE
+    ════════════════════════════════════════════════════════════ */
+    function lsGet(key, fallback = null) {
+      try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : fallback; }
+      catch (e) { return fallback; }
+    }
+    function lsSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { }
+    }
+
+    function getMastery() { return lsGet(`ace_cat_${CAT_CONFIG.id}_mastery`, 0); }
+    function getXP() { return lsGet(`ace_cat_${CAT_CONFIG.id}_xp`, 0); }
+    function getActDone(k) { return lsGet(`ace_cat_${CAT_CONFIG.id}_${k}_complete`, false); }
+    function getActProg(k) { return lsGet(`ace_cat_${CAT_CONFIG.id}_${k}_progress`, false); }
+
+    /* ════════════════════════════════════════════════════════════
+       UI STATE
+    ════════════════════════════════════════════════════════════ */
+    function updateUI() {
+      const mastery = getMastery();
+      const xp = getXP();
+
+      document.getElementById('heroMastery').textContent = mastery + '%';
+      document.getElementById('heroXP').textContent = xp.toLocaleString() + ' XP';
+      document.getElementById('progressPct').textContent = mastery + '%';
+      document.getElementById('progressFill').style.width = mastery + '%';
+
+      // Final test lock
+      const finalCard = document.getElementById('finalCard');
+      if (mastery < 80) {
+        finalCard.classList.add('locked');
+        document.getElementById('status-final').textContent = `🔒 Need ${80 - mastery}% more`;
+        document.getElementById('status-final').className = 'act-status status-locked';
+      } else {
+        finalCard.classList.remove('locked');
+        setActivityStatus('final');
+      }
+
+      // Activity statuses
+      ['flashcards', 'practice', 'practice-test', 'jeopardy'].forEach(k => setActivityStatus(k));
+    }
+
+    function setActivityStatus(k) {
+      const el = document.getElementById(`status-${k}`);
+      if (!el) return;
+      if (getActDone(k)) {
+        el.textContent = '✓ Complete';
+        el.className = 'act-status status-complete';
+      } else if (getActProg(k)) {
+        el.textContent = '◑ In progress';
+        el.className = 'act-status status-progress';
+      } else {
+        el.textContent = '– New';
+        el.className = 'act-status';
+      }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       ACTIVITY LAUNCH
+    ════════════════════════════════════════════════════════════ */
+    function launchActivity(key, label) {
+      let path = CAT_CONFIG.activities[key];
+      if (!path) return;
+
+      if (key === 'jeopardy') {
+        const themeLink = document.querySelector('link[href*="shared/ace-theme.css"]');
+        const sharedPrefix = themeLink ? themeLink.getAttribute('href').replace('ace-theme.css', '') : '../../../../shared/';
+        path = sharedPrefix + 'jeopardy.html?cat=' + encodeURIComponent(CAT_CONFIG.id) +
+          '&title=' + encodeURIComponent(CAT_CONFIG.num + ': ' + CAT_CONFIG.title) +
+          '&color=' + encodeURIComponent(CAT_CONFIG.color) +
+          '&data=data/questions.json' +
+          '&back=' + encodeURIComponent(window.location.href);
+      }
+
+      // Mark as in-progress
+      lsSet(`ace_cat_${CAT_CONFIG.id}_${key}_progress`, true);
+      updateUI();
+
+      const overlay = document.getElementById('activityOverlay');
+      const frame = document.getElementById('activityFrame');
+      document.getElementById('overlayLabel').textContent = label;
+
+      frame.src = path;
+      overlay.classList.add('active');
+    }
+
+    function closeOverlay() {
+      const overlay = document.getElementById('activityOverlay');
+      const frame = document.getElementById('activityFrame');
+      overlay.classList.remove('active');
+      frame.src = '';
+      updateUI();
+    }
+
+    document.getElementById('closeOverlay').addEventListener('click', closeOverlay);
+
+    // Listen for completion messages from iframes
+    window.addEventListener('message', function (e) {
+      const d = e.data;
+      if (!d || typeof d !== 'object') return;
+
+      const type = d.type || d.action;
+
+      // Map message types to activity keys
+      const keyMap = {
+        'flashcardsComplete': 'flashcards',
+        'practiceComplete': 'practice',
+        'practiceTestComplete': 'practice-test',
+        'jeopardyComplete': 'jeopardy',
+        'finalComplete': 'final',
+        'ACE_CLOSE': null,
+      };
+
+      if (type === 'ACE_CLOSE') {
+        closeOverlay();
+        return;
+      }
+
+      const actKey = keyMap[type];
+      if (actKey) {
+        lsSet(`ace_cat_${CAT_CONFIG.id}_${actKey}_complete`, true);
+        // Award XP
+        const xpMap = { flashcards: 50, practice: 75, 'practice-test': 100, jeopardy: 150, final: 200 };
+        const earned = xpMap[actKey] || 50;
+        const current = getXP();
+        lsSet(`ace_cat_${CAT_CONFIG.id}_xp`, current + earned);
+        const totalXP = lsGet('ace_xp_total', 0);
+        lsSet('ace_xp_total', totalXP + earned);
+        closeOverlay();
+      }
+    });
+
+    /* ════════════════════════════════════════════════════════════
+       THEME
+    ════════════════════════════════════════════════════════════ */
+    const html = document.documentElement;
+    const btnTheme = document.getElementById('btnTheme');
+    function applyTheme(t) {
+      html.setAttribute('data-theme', t);
+      btnTheme.textContent = t === 'dark' ? '🌙' : '☀️';
+      try { localStorage.setItem('ace_theme', t); } catch (e) { }
+    }
+    btnTheme.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    const savedTheme = lsGet('ace_theme', null);
+    if (savedTheme) applyTheme(savedTheme);
+
+    /* ════════════════════════════════════════════════════════════
+       INIT
+    ════════════════════════════════════════════════════════════ */
+    updateUI();
+  </script>
+</body>
+
+</html>

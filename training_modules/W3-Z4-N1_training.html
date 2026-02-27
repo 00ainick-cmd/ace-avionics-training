@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — AC fundamentals (frequency/waveform/reactance/transformer)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+        .sidebar-node-link.completed::after {
+            content: ' ✓';
+            color: var(--success);
+            float: right;
+            font-weight: bold;
+        }
+        .completion-banner {
+            display: none;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            align-items: center;
+            gap: 10px;
+        }
+        .completion-banner.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header" style="padding-bottom: 20px;">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+            <button onclick="endSession()" class="end-session-btn" style="background:var(--error); color:#fff; border:none; padding:10px; margin-top: 15px; font-weight:800; cursor:pointer; font-family:'Courier New', monospace; border-radius:4px; text-transform:uppercase; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); width: 100%; font-size: 0.85rem;">END SESSION / LOG DATA</button>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link active">AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link">Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">AHRS/PFD basics</a>
+
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <div id="completion-banner" class="completion-banner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            MODULE COMPLETED — You have already mastered this training node.
+        </div>
+        
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W3 // ELECTRICAL // AC FUNDAMENTALS</span>
+            </div>
+            <h1>AC fundamentals<br><span class="doc-subtitle">frequency/waveform/reactance/transformer</span></h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Define AC frequency and explain why aviation utilizes the 400 Hz standard instead of 60 Hz.</li>
+        <li>Identify the components of a sinusoidal AC waveform.</li>
+        <li>Explain the basic operation and advantage of an electrical transformer.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/oscilloscope_ac_wave.png" alt="A close-up of a digital oscilloscope screen showing a perfect 400 Hz yellow sinusoidal AC waveform" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A close-up of a digital oscilloscope screen showing a perfect 400 Hz yellow sinusoidal AC waveform</figcaption>
+                </figure>
+        <p class="body-text">A technician is repairing a heavy transport AC generator control unit on the bench. They verify the output is a perfect 115 VAC, sign off the unit, and install it. But when the aircraft powers up, the AC-powered gyro motors run erratically and the avionics displays glitch constantly. The problem? The generator is outputting 115 VAC, but at 350 Hz instead of the required 400 Hz. In AC systems, voltage alone does not define power — <strong>frequency</strong> matters equally. If you do not understand AC characteristics, you cannot maintain large transport or business aircraft.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <p class="body-text">While light aircraft run entirely on 28V DC, large business jets and commercial airliners generate and distribute primary power as <strong>Alternating Current (AC)</strong> (typically 115 VAC, 3-phase).</p>
+        <h3 class="content-h3">The Waveform and Frequency</h3>
+        <p class="body-text">Unlike DC which stays flat, a single-phase AC voltage follows a <strong>sinusoidal (sine wave)</strong> pattern:</p>
+        <ul class="content-list">
+        <li>It rises from zero to a positive peak, drops back through zero, falls to a negative peak, and returns to zero — completing one full <strong>cycle</strong>.</li>
+        </ul>
+        <p class="body-text"><strong>Frequency</strong> describes how many of these complete AC cycles occur per second. It is measured in <strong>Hertz (Hz)</strong>.</p>
+        <ul class="content-list">
+        <li>US household power = <strong>60 Hz</strong> (60 cycles every second).</li>
+        <li>Commercial Aircraft AC systems = <strong>400 Hz</strong>.</li>
+        </ul>
+        <h3 class="content-h3">Why 400 Hz? The Weight Advantage</h3>
+        <p class="body-text">Why did aviation engineers choose 400 Hz instead of standard 60 Hz? <strong>Weight.</strong> In electromagnetic devices like motors, generators, and transformers, higher frequencies allow the magnetic cores and copper windings to be physically smaller while transferring the same amount of power. A 400 Hz transformer is a fraction of the size and weight of a 60 Hz transformer. In aviation, shedding pounds is paramount. *The downside?* 400 Hz power experiences much higher line losses over long wire runs, but an aircraft fuselage is short enough that this trade-off is worth it.</p>
+        <h3 class="content-h3">The Transformer Advantage</h3>
+        <p class="body-text">The primary reason heavy aircraft use AC instead of DC is the <strong>Transformer</strong>:</p>
+        <ul class="content-list">
+        <li>Transformers use electromagnetic induction to step AC voltage UP or DOWN. (They physically cannot work with DC).</li>
+        <li>Why step up voltage? Because <strong>P = V × I</strong>. If you step up the distribution voltage (say, to 115V or 230V), you drastically reduce the current required to deliver a specific wattage to the load.</li>
+        <li>Lower current means you can use <strong>thinner, lighter wiring</strong> to route power across the 150-foot wingspan of an airliner, saving hundreds of pounds of copper weight.</li>
+        </ul>
+        <h3 class="content-h3">Reactance (When Frequency Matters)</h3>
+        <p class="body-text">In AC circuits, inductors and capacitors behave uniquely compared to DC:</p>
+        <ul class="content-list">
+        <li><strong>Inductive Reactance (XL)</strong> is the opposition an inductor presents to AC current. Crucially, as the AC frequency *increases*, the inductor&#x27;s opposition *increases*.</li>
+        <li><strong>Capacitive Reactance (XC)</strong> is the opposition a capacitor presents. As AC frequency *increases*, the capacitor&#x27;s opposition *decreases*.</li>
+        </ul>
+        <p class="body-text">This frequency-dependent behavior is exactly how avionics engineers build the filters that separate high-frequency radio signals from low-frequency audio signals.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Engine Driven AC Generator] --> B[Produces 115 VAC at 400 Hz]
+    B --> C[AC Distribution Bus]
+    
+    C --> D[Transformer Rectifier Unit TRU]
+    D -->|Steps Down & Rectifies| E[Provides 28 VDC for secondary avionics]
+    
+    C --> F[Step-Down Transformer]
+    F -->|Lowers to 26 VAC| G[Powers Synchro/Gyro Instruments]
+    
+    C --> H[Powers Heavy AC Loads directly]
+    H --> I[Hydraulic Pumps / Galley Ovens]
+    
+    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style D fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Interactive Simulation</span>
+                <h2 class="section-title">Interactive Lab</h2>
+                <div class="simulation-container" style="background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 30px 0; padding: 20px;">
+                    <style>
+    .ac-container {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .ac-header {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .ac-scope {
+        background: #020617;
+        border: 2px solid #334155;
+        border-radius: 12px;
+        padding: 10px;
+        position: relative;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .ac-canvas-wrap {
+        width: 100%;
+        height: 250px;
+        background: #0f172a;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1);
+    }
+
+    #ac-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .ac-graticule {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+        background-size: 25px 25px;
+        background-position: center center;
+        pointer-events: none;
+    }
+
+    .ac-center-lines {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(59, 130, 246, 0.3);
+        pointer-events: none;
+    }
+
+    .ac-center-lines::after {
+        content: '';
+        position: absolute;
+        top: -125px;
+        left: 50%;
+        bottom: -125px;
+        width: 1px;
+        background: rgba(59, 130, 246, 0.3);
+    }
+
+    .ac-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+    }
+
+    .ac-control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ac-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .ac-val {
+        color: #60a5fa;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+    }
+
+    .ac-stats {
+        display: flex;
+        justify-content: space-around;
+        background: #0b1120;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .ac-stat-box {
+        text-align: center;
+    }
+
+    .ac-stat-title {
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+    }
+
+    .ac-stat-data {
+        color: #f1f5f9;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="ac-container">
+    <div class="ac-header">Simulated Oscilloscope: AC Fundamentals</div>
+
+    <div class="ac-scope">
+        <div class="ac-canvas-wrap">
+            <div class="ac-graticule"></div>
+            <div class="ac-center-lines"></div>
+            <canvas id="ac-canvas"></canvas>
+        </div>
+        <div class="ac-stats">
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">V(Peak)</div>
+                <div class="ac-stat-data" id="ac-vp">115 V</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">V(RMS)</div>
+                <div class="ac-stat-data" id="ac-vrms" style="color:#10b981;">81.3 V</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">Frequency</div>
+                <div class="ac-stat-data" id="ac-freq-disp">400 Hz</div>
+            </div>
+            <div class="ac-stat-box">
+                <div class="ac-stat-title">Period</div>
+                <div class="ac-stat-data" id="ac-period">2.5 ms</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ac-controls">
+        <div class="ac-control-group">
+            <div class="ac-label">
+                <span>Peak Voltage (Amplitude)</span>
+                <span class="ac-val" id="val-volt">115 V</span>
+            </div>
+            <input type="range" id="ac-slider-volt" min="10" max="230" value="115">
+        </div>
+        <div class="ac-control-group">
+            <div class="ac-label">
+                <span>Frequency (Hz)</span>
+                <span class="ac-val" id="val-freq">400 Hz</span>
+            </div>
+            <input type="range" id="ac-slider-freq" min="50" max="800" value="400">
+        </div>
+    </div>
+
+    <div style="font-size:0.85rem; color:var(--text-muted); text-align:center;">
+        Notice how altering the Peak Voltage directly impacts the <strong>RMS Voltage</strong> (Root Mean Square), which
+        is the usable power equivalent to DC. Aircraft typically run on 115 VAC at 400 Hz to save weight on magnetic
+        cores like transformers or alternators.
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('ac-canvas');
+        const ctx = canvas.getContext('2d');
+        const sliderVolt = document.getElementById('ac-slider-volt');
+        const sliderFreq = document.getElementById('ac-slider-freq');
+
+        const valVolt = document.getElementById('val-volt');
+        const valFreq = document.getElementById('val-freq');
+        const statVp = document.getElementById('ac-vp');
+        const statVrms = document.getElementById('ac-vrms');
+        const statFreq = document.getElementById('ac-freq-disp');
+        const statPeriod = document.getElementById('ac-period');
+
+        let width, height;
+        function resize() {
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let voltage = parseInt(sliderVolt.value);
+        let frequency = parseInt(sliderFreq.value);
+        let timeOffset = 0;
+
+        function updateStats() {
+            voltage = parseInt(sliderVolt.value);
+            frequency = parseInt(sliderFreq.value);
+
+            valVolt.innerText = voltage + " V";
+            valFreq.innerText = frequency + " Hz";
+
+            statVp.innerText = voltage + " V";
+            const vrms = (voltage * 0.707).toFixed(1);
+            statVrms.innerText = vrms + " V";
+
+            statFreq.innerText = frequency + " Hz";
+            const periodMs = (1000 / frequency).toFixed(2);
+            statPeriod.innerText = periodMs + " ms";
+        }
+
+        sliderVolt.addEventListener('input', updateStats);
+        sliderFreq.addEventListener('input', updateStats);
+
+        function drawWave(time) {
+            ctx.clearRect(0, 0, width, height);
+
+            // Scope settings
+            const centerY = height / 2;
+            // Map 230V max to 90% of half-height
+            const pixelsPerVolt = (height / 2 * 0.9) / 230;
+
+            // Let's say visual width represents exactly 10 milliseconds of time.
+            // 10ms at 400Hz = 4 full cycles.
+            const timeWindowMs = 10;
+
+            // Move wave based on real time to animate
+            timeOffset += (frequency * 0.00005);
+
+            ctx.beginPath();
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#3b82f6'; // Bright blue trace
+
+            for (let x = 0; x <= width; x++) {
+                // What time (ms) does this pixel represent?
+                const pixelTimeMs = (x / width) * timeWindowMs;
+
+                // value = Vp * sin(2 * PI * f * t + phase)
+                // t is in seconds: pixelTimeMs / 1000
+                const t = pixelTimeMs / 1000;
+                const yVal = voltage * Math.sin(2 * Math.PI * frequency * t - timeOffset);
+
+                const yPixel = centerY - (yVal * pixelsPerVolt);
+
+                if (x === 0) ctx.moveTo(x, yPixel);
+                else ctx.lineTo(x, yPixel);
+            }
+
+            // Glowing effect
+            ctx.shadowColor = '#60a5fa';
+            ctx.shadowBlur = 10;
+            ctx.stroke();
+
+            // Draw RMS lines
+            ctx.shadowBlur = 0; // turn off glow for RMS indicator
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; // Green
+            ctx.lineWidth = 1;
+            const vrms = voltage * 0.707;
+            const yTopRMS = centerY - (vrms * pixelsPerVolt);
+            const yBotRMS = centerY + (vrms * pixelsPerVolt);
+            ctx.moveTo(0, yTopRMS); ctx.lineTo(width, yTopRMS);
+            ctx.moveTo(0, yBotRMS); ctx.lineTo(width, yBotRMS);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            requestAnimationFrame(drawWave);
+        }
+
+        updateStats();
+        requestAnimationFrame(drawWave);
+    });
+</script>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>When bench-testing or troubleshooting an AC generator, inverter, or ground power cart, verifying voltage with a standard multimeter is only half the job. You MUST verify the frequency using a frequency counter or oscilloscope. 115V at 300Hz is unairworthy power and will destroy expensive 400Hz avionics cooling fans and gyro motors.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 3.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Frequency unit: hertz (Hz)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Frequency unit: hertz (Hz)</div>
+                            <p>Frequency is measured in hertz (Hz). One hertz equals one complete AC cycle per second. Aircraft AC systems typically operate at 400 Hz; household power in the US is 60 Hz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Capacitance unit: farad (F) and microfarad (µF)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Capacitance unit: farad (F) and microfarad (µF)</div>
+                            <p>Capacitance is measured in farads (F). Because one farad is extremely large, practical avionics capacitors are rated in microfarads (µF, 10⁻⁶ F) or picofarads (pF, 10⁻¹² F). Microfarads are most common in avionics power filtering circuits.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Inductive reactance (XL)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Inductive reactance (XL)</div>
+                            <p>Inductive reactance (XL) is the opposition an inductor presents to AC current flow. It is measured in ohms and increases proportionally with frequency: XL = 2πfL. Higher frequency → higher reactance → less AC current through the inductor.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>AC advantage: voltage transformation</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">AC advantage: voltage transformation</div>
+                            <p>The primary advantage of AC in aircraft is the ability to use transformers to step voltage up or down. Higher voltage means lower current for the same power (P = V x I), which allows smaller, lighter wiring — critical in weight-sensitive aircraft.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>AC waveform shape</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">AC waveform shape</div>
+                            <p>A single-phase AC waveform is a sinusoidal (sine wave) curve that rises above zero to a positive peak, returns through zero, falls to a negative peak, and returns to zero — completing one full cycle at the system frequency.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transformer operation</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transformer operation</div>
+                            <p>A transformer transfers electrical power from one AC circuit to another through electromagnetic induction, simultaneously stepping voltage up or down based on the turns ratio of the primary and secondary windings. Transformers only work with AC.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Verifying AC alternator frequency</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Verifying AC alternator frequency</div>
+                            <p>A frequency counter or calibrated oscilloscope are the correct instruments to verify that an AC alternator is producing the correct output frequency (typically 400 Hz) during bench testing.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Hertz (Hz)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Hertz (Hz)</div>
+                            <p>The standard unit of frequency; equating to one complete AC cycle per second.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>400 Hz</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">400 Hz</div>
+                            <p>The mandated aviation AC frequency standard, chosen to minimize the physical size and weight of magnetic components.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Transformer</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Transformer</div>
+                            <p>An AC-only device featuring primary and secondary windings that transfers power magnetically to step voltage levels up or down.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Sinusoidal Waveform</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Sinusoidal Waveform</div>
+                            <p>The smooth, continuously alternating wave shape produced by rotating AC generators.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 6.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="2" data-feedback="Frequency is measured in hertz (Hz), which represents the number of complete cycles per second. Watts measure power, amperes measure current, and ohms measure resistance — none of these units describe how many times per second an AC waveform completes a cycle.">
+                <div class="kc-header">Knowledge Verification [1/7]</div>
+                <div class="kc-question">The frequency of an AC electrical system is expressed in which unit?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0" data-remediation="">
+                        <div class="kc-option-text">Watts (W)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1" data-remediation="">
+                        <div class="kc-option-text">Amperes (A)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2" data-remediation="">
+                        <div class="kc-option-text">Hertz (Hz)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3" data-remediation="">
+                        <div class="kc-option-text">Ohms (Ω)</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="1" data-feedback="Capacitance is measured in farads (F). The farad is too large for practical components, so avionics capacitors are typically specified in microfarads (µF). For high-frequency RF circuits, picofarads (pF) are used. Henries measure inductance, ohms measure resistance, and coulombs measure charge — not capacitance.">
+                <div class="kc-header">Knowledge Verification [2/7]</div>
+                <div class="kc-question">What is the SI unit of capacitance, and what smaller denomination is most commonly used when specifying capacitors in avionics circuits?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0" data-remediation="">
+                        <div class="kc-option-text">Henry (H); millihenries are most common in avionics</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1" data-remediation="">
+                        <div class="kc-option-text">Farad (F); microfarads (µF) are most common in avionics</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2" data-remediation="">
+                        <div class="kc-option-text">Ohm (Ω); milliohms are most common in avionics</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3" data-remediation="">
+                        <div class="kc-option-text">Coulomb (C); microcoulombs are most common in avionics</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="1" data-feedback="Inductive reactance (XL) is the opposition to AC current flow produced by an inductor, measured in ohms, with the value increasing as frequency rises (XL = 2πfL). The henry is the unit of inductance itself, not reactance. Capacitive reactance decreases with frequency (the opposite behavior). Impedance combines both resistance and reactance.">
+                <div class="kc-header">Knowledge Verification [3/7]</div>
+                <div class="kc-question">Which statement correctly describes inductive reactance?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0" data-remediation="">
+                        <div class="kc-option-text">It is the opposition to DC current flow by an inductor, measured in henries</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1" data-remediation="">
+                        <div class="kc-option-text">It is the opposition to AC current flow by an inductor, measured in ohms and increasing with frequency</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2" data-remediation="">
+                        <div class="kc-option-text">It is the opposition to current flow by a capacitor, measured in ohms and decreasing with frequency</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3" data-remediation="">
+                        <div class="kc-option-text">It is the total opposition to current flow in any circuit, combining resistance and reactance</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="2" data-feedback="The key advantage of AC is transformer compatibility. Transformers can step voltage up or down, allowing high-power loads to be powered at high voltage and low current — which means thinner, lighter wiring. DC voltage cannot be changed by a simple transformer; you need electronic converters instead, which are heavier and less efficient for large power levels.">
+                <div class="kc-header">Knowledge Verification [4/7]</div>
+                <div class="kc-question">What is the primary advantage of using an AC electrical system in aircraft compared to a purely DC system?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0" data-remediation="">
+                        <div class="kc-option-text">AC is safer to work on than DC systems of equivalent voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1" data-remediation="">
+                        <div class="kc-option-text">AC can be stored in batteries more efficiently than DC</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2" data-remediation="">
+                        <div class="kc-option-text">AC systems allow transformers to change voltage levels, enabling lighter wiring for high-power loads</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3" data-remediation="">
+                        <div class="kc-option-text">AC eliminates the need for circuit breakers in aircraft wiring systems</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="2" data-feedback="A single-phase AC waveform is sinusoidal — it follows a sine function over time, continuously and smoothly alternating between positive and negative values. One complete trip from zero, to positive peak, back through zero, to negative peak, and back to zero constitutes one cycle. This shape results directly from the physics of rotating electromagnetic alternators.">
+                <div class="kc-header">Knowledge Verification [5/7]</div>
+                <div class="kc-question">How is the voltage waveform of a single-phase AC electrical system best described?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0" data-remediation="">
+                        <div class="kc-option-text">A constant DC level interrupted by brief spikes</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1" data-remediation="">
+                        <div class="kc-option-text">A square wave toggling between a fixed positive and fixed negative voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2" data-remediation="">
+                        <div class="kc-option-text">A sinusoidal curve that smoothly alternates above and below zero voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3" data-remediation="">
+                        <div class="kc-option-text">A triangular wave that linearly ramps between peak and zero</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="1" data-feedback="Transformers work by electromagnetic induction. The AC primary current creates a changing magnetic flux in the core. This changing flux induces a voltage in the secondary winding proportional to the turns ratio. There is no direct electrical connection between primary and secondary windings — power is coupled magnetically. This galvanic isolation is a secondary benefit used in avionics power supplies.">
+                <div class="kc-header">Knowledge Verification [6/7]</div>
+                <div class="kc-question">How does a transformer transfer power from its primary circuit to its secondary circuit?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0" data-remediation="">
+                        <div class="kc-option-text">By direct electrical conduction through a common wire connecting both windings</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1" data-remediation="">
+                        <div class="kc-option-text">Through electromagnetic induction, where the AC in the primary winding creates a changing magnetic field that induces voltage in the secondary winding</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2" data-remediation="">
+                        <div class="kc-option-text">By converting AC to DC in the primary and regenerating AC in the secondary</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3" data-remediation="">
+                        <div class="kc-option-text">By storing energy in a magnetic core and releasing it at a different voltage during the off cycle</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc7" style="display: none; margin:0;" data-correct="1" data-feedback="Frequency must be verified with a frequency counter or oscilloscope. A voltmeter confirms output amplitude but gives no frequency information. An ammeter verifies current capacity. Resistance measurement is useful for winding checks but does not verify operational frequency. Only a frequency counter or oscilloscope directly measures Hz.">
+                <div class="kc-header">Knowledge Verification [7/7]</div>
+                <div class="kc-question">A technician needs to confirm that a repaired aircraft AC alternator is producing the correct output frequency before returning it to service. Which instrument is most appropriate for this verification?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="0" data-remediation="">
+                        <div class="kc-option-text">A standard AC voltmeter to measure output voltage magnitude</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="1" data-remediation="">
+                        <div class="kc-option-text">A frequency counter or calibrated oscilloscope to measure output frequency</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="2" data-remediation="">
+                        <div class="kc-option-text">An ammeter to measure current output at full load</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="3" data-remediation="">
+                        <div class="kc-option-text">A digital multimeter set to resistance to verify winding continuity</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc7" disabled onclick="checkAnswer('kc7')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc7"></div>
+                <button class="kc-next-btn" id="next-kc7" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(6)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong>AC power relies on both voltage and frequency — aviation uses the 400 Hz standard because it allows transformers and motors to be significantly lighter than 60 Hz components.</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W3-Z3-N3_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W4-Z1-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W3-Z4-N1';
+        const NODE_LOS = ["q49", "q109", "q205", "q174", "q155", "q206", "q28"];
+        const TOTAL_KCS = 7;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+        let sessionStartTime = Date.now();
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            
+            // Wire XP specifically to Learning Objectives
+            let loXP = JSON.parse(localStorage.getItem('caet_lo_xp') || '{}');
+            NODE_LOS.forEach(lo => {
+                loXP[lo] = (loXP[lo] || 0) + amount;
+            });
+            localStorage.setItem('caet_lo_xp', JSON.stringify(loXP));
+            
+            updateXPDisplay();
+            
+            // Trigger LMS global XP if hosted in an iframe
+            if (window.parent && typeof window.parent.awardXP === 'function') {
+                window.parent.awardXP(amount, reason);
+            }
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+            let banner = document.getElementById('completion-banner');
+            if (banner) banner.classList.add('visible');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            if (localStorage.getItem(`completed_${NODE_ID}`)) {
+                let banner = document.getElementById('completion-banner');
+                if (banner) banner.classList.add('visible');
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            
+            // Supabase Tracking
+            if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+                window.AceSupabase.trackQuestionEvent({
+                    lessonId: NODE_ID,
+                    questionId: `${NODE_ID}-KC-${qId.replace('kc', '')}`,
+                    format: 'interactive',
+                    loId: NODE_LOS.length > 0 ? NODE_LOS[0] : 'General',
+                    category: 'Electrical',
+                    selectedIndex: parseInt(selected.value),
+                    correctIndex: correct,
+                    isCorrect: isCorrect,
+                    points: isCorrect ? 25 : 0
+                });
+            }
+            
+            let displayExplanation = explanation;
+            const remediationText = selected.getAttribute('data-remediation');
+            if (!isCorrect && remediationText && remediationText.trim() !== '') {
+                displayExplanation = `<strong>Adaptive Hint:</strong> ${remediationText}<br><br><span style="font-size:0.9em; opacity:0.8;">Standard Feedback: ${explanation}</span>`;
+            }
+
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${displayExplanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+
+        function endSession() {
+            console.log("=========================================");
+            console.log("            CAET SESSION DATA            ");
+            console.log("=========================================");
+            console.log("Total XP Earned:", localStorage.getItem('caet_xp') || '0');
+            console.log("LO XP Breakdown:", localStorage.getItem('caet_lo_xp') || 'None');
+            console.log("-----------------------------------------");
+            console.log("Modules Completed:");
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('completed_W')) {
+                    console.log("[COMPLETED]", key.replace('completed_', ''));
+                }
+            }
+            console.log("=========================================");
+            
+            const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+            if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+                window.AceSupabase.trackSessionSummary({
+                    lessonId: NODE_ID,
+                    format: 'interactive',
+                    questionsSeen: TOTAL_KCS,
+                    questionsCorrect: kcsCorrect,
+                    durationSec: durationSec
+                });
+            }
+            window.location.href = 'index.html';
+        }
+    </script>
+    
+    <!-- ============ SUPABASE CLOUD TRACKING ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/js/supabase-client.js"></script>
+</body>
+</html>

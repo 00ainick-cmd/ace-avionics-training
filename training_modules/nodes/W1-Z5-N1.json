@@ -1,0 +1,41 @@
+{
+  "id": "W1-Z5-N1",
+  "title": "ESD-safe handling basics",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "ESD/FOD discipline",
+  "objectiveKeys": [
+    "q23"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ESD-safe handling basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize ESD-sensitive parts and basic ESD workstation behavior."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ESD Prevention Practice",
+          "definition": "To prevent ESD damage to avionics: (1) use a properly grounded anti-static wrist strap, and (2) handle components ONLY at ESD-protected workstations.",
+          "analogy": "Like handling photographic film in a darkroom \u2014 the environment must be specially controlled before you open the package, not after."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician needs to remove a CMOS processor board from an avionics LRU. Which protective practice is required?",
+      "choices": [
+        "Wear latex gloves and hold the board by its edges",
+        "Work quickly to minimize exposure time to ambient static",
+        "Use a properly grounded anti-static wrist strap and work only at an ESD-protected station",
+        "Ground the LRU chassis only \u2014 the board does not need additional protection"
+      ],
+      "correctIndex": 2,
+      "feedback": "ESD damage can be caused by static discharge too small to feel. A grounded wrist strap and ESD-protected workstation are both required to safely handle CMOS and other static-sensitive components."
+    }
+  ]
+}

@@ -1,0 +1,593 @@
+{
+  "metadata": {
+    "courseId": "caet-entry-w1",
+    "title": "Safety (Generic CAET overview)",
+    "description": "Micro-training generated for W1: Safety (Generic CAET overview)"
+  },
+  "lessons": [
+    {
+      "id": "W1-Z1-N1",
+      "title": "Hazard recognition (stop-work mindset)",
+      "zone": "Safety mindset & reporting",
+      "objectiveKeys": [
+        "q29"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Hazard recognition (stop-work mindset)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Identify unsafe conditions and choose the first safe action (stop, secure, report)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Near-Miss",
+              "definition": "An unplanned event that did NOT result in injury or damage but had the POTENTIAL to do so. Near-misses MUST be reported and investigated.",
+              "analogy": "A car that nearly runs a red light without hitting anything \u2014 the near-miss reveals a hazard that needs to be corrected before the next attempt isn't so lucky."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A technician slips on a wet floor but catches himself on a bench without falling. How should this event be classified and handled?",
+          "choices": [
+            "It can be ignored \u2014 no one was hurt",
+            "It is an OSHA recordable incident requiring workers' compensation filing",
+            "It is only reportable if the technician required medical attention",
+            "It is a near-miss and must be reported and investigated"
+          ],
+          "correctIndex": 3,
+          "feedback": "A near-miss is any unplanned event with potential for injury or damage, even if none occurred. Near-misses must be reported and investigated to prevent recurrence."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z1-N2",
+      "title": "Housekeeping & clean work area discipline",
+      "zone": "Safety mindset & reporting",
+      "objectiveKeys": [
+        "q59"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Housekeeping & clean work area discipline"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Explain why clean work areas prevent safety and quality issues (FOD/accidents)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "FOD & Trip Hazard Prevention",
+              "definition": "Keeping walkways and work areas clutter-free in a Part 145 shop prevents FOD (Foreign Object Damage/Debris), trip hazards for personnel, and tool loss \u2014 all of which directly affect airworthiness and safety.",
+              "analogy": "Like a hospital operating room floor \u2014 a dropped scalpel (or screw) creates both a personnel hazard and a risk of ending up somewhere it shouldn't."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Why is keeping walkways and work areas free of clutter critical in a Part 145 repair station?",
+          "choices": [
+            "OSHA requires it primarily for general workplace aesthetics",
+            "It prevents FOD, trip hazards, and tool loss that could affect airworthiness and personnel safety",
+            "Clutter causes EMI interference with avionics test equipment calibration",
+            "It is only required during FAA surveillance visits and scheduled audits"
+          ],
+          "correctIndex": 1,
+          "feedback": "Clutter in an avionics shop creates three key risks: FOD (hardware, wire scraps, or tools entering aircraft systems), trip and fall hazards, and tool accountability failures. All three directly impact safety and airworthiness."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z2-N1",
+      "title": "Eye, hearing, and chemical glove basics",
+      "zone": "Basic PPE",
+      "objectiveKeys": [
+        "q157",
+        "q235"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Eye, hearing, and chemical glove basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Select basic PPE: eye protection, hearing protection, gloves for chemicals."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "First Chemical Handling Step",
+              "definition": "Before handling any solvent or chemical, a new technician MUST read the SDS for each chemical to understand its hazards, required PPE, and emergency procedures.",
+              "analogy": "Like reading an instruction manual before using a power tool \u2014 you need to know the dangers before you pick it up."
+            },
+            {
+              "term": "Hearing Protection (Avionics Shop)",
+              "definition": "Hearing protection is critical in an avionics shop because noise-induced hearing loss is cumulative and permanent \u2014 each unprotected exposure adds to total damage, even when individual exposures seem tolerable.",
+              "analogy": "Like sunscreen for your ears \u2014 you do not feel the damage happening, but it accumulates with every unprotected exposure."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A new avionics technician is about to use a chemical solvent for the first time. What is the MOST important first step?",
+          "choices": [
+            "Read the SDS for the solvent to understand hazards, PPE, and emergency procedures",
+            "Open the solvent in a ventilated area and proceed",
+            "Ask a coworker how much solvent to use",
+            "Don latex gloves and a respirator as general precaution without reading the SDS"
+          ],
+          "correctIndex": 0,
+          "feedback": "Different chemicals have different hazards, PPE needs, and first-aid steps. Reading the SDS for EACH chemical before use ensures the technician uses the correct protective measures."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Why is hearing protection critical in an avionics shop with regular engine run-up activity nearby?",
+          "choices": [
+            "Cumulative noise-induced hearing loss from repeated exposure is a long-term permanent hazard",
+            "Engine noise at run-up levels can cause immediate permanent deafness from a single exposure",
+            "OSHA requires it specifically for Part 145 shops within 500 feet of active runways",
+            "Hearing protection prevents radio frequency interference with sensitive avionics test equipment"
+          ],
+          "correctIndex": 0,
+          "feedback": "The key word is cumulative \u2014 hearing damage builds over time. A single run-up may not seem dangerous, but repeated unprotected exposure leads to permanent hearing loss. This is why hearing protection is required even when individual noise levels seem tolerable."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z2-N2",
+      "title": "Electrical shock first action",
+      "zone": "Basic PPE",
+      "objectiveKeys": [
+        "q175"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Electrical shock first action"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "State the first safe action before assisting a shocked person."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Electrical Shock First Aid",
+              "definition": "For an electrical shock victim: (1) FIRST ensure the area is safe, (2) disconnect the power source before touching the victim, (3) call for emergency assistance. Never touch a victim who may still be energized.",
+              "analogy": "Like a water rescue \u2014 you don't jump in and grab a drowning person who might pull you under. You neutralize the danger (throw a line, cut power) before making contact."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A coworker receives an electrical shock and is still in contact with the circuit. What is the correct FIRST action?",
+          "choices": [
+            "Immediately pull them away from the circuit with your hands",
+            "Ensure the area is safe and disconnect power before touching the victim",
+            "Shout for help while grabbing the victim to provide support",
+            "Begin CPR immediately while a coworker calls 911"
+          ],
+          "correctIndex": 1,
+          "feedback": "Touching an energized victim can electrocute the rescuer. The first step is to ensure YOUR safety, then disconnect power \u2014 only then is it safe to touch the victim and call for emergency help."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z3-N1",
+      "title": "SDS / HazCom basics",
+      "zone": "SDS / chemicals",
+      "objectiveKeys": [
+        "q3",
+        "q4",
+        "q91"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to SDS / HazCom basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Identify what an SDS is, when to check it, and what it provides."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "SDS Accessibility Requirement",
+              "definition": "Safety Data Sheets for shop chemicals must be kept in an accessible location readily available to ALL personnel who work with or near hazardous materials.",
+              "analogy": "Like a first-aid kit that must be visible and reachable by anyone who might need it \u2014 not locked away where only supervisors can access it."
+            },
+            {
+              "term": "SDS In-Shop Accessibility",
+              "definition": "Safety Data Sheets for shop chemicals must be kept in an accessible location in the shop, readily available to ALL personnel who work with or near hazardous materials.",
+              "analogy": "Like an emergency exit map posted inside the building \u2014 it must be physically present in the space where people work, not stored in another building."
+            },
+            {
+              "term": "Safety Data Sheet (SDS)",
+              "definition": "The document containing specific safety information about a chemical, including hazards, handling procedures, first-aid measures, and emergency response \u2014 required for every hazardous chemical in the shop.",
+              "analogy": "The SDS is the chemical's complete 'owner's manual and warning label' \u2014 it tells you exactly what you're dealing with and what to do if something goes wrong."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Where must Safety Data Sheets (SDS) for shop chemicals be stored?",
+          "choices": [
+            "In the supervisor's office for security",
+            "In an accessible location available to all personnel working with or near hazardous materials",
+            "In a locked cabinet accessible only to certified technicians",
+            "Digitally only, on the company intranet"
+          ],
+          "correctIndex": 1,
+          "feedback": "SDS must be readily accessible to ALL personnel who may be exposed \u2014 not restricted to supervisors or specific roles."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Where specifically must Safety Data Sheets (SDS) be kept for shop chemicals?",
+          "choices": [
+            "In the corporate safety office across the facility",
+            "On a shared network drive accessible from any computer",
+            "In an accessible location in the shop, readily available to all personnel who work with or near hazardous materials",
+            "In the supervisor's desk drawer for safekeeping"
+          ],
+          "correctIndex": 2,
+          "feedback": "SDS must be physically accessible within the shop itself \u2014 not in a remote office or restricted location. All personnel who work with or near the chemicals must be able to reach them without delay."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A technician needs to know the health hazards and first-aid steps for a chemical solvent. Which document should they consult?",
+          "choices": [
+            "The product label only \u2014 it contains all required information",
+            "The shop's tool inventory log",
+            "The OSHA 300 injury log",
+            "The Safety Data Sheet (SDS) for that chemical"
+          ],
+          "correctIndex": 3,
+          "feedback": "The SDS contains comprehensive safety information for each chemical: hazards, handling procedures, PPE requirements, and first-aid measures \u2014 the product label alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z3-N2",
+      "title": "Chemical handling/storage/disposal awareness (generic)",
+      "zone": "SDS / chemicals",
+      "objectiveKeys": [
+        "q25",
+        "q111",
+        "q234",
+        "q94"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Chemical handling/storage/disposal awareness (generic)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize safe handling, storage, and disposal awareness; follow local procedures."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Hazmat Disposal Rule",
+              "definition": "Hazardous materials must be disposed of by following EPA and local regulations, using licensed disposal vendors, and NEVER pouring chemicals down drains or into regular trash.",
+              "analogy": "Like recycling electronics \u2014 you can't toss a laptop in the garbage; it must go through a certified e-waste vendor."
+            },
+            {
+              "term": "NiCd Battery Disposal",
+              "definition": "Nickel-Cadmium (NiCd) batteries must be disposed of by following local hazardous materials regulations \u2014 they CANNOT be discarded in regular trash because cadmium is a toxic heavy metal.",
+              "analogy": "Like old paint \u2014 you can't toss it in the garbage. It must go through an approved hazmat collection event or licensed disposal service."
+            },
+            {
+              "term": "Safety Data Sheet (SDS)",
+              "definition": "The document required to be readily available for each hazardous material used in a Part 145 avionics shop \u2014 covering hazards, PPE requirements, first aid, and disposal procedures.",
+              "analogy": "Like a medication package insert required by law \u2014 it must be on hand and tells you exactly what you are working with and what to do if something goes wrong."
+            },
+            {
+              "term": "Hydraulic Fluid Spill Response",
+              "definition": "For a hydraulic fluid spill near avionics equipment: (1) contain immediately with absorbent materials, (2) remove power from nearby equipment, (3) clean up following shop hazmat procedures.",
+              "analogy": "Like a kitchen grease fire \u2014 contain it first, cut the ignition source (power), then clean up properly."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which method is acceptable for disposing of used solvent in a GA avionics shop?",
+          "choices": [
+            "Pour it down the utility sink drain",
+            "Absorb it and place in regular trash",
+            "Use a licensed hazardous waste disposal vendor per EPA and local regulations",
+            "Evaporate it outside away from the building"
+          ],
+          "correctIndex": 2,
+          "feedback": "Hazardous chemicals must go through licensed disposal vendors following EPA and local regulations \u2014 drains and regular trash are prohibited."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "An aircraft NiCd battery has reached end-of-life. What is the correct disposal procedure?",
+          "choices": [
+            "Discharge fully and place in regular trash \u2014 it is inert when empty",
+            "Puncture the cells for safe venting before disposal",
+            "Follow local hazardous materials disposal regulations \u2014 do not put in regular trash",
+            "Return it to the original manufacturer only \u2014 no other method is allowed"
+          ],
+          "correctIndex": 2,
+          "feedback": "Cadmium is a toxic heavy metal \u2014 NiCd batteries must go through regulated hazmat disposal channels regardless of state of charge. Regular trash disposal is prohibited."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What document must be readily available for each hazardous material used in a Part 145 avionics shop?",
+          "choices": [
+            "The product's manufacturer warranty documentation",
+            "The FAA type certificate for the specific material",
+            "The shop's hazmat storage insurance documentation",
+            "The Safety Data Sheet (SDS)"
+          ],
+          "correctIndex": 3,
+          "feedback": "OSHA's Hazard Communication Standard requires SDS documents to be readily accessible for all hazardous chemicals in the workplace. This applies to solvents, conformal coatings, flux, and other chemicals. No FAA type certificate exists for chemicals."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Hydraulic fluid spills onto the avionics bench area. What is the correct immediate response?",
+          "choices": [
+            "Wipe it up quickly with shop rags and continue work",
+            "Contain the spill with absorbent materials, remove power from nearby equipment, then clean up per hazmat procedures",
+            "Dilute the spill with water to reduce fire risk before cleaning",
+            "Only clean up after the current job is completed to avoid work interruption"
+          ],
+          "correctIndex": 1,
+          "feedback": "Hydraulic fluid is flammable and corrosive. You must contain it first, remove electrical power (ignition hazard), then follow established hazmat cleanup procedures."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z3-N3",
+      "title": "Solvent fumes / exposure awareness",
+      "zone": "SDS / chemicals",
+      "objectiveKeys": [
+        "q201",
+        "q213"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Solvent fumes / exposure awareness"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize basic exposure response and ventilation awareness."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Flammable Liquid Storage Requirements",
+              "definition": "Flammable liquids must be stored in: (1) approved, labeled, self-closing safety containers, (2) inside a dedicated flammable storage cabinet, (3) away from all ignition sources.",
+              "analogy": "Like storing gunpowder \u2014 it needs its own isolated container in its own isolated cabinet, not sitting next to a spark source on an open shelf."
+            },
+            {
+              "term": "Solvent Fume Overexposure Response",
+              "definition": "If a technician feels dizzy from solvent fumes: (1) leave the area immediately, (2) move to fresh air, (3) notify a supervisor, (4) report the incident per safety procedures \u2014 before returning to work.",
+              "analogy": "Like a scuba diver whose air runs low \u2014 surface immediately (leave the area), get to safety (fresh air), report to your dive master (supervisor), and log the incident before going back in."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How must flammable liquids be stored in a GA avionics shop?",
+          "choices": [
+            "In any sealed container on the general tool shelving",
+            "In open cans under the bench to allow vapors to dissipate",
+            "In approved, labeled, self-closing safety containers in a dedicated flammable storage cabinet away from ignition sources",
+            "In any cabinet as long as it is labeled 'Flammable'"
+          ],
+          "correctIndex": 2,
+          "feedback": "Flammable liquid storage requires three elements: approved self-closing containers, a dedicated flammable storage cabinet, and separation from ignition sources."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A technician begins to feel dizzy while using a cleaning solvent in the shop. What is the correct course of action?",
+          "choices": [
+            "Immediately leave the area, move to fresh air, notify a supervisor, and report the incident before returning",
+            "Open a window, put on a respirator, and continue the job",
+            "Take a short break at the bench and let the dizziness pass before continuing",
+            "Only notify a supervisor if the dizziness persists for more than 30 minutes"
+          ],
+          "correctIndex": 0,
+          "feedback": "Dizziness from solvent fumes indicates overexposure to toxic vapors. Immediate removal from the area and fresh air is the first priority, followed by supervisor notification and incident reporting."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z4-N1",
+      "title": "Fire safety basics (no extinguisher classes)",
+      "zone": "Fire safety basics",
+      "objectiveKeys": [
+        "q151"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Fire safety basics (no extinguisher classes)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Prevention + basic extinguisher readiness awareness + first actions (notify/follow local procedure)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Fire Extinguisher Readiness Check",
+              "definition": "To verify a fire extinguisher is ready: (1) pressure gauge in green zone, (2) safety pin intact with tamper seal, (3) no visible damage to body or hose, (4) annual inspection tag current.",
+              "analogy": "Like a pre-flight walkaround \u2014 you check each item methodically so that when you need it, it works."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which combination of checks confirms a fire extinguisher is ready for service in a GA avionics shop?",
+          "choices": [
+            "Verify the nozzle is unobstructed and the gauge reads any positive pressure",
+            "Weigh it to confirm charge weight only",
+            "Shake it to verify agent is loose inside",
+            "Pressure gauge in green, safety pin intact, no damage, annual tag current"
+          ],
+          "correctIndex": 3,
+          "feedback": "All four checks are required: gauge in green zone, intact pin/seal, no physical damage, and a current annual inspection tag \u2014 all must pass for the extinguisher to be considered serviceable."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z5-N1",
+      "title": "ESD-safe handling basics",
+      "zone": "ESD/FOD discipline",
+      "objectiveKeys": [
+        "q23"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to ESD-safe handling basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize ESD-sensitive parts and basic ESD workstation behavior."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "ESD Prevention Practice",
+              "definition": "To prevent ESD damage to avionics: (1) use a properly grounded anti-static wrist strap, and (2) handle components ONLY at ESD-protected workstations.",
+              "analogy": "Like handling photographic film in a darkroom \u2014 the environment must be specially controlled before you open the package, not after."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A technician needs to remove a CMOS processor board from an avionics LRU. Which protective practice is required?",
+          "choices": [
+            "Wear latex gloves and hold the board by its edges",
+            "Work quickly to minimize exposure time to ambient static",
+            "Use a properly grounded anti-static wrist strap and work only at an ESD-protected station",
+            "Ground the LRU chassis only \u2014 the board does not need additional protection"
+          ],
+          "correctIndex": 2,
+          "feedback": "ESD damage can be caused by static discharge too small to feel. A grounded wrist strap and ESD-protected workstation are both required to safely handle CMOS and other static-sensitive components."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z5-N2",
+      "title": "FOD and tool accountability",
+      "zone": "ESD/FOD discipline",
+      "objectiveKeys": [
+        "q9",
+        "q31"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to FOD and tool accountability"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Take correct actions to prevent FOD; do not close up until hardware is accounted for."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "FOD Prevention \u2014 Tool Control",
+              "definition": "The most effective FOD prevention practice is strict tool control: count tools BEFORE and AFTER every job, and immediately retrieve and clean up any dropped hardware or debris.",
+              "analogy": "Like a surgeon counting instruments before and after an operation \u2014 every item must be accounted for, because a missing one means something dangerous was left inside."
+            },
+            {
+              "term": "Dropped Hardware FOD Response",
+              "definition": "If a screw is dropped behind a panel during avionics installation: (1) STOP work, (2) retrieve the screw BEFORE closing any panels, (3) log it as a FOD prevention measure.",
+              "analogy": "Like a surgeon who drops an instrument inside a patient \u2014 you stop the procedure, retrieve the item, and document it. You don't close up and hope for the best."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which practice is MOST effective at preventing Foreign Object Damage (FOD) in an avionics shop?",
+          "choices": [
+            "Using only snap-on toolboxes with latching lids",
+            "Strict tool control \u2014 counting tools before and after each job and immediately cleaning up dropped hardware",
+            "Performing tool inventory once per week",
+            "Restricting shop access to credentialed technicians only"
+          ],
+          "correctIndex": 1,
+          "feedback": "Tool control is the foundation of FOD prevention \u2014 counting tools before and after every job ensures nothing is left inside an aircraft, and immediate cleanup of dropped hardware prevents items from migrating into aircraft structure."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "During avionics installation, a screw drops behind a panel and is not immediately visible. What is the correct action?",
+          "choices": [
+            "Close the panel and notify QC on the job card",
+            "Complete the installation and perform a final FOD walk after",
+            "Replace the missing screw with a spare and note the discrepancy on the work order",
+            "Stop work, retrieve the screw before closing any panels, and log the event"
+          ],
+          "correctIndex": 3,
+          "feedback": "No panel may be closed until the dropped hardware is retrieved. A missing screw inside an aircraft structure is a serious FOD hazard, and the event must be logged per FOD prevention procedures."
+        }
+      ]
+    },
+    {
+      "id": "W1-Z2-N3",
+      "title": "Ramp/rotor awareness (optional)",
+      "zone": "Basic PPE",
+      "objectiveKeys": [
+        "q92"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Ramp/rotor awareness (optional)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Optional awareness of safe behavior around running aircraft/rotor systems."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Rotorcraft Ground Safety",
+              "definition": "Around a running helicopter: (1) stay clear of the tail rotor at all times, (2) approach only from the front within the pilot's field of view, (3) never approach until the pilot signals it is safe.",
+              "analogy": "Like approaching a running industrial fan \u2014 you never walk around the back where you can't see the blades clearly, and you always wait for someone to signal it's safe."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "When approaching a running helicopter on the ramp, what is the correct practice?",
+          "choices": [
+            "Stay clear of the tail rotor, approach from the front, and wait for the pilot's signal",
+            "Approach from the rear where ground wash is least, staying low",
+            "Approach from either side \u2014 the main rotor is the only real hazard",
+            "Approach only after the engine is at idle power regardless of pilot signal"
+          ],
+          "correctIndex": 0,
+          "feedback": "The tail rotor is nearly invisible when spinning and is a lethal hazard. You must approach from the front where the pilot can see you, and only after receiving the go-ahead signal."
+        }
+      ]
+    }
+  ]
+}

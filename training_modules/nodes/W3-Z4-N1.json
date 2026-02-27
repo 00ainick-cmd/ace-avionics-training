@@ -1,0 +1,149 @@
+{
+  "id": "W3-Z4-N1",
+  "title": "AC fundamentals (frequency/waveform/reactance/transformer)",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "AC fundamentals",
+  "objectiveKeys": [
+    "q49",
+    "q109",
+    "q205",
+    "q174",
+    "q155",
+    "q206",
+    "q28"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to AC fundamentals (frequency/waveform/reactance/transformer)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Explain AC waveform/frequency and basic reactance/transformer concepts (entry level)."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Frequency unit: hertz (Hz)",
+          "definition": "Frequency is measured in hertz (Hz). One hertz equals one complete AC cycle per second. Aircraft AC systems typically operate at 400 Hz; household power in the US is 60 Hz.",
+          "analogy": "Hertz is to AC cycles what RPM is to engine rotation \u2014 it counts how many times something completes a full cycle every second."
+        },
+        {
+          "term": "Capacitance unit: farad (F) and microfarad (\u00b5F)",
+          "definition": "Capacitance is measured in farads (F). Because one farad is extremely large, practical avionics capacitors are rated in microfarads (\u00b5F, 10\u207b\u2076 F) or picofarads (pF, 10\u207b\u00b9\u00b2 F). Microfarads are most common in avionics power filtering circuits.",
+          "analogy": "The farad is like measuring road distance in light-years \u2014 technically correct but impractically large. Avionics engineers use microfarads for the same reason road builders use miles or kilometers."
+        },
+        {
+          "term": "Inductive reactance (XL)",
+          "definition": "Inductive reactance (XL) is the opposition an inductor presents to AC current flow. It is measured in ohms and increases proportionally with frequency: XL = 2\u03c0fL. Higher frequency \u2192 higher reactance \u2192 less AC current through the inductor.",
+          "analogy": "An inductor resists changes in current. At higher frequency, current changes direction faster, so the inductor opposes it more strongly \u2014 like a shock absorber that stiffens up at higher vibration frequencies."
+        },
+        {
+          "term": "AC advantage: voltage transformation",
+          "definition": "The primary advantage of AC in aircraft is the ability to use transformers to step voltage up or down. Higher voltage means lower current for the same power (P = V x I), which allows smaller, lighter wiring \u2014 critical in weight-sensitive aircraft.",
+          "analogy": "High-tension power lines carry electricity cross-country at very high voltage and low current, using thinner wire than would be needed at household voltage. Aircraft AC systems exploit the same physics."
+        },
+        {
+          "term": "AC waveform shape",
+          "definition": "A single-phase AC waveform is a sinusoidal (sine wave) curve that rises above zero to a positive peak, returns through zero, falls to a negative peak, and returns to zero \u2014 completing one full cycle at the system frequency.",
+          "analogy": "Imagine a cork bobbing on ocean waves \u2014 it continuously rises above and dips below the calm waterline in a smooth, repeating pattern. The voltage does the same around the zero-volt line."
+        },
+        {
+          "term": "Transformer operation",
+          "definition": "A transformer transfers electrical power from one AC circuit to another through electromagnetic induction, simultaneously stepping voltage up or down based on the turns ratio of the primary and secondary windings. Transformers only work with AC.",
+          "analogy": "A transformer is like a mechanical gear system for electrical power \u2014 it trades off voltage for current (or current for voltage) to match the 'gear ratio' of the winding turns, just as gears trade off speed for torque."
+        },
+        {
+          "term": "Verifying AC alternator frequency",
+          "definition": "A frequency counter or calibrated oscilloscope are the correct instruments to verify that an AC alternator is producing the correct output frequency (typically 400 Hz) during bench testing.",
+          "analogy": "Like using a stopwatch to verify the beat rate of a metronome \u2014 you need an instrument specifically designed to count cycles per second, not one that just measures magnitude."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "The frequency of an AC electrical system is expressed in which unit?",
+      "choices": [
+        "Watts (W)",
+        "Amperes (A)",
+        "Hertz (Hz)",
+        "Ohms (\u03a9)"
+      ],
+      "correctIndex": 2,
+      "feedback": "Frequency is measured in hertz (Hz), which represents the number of complete cycles per second. Watts measure power, amperes measure current, and ohms measure resistance \u2014 none of these units describe how many times per second an AC waveform completes a cycle."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the SI unit of capacitance, and what smaller denomination is most commonly used when specifying capacitors in avionics circuits?",
+      "choices": [
+        "Henry (H); millihenries are most common in avionics",
+        "Farad (F); microfarads (\u00b5F) are most common in avionics",
+        "Ohm (\u03a9); milliohms are most common in avionics",
+        "Coulomb (C); microcoulombs are most common in avionics"
+      ],
+      "correctIndex": 1,
+      "feedback": "Capacitance is measured in farads (F). The farad is too large for practical components, so avionics capacitors are typically specified in microfarads (\u00b5F). For high-frequency RF circuits, picofarads (pF) are used. Henries measure inductance, ohms measure resistance, and coulombs measure charge \u2014 not capacitance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which statement correctly describes inductive reactance?",
+      "choices": [
+        "It is the opposition to DC current flow by an inductor, measured in henries",
+        "It is the opposition to AC current flow by an inductor, measured in ohms and increasing with frequency",
+        "It is the opposition to current flow by a capacitor, measured in ohms and decreasing with frequency",
+        "It is the total opposition to current flow in any circuit, combining resistance and reactance"
+      ],
+      "correctIndex": 1,
+      "feedback": "Inductive reactance (XL) is the opposition to AC current flow produced by an inductor, measured in ohms, with the value increasing as frequency rises (XL = 2\u03c0fL). The henry is the unit of inductance itself, not reactance. Capacitive reactance decreases with frequency (the opposite behavior). Impedance combines both resistance and reactance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary advantage of using an AC electrical system in aircraft compared to a purely DC system?",
+      "choices": [
+        "AC is safer to work on than DC systems of equivalent voltage",
+        "AC can be stored in batteries more efficiently than DC",
+        "AC systems allow transformers to change voltage levels, enabling lighter wiring for high-power loads",
+        "AC eliminates the need for circuit breakers in aircraft wiring systems"
+      ],
+      "correctIndex": 2,
+      "feedback": "The key advantage of AC is transformer compatibility. Transformers can step voltage up or down, allowing high-power loads to be powered at high voltage and low current \u2014 which means thinner, lighter wiring. DC voltage cannot be changed by a simple transformer; you need electronic converters instead, which are heavier and less efficient for large power levels."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How is the voltage waveform of a single-phase AC electrical system best described?",
+      "choices": [
+        "A constant DC level interrupted by brief spikes",
+        "A square wave toggling between a fixed positive and fixed negative voltage",
+        "A sinusoidal curve that smoothly alternates above and below zero voltage",
+        "A triangular wave that linearly ramps between peak and zero"
+      ],
+      "correctIndex": 2,
+      "feedback": "A single-phase AC waveform is sinusoidal \u2014 it follows a sine function over time, continuously and smoothly alternating between positive and negative values. One complete trip from zero, to positive peak, back through zero, to negative peak, and back to zero constitutes one cycle. This shape results directly from the physics of rotating electromagnetic alternators."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How does a transformer transfer power from its primary circuit to its secondary circuit?",
+      "choices": [
+        "By direct electrical conduction through a common wire connecting both windings",
+        "Through electromagnetic induction, where the AC in the primary winding creates a changing magnetic field that induces voltage in the secondary winding",
+        "By converting AC to DC in the primary and regenerating AC in the secondary",
+        "By storing energy in a magnetic core and releasing it at a different voltage during the off cycle"
+      ],
+      "correctIndex": 1,
+      "feedback": "Transformers work by electromagnetic induction. The AC primary current creates a changing magnetic flux in the core. This changing flux induces a voltage in the secondary winding proportional to the turns ratio. There is no direct electrical connection between primary and secondary windings \u2014 power is coupled magnetically. This galvanic isolation is a secondary benefit used in avionics power supplies."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A technician needs to confirm that a repaired aircraft AC alternator is producing the correct output frequency before returning it to service. Which instrument is most appropriate for this verification?",
+      "choices": [
+        "A standard AC voltmeter to measure output voltage magnitude",
+        "A frequency counter or calibrated oscilloscope to measure output frequency",
+        "An ammeter to measure current output at full load",
+        "A digital multimeter set to resistance to verify winding continuity"
+      ],
+      "correctIndex": 1,
+      "feedback": "Frequency must be verified with a frequency counter or oscilloscope. A voltmeter confirms output amplitude but gives no frequency information. An ammeter verifies current capacity. Resistance measurement is useful for winding checks but does not verify operational frequency. Only a frequency counter or oscilloscope directly measures Hz."
+    }
+  ]
+}

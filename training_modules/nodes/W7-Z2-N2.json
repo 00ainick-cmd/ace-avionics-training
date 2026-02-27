@@ -1,0 +1,95 @@
+{
+  "id": "W7-Z2-N2",
+  "title": "Antennas & RF safety basics",
+  "world": "CNS Systems",
+  "zone": "Communications",
+  "objectiveKeys": [
+    "q87",
+    "q134",
+    "q204",
+    "q80"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Antennas & RF safety basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize antenna inspection and RF safety precautions."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "VHF antenna inspection items",
+          "definition": "Regular VHF antenna inspection: (1) physical condition \u2014 no cracks, chips, or broken base; (2) secure mounting \u2014 no looseness; (3) connector tightness \u2014 coax connector properly torqued; (4) coaxial cable condition \u2014 no kinks, chafing, or water infiltration; (5) no corrosion at base or connector.",
+          "analogy": "Like inspecting a car antenna \u2014 check the element, the base mounting, and the cable all the way to where it connects to the radio."
+        },
+        {
+          "term": "RF radiation safety",
+          "definition": "Radio frequency (RF) radiation from transmitting antennas can cause tissue heating, eye damage, and interference with medical devices at close range. ALWAYS de-energize the transmitter before working on or near the antenna. This applies to all RF systems: VHF comm, transponder, DME, ADS-B.",
+          "analogy": "Like not looking directly into a laser \u2014 the energy is invisible but can cause real harm at close range."
+        },
+        {
+          "term": "Coaxial cable replacement \u2014 critical steps",
+          "definition": "When replacing coax for a VHF antenna: (1) use correct impedance cable (50\u03a9 for VHF comm), (2) use correct cable type/spec for the run length and environment, (3) install connectors properly \u2014 correct preparation, crimping, and torque, (4) measure SWR (Standing Wave Ratio) to verify the installation.",
+          "analogy": "Like replacing a garden hose \u2014 use the right diameter (impedance), connect fittings properly (connectors), then check for leaks (SWR)."
+        },
+        {
+          "term": "Intermittent comm audio \u2014 common causes",
+          "definition": "Three most common causes of intermittent or noisy comm audio: (1) loose or corroded connector (high contact resistance causing noise), (2) damaged coaxial cable (bent, kinked, or crushed center conductor), (3) failing microphone jack (worn or oxidized contacts causing noise when moving).",
+          "analogy": "Like a lamp that flickers \u2014 most often it's a loose bulb, damaged cord, or worn socket, not the lamp itself."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What should be checked during a regular VHF communication antenna inspection?",
+      "choices": [
+        "Antenna impedance using a network analyzer and SWR meter",
+        "The antenna radiation pattern using a calibrated antenna range",
+        "The radio's transmitted power output and frequency accuracy",
+        "Physical condition, mounting security, connector tightness, coax condition, and corrosion"
+      ],
+      "correctIndex": 3,
+      "feedback": "A standard VHF antenna inspection is visual and physical: check for physical damage to the element, verify it's securely mounted with no wobble, confirm the coax connector is tight, inspect the coax for damage, and check for corrosion at all contact points. An SWR measurement can be added after any maintenance."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the key safety requirement when performing maintenance near an aircraft VHF antenna?",
+      "choices": [
+        "Ensure the RF transmitting system is off before working near the antenna",
+        "Keep the system in low-power standby mode to reduce risk",
+        "Wear RF-shielded gloves rated for VHF frequencies",
+        "Only approach the antenna from behind to avoid the main radiation lobe"
+      ],
+      "correctIndex": 0,
+      "feedback": "The only safe approach is to de-energize the system. RF can cause tissue injury at close range \u2014 'standby' or 'low power' modes still transmit and are not safe for nearby work. Always verify the system is off before working at the antenna or along the transmission line."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the critical steps when replacing coaxial cable on a VHF communication antenna?",
+      "choices": [
+        "Only match cable length to the original; impedance doesn't matter for short runs",
+        "Replace the antenna at the same time for guaranteed performance",
+        "Use correct impedance and cable type, install and torque connectors properly, verify SWR after installation",
+        "Only SWR verification is required \u2014 cable type and connector torque are secondary"
+      ],
+      "correctIndex": 2,
+      "feedback": "All three steps are critical: wrong impedance creates a mismatch (increased reflected power, reduced range); improperly installed connectors cause intermittent connection and RF leakage; without SWR verification, a hidden fault may not be detected until the radio fails in flight."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the most common causes of intermittent or noisy audio in an aircraft communication system?",
+      "choices": [
+        "Incorrectly programmed squelch threshold and volume setting",
+        "Software version mismatch between the radio and audio panel",
+        "Loose or corroded connectors, damaged coaxial cable, or failing microphone jack",
+        "Alternator noise from an unfiltered electrical bus"
+      ],
+      "correctIndex": 2,
+      "feedback": "The vast majority of intermittent/noisy comm audio issues are physical connection problems: corroded or loose connectors create variable resistance; damaged coax (kinked, crushed, water-infiltrated) degrades signal; failing mic jacks introduce noise with movement. These should be the first inspection points."
+    }
+  ]
+}

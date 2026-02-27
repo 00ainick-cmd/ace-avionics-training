@@ -1,0 +1,59 @@
+{
+  "id": "W5-Z1-N2",
+  "title": "Wire gauge sizing",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Wire/cable fundamentals",
+  "objectiveKeys": [
+    "q66",
+    "q118"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Wire gauge sizing"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Use AWG sizing basics for loads/environments."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Wire Gauge Selection",
+          "definition": "Correct wire gauge selection requires consulting the wire load analysis and manufacturer's ampacity tables, considering: circuit current draw, wire run length (voltage drop), and installation temperature environment \u2014 not just the current rating alone.",
+          "analogy": "Choosing wire gauge is like sizing a pipe for water flow \u2014 you need to account for flow rate (current), pipe length (voltage drop), and temperature (affects flow resistance). One factor alone gives the wrong size."
+        },
+        {
+          "term": "American Wire Gauge (AWG)",
+          "definition": "The American Wire Gauge (AWG) system designates conductor size: larger AWG numbers = smaller wire diameters. Common avionics sizes: 22 AWG (signal), 20 AWG (medium current), 16 AWG (higher current). A 22 AWG wire is smaller than a 16 AWG wire.",
+          "analogy": "AWG is counterintuitive \u2014 like hotel room numbers that go DOWN as you get to the luxury suites. Smaller AWG number = larger, more expensive (more copper) wire."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How should an avionics technician select the correct wire gauge for a new circuit?",
+      "choices": [
+        "Use the smallest wire that fits the connector contact to minimize weight",
+        "Consult the aircraft's wire load analysis and manufacturer's ampacity tables, considering current load, run length, and installation temperature",
+        "Match the wire gauge to whatever gauge was used for adjacent circuits in the harness",
+        "Use 20 AWG for all avionics circuits as the standard aviation wire size"
+      ],
+      "correctIndex": 1,
+      "feedback": "Wire gauge selection is a calculated decision \u2014 ampacity tables give the base rating, then de-rate for temperature and check voltage drop for the run length. The aircraft's wire load analysis documents this for each circuit."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "In the American Wire Gauge (AWG) system, what does a higher gauge number indicate?",
+      "choices": [
+        "A larger conductor cross-sectional area and higher current capacity",
+        "A higher temperature rating for the wire insulation",
+        "A smaller conductor cross-sectional area \u2014 the conductor is physically smaller",
+        "A heavier overall wire construction with more insulation layers"
+      ],
+      "correctIndex": 2,
+      "feedback": "Higher AWG number = smaller wire. 22 AWG has a smaller conductor than 16 AWG. This is essential when selecting wire for a specific current load \u2014 choosing too high a gauge number means an undersized wire."
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "W3-Z3-N2",
+  "title": "Batteries and grounding/bonding",
+  "world": "Electrical Fundamentals & Aircraft Electrical Systems",
+  "zone": "Aircraft DC systems",
+  "objectiveKeys": [
+    "q101",
+    "q139",
+    "q230",
+    "q231"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Batteries and grounding/bonding"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Describe battery function and bonding/grounding basics."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Aircraft battery \u2014 role in DC system",
+          "definition": "The battery is the initial power source: it powers avionics, fuel pump, and starter motor during engine starting. Once the engine is running and up to speed, the alternator (or generator) takes over as the primary power source and recharges the battery.",
+          "analogy": "Like a car's starter battery \u2014 it gets the engine going, then the alternator takes over to run everything and recharge it."
+        },
+        {
+          "term": "Battery disconnect \u2014 correct sequence",
+          "definition": "Always remove the NEGATIVE (ground) cable FIRST when disconnecting a battery. If a tool touches the airframe while removing the positive cable with the negative already disconnected, no circuit is completed \u2014 no spark. Removing positive first risks a short if the tool contacts the airframe.",
+          "analogy": "Like turning off the water main before disconnecting a pipe fitting \u2014 remove the source of danger before handling the connection."
+        },
+        {
+          "term": "Bonding jumper \u2014 purpose",
+          "definition": "A bonding jumper creates a low-resistance electrical path between a component and the aircraft structure. Three purposes: (1) current return path (grounding), (2) lightning protection (provides controlled dissipation path), (3) EMI reduction (prevents static buildup and ground loops).",
+          "analogy": "Like a bridge between two islands \u2014 it ensures current can flow freely between them rather than building up on one side."
+        },
+        {
+          "term": "Bonding jumper \u2014 current return and static discharge",
+          "definition": "Bonding jumpers provide two key functions: (1) current return \u2014 the low-resistance path for DC current to return from loads back to the battery/bus through the airframe, and (2) static discharge \u2014 preventing static charge buildup that could cause interference or spark ignition near fuel.",
+          "analogy": "Like a dedicated return lane on a highway \u2014 it ensures the traffic (current) that went out can efficiently come back."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the battery's role in a DC aircraft electrical system during engine start?",
+      "choices": [
+        "It regulates alternator output voltage",
+        "It filters noise from the electrical bus",
+        "It stores excess power generated during cruise flight only",
+        "It is the initial power source before the alternator comes online"
+      ],
+      "correctIndex": 3,
+      "feedback": "The battery provides all electrical power during engine starting \u2014 before the alternator reaches its operating speed and output voltage. Once the alternator is online, it becomes the primary source and recharges the battery."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the correct first step when disconnecting an aircraft battery?",
+      "choices": [
+        "Remove the ground (negative) cable first",
+        "Remove the positive (hot) cable first",
+        "Remove both cables simultaneously",
+        "Turn off the master switch, then remove either cable"
+      ],
+      "correctIndex": 0,
+      "feedback": "Always remove negative first. With the ground disconnected, the positive terminal is no longer connected to the return path \u2014 accidental contact of the positive terminal with the airframe won't cause a short. Removing positive first with negative still connected creates a short circuit risk."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the primary purpose of bonding jumpers in an aircraft electrical system?",
+      "choices": [
+        "To carry main power from the bus to avionics LRUs",
+        "To provide a low-resistance path between components and structure for grounding, lightning protection, and EMI reduction",
+        "To carry return current only from AC systems",
+        "To mechanically secure avionics equipment to the aircraft rack"
+      ],
+      "correctIndex": 1,
+      "feedback": "Bonding jumpers serve three critical electrical functions: they provide the current return path (ground), they give lightning energy a controlled low-resistance path to the airframe (rather than through avionics), and they reduce EMI by equalizing potentials between components."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "In a single-wire aircraft electrical system, what role does the airframe play, and how does a bonding jumper enable it?",
+      "choices": [
+        "The airframe carries positive current; bonding connects positive terminals to structure",
+        "The airframe serves as the negative current return conductor; bonding jumpers provide the low-resistance connection from components to structure",
+        "The airframe insulates components from ground; bonding jumpers add resistance to prevent faults",
+        "The airframe is the positive bus; bonding jumpers connect it to the battery negative"
+      ],
+      "correctIndex": 1,
+      "feedback": "Most GA aircraft use single-wire electrical systems where the airframe IS the negative return conductor. Bonding jumpers connect avionics and components to the airframe so current can return to the battery. Without proper bonding, return current has no path and equipment won't function."
+    }
+  ]
+}

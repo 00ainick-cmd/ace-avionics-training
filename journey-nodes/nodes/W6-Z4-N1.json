@@ -1,0 +1,77 @@
+{
+  "id": "W6-Z4-N1",
+  "title": "Databus troubleshooting basics",
+  "world": "Digital Databus Systems",
+  "zone": "Databus troubleshooting",
+  "objectiveKeys": [
+    "q46",
+    "q93",
+    "q215"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Databus troubleshooting basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "First-pass checks before swapping LRUs; termination/wiring."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ARINC 429 Intermittent Loss \u2014 First Step",
+          "definition": "For intermittent ARINC 429 communication loss, the correct first troubleshooting step is to check wiring continuity and connector integrity at both the transmitter and receiver ends, before suspecting LRU failure.",
+          "analogy": "Like a flickering lamp \u2014 before buying a new bulb, check whether the cord or plug is loose. Most intermittent failures are connection problems, not component failures."
+        },
+        {
+          "term": "ARINC 429 Data Error \u2014 First Step",
+          "definition": "When ARINC 429 data errors occur, the first troubleshooting step is to verify bus voltage levels (+10V/0V/-10V differential) and bus termination resistance (nominally 75\u201385 \u03a9) are within specification \u2014 before replacing any LRU.",
+          "analogy": "Before assuming the radio is broken when you get garbled audio, check the signal strength and antenna connection first. Bus voltage and termination are the ARINC 429 equivalent of signal quality."
+        },
+        {
+          "term": "Bus Corruption Diagnosis",
+          "definition": "When a digital LRU appears to send erroneous data due to suspected bus corruption, the correct first step is to connect a bus analyzer to the ARINC 429 bus and capture the actual data words \u2014 confirming whether the source LRU or the bus/wiring is responsible before replacing any hardware.",
+          "analogy": "Before blaming the messenger for a garbled message, read the original message at the source \u2014 a bus analyzer lets you see exactly what is being sent before deciding if the sender or the transmission line is at fault."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An autopilot intermittently loses ARINC 429 data from the air data computer. What should the technician do first?",
+      "choices": [
+        "Immediately swap the ADC with a serviceable unit to confirm the fault",
+        "Reprogram the autopilot's ARINC 429 receiver threshold settings",
+        "Check wiring continuity and connector integrity at both the ADC output and the autopilot input connectors",
+        "Replace the ARINC 429 bus cable with a new shielded twisted pair"
+      ],
+      "correctIndex": 2,
+      "feedback": "Intermittent faults are most often connection-related. Inspect connectors and verify continuity at both ends before condemning an expensive LRU or replacing cable."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An ARINC 429 bus is producing intermittent data errors. What is the correct first troubleshooting step?",
+      "choices": [
+        "Replace the transmitting LRU with a known-good spare to confirm the fault",
+        "Increase the bus operating speed from low to high to improve signal quality",
+        "Verify that bus voltage levels and termination resistance are within specification",
+        "Re-route the bus cable away from power wiring to reduce interference"
+      ],
+      "correctIndex": 2,
+      "feedback": "Bus voltage levels and termination are the most common causes of ARINC 429 data errors. Verifying these first is more efficient and less costly than replacing LRUs."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A flight control computer is suspected of transmitting erroneous attitude data on its ARINC 429 output. What is the correct first troubleshooting step?",
+      "choices": [
+        "Immediately replace the flight control computer with a serviceable spare",
+        "Check the ARINC 429 termination resistance at both ends of the bus",
+        "Re-calibrate the AHRS to ensure the flight computer is receiving correct inputs",
+        "Connect a bus analyzer to the ARINC 429 output and verify the actual data content before condemning the computer"
+      ],
+      "correctIndex": 3,
+      "feedback": "A bus analyzer non-intrusively captures data words at the bus. If the analyzer confirms the FC computer is transmitting correct data, the fault is downstream (wiring, receiver). Only if the analyzer confirms bad data should the FC computer be suspected."
+    }
+  ]
+}

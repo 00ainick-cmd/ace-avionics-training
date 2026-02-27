@@ -1,0 +1,77 @@
+{
+  "id": "W5-Z3-N3",
+  "title": "Service loops & routing discipline",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Harness fab/routing",
+  "objectiveKeys": [
+    "q161",
+    "q200",
+    "q237"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Service loops & routing discipline"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Use service loops and support methods correctly."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Harness Routing Requirements",
+          "definition": "A wire harness must be: supported at regular intervals (per manual \u2014 typically 12\u201324 inches) with approved clamps, routed clear of moving parts and heat sources, and have no sharp bends (minimum bend radius = approximately 10\u00d7 wire diameter for data cables) to prevent insulation damage and conductor fatigue.",
+          "analogy": "A harness should be like a well-organized highway \u2014 properly supported (guardrails), free of obstacles (no tight turns), and well-maintained (no contact with hazards)."
+        },
+        {
+          "term": "Service Loop",
+          "definition": "A service loop is extra wire length coiled or folded near a connector or terminal, providing material for future re-terminations (each strip-and-crimp operation shortens the wire slightly) \u2014 preventing the need for splices when a connector is rebuilt over the aircraft's service life.",
+          "analogy": "A service loop is like leaving slack in a guitar string before tuning \u2014 you need extra material to wrap the tuning peg. Without it, you can't tune without splicing more string."
+        },
+        {
+          "term": "Damaged Harness Jacket \u2014 Assessment",
+          "definition": "A damaged harness outer jacket requires a damage assessment: minor/localized damage may be repaired with approved heat-shrink tubing or conduit per the maintenance manual; extensive, widespread, or damage reaching individual wire insulation typically requires harness replacement.",
+          "analogy": "Like assessing a damaged car bumper: a small dent gets repaired; a bumper that has caved into the engine compartment gets replaced. The severity determines the action."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "How should a wire harness be routed and secured in a small GA aircraft?",
+      "choices": [
+        "Loosely bunched along the fuselage with tie-wraps every few feet",
+        "Attached directly to structural members using adhesive foam clips",
+        "Secured with electrical tape every 24 inches and routed wherever space is available",
+        "Supported at regular intervals with approved clamps, kept clear of moving parts and heat sources, and routed to avoid sharp bends"
+      ],
+      "correctIndex": 3,
+      "feedback": "Proper harness installation: approved clamps at regular intervals (prevents sagging and chafing), clearance from moving parts and heat (prevents damage), and no sharp bends (prevents conductor and insulation damage)."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the purpose of a service loop in an aircraft wire harness?",
+      "choices": [
+        "To allow the harness to flex during aircraft structural flexing without breaking",
+        "To provide extra wire length near connectors for future re-termination or repair without the need for splicing",
+        "To distribute the harness weight evenly by creating balanced coils in the bundle",
+        "To increase the harness resistance so that each circuit is individually tuned"
+      ],
+      "correctIndex": 1,
+      "feedback": "Service loops store extra wire near connectors. Each time a connector is re-terminated (pins replaced, damaged section cut back), the service loop provides material. Without it, the wire becomes too short and a splice must be added."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A wire harness outer jacket is found damaged during an inspection. What is the correct approach?",
+      "choices": [
+        "Always replace the entire harness regardless of the extent of damage",
+        "Assess the extent of damage: repair with approved heat-shrink or conduit per the maintenance manual for localized damage, or replace the harness if damage is severe or widespread",
+        "Apply vinyl tape over any damaged section \u2014 this is the standard field repair method",
+        "Damage to the outer jacket only is not an airworthiness concern \u2014 document and monitor"
+      ],
+      "correctIndex": 1,
+      "feedback": "Assessment is the key step. Not all jacket damage requires harness replacement \u2014 minor, localized damage may be repaired per the maintenance manual using heat-shrink or conduit. Severe damage requires replacement."
+    }
+  ]
+}

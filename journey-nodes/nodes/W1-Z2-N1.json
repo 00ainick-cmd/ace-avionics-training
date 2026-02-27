@@ -1,0 +1,59 @@
+{
+  "id": "W1-Z2-N1",
+  "title": "Eye, hearing, and chemical glove basics",
+  "world": "Safety (Generic CAET overview)",
+  "zone": "Basic PPE",
+  "objectiveKeys": [
+    "q157",
+    "q235"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Eye, hearing, and chemical glove basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Select basic PPE: eye protection, hearing protection, gloves for chemicals."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "First Chemical Handling Step",
+          "definition": "Before handling any solvent or chemical, a new technician MUST read the SDS for each chemical to understand its hazards, required PPE, and emergency procedures.",
+          "analogy": "Like reading an instruction manual before using a power tool \u2014 you need to know the dangers before you pick it up."
+        },
+        {
+          "term": "Hearing Protection (Avionics Shop)",
+          "definition": "Hearing protection is critical in an avionics shop because noise-induced hearing loss is cumulative and permanent \u2014 each unprotected exposure adds to total damage, even when individual exposures seem tolerable.",
+          "analogy": "Like sunscreen for your ears \u2014 you do not feel the damage happening, but it accumulates with every unprotected exposure."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "A new avionics technician is about to use a chemical solvent for the first time. What is the MOST important first step?",
+      "choices": [
+        "Read the SDS for the solvent to understand hazards, PPE, and emergency procedures",
+        "Open the solvent in a ventilated area and proceed",
+        "Ask a coworker how much solvent to use",
+        "Don latex gloves and a respirator as general precaution without reading the SDS"
+      ],
+      "correctIndex": 0,
+      "feedback": "Different chemicals have different hazards, PPE needs, and first-aid steps. Reading the SDS for EACH chemical before use ensures the technician uses the correct protective measures."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why is hearing protection critical in an avionics shop with regular engine run-up activity nearby?",
+      "choices": [
+        "Cumulative noise-induced hearing loss from repeated exposure is a long-term permanent hazard",
+        "Engine noise at run-up levels can cause immediate permanent deafness from a single exposure",
+        "OSHA requires it specifically for Part 145 shops within 500 feet of active runways",
+        "Hearing protection prevents radio frequency interference with sensitive avionics test equipment"
+      ],
+      "correctIndex": 0,
+      "feedback": "The key word is cumulative \u2014 hearing damage builds over time. A single run-up may not seem dangerous, but repeated unprotected exposure leads to permanent hearing loss. This is why hearing protection is required even when individual noise levels seem tolerable."
+    }
+  ]
+}

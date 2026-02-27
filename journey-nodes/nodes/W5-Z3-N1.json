@@ -1,0 +1,59 @@
+{
+  "id": "W5-Z3-N1",
+  "title": "Harness fabrication basics",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Harness fab/routing",
+  "objectiveKeys": [
+    "q124",
+    "q189"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Harness fabrication basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Plan before cutting; build harness per diagram."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Harness Fabrication First Step",
+          "definition": "Before cutting any wire when fabricating an aircraft harness, the technician must thoroughly study the wiring diagram to understand all wire runs, connector locations, pin assignments, wire gauges, and routing paths \u2014 errors caught on the diagram are free; errors discovered after cutting cost time and materials.",
+          "analogy": "It's the measure-twice-cut-once rule: read the blueprint completely before making a single cut. Understanding the whole plan before acting prevents expensive and time-consuming mistakes."
+        },
+        {
+          "term": "Harness Securing Methods",
+          "definition": "Acceptable aircraft harness securing methods: (1) approved MS/AN lacing cord (traditional military and civilian method), (2) nylon tie wraps with edge protectors where needed, (3) cushioned clamps (AdEL or equivalent) at intervals per the maintenance manual.",
+          "analogy": "Three approved ways to bundle wires \u2014 lacing cord is like tying shoelaces, tie wraps are like twist ties, and cushioned clamps are like padded brackets. All must be approved types at correct spacing."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the first step when fabricating an aircraft wire harness from a wiring diagram?",
+      "choices": [
+        "Study the wiring diagram completely to understand all wire runs, connector locations, and pin assignments before cutting any wire",
+        "Cut all wires to approximate length, then adjust as needed during installation",
+        "Install the connectors first, then run wires to each connector as needed",
+        "Cut the longest wire first, then use it as a template for subsequent cuts"
+      ],
+      "correctIndex": 0,
+      "feedback": "Studying the complete diagram first ensures the technician understands the full harness topology before cutting. Errors on paper are corrected for free; errors in cut wire cost materials and time."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which methods are acceptable for securing wire harnesses in an aircraft?",
+      "choices": [
+        "Approved MS/AN lacing cord, nylon tie wraps with edge protection, or cushioned clamps at intervals per the maintenance manual",
+        "Rubber bands and cable loops \u2014 they avoid contact damage to the outer jacket",
+        "Plastic clips from automotive harness kits \u2014 these provide adequate support",
+        "Electrical tape wrapping at 12-inch intervals \u2014 provides both securing and insulation"
+      ],
+      "correctIndex": 0,
+      "feedback": "Three approved methods: lacing cord (MS/AN specs), nylon tie wraps (with edge protection), and cushioned clamps per the manual. Automotive hardware, rubber bands, and electrical tape are not approved."
+    }
+  ]
+}

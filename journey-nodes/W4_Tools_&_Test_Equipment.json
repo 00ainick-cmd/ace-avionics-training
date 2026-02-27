@@ -1,0 +1,675 @@
+{
+  "metadata": {
+    "courseId": "caet-entry-w4",
+    "title": "Tools & Test Equipment",
+    "description": "Micro-training generated for W4: Tools & Test Equipment"
+  },
+  "lessons": [
+    {
+      "id": "W4-Z1-N1",
+      "title": "Hand tools & precision basics",
+      "zone": "Hand tools",
+      "objectiveKeys": [
+        "q1",
+        "q2",
+        "q146",
+        "q170"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Hand tools & precision basics"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Use common hand tools correctly; avoid damage."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Center Punch",
+              "definition": "A center punch is a hardened steel tool struck with a hammer to create a precise conical indentation in metal; the indentation seats the drill bit tip, preventing it from skating across the work surface and ensuring accurate hole placement.",
+              "analogy": "A center punch is like making a thumbprint in clay before poking a hole \u2014 the depression gives the drill bit a starting point so it doesn't slide sideways before cutting."
+            },
+            {
+              "term": "Center Punch",
+              "definition": "A center punch is a hardened steel tool struck with a hammer to create a precise conical indentation in metal; the indentation seats the drill bit tip, preventing it from skating across the work surface and ensuring accurate hole placement.",
+              "analogy": "A center punch is like making a thumbprint in clay before poking a hole \u2014 the depression gives the drill bit a starting point so it doesn't slide sideways before cutting."
+            },
+            {
+              "term": "Micrometer Measurement Procedure",
+              "definition": "For accurate micrometer measurements: (1) clean both measuring surfaces (spindle and anvil) to remove debris, (2) zero the micrometer (close on nothing \u2014 verify it reads zero), (3) apply gentle, consistent pressure using the thimble ratchet (if equipped) \u2014 excessive pressure deforms the workpiece.",
+              "analogy": "Using a micrometer properly is like calibrating a scale: clean the pan (clean surfaces), check it reads zero with nothing on it (zero check), then place items with the same gentle touch each time (consistent pressure)."
+            },
+            {
+              "term": "Screwdriver Sizing and Cam-Out",
+              "definition": "Cam-out occurs when a screwdriver slips out of the screw head under torque, damaging the head and potentially the surrounding surface. Using a properly sized screwdriver that fully fills and engages the screw head recess is the primary prevention \u2014 an undersized blade has less contact area and cams out more easily.",
+              "analogy": "Using a screwdriver that's too small is like trying to turn a deadbolt with a toothpick \u2014 the toothpick will snap out under pressure because it doesn't fully engage the mechanism. A proper key fills the slot completely."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the primary purpose of a center punch in an avionics repair shop?",
+          "choices": [
+            "To remove stuck fasteners by driving them from the back side",
+            "To create a precise indentation that guides the drill bit and prevents wandering during drilling",
+            "To mark scribe lines on sheet metal for cutting",
+            "To test the hardness of a metal surface before drilling"
+          ],
+          "correctIndex": 1,
+          "feedback": "A center punch creates an indentation that seats the drill tip, preventing it from sliding when drilling begins. Without this, the drill wanders and holes are misplaced."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the primary purpose of a center punch in an avionics repair shop?",
+          "choices": [
+            "To remove stuck fasteners by driving them from the back side",
+            "To create a precise indentation that guides the drill bit and prevents wandering during drilling",
+            "To mark scribe lines on sheet metal for cutting",
+            "To test the hardness of a metal surface before drilling"
+          ],
+          "correctIndex": 1,
+          "feedback": "A center punch creates an indentation that seats the drill tip, preventing it from sliding when drilling begins. Without this, the drill wanders and holes are misplaced."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What are the correct steps for taking an accurate micrometer measurement?",
+          "choices": [
+            "Lubricate the spindle, set to expected range, take three rapid readings and average",
+            "Clean the measuring surfaces, zero the micrometer before use, and apply consistent gentle pressure when taking the reading",
+            "Apply oil to the workpiece, close the micrometer firmly, and read the display",
+            "Lock the barrel before closing on the workpiece to prevent overshooting"
+          ],
+          "correctIndex": 1,
+          "feedback": "Micrometer accuracy requires: clean surfaces (no contamination affecting the gap), verified zero (no baseline offset), and consistent gentle pressure (not deforming the workpiece or getting different readings based on force)."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the most important factor when selecting a manual screwdriver to prevent cam-out?",
+          "choices": [
+            "The screwdriver should be as long as possible to provide maximum torque leverage",
+            "The screwdriver should be harder than the screw material to prevent wear",
+            "The screwdriver blade or bit should be properly sized to fully engage the screw head",
+            "The screwdriver should be rated for maximum torque exceeding the fastener specification"
+          ],
+          "correctIndex": 2,
+          "feedback": "Full engagement is the primary cam-out prevention measure. A correctly sized bit/blade fills the recess completely, maximizing the contact area that resists the tendency to cam out under torque."
+        }
+      ]
+    },
+    {
+      "id": "W4-Z2-N1",
+      "title": "DMM basics (modes & connections)",
+      "zone": "Multimeters",
+      "objectiveKeys": [
+        "q45",
+        "q78",
+        "q136",
+        "q145",
+        "q198",
+        "q233"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to DMM basics (modes & connections)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Operate a DMM safely for V/I/R/continuity checks."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Voltage measurement \u2014 multimeter connection",
+              "definition": "To measure voltage, connect the multimeter IN PARALLEL across the component (red probe to positive side, black to negative). Circuit must be POWERED ON. The meter's high internal resistance prevents it from affecting circuit operation.",
+              "analogy": "Like checking water pressure at a tap \u2014 you put the gauge across the pipe outlet without interrupting the flow."
+            },
+            {
+              "term": "Multimeter OL Indication",
+              "definition": "'OL' (over limit or overload) on a multimeter set to ohms means the resistance is greater than the meter's maximum measurable range on the selected scale \u2014 typically indicating an open circuit (broken wire, open fuse, or disconnected path) or a very high resistance.",
+              "analogy": "OL is like a bathroom scale reading 'ERR' when an elephant stands on it \u2014 the scale's range is exceeded. OL means the resistance is beyond the meter's limit, most often because the circuit is open (no path for current)."
+            },
+            {
+              "term": "Resistance measurement procedure",
+              "definition": "Before measuring resistance: (1) Turn circuit power OFF. (2) Discharge any capacitors in the circuit. Reason: applied voltage will damage the meter's ohmmeter circuit and give false readings. The DMM supplies its own small test current for resistance measurement.",
+              "analogy": "Like checking the temperature of a cup with your finger \u2014 you need to set it down first, you can't check it while it's on the stove."
+            },
+            {
+              "term": "Continuity Test",
+              "definition": "A continuity test uses a multimeter (typically in the ohms or continuity beep mode) to measure resistance between two ends of a conductor; near-zero resistance confirms a complete circuit, while 'OL' or infinite resistance confirms an open/broken wire.",
+              "analogy": "A continuity test is like testing whether a garden hose leaks by blowing through it \u2014 if air comes out the other end (near-zero resistance), the path is complete. If nothing comes out (OL), there's a break."
+            },
+            {
+              "term": "Multimeter",
+              "definition": "A multimeter (digital or analog) is a single instrument that measures multiple electrical quantities: voltage (volts AC and DC), current (amps AC and DC), and resistance (ohms) \u2014 replacing separate voltmeter, ammeter, and ohmmeter instruments.",
+              "analogy": "A multimeter is the Swiss Army knife of electrical test equipment \u2014 voltage meter, current meter, and ohmmeter all in one instrument, with a selector switch to choose which function you need."
+            },
+            {
+              "term": "Current measurement \u2014 ammeter connection",
+              "definition": "To measure current, connect the ammeter IN SERIES \u2014 break the circuit and insert the meter so all current flows through it. The ammeter has very low internal resistance so it doesn't significantly affect circuit operation. Never connect an ammeter in parallel \u2014 it will short-circuit the supply.",
+              "analogy": "Like measuring water flow by cutting the pipe and inserting a flow meter \u2014 the water must pass through the meter to be counted."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How should a multimeter be connected to measure voltage across an avionics component?",
+          "choices": [
+            "In series with the load, circuit off",
+            "In parallel with the load, circuit off",
+            "In series with the load, circuit on",
+            "In parallel with the load, circuit on"
+          ],
+          "correctIndex": 3,
+          "feedback": "Voltage is always measured in parallel (across the component) with the circuit powered on. A multimeter has very high internal resistance, so parallel connection doesn't significantly load the circuit."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A multimeter set to the 200-ohm range shows 'OL' when connected across a wire. What does this indicate?",
+          "choices": [
+            "The wire has exactly 200 ohms resistance \u2014 the display switches to OL at full scale",
+            "The measurement polarity is reversed and the leads must be swapped",
+            "The multimeter is damaged and cannot measure the circuit correctly",
+            "The resistance is greater than the 200-ohm range, most likely an open circuit (broken wire) or very high resistance"
+          ],
+          "correctIndex": 3,
+          "feedback": "'OL' on the 200-ohm range means resistance exceeds 200 ohms. For a wire, this almost certainly means an open circuit \u2014 no conductive path exists between the probe points."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which procedure must be followed before using a multimeter to measure resistance in an avionics circuit?",
+          "choices": [
+            "Ensure circuit power is on and set meter to AC range",
+            "Ensure circuit power is off and capacitors are discharged",
+            "Connect meter in series with the circuit powered on",
+            "Connect meter in parallel with circuit powered on"
+          ],
+          "correctIndex": 1,
+          "feedback": "Power must be OFF before measuring resistance \u2014 applied voltage damages the ohmmeter circuit and gives false readings. Capacitors must be discharged as they can hold a charge that masquerades as a voltage source."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A warning light is not illuminating. The lamp tests good. What test should the technician use to determine if a broken wire is the cause?",
+          "choices": [
+            "Perform a continuity test with a multimeter measuring resistance between the two ends of the suspect wire",
+            "Measure the voltage drop across the lamp with the circuit energized",
+            "Use an oscilloscope to check the lamp's activation signal waveform",
+            "Measure the current in the lamp circuit with an ammeter"
+          ],
+          "correctIndex": 0,
+          "feedback": "A continuity test directly tests wire integrity. With power OFF, measure resistance between wire ends: near-zero ohms = intact; OL = broken. This is the definitive test for a broken wire."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What are the three primary electrical quantities measured by a digital multimeter?",
+          "choices": [
+            "Frequency, power factor, and efficiency",
+            "Capacitance, inductance, and RF output",
+            "Impedance, reactance, and phase angle",
+            "Voltage, current, and resistance"
+          ],
+          "correctIndex": 3,
+          "feedback": "A multimeter's three primary measurements are voltage (V), current (A), and resistance (\u03a9). Modern DMMs often add capacitance, frequency, temperature, and diode test, but the three core functions are V, A, and \u03a9."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How must an ammeter be connected to measure current in an aircraft circuit?",
+          "choices": [
+            "In series with the load, circuit broken to insert meter",
+            "In parallel across the load, circuit off",
+            "In parallel across the load, circuit on",
+            "In series with the source only, load bypassed"
+          ],
+          "correctIndex": 0,
+          "feedback": "An ammeter must be in series so all circuit current flows through it. You must break the circuit to insert the meter. Never connect in parallel \u2014 the ammeter's near-zero resistance would create a short circuit."
+        }
+      ]
+    },
+    {
+      "id": "W4-Z3-N1",
+      "title": "Voltage drop & resistance clues",
+      "zone": "Fault finding",
+      "objectiveKeys": [
+        "q69",
+        "q116",
+        "q138",
+        "q186",
+        "q194"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Voltage drop & resistance clues"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Interpret low voltage/dim load symptoms and resistance-related faults."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Fluctuating milliohmmeter reading",
+              "definition": "An unstable or fluctuating milliohmmeter reading on a bonding strap indicates a poor, intermittent contact \u2014 almost always caused by corrosion or contamination at one or both attachment points. Correct action: inspect, clean, and re-measure.",
+              "analogy": "Like a loose headphone plug causing crackling audio \u2014 the connection exists but isn't solid."
+            },
+            {
+              "term": "Lower-than-expected voltage across load",
+              "definition": "If voltage at a load is lower than expected, excessive resistance upstream is consuming voltage (V=IR voltage drop). Causes: corroded connections, undersized wire, loose terminals. The extra resistance steals voltage from the load.",
+              "analogy": "Water pressure drops at the end of a garden hose with a partially kinked section \u2014 the kink steals the pressure before it reaches the nozzle."
+            },
+            {
+              "term": "Voltage drop \u2014 cause",
+              "definition": "A voltage drop between source and load is caused by resistance in the wiring path: V_drop = I \u00d7 R_wire. Common sources: corroded connectors, undersized wire, loose terminals, bad splices. Even small resistance creates measurable drops at normal aircraft current levels.",
+              "analogy": "Friction in a pipe reduces water pressure at the outlet \u2014 more friction (resistance) means more pressure (voltage) lost before the water (current) arrives."
+            },
+            {
+              "term": "Dim lights \u2014 voltage drop diagnosis",
+              "definition": "Dim bulbs in a lighting circuit indicate reduced voltage at the bulb \u2014 caused by excessive resistance upstream stealing voltage (V=IR drop). Common causes: corroded connectors, loose terminals, undersized wire, or a poor ground return.",
+              "analogy": "Like a clogged showerhead producing weak pressure \u2014 the water supply is fine, but something in the path is choking the flow."
+            },
+            {
+              "term": "0.5V drop \u2014 ground return included",
+              "definition": "A 0.5V drop can occur anywhere in the complete circuit loop: supply wiring, connectors, AND the ground return path. Don't forget that the ground wire and ground connections also have resistance. A bad ground creates the same voltage drop symptom as a bad supply wire.",
+              "analogy": "A water system with a constricted intake pipe AND a constricted drain \u2014 both limit overall flow and pressure."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "During a bonding check, the milliohmmeter reading fluctuates rather than settling on a stable value. What does this indicate and what should be done?",
+          "choices": [
+            "The strap is good \u2014 fluctuation is normal for milliohmmeter readings",
+            "The meter is faulty \u2014 replace the instrument",
+            "There is an intermittent contact \u2014 inspect and clean attachment points for corrosion",
+            "The circuit has AC interference \u2014 use DC excitation mode"
+          ],
+          "correctIndex": 2,
+          "feedback": "A fluctuating reading means the contact is intermittent \u2014 not consistently solid. This is characteristic of corrosion or contamination at the bonding surface. Inspect and clean both attachment points before re-measuring."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A nav radio shows 24V supply at the bus but only 21V at the radio connector. What is the most likely cause?",
+          "choices": [
+            "Excessive resistance in the wiring or connectors between the bus and radio",
+            "There is an open circuit between the bus and the radio",
+            "The radio is drawing more current than rated",
+            "The voltage regulator output is too low"
+          ],
+          "correctIndex": 0,
+          "feedback": "The 3V drop is a classic sign of excessive resistance in the wiring path (V=IR). Corroded pins, a loose terminal, or undersized wire creates resistance that drops voltage before it reaches the load. An open would give 0V at the radio."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "You measure 24V at the bus and 23.5V at a downstream connector. What does this 0.5V difference most likely indicate?",
+          "choices": [
+            "A blown fuse between the bus and connector",
+            "Normal voltage variation within tolerance",
+            "Resistance in the wiring or connectors between those two points",
+            "The downstream equipment is drawing excessive current"
+          ],
+          "correctIndex": 2,
+          "feedback": "V_drop = I \u00d7 R_path. A measurable voltage difference between source and load means there is resistance in the path consuming voltage. This points to corroded connectors, a bad terminal, undersized wire, or a poor splice."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Navigation lights in an aircraft are noticeably dimmer than when the aircraft was new. What is the most likely cause?",
+          "choices": [
+            "The bulbs are drawing more current as they age",
+            "There is an open circuit in one of the branches",
+            "Excessive resistance from corroded connections or undersized wiring is causing a voltage drop",
+            "The bus voltage has increased beyond normal limits"
+          ],
+          "correctIndex": 2,
+          "feedback": "Dim but functioning lights indicate reduced voltage \u2014 not zero volts. Corroded connectors, loose pins, or undersized wire create resistance that drops voltage before it reaches the bulbs. This is the classic presentation of a wiring/connection problem."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A 0.5V drop is measured between the bus and a downstream load in a 24V circuit. Which of the following should be inspected as potential causes?",
+          "choices": [
+            "The wiring, connectors, and ground return path between the source and the load",
+            "Only the ground connection at the load",
+            "Only the positive supply wire",
+            "The load itself \u2014 it must be drawing too much current"
+          ],
+          "correctIndex": 0,
+          "feedback": "Voltage drop can occur in any part of the circuit: supply wire, connectors, and the ground return. All three must be checked. Focusing only on one side misses the complete picture \u2014 a degraded ground is just as capable of creating a measured drop."
+        }
+      ]
+    },
+    {
+      "id": "W4-Z3-N2",
+      "title": "Basic fault isolation (opens/shorts/parasitic)",
+      "zone": "Fault finding",
+      "objectiveKeys": [
+        "q47",
+        "q81",
+        "q141",
+        "q171",
+        "q207",
+        "q223",
+        "q232"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Basic fault isolation (opens/shorts/parasitic)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Apply basic fault isolation logic (opens/shorts/breaker trips/parasitic draw)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Parasitic current draw \u2014 common causes",
+              "definition": "Three main causes: (1) faulty relay contacts that remain closed when they should open, (2) stuck switches that don't fully disconnect a circuit, (3) incorrect avionics installation wiring that leaves circuits energized. All drain the battery when the master is off.",
+              "analogy": "Like a house where a light switch is broken and the light stays on \u2014 something that should be off is staying on and draining power."
+            },
+            {
+              "term": "Unstable within-limits voltage",
+              "definition": "Voltage that fluctuates but stays within acceptable limits points to an intermittent ground connection or a failing voltage regulator \u2014 not a hard fault. Both cause varying resistance in the return/regulation path.",
+              "analogy": "Like a dimmer switch that flickers but doesn't go out \u2014 the connection is there but inconsistent."
+            },
+            {
+              "term": "0V across component \u2014 diagnosis",
+              "definition": "If you measure 0V across a component in an active circuit, there is an open circuit UPSTREAM. No current flows through the component so no voltage appears across it. Check: blown fuse, tripped breaker, broken wire, or open switch upstream of the component.",
+              "analogy": "If a section of a highway is completely blocked, no cars reach the exit \u2014 the exit measures 'zero traffic' not because it's broken, but because nothing is getting through upstream."
+            },
+            {
+              "term": "Parasitic current draw",
+              "definition": "Current consumed by a circuit or component when the aircraft master switch is OFF. Even small amounts (50\u2013100 mA) will drain a battery in hours or days. Causes: stuck relay contacts, latched switches, always-on avionics wiring.",
+              "analogy": "A slow leak in a water tank \u2014 you come back after a week and it's empty even though you 'turned off' the supply."
+            },
+            {
+              "term": "Breaker trips immediately on reset",
+              "definition": "A circuit breaker that trips immediately when reset indicates a hard fault \u2014 almost always a short circuit or failed heating element. Do NOT reset repeatedly. Each reset attempt forces current through the fault, worsening damage. Isolate and inspect before further action.",
+              "analogy": "Like a safety valve that keeps tripping the moment you reset it \u2014 the valve is working correctly; the problem is the pressure it's protecting against."
+            },
+            {
+              "term": "New avionics won't power up \u2014 first checks",
+              "definition": "First three checks for new avionics that won't power on: (1) Circuit breaker is set (not tripped), (2) power wiring is connected to the correct bus, (3) ground wire is properly terminated with good contact to airframe. These cover 90% of new installation no-power faults.",
+              "analogy": "First checks when a new appliance doesn't work: Is it plugged in? Is the outlet switch on? Is the outlet actually live?"
+            },
+            {
+              "term": "Parasitic Draw Diagnosis",
+              "definition": "To confirm a faulty switch as a parasitic draw source, place an ammeter in series with the circuit and activate the suspect switch while monitoring current. A current increase confirms the switch is the source.",
+              "analogy": "Like checking which faucet is draining your water pressure \u2014 turn them on one at a time while watching the flow meter."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which of the following is a common cause of parasitic current draw in general aviation aircraft?",
+          "choices": [
+            "Excessive wire gauge for the circuit",
+            "Faulty relay contacts that remain closed",
+            "High battery internal resistance",
+            "Overcharged alternator output"
+          ],
+          "correctIndex": 1,
+          "feedback": "Faulty relay contacts that fail to open keep circuits energized after master shutdown, draining the battery. Wire gauge, battery resistance, and alternator output don't cause parasitic draw on their own."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Avionics voltage is measured as unstable \u2014 fluctuating slightly but never going out of spec. What is the most likely cause?",
+          "choices": [
+            "Blown fuse in the circuit",
+            "Open circuit upstream",
+            "Intermittent ground or failing voltage regulator",
+            "Overloaded bus with too many parallel loads"
+          ],
+          "correctIndex": 2,
+          "feedback": "A blown fuse or open circuit would cause zero voltage. An overloaded bus would cause consistently low (not fluctuating) voltage. Intermittent ground connections and failing regulators produce the characteristic unstable-but-within-limits pattern."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "With the circuit powered on, a technician measures 0V across a component. The circuit breaker appears set. What is the most likely cause?",
+          "choices": [
+            "The component is drawing too much current",
+            "There is a short circuit at the component's output",
+            "An open circuit upstream \u2014 broken wire, blown fuse, or tripped breaker",
+            "The bus voltage is too low to appear at the component"
+          ],
+          "correctIndex": 2,
+          "feedback": "Zero volts across a component in a live circuit means no current is flowing \u2014 which requires an open path upstream. Even if the breaker appears set, it may have tripped internally. A blown fuse or broken wire upstream would also produce 0V."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is parasitic current draw?",
+          "choices": [
+            "Current drawn during engine start that exceeds normal levels",
+            "Current consumed by a component when the master switch is off, draining the battery",
+            "Extra current drawn by avionics during warm-up",
+            "Current flowing back from the bus to the battery during charging"
+          ],
+          "correctIndex": 1,
+          "feedback": "Parasitic draw occurs when master is off but current still flows \u2014 from stuck relays, faulty switches, or improperly wired avionics. Over hours or days, even 100mA will discharge an aircraft battery."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A pitot heat circuit breaker trips the moment it is reset. What is the correct procedure?",
+          "choices": [
+            "Reset it one more time \u2014 breakers sometimes need two resets after a thermal trip",
+            "Replace the breaker with a 5-amp higher-rated unit and reset",
+            "Do not reset again; isolate the circuit and inspect for a short circuit or failed element",
+            "Apply full bus voltage and measure the current spike to identify the fault"
+          ],
+          "correctIndex": 2,
+          "feedback": "Immediate tripping on reset means the fault is still present \u2014 a short or failed element is drawing excessive current the instant power is applied. Do not reset again; isolate the circuit and perform a proper inspection before any further action."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A newly installed GPS/NAV/COMM fails to power on during initial test. What should be checked first?",
+          "choices": [
+            "Antenna SWR and impedance matching",
+            "Circuit breaker, correct bus connection, and ground wire termination",
+            "Software version compatibility with the panel system",
+            "Cooling fan operation and avionics bay temperature"
+          ],
+          "correctIndex": 1,
+          "feedback": "The vast majority of new-install no-power situations trace to one of three basic issues: tripped or unset breaker, wire connected to wrong bus, or ground wire not making solid contact. Check these before suspecting the unit itself."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "How do you confirm a faulty switch is the source of a parasitic draw in an aircraft circuit?",
+          "choices": [
+            "Place an ammeter in series with the circuit and activate the suspect switch while monitoring current",
+            "Measure voltage across the switch terminals with the circuit energized",
+            "Measure resistance across the switch with the circuit de-energized and power off",
+            "Pull the circuit breaker and check if the battery drain stops to isolate the branch"
+          ],
+          "correctIndex": 0,
+          "feedback": "Parasitic draw is current, so an ammeter in series is required. Activating the suspect switch while watching current directly confirms whether that switch is the draw source. Voltage measurement identifies a drop, not draw. Pulling the breaker isolates the circuit but does not identify the specific faulty component."
+        }
+      ]
+    },
+    {
+      "id": "W4-Z4-N1",
+      "title": "Oscilloscope & specialty instruments awareness",
+      "zone": "Scope & specialty instruments",
+      "objectiveKeys": [
+        "q11",
+        "q37",
+        "q54",
+        "q107",
+        "q125",
+        "q133",
+        "q142",
+        "q144"
+      ],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Oscilloscope & specialty instruments awareness"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Recognize what an oscilloscope shows and when specialty instruments are used (basic)."
+        },
+        {
+          "type": "interactive-flashcard-grid",
+          "items": [
+            {
+              "term": "Milliohmmeter",
+              "definition": "A precision instrument for measuring very low resistance values (milliohms). Used to verify aircraft bonding straps, connector contact resistance, and ground return paths where a standard DMM lacks resolution.",
+              "analogy": "Like using a precision scale to weigh a feather \u2014 a bathroom scale can't detect it, but a jeweler's scale can."
+            },
+            {
+              "term": "Milliohmmeter primary use",
+              "definition": "Measuring very low resistance values: bonding straps, connector contact resistance, and ground return paths. Provides milliohm-level precision where standard DMMs cannot.",
+              "analogy": "A caliper versus a ruler \u2014 both measure length, but the caliper resolves tiny differences a ruler would miss."
+            },
+            {
+              "term": "Oscilloscope",
+              "definition": "An oscilloscope displays voltage as a function of time on a calibrated screen, allowing observation of signal amplitude (peak voltage), frequency (cycles per second), waveform shape (sine, square, triangle, digital), and timing relationships between signals.",
+              "analogy": "An oscilloscope is like a video camera for electricity \u2014 it shows you exactly what a voltage signal is doing over time, revealing information that a simple voltmeter can only partially capture."
+            },
+            {
+              "term": "Digital Databus Analyzer",
+              "definition": "A digital databus (protocol) analyzer connects non-intrusively to a databus and captures, timestamps, and decodes bus traffic in real time \u2014 displaying individual data words with their labels, values, and error conditions, enabling verification of correct operation and diagnosis of communication faults.",
+              "analogy": "A databus analyzer is like a flight data recorder for the ARINC 429 bus \u2014 it captures everything that flows by, decodes it into readable form, and helps you understand what happened when things went wrong."
+            },
+            {
+              "term": "Tool for Intermittent Bus Failures",
+              "definition": "A digital databus analyzer (protocol analyzer) is the best tool for capturing intermittent bus failures \u2014 it monitors continuously and time-stamps all bus activity, capturing the failure event when it occurs even if it is brief and transient.",
+              "analogy": "An intermittent bus failure is like a car noise that only happens sometimes. A databus analyzer is the dashcam that records everything \u2014 when the noise finally happens, you have proof of what it was."
+            },
+            {
+              "term": "Databus Analyzer \u2014 Primary Purpose",
+              "definition": "A databus analyzer's primary troubleshooting purpose is to capture bus traffic in real time, decode individual data words (revealing label, value, and error status), and identify which transmissions are incorrect, corrupted, or missing entirely.",
+              "analogy": "Think of a databus analyzer like a network packet sniffer for avionics \u2014 it sees every data 'packet' (word) on the bus, decodes it from raw bits into readable labels and values, and flags anything that's wrong."
+            },
+            {
+              "term": "Protocol Analyzer \u2014 Common Name",
+              "definition": "A databus analyzer (also called a protocol analyzer) is the standard tool in avionics maintenance for capturing and analyzing digital databus traffic \u2014 available for ARINC 429, MIL-STD-1553, RS-232/485, and other protocols.",
+              "analogy": "Just as a mechanic has a scan tool for car computer diagnostics, an avionics technician has a protocol analyzer for databus diagnostics \u2014 the right specialized tool for the job."
+            },
+            {
+              "term": "Megohmmeter (Megger)",
+              "definition": "An instrument that applies high voltage (typically 500V\u20131000V DC) to test insulation resistance in wiring, motors, and generators. Measures in megohms (M\u03a9). Low megohm readings indicate insulation breakdown or moisture contamination.",
+              "analogy": "Like applying high water pressure to check a hose for leaks \u2014 normal pressure wouldn't reveal pinhole leaks, but high pressure does."
+            }
+          ]
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which instrument is best suited to verify that an aircraft bonding strap meets the required low-resistance specification?",
+          "choices": [
+            "Milliohmmeter",
+            "Megohmmeter",
+            "Standard digital multimeter",
+            "Clamp-on ammeter"
+          ],
+          "correctIndex": 0,
+          "feedback": "Milliohmmeter measures resistance at milliohm precision, required for bonding verification. A standard DMM lacks sufficient resolution for sub-ohm values. A megohmmeter tests insulation, not bonding straps."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "A milliohmmeter is primarily used to measure which of the following?",
+          "choices": [
+            "Insulation resistance of wire bundles",
+            "Frequency of AC signals",
+            "Very low resistance values like bonding straps and ground return paths",
+            "High-voltage breakdown thresholds"
+          ],
+          "correctIndex": 2,
+          "feedback": "The milliohmmeter excels at measuring very low resistances \u2014 bonding straps, connector contacts, and ground return paths. Insulation resistance is measured with a megohmmeter; frequency with a frequency counter or oscilloscope."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What information can an oscilloscope provide that a digital multimeter cannot?",
+          "choices": [
+            "Precise DC voltage measurements to six decimal places",
+            "Direct measurement of circuit resistance using a four-wire method",
+            "Visual display of signal waveform shape, amplitude over time, and frequency",
+            "Current measurement without breaking the circuit"
+          ],
+          "correctIndex": 2,
+          "feedback": "An oscilloscope shows voltage vs. time \u2014 waveform shape, amplitude changes, frequency, and timing. A DMM gives only a single steady-state value; it cannot show signal dynamics or waveform characteristics."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What is the primary function of a digital databus analyzer in avionics maintenance?",
+          "choices": [
+            "To capture, display, and decode bus traffic to verify correct data transmission and diagnose communication faults",
+            "To measure the DC power supply voltage to each avionics LRU",
+            "To program ARINC 429 LRUs with their initial configuration settings",
+            "To measure the resistance of the bus termination resistors at each end"
+          ],
+          "correctIndex": 0,
+          "feedback": "A databus analyzer provides non-intrusive, real-time decoding of bus protocol data \u2014 showing what labels are being transmitted, their values, timing, and any errors \u2014 the essential tool for ARINC 429 and MIL-STD-1553 diagnosis."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which instrument is most useful for diagnosing an intermittent ARINC 429 bus failure that occurs unpredictably?",
+          "choices": [
+            "A digital multimeter measuring bus voltage",
+            "A digital databus (protocol) analyzer that continuously monitors and records all bus activity",
+            "An oscilloscope triggered on bus signal transitions",
+            "A megohmmeter measuring cable insulation resistance"
+          ],
+          "correctIndex": 1,
+          "feedback": "An intermittent failure by definition doesn't occur consistently. A databus analyzer continuously monitors and logs all bus activity, capturing the failure event with timestamp and context when it finally occurs."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "In avionics troubleshooting, what is the primary purpose of a digital databus analyzer?",
+          "choices": [
+            "To measure the AC impedance of the bus cable at various frequencies",
+            "To program replacement LRUs with the correct ARINC label configuration",
+            "To capture bus traffic in real time, decode data words, and identify incorrect or missing transmissions",
+            "To test bus cable shielding effectiveness against electromagnetic interference"
+          ],
+          "correctIndex": 2,
+          "feedback": "The databus analyzer is the window into what's actually happening on the bus: real-time capture, word-by-word decoding, and automatic flagging of errors or missing labels."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "What instrument is commonly used in avionics maintenance to capture and analyze digital databus traffic?",
+          "choices": [
+            "Digital multimeter \u2014 the most versatile test instrument for all avionics measurements",
+            "Spectrum analyzer \u2014 for analyzing the frequency content of digital signals",
+            "Oscilloscope \u2014 the standard instrument for all digital signal analysis",
+            "Databus analyzer (protocol analyzer) \u2014 specialized for capturing and decoding digital bus communication"
+          ],
+          "correctIndex": 3,
+          "feedback": "A databus analyzer (protocol analyzer) is the specialized tool for ARINC 429, MIL-STD-1553, and other avionics bus analysis. Oscilloscopes show waveforms but don't decode protocol data; DMMs show only voltage."
+        },
+        {
+          "type": "knowledge-check",
+          "question": "Which instrument is used to test the insulation resistance of aircraft wiring and generator windings?",
+          "choices": [
+            "Digital multimeter (DMM)",
+            "Milliohmmeter",
+            "Megohmmeter (megger)",
+            "LCR meter"
+          ],
+          "correctIndex": 2,
+          "feedback": "The megohmmeter tests insulation integrity by applying high voltage and measuring resistance in megohms. A DMM cannot generate the high test voltage needed to stress insulation and reveal degradation."
+        }
+      ]
+    },
+    {
+      "id": "W4-Z5-N1",
+      "title": "Wattmeter basics (authoring gap)",
+      "zone": "Tool governance",
+      "objectiveKeys": [],
+      "blocks": [
+        {
+          "type": "text-heading",
+          "content": "Introduction to Wattmeter basics (authoring gap)"
+        },
+        {
+          "type": "text-paragraph",
+          "content": "Explain wattmeter use (power measurement) at a basic level."
+        }
+      ]
+    }
+  ]
+}

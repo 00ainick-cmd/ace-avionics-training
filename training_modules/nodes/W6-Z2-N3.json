@@ -1,0 +1,77 @@
+{
+  "id": "W6-Z2-N3",
+  "title": "ARINC 429 speed/timing awareness",
+  "world": "Digital Databus Systems",
+  "zone": "ARINC 429 architecture",
+  "objectiveKeys": [
+    "q14",
+    "q75",
+    "q15"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to ARINC 429 speed/timing awareness"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Recognize common speeds and timing concepts."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "ARINC 429 Transmission Speeds",
+          "definition": "ARINC 429 operates at two standard speeds: low speed at 12.5\u201314.5 kbps (kilobits per second) and high speed at 100 kbps.",
+          "analogy": "Think of low-speed ARINC 429 as a slow, careful walkie-talkie and high-speed as a fast CB radio \u2014 same protocol, different transmission rates for different data urgency."
+        },
+        {
+          "term": "ARINC 429 High-Speed Rate",
+          "definition": "The ARINC 429 high-speed bus operates at 100 kilobits per second (kbps), used for time-critical avionics data such as attitude, navigation, and air data.",
+          "analogy": "100 kbps is the fast lane of ARINC 429 \u2014 used when data needs to get there quickly, like attitude updates to the autopilot."
+        },
+        {
+          "term": "ARINC 429 Update Latency",
+          "definition": "High latency between data updates on an ARINC 429 bus is caused by either high bus loading (too many labels being transmitted, slowing the update rate for each) or an infrequently updating source LRU \u2014 not necessarily a hardware failure.",
+          "analogy": "Like a busy highway \u2014 more cars (labels) on the road means each car (data word) takes longer to arrive. Or the source simply isn't sending updates often."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What are the two standard ARINC 429 bus data rates?",
+      "choices": [
+        "1 kbps and 10 kbps",
+        "50 kbps and 500 kbps",
+        "12.5\u201314.5 kbps (low) and 100 kbps (high)",
+        "100 kbps and 1 Mbps"
+      ],
+      "correctIndex": 2,
+      "feedback": "ARINC 429 specifies low-speed (12.5\u201314.5 kbps) for less time-critical data and high-speed (100 kbps) for time-critical avionics data such as attitude and navigation."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "What is the maximum data rate of the ARINC 429 high-speed bus?",
+      "choices": [
+        "14.5 kbps",
+        "100 kbps",
+        "50 kbps",
+        "1,000 kbps"
+      ],
+      "correctIndex": 1,
+      "feedback": "ARINC 429 high speed is defined as 100 kbps. Low speed is 12.5\u201314.5 kbps. The high-speed standard handles flight-critical parameters requiring faster update rates."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An avionics system shows unusually slow update rates on the ARINC 429 display. Before replacing the transmitting LRU, what should the technician investigate?",
+      "choices": [
+        "Whether the receiving LRU has a failed demodulator circuit",
+        "Whether the static discharge system is affecting digital signal timing",
+        "Whether the data bus cable is too long and requires a signal repeater",
+        "Whether high bus loading or an infrequently updating data source is causing the slow updates"
+      ],
+      "correctIndex": 3,
+      "feedback": "Slow update rates are often caused by high bus loading (many labels competing for bandwidth) or a source that transmits infrequently by design \u2014 not hardware failure. Check both before condemning a box."
+    }
+  ]
+}

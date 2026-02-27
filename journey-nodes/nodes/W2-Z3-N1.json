@@ -1,0 +1,59 @@
+{
+  "id": "W2-Z3-N1",
+  "title": "Maintenance record elements (Part 43.9 level)",
+  "world": "Maintenance Regulations & Documentation (Entry scope)",
+  "zone": "Documentation basics",
+  "objectiveKeys": [
+    "q20",
+    "q154"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Maintenance record elements (Part 43.9 level)"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Identify required elements of a maintenance record/log entry."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "Maintenance Record (\u00a743.9)",
+          "definition": "Per 14 CFR \u00a743.9, a maintenance record must include: description of work performed, date completed, name of person performing work, certificate number, and a return-to-service signature.",
+          "analogy": "Like a doctor's note after surgery \u2014 it must say what was done, when, by whom with their license number, and that the patient is cleared to go."
+        },
+        {
+          "term": "Avionics Repair Log Entry (Required Elements)",
+          "definition": "Required elements per \u00a743.9: description of work performed, parts used, date completed, technician name, certificate number, and return-to-service statement.",
+          "analogy": "Like a contractor's invoice that doubles as a warranty record \u2014 documenting exactly what was done, what was installed, when, and by whom with their license number."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Per 14 CFR \u00a743.9, which elements must be included in a maintenance record entry?",
+      "choices": [
+        "Description of work, date, name, certificate number, and return-to-service signature",
+        "Description of work, aircraft serial number, date, and inspector signature",
+        "Work order number, date, technician photo ID, and certificate number",
+        "Part numbers replaced, date, flight hours, and technician name"
+      ],
+      "correctIndex": 0,
+      "feedback": "\u00a743.9 requires five elements: description of work performed, date completed, name, certificate number, and return-to-service signature. Aircraft serial number, flight hours, and photo ID are not required elements."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which list correctly states all required elements of a maintenance log entry for an avionics repair?",
+      "choices": [
+        "Description of work performed, parts used, date completed, technician name, certificate number, and return-to-service statement",
+        "Description of work, aircraft serial number, date, and IA countersignature",
+        "Work order number, parts used, technician name, and shop authorization stamp",
+        "Description of work, date, parts used, and return-to-service signature only"
+      ],
+      "correctIndex": 0,
+      "feedback": "All six elements are required by \u00a743.9. Aircraft serial number and IA countersignature are not required elements. Work order number and shop stamp are administrative tools, not regulatory requirements."
+    }
+  ]
+}

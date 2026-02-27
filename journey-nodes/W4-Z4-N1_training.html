@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Training Manual — Oscilloscope &amp; specialty instruments awareness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="training_style.css">
+    <style>
+        .sidebar-title { background-clip: text; -webkit-background-clip: text; }
+    </style>
+</head>
+<body>
+    <nav class="course-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">CAET Prep</div>
+            <div class="sidebar-subtitle">Interactive Training</div>
+        </div>
+        <div class="sidebar-world-name">Safety</div>
+        <a href="W1-Z1-N1_training.html" class="sidebar-node-link">W1-Z1-N1 Hazard recognition (stop-work mindset)</a>
+        <a href="W1-Z1-N2_training.html" class="sidebar-node-link">W1-Z1-N2 Housekeeping &amp; clean work area discipline</a>
+        <a href="W1-Z2-N1_training.html" class="sidebar-node-link">W1-Z2-N1 Eye, hearing, and chemical glove basics</a>
+        <a href="W1-Z2-N2_training.html" class="sidebar-node-link">W1-Z2-N2 Electrical shock first action</a>
+        <a href="W1-Z2-N3_training.html" class="sidebar-node-link">W1-Z2-N3 Ramp/rotor awareness (optional)</a>
+        <a href="W1-Z3-N1_training.html" class="sidebar-node-link">W1-Z3-N1 SDS / HazCom basics</a>
+        <a href="W1-Z3-N2_training.html" class="sidebar-node-link">W1-Z3-N2 Chemical handling/storage/disposal awareness (generic)</a>
+        <a href="W1-Z3-N3_training.html" class="sidebar-node-link">W1-Z3-N3 Solvent fumes / exposure awareness</a>
+        <a href="W1-Z4-N1_training.html" class="sidebar-node-link">W1-Z4-N1 Fire safety basics (no extinguisher classes)</a>
+        <a href="W1-Z5-N1_training.html" class="sidebar-node-link">W1-Z5-N1 ESD-safe handling basics</a>
+        <a href="W1-Z5-N2_training.html" class="sidebar-node-link">W1-Z5-N2 FOD and tool accountability</a>
+        <div class="sidebar-world-name">Maintenance Regulations &amp; Documentation</div>
+        <a href="W2-Z1-N1_training.html" class="sidebar-node-link">W2-Z1-N1 Parts 145/43/91 basics (recognition)</a>
+        <a href="W2-Z1-N2_training.html" class="sidebar-node-link">W2-Z1-N2 Maintenance vs preventive maintenance (recognition)</a>
+        <a href="W2-Z2-N1_training.html" class="sidebar-node-link">W2-Z2-N1 Ratings/capability limits (stay in your lane)</a>
+        <a href="W2-Z2-N2_training.html" class="sidebar-node-link">W2-Z2-N2 Current manuals / technical data requirement</a>
+        <a href="W2-Z2-N3_training.html" class="sidebar-node-link">W2-Z2-N3 Manual-first troubleshooting start point</a>
+        <a href="W2-Z3-N1_training.html" class="sidebar-node-link">W2-Z3-N1 Maintenance record elements (Part 43.9 level)</a>
+        <a href="W2-Z4-N1_training.html" class="sidebar-node-link">W2-Z4-N1 Major alteration basics</a>
+        <a href="W2-Z4-N2_training.html" class="sidebar-node-link">W2-Z4-N2 STC and TSO replacement basics</a>
+        <a href="W2-Z5-N1_training.html" class="sidebar-node-link">W2-Z5-N1 Installation standards awareness (cross-link)</a>
+        <a href="W2-Z5-N2_training.html" class="sidebar-node-link">W2-Z5-N2 Calibration label check (cross-link)</a>
+        <div class="sidebar-world-name">Electrical Fundamentals &amp; Aircraft Electrical Systems</div>
+        <a href="W3-Z1-N1_training.html" class="sidebar-node-link">W3-Z1-N1 Ohm’s Law basics</a>
+        <a href="W3-Z1-N2_training.html" class="sidebar-node-link">W3-Z1-N2 Power basics</a>
+        <a href="W3-Z2-N1_training.html" class="sidebar-node-link">W3-Z2-N1 Series/parallel circuit behavior</a>
+        <a href="W3-Z2-N2_training.html" class="sidebar-node-link">W3-Z2-N2 Circuit protection (fuses/breakers)</a>
+        <a href="W3-Z3-N1_training.html" class="sidebar-node-link">W3-Z3-N1 Buses and distribution</a>
+        <a href="W3-Z3-N2_training.html" class="sidebar-node-link">W3-Z3-N2 Batteries and grounding/bonding</a>
+        <a href="W3-Z3-N3_training.html" class="sidebar-node-link">W3-Z3-N3 Power generation and regulation</a>
+        <a href="W3-Z4-N1_training.html" class="sidebar-node-link">W3-Z4-N1 AC fundamentals (frequency/waveform/reactance/transformer)</a>
+        <div class="sidebar-world-name">Tools &amp; Test Equipment</div>
+        <a href="W4-Z1-N1_training.html" class="sidebar-node-link">W4-Z1-N1 Hand tools &amp; precision basics</a>
+        <a href="W4-Z2-N1_training.html" class="sidebar-node-link">W4-Z2-N1 DMM basics (modes &amp; connections)</a>
+        <a href="W4-Z3-N1_training.html" class="sidebar-node-link">W4-Z3-N1 Voltage drop &amp; resistance clues</a>
+        <a href="W4-Z3-N2_training.html" class="sidebar-node-link">W4-Z3-N2 Basic fault isolation (opens/shorts/parasitic)</a>
+        <a href="W4-Z4-N1_training.html" class="sidebar-node-link active">W4-Z4-N1 Oscilloscope &amp; specialty instruments awareness</a>
+        <a href="W4-Z5-N1_training.html" class="sidebar-node-link">W4-Z5-N1 Wattmeter basics (authoring gap)</a>
+        <div class="sidebar-world-name">Aircraft Wiring &amp; Harness</div>
+        <a href="W5-Z1-N1_training.html" class="sidebar-node-link">W5-Z1-N1 Wire types &amp; insulation</a>
+        <a href="W5-Z1-N2_training.html" class="sidebar-node-link">W5-Z1-N2 Wire gauge sizing</a>
+        <a href="W5-Z2-N1_training.html" class="sidebar-node-link">W5-Z2-N1 Crimping fundamentals</a>
+        <a href="W5-Z2-N2_training.html" class="sidebar-node-link">W5-Z2-N2 Connectors &amp; backshells</a>
+        <a href="W5-Z3-N1_training.html" class="sidebar-node-link">W5-Z3-N1 Harness fabrication basics</a>
+        <a href="W5-Z3-N2_training.html" class="sidebar-node-link">W5-Z3-N2 Routing &amp; protection</a>
+        <a href="W5-Z3-N3_training.html" class="sidebar-node-link">W5-Z3-N3 Service loops &amp; routing discipline</a>
+        <a href="W5-Z4-N1_training.html" class="sidebar-node-link">W5-Z4-N1 Shielding &amp; EMI basics</a>
+        <a href="W5-Z4-N2_training.html" class="sidebar-node-link">W5-Z4-N2 Soldering awareness</a>
+        <a href="W5-Z4-N3_training.html" class="sidebar-node-link">W5-Z4-N3 Heat shrink / solder sleeves (authoring gap)</a>
+        <a href="W5-Z5-N1_training.html" class="sidebar-node-link">W5-Z5-N1 Prohibited practices</a>
+        <a href="W5-Z5-N2_training.html" class="sidebar-node-link">W5-Z5-N2 Safety wire twist rate (optional)</a>
+        <div class="sidebar-world-name">Digital Databus Systems</div>
+        <a href="W6-Z1-N1_training.html" class="sidebar-node-link">W6-Z1-N1 Why digital databuses exist</a>
+        <a href="W6-Z2-N1_training.html" class="sidebar-node-link">W6-Z2-N1 ARINC 429 architecture basics</a>
+        <a href="W6-Z2-N2_training.html" class="sidebar-node-link">W6-Z2-N2 ARINC 429 word structure basics</a>
+        <a href="W6-Z2-N3_training.html" class="sidebar-node-link">W6-Z2-N3 ARINC 429 speed/timing awareness</a>
+        <a href="W6-Z3-N1_training.html" class="sidebar-node-link">W6-Z3-N1 MIL-STD-1553 basics</a>
+        <a href="W6-Z3-N2_training.html" class="sidebar-node-link">W6-Z3-N2 RS-232 basics</a>
+        <a href="W6-Z3-N3_training.html" class="sidebar-node-link">W6-Z3-N3 RS-485/422 basics</a>
+        <a href="W6-Z4-N1_training.html" class="sidebar-node-link">W6-Z4-N1 Databus troubleshooting basics</a>
+        <a href="W6-Z4-N2_training.html" class="sidebar-node-link">W6-Z4-N2 Databus analyzer awareness (cross-link)</a>
+        <div class="sidebar-world-name">CNS Systems</div>
+        <a href="W7-Z1-N1_training.html" class="sidebar-node-link">W7-Z1-N1 Audio panel/intercom basics</a>
+        <a href="W7-Z2-N1_training.html" class="sidebar-node-link">W7-Z2-N1 VHF/HF comm basics</a>
+        <a href="W7-Z2-N2_training.html" class="sidebar-node-link">W7-Z2-N2 Antennas &amp; RF safety basics</a>
+        <a href="W7-Z3-N1_training.html" class="sidebar-node-link">W7-Z3-N1 VOR basics</a>
+        <a href="W7-Z3-N2_training.html" class="sidebar-node-link">W7-Z3-N2 ILS/marker basics</a>
+        <a href="W7-Z3-N3_training.html" class="sidebar-node-link">W7-Z3-N3 Other nav basics</a>
+        <a href="W7-Z4-N1_training.html" class="sidebar-node-link">W7-Z4-N1 GPS/WAAS basics</a>
+        <a href="W7-Z5-N1_training.html" class="sidebar-node-link">W7-Z5-N1 Transponder basics</a>
+        <a href="W7-Z5-N2_training.html" class="sidebar-node-link">W7-Z5-N2 ADS-B/TCAS basics</a>
+        <div class="sidebar-world-name">Flight Instruments &amp; Pitot-Static</div>
+        <a href="W8-Z1-N1_training.html" class="sidebar-node-link">W8-Z1-N1 Pitot-static components basics</a>
+        <a href="W8-Z2-N1_training.html" class="sidebar-node-link">W8-Z2-N1 Altimeter/VSI/ASI basics</a>
+        <a href="W8-Z3-N1_training.html" class="sidebar-node-link">W8-Z3-N1 Pitot/static blockage symptoms</a>
+        <a href="W8-Z4-N1_training.html" class="sidebar-node-link">W8-Z4-N1 Gyro instruments basics</a>
+        <a href="W8-Z5-N1_training.html" class="sidebar-node-link">W8-Z5-N1 AHRS/PFD basics</a>
+    </nav>
+    <div class="main-content">
+    <div class="document-container">
+
+        <header class="doc-header">
+            <div class="doc-meta">
+                <span>W4 // TOOLS // SCOPE &amp; SPECIALTY INSTRUMENTS</span>
+                <span>NODE: W4-Z4-N1</span>
+            </div>
+            <h1>Oscilloscope &amp; specialty instruments awareness</h1>
+        </header>
+        
+        <div class="doc-body">
+
+            <section class="lesson-section">
+                <span class="section-label">Section 1.0 // Learning Objectives</span>
+                <h2 class="section-title">Module Objectives</h2>
+                <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
+                    <ul class="content-list">
+        <li>Describe the primary diagnostic advantage of an oscilloscope over a digital multimeter.</li>
+        <li>Identify the specific fault conditions that require the use of a milliohmmeter or a megohmmeter.</li>
+        <li>Explain the role of a databus analyzer in diagnosing digital communication failures.</li>
+        </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 2.0 // Introduction</span>
+                <h2 class="section-title">Why Does This Matter?</h2>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/specialty_instruments_bench.png" alt="An avionics workbench featuring a digital databus analyzer screening hex data and a milliohmmeter showing 4 milliohms" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // An avionics workbench featuring a digital databus analyzer screening hex data and a milliohmmeter showing 4 milliohms</figcaption>
+                </figure>
+        <p class="body-text">An EFIS display loses its heading data intermittently. It drops out for two seconds, recovers, and works fine for an hour before doing it again. Your multimeter reads a rock-solid 28V at the display&#x27;s power pin. Your continuity checks on the wiring pass perfectly. The fault is not in the power or the copper wire — it is in the <strong>digital data</strong>. The only way to see what is happening on an ARINC 429 databus is with a <strong>databus analyzer</strong>. Knowing exactly which specialty instrument to reach for is the hallmark of a master technician.</p>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 3.0 // Core Principles</span>
+                <h2 class="section-title">What You Need To Know</h2>
+                <p class="body-text">A standard Digital Multimeter (DMM) is a blunt instrument. It shows steady-state voltage and simple resistance. Advanced avionics require advanced insight.</p>
+        <h3 class="content-h3">Oscilloscope (Visualizing Time)</h3>
+        <p class="body-text">An <strong>oscilloscope (O-scope)</strong> displays voltage as a visual function of time on a calibrated screen. Unlike a DMM which averages a reading into a single number, an oscilloscope shows you:</p>
+        <ul class="content-list">
+        <li><strong>Waveform shape</strong> — Is it a clean sine wave, a square wave, or corrupted digital pulses?</li>
+        <li><strong>Amplitude</strong> — The absolute peak-to-peak transient voltage limits.</li>
+        <li><strong>Frequency</strong> — How rapidly the signal cycles (Hz).</li>
+        <li><strong>Interference</strong> — Visually seeing high-frequency alternator noise riding on top of a DC power line.</li>
+        </ul>
+        <p class="body-text"><strong>Use case:</strong> When you need to see exactly *how a signal behaves over time* or identify split-second electrical noise glitches that a DMM cannot catch.</p>
+        <h3 class="content-h3">Milliohmmeter (Micro-Resistance)</h3>
+        <p class="body-text">A standard multimeter cannot accurately measure resistance below 1 ohm because the resistance of the meter&#x27;s own test leads skews the reading. A <strong>milliohmmeter</strong> uses a 4-wire technique to measure extremely low resistance values (milliohms) with extreme precision.</p>
+        <ul class="content-list">
+        <li><strong>Use case:</strong> Verifying lightning protection bonding straps. If the manual requires a bonding strap connection to measure less than 3 milliohms (0.003Ω) to the airframe, only a milliohmmeter can prove it.</li>
+        </ul>
+        <h3 class="content-h3">Megohmmeter (Megger / Insulation Testing)</h3>
+        <p class="body-text">A <strong>megohmmeter</strong> is designed specifically to test the integrity of wire insulation. It applies a very high test voltage (typically 500V or 1000V DC) across the insulation to see if it &quot;leaks&quot; current.</p>
+        <ul class="content-list">
+        <li><strong>Use case:</strong> Testing heavy gauge starter cables, generator windings, or aging wire bundles for microscopic cracks, chafing, or moisture intrusion. A standard DMM&#x27;s 3-volt battery cannot stress insulation enough to find a high-voltage leak. Readings are measured in Megohms (Millions of ohms).</li>
+        </ul>
+        <h3 class="content-h3">Digital Databus Analyzer</h3>
+        <p class="body-text">Modern avionics (Garmin, Collins, Honeywell) talk to each other using high-speed digital protocols like ARINC 429, RS-232, or Ethernet. A <strong>databus analyzer</strong> connects non-intrusively to the data wires and:</p>
+        <ul class="content-list">
+        <li>Captures the lightning-fast 1s and 0s in real time.</li>
+        <li>Decodes the raw binary into human-readable engineering data (e.g., &quot;Heading: 275 degrees&quot;).</li>
+        <li>Flags corrupted data words, parity errors, or incorrect timing.</li>
+        <li><strong>Use case:</strong> Essential for diagnosing &quot;red X&quot; display failures when the power and wiring are perfect, but the transmitting computer is broadcasting garbage data.</li>
+        </ul>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 4.1A // Structural Diagram</span>
+                <h2 class="section-title">System Visualization</h2>
+                <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
+                    <pre class="mermaid">
+graph TD
+    A[Fault: Intermittent Heading Failure] --> B{What tool to use?}
+    
+    B -->|Check Power| C[DMM: 28V OK]
+    B -->|Check Wire Continuity| D[DMM: 0.2 ohms OK]
+    B -->|Check Ground Strip| E[Milliohmmeter: 2 milliohms OK]
+    B -->|Check Data Signal| F[Databus Analyzer]
+    
+    F --> G[Analyzer shows Parity Errors on ARINC 429 line]
+    G --> H[Fault Isolated: Transmitting AHRS is failing internally]
+    
+    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style H fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 4.0 // Practical Application</span>
+                <h2 class="section-title">On The Job</h2>
+                <div class="callout info">
+                    <div class="callout-title">Standard Operating Procedure</div>
+                    <p>Match the specific instrument to the question you are asking: - &quot;What does this audio signal look like?&quot; → <strong>Oscilloscope</strong> - &quot;Is this static wick bonded tightly enough to the aluminum?&quot; → <strong>Milliohmmeter</strong> - &quot;Is the insulation on this old generator cable breaking down?&quot; → <strong>Megohmmeter</strong> - &quot;Why is the GPS not talking to the Autopilot?&quot; → <strong>Databus analyzer</strong> Reaching for a DMM out of habit when you need an analyzer wastes hours.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Figure 4.1 // Key Terminology Base</span>
+                <h2 class="section-title">Reference Terms</h2>
+                <div class="figure-grid">
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Milliohmmeter</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Milliohmmeter</div>
+                            <p>A precision instrument for measuring very low resistance values (milliohms). Used to verify aircraft bonding straps, connector contact resistance, and ground return paths where a standard DMM lacks resolution.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Milliohmmeter primary use</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Milliohmmeter primary use</div>
+                            <p>Measuring very low resistance values: bonding straps, connector contact resistance, and ground return paths. Provides milliohm-level precision where standard DMMs cannot.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Oscilloscope</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Oscilloscope</div>
+                            <p>An oscilloscope displays voltage as a function of time on a calibrated screen, allowing observation of signal amplitude (peak voltage), frequency (cycles per second), waveform shape (sine, square, triangle, digital), and timing relationships between signals.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Digital Databus Analyzer</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Digital Databus Analyzer</div>
+                            <p>A digital databus (protocol) analyzer connects non-intrusively to a databus and captures, timestamps, and decodes bus traffic in real time — displaying individual data words with their labels, values, and error conditions, enabling verification of correct operation and diagnosis of communication faults.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Tool for Intermittent Bus Failures</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Tool for Intermittent Bus Failures</div>
+                            <p>A digital databus analyzer (protocol analyzer) is the best tool for capturing intermittent bus failures — it monitors continuously and time-stamps all bus activity, capturing the failure event when it occurs even if it is brief and transient.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Databus Analyzer — Primary Purpose</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Databus Analyzer — Primary Purpose</div>
+                            <p>A databus analyzer&#x27;s primary troubleshooting purpose is to capture bus traffic in real time, decode individual data words (revealing label, value, and error status), and identify which transmissions are incorrect, corrupted, or missing entirely.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Protocol Analyzer — Common Name</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Protocol Analyzer — Common Name</div>
+                            <p>A databus analyzer (also called a protocol analyzer) is the standard tool in avionics maintenance for capturing and analyzing digital databus traffic — available for ARINC 429, MIL-STD-1553, RS-232/485, and other protocols.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Megohmmeter (Megger)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Megohmmeter (Megger)</div>
+                            <p>An instrument that applies high voltage (typically 500V–1000V DC) to test insulation resistance in wiring, motors, and generators. Measures in megohms (MΩ). Low megohm readings indicate insulation breakdown or moisture contamination.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Databus Analyzer</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Databus Analyzer</div>
+                            <p>A protocol reader that captures, decodes, and translates digital bus traffic (like ARINC 429) to diagnose communication faults.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <span class="section-label">Section 5.0 // Verification</span>
+                <h2 class="section-title">Assessment Check</h2>
+                <div class="interactive-quiz-container">
+            <div class="kc-container kc-step" id="kc1" style="display: block; margin:0;" data-correct="0" data-feedback="Milliohmmeter measures resistance at milliohm precision, required for bonding verification. A standard DMM lacks sufficient resolution for sub-ohm values. A megohmmeter tests insulation, not bonding straps.">
+                <div class="kc-header">Knowledge Verification [1/8]</div>
+                <div class="kc-question">Which instrument is best suited to verify that an aircraft bonding strap meets the required low-resistance specification?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="0">
+                        <div class="kc-option-text">Milliohmmeter</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="1">
+                        <div class="kc-option-text">Megohmmeter</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="2">
+                        <div class="kc-option-text">Standard digital multimeter</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc1')">
+                        <input type="radio" name="kc1" value="3">
+                        <div class="kc-option-text">Clamp-on ammeter</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc1" disabled onclick="checkAnswer('kc1')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc1"></div>
+                <button class="kc-next-btn" id="next-kc1" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(0)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc2" style="display: none; margin:0;" data-correct="2" data-feedback="The milliohmmeter excels at measuring very low resistances — bonding straps, connector contacts, and ground return paths. Insulation resistance is measured with a megohmmeter; frequency with a frequency counter or oscilloscope.">
+                <div class="kc-header">Knowledge Verification [2/8]</div>
+                <div class="kc-question">A milliohmmeter is primarily used to measure which of the following?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="0">
+                        <div class="kc-option-text">Insulation resistance of wire bundles</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="1">
+                        <div class="kc-option-text">Frequency of AC signals</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="2">
+                        <div class="kc-option-text">Very low resistance values like bonding straps and ground return paths</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc2')">
+                        <input type="radio" name="kc2" value="3">
+                        <div class="kc-option-text">High-voltage breakdown thresholds</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc2" disabled onclick="checkAnswer('kc2')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc2"></div>
+                <button class="kc-next-btn" id="next-kc2" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(1)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc3" style="display: none; margin:0;" data-correct="2" data-feedback="An oscilloscope shows voltage vs. time — waveform shape, amplitude changes, frequency, and timing. A DMM gives only a single steady-state value; it cannot show signal dynamics or waveform characteristics.">
+                <div class="kc-header">Knowledge Verification [3/8]</div>
+                <div class="kc-question">What information can an oscilloscope provide that a digital multimeter cannot?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="0">
+                        <div class="kc-option-text">Precise DC voltage measurements to six decimal places</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="1">
+                        <div class="kc-option-text">Direct measurement of circuit resistance using a four-wire method</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="2">
+                        <div class="kc-option-text">Visual display of signal waveform shape, amplitude over time, and frequency</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc3')">
+                        <input type="radio" name="kc3" value="3">
+                        <div class="kc-option-text">Current measurement without breaking the circuit</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc3" disabled onclick="checkAnswer('kc3')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc3"></div>
+                <button class="kc-next-btn" id="next-kc3" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(2)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc4" style="display: none; margin:0;" data-correct="0" data-feedback="A databus analyzer provides non-intrusive, real-time decoding of bus protocol data — showing what labels are being transmitted, their values, timing, and any errors — the essential tool for ARINC 429 and MIL-STD-1553 diagnosis.">
+                <div class="kc-header">Knowledge Verification [4/8]</div>
+                <div class="kc-question">What is the primary function of a digital databus analyzer in avionics maintenance?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="0">
+                        <div class="kc-option-text">To capture, display, and decode bus traffic to verify correct data transmission and diagnose communication faults</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="1">
+                        <div class="kc-option-text">To measure the DC power supply voltage to each avionics LRU</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="2">
+                        <div class="kc-option-text">To program ARINC 429 LRUs with their initial configuration settings</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc4')">
+                        <input type="radio" name="kc4" value="3">
+                        <div class="kc-option-text">To measure the resistance of the bus termination resistors at each end</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc4" disabled onclick="checkAnswer('kc4')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc4"></div>
+                <button class="kc-next-btn" id="next-kc4" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(3)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc5" style="display: none; margin:0;" data-correct="1" data-feedback="An intermittent failure by definition doesn&#x27;t occur consistently. A databus analyzer continuously monitors and logs all bus activity, capturing the failure event with timestamp and context when it finally occurs.">
+                <div class="kc-header">Knowledge Verification [5/8]</div>
+                <div class="kc-question">Which instrument is most useful for diagnosing an intermittent ARINC 429 bus failure that occurs unpredictably?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="0">
+                        <div class="kc-option-text">A digital multimeter measuring bus voltage</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="1">
+                        <div class="kc-option-text">A digital databus (protocol) analyzer that continuously monitors and records all bus activity</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="2">
+                        <div class="kc-option-text">An oscilloscope triggered on bus signal transitions</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc5')">
+                        <input type="radio" name="kc5" value="3">
+                        <div class="kc-option-text">A megohmmeter measuring cable insulation resistance</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc5" disabled onclick="checkAnswer('kc5')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc5"></div>
+                <button class="kc-next-btn" id="next-kc5" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(4)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc6" style="display: none; margin:0;" data-correct="2" data-feedback="The databus analyzer is the window into what&#x27;s actually happening on the bus: real-time capture, word-by-word decoding, and automatic flagging of errors or missing labels.">
+                <div class="kc-header">Knowledge Verification [6/8]</div>
+                <div class="kc-question">In avionics troubleshooting, what is the primary purpose of a digital databus analyzer?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="0">
+                        <div class="kc-option-text">To measure the AC impedance of the bus cable at various frequencies</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="1">
+                        <div class="kc-option-text">To program replacement LRUs with the correct ARINC label configuration</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="2">
+                        <div class="kc-option-text">To capture bus traffic in real time, decode data words, and identify incorrect or missing transmissions</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc6')">
+                        <input type="radio" name="kc6" value="3">
+                        <div class="kc-option-text">To test bus cable shielding effectiveness against electromagnetic interference</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc6" disabled onclick="checkAnswer('kc6')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc6"></div>
+                <button class="kc-next-btn" id="next-kc6" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(5)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc7" style="display: none; margin:0;" data-correct="3" data-feedback="A databus analyzer (protocol analyzer) is the specialized tool for ARINC 429, MIL-STD-1553, and other avionics bus analysis. Oscilloscopes show waveforms but don&#x27;t decode protocol data; DMMs show only voltage.">
+                <div class="kc-header">Knowledge Verification [7/8]</div>
+                <div class="kc-question">What instrument is commonly used in avionics maintenance to capture and analyze digital databus traffic?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="0">
+                        <div class="kc-option-text">Digital multimeter — the most versatile test instrument for all avionics measurements</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="1">
+                        <div class="kc-option-text">Spectrum analyzer — for analyzing the frequency content of digital signals</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="2">
+                        <div class="kc-option-text">Oscilloscope — the standard instrument for all digital signal analysis</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc7')">
+                        <input type="radio" name="kc7" value="3">
+                        <div class="kc-option-text">Databus analyzer (protocol analyzer) — specialized for capturing and decoding digital bus communication</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc7" disabled onclick="checkAnswer('kc7')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc7"></div>
+                <button class="kc-next-btn" id="next-kc7" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(6)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-step" id="kc8" style="display: none; margin:0;" data-correct="2" data-feedback="The megohmmeter tests insulation integrity by applying high voltage and measuring resistance in megohms. A DMM cannot generate the high test voltage needed to stress insulation and reveal degradation.">
+                <div class="kc-header">Knowledge Verification [8/8]</div>
+                <div class="kc-question">Which instrument is used to test the insulation resistance of aircraft wiring and generator windings?</div>
+                <div class="kc-options">
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="0">
+                        <div class="kc-option-text">Digital multimeter (DMM)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="1">
+                        <div class="kc-option-text">Milliohmmeter</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="2">
+                        <div class="kc-option-text">Megohmmeter (megger)</div>
+                    </label>
+                    <label class="kc-option" onclick="selectOption(this, 'kc8')">
+                        <input type="radio" name="kc8" value="3">
+                        <div class="kc-option-text">LCR meter</div>
+                    </label>
+                </div>
+                <button class="kc-submit" id="btn-kc8" disabled onclick="checkAnswer('kc8')">Verify Answer</button>
+                <div class="kc-feedback" id="feedback-kc8"></div>
+                <button class="kc-next-btn" id="next-kc8" style="display:none; margin-top:15px; background:var(--accent); color:#fff; border:none; padding:12px 24px; font-weight:bold; cursor:pointer; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="nextQuestion(7)">Next Question →</button>
+            </div>
+            <div class="kc-container kc-results" id="quiz-results" style="display:none; margin:0; text-align:center; padding: 50px 20px;">
+                <h2 style="margin-bottom:15px; font-size: 2rem;">End of Module Assessment</h2>
+                <div id="quiz-score" style="font-size:4rem; font-weight:800; margin-bottom:20px; line-height:1;"></div>
+                <div id="quiz-status" style="font-size:1.3rem; margin-bottom:30px; font-weight:600;"></div>
+                <button id="quiz-retry-btn" style="display:none; background:var(--error); color:#fff; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; font-size:1.1rem; font-family:'Courier New', monospace; text-transform:uppercase;" onclick="location.reload()">Retry Assessment ↻</button>
+            </div>
+        </div>
+            </section>
+
+            <section class="lesson-section">
+                <div class="callout warning">
+                    <div class="callout-title">The Bottom Line</div>
+                    <p><strong><strong>Oscilloscopes show high-speed waveforms over time, milliohmmeters prove bonding integrity, megohmmeters stress-test wire insulation, and databus analyzers translate digital communication.</strong>
+
+---
+---</strong></p>
+                </div>
+            </section>
+
+        </div> <!-- End doc-body -->
+        
+        </div> <!-- End doc-body -->
+
+        <div class="doc-footer">
+            <a href="W4-Z3-N2_training.html" class="footer-nav">← Previous</a>
+            <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
+            <a href="W4-Z5-N1_training.html" class="footer-nav">Next →</a>
+        </div>
+    </div> <!-- End document-container -->
+    </div> <!-- End main-content -->
+
+    <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryBorderColor: '#334155',
+                primaryTextColor: '#f1f5f9',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+    <script>
+        const NODE_ID = 'W4-Z4-N1';
+        const TOTAL_KCS = 8;
+        let currentXP = parseInt(localStorage.getItem('caet_xp') || '0');
+        let kcsAttempted = 0;
+        let kcsCorrect = 0;
+        let hasScrolledToBottom = false;
+
+        function updateXPDisplay() {
+            let badge = document.getElementById('xp-badge');
+            if (!badge) {
+                badge = document.createElement('div');
+                badge.id = 'xp-badge';
+                badge.className = 'xp-badge';
+                document.body.appendChild(badge);
+            }
+            badge.innerHTML = `<span class="xp-star">★</span> ${currentXP} XP`;
+        }
+
+        function awardXP(amount, reason) {
+            currentXP += amount;
+            localStorage.setItem('caet_xp', currentXP);
+            updateXPDisplay();
+            
+            const floater = document.createElement('div');
+            floater.className = 'xp-floater';
+            floater.innerHTML = `+${amount} XP <div style="font-size:0.6rem; color:#94a3b8; margin-top:2px;">${reason}</div>`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 2500);
+        }
+
+        function evaluateCompletion() {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            if (TOTAL_KCS === 0 && hasScrolledToBottom) {
+                completeModule("Node Completed!");
+            }
+        }
+
+        function completeModule(reason) {
+            if (localStorage.getItem(`completed_${NODE_ID}`)) return;
+            localStorage.setItem(`completed_${NODE_ID}`, 'true');
+            setTimeout(() => awardXP(100, reason), 500);
+            let sidebarLink = document.querySelector(`.sidebar-node-link[href="${NODE_ID}_training.html"]`);
+            if (sidebarLink) sidebarLink.classList.add('completed');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateXPDisplay();
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    hasScrolledToBottom = true;
+                    if (TOTAL_KCS === 0) evaluateCompletion();
+                }
+            });
+            
+            const footer = document.querySelector('.doc-footer');
+            if (footer) observer.observe(footer);
+            
+            document.querySelectorAll('.sidebar-node-link').forEach(link => {
+                let linkNodeId = link.getAttribute('href').replace('_training.html', '');
+                if (localStorage.getItem(`completed_${linkNodeId}`)) {
+                    link.classList.add('completed');
+                }
+            });
+        });
+
+        function selectOption(label, qId) {
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.backgroundColor = '');
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => o.style.borderColor = '');
+            label.style.backgroundColor = 'var(--bg-header)';
+            label.style.borderColor = 'var(--accent)';
+            document.getElementById(`btn-${qId}`).disabled = false;
+        }
+
+        function checkAnswer(qId) {
+            const container = document.getElementById(qId);
+            const correct = parseInt(container.getAttribute('data-correct'));
+            const explanation = container.getAttribute('data-feedback');
+            
+            const selected = document.querySelector(`input[name="${qId}"]:checked`);
+            if (!selected) return;
+            const isCorrect = parseInt(selected.value) === correct;
+            const fb = document.getElementById(`feedback-${qId}`);
+            fb.className = `kc-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            fb.innerHTML = `
+                <div class="kc-feedback-title">${isCorrect ? 'CORRECT VERIFICATION' : 'INCORRECT MATCH'}</div>
+                <p>${explanation}</p>`;
+            
+            document.getElementById(`btn-${qId}`).style.display = 'none';
+            document.getElementById(`next-${qId}`).style.display = 'inline-block';
+            
+            document.querySelectorAll(`#${qId} .kc-option`).forEach(o => { o.style.pointerEvents = 'none'; });
+            
+            kcsAttempted++;
+            if (isCorrect) {
+                kcsCorrect++;
+                if (!localStorage.getItem(`kc_solved_${NODE_ID}_${qId}`)) {
+                    localStorage.setItem(`kc_solved_${NODE_ID}_${qId}`, 'true');
+                    awardXP(25, 'Knowledge Verified');
+                }
+            }
+        }
+
+        function nextQuestion(currentIndex) {
+            document.getElementById(`kc${currentIndex + 1}`).style.display = 'none';
+            if (currentIndex + 1 < TOTAL_KCS) {
+                document.getElementById(`kc${currentIndex + 2}`).style.display = 'block';
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-results').style.display = 'block';
+            let score = (kcsCorrect / TOTAL_KCS) * 100;
+            document.getElementById('quiz-score').innerText = `${Math.round(score)}%`;
+            
+            let statusDiv = document.getElementById('quiz-status');
+            if (score >= 80) {
+                document.getElementById('quiz-score').style.color = 'var(--success)';
+                statusDiv.innerHTML = `<span style="color:var(--success);">PASSED - MODULE COMPLETE</span>`;
+                completeModule(`Module Mastered! (${Math.round(score)}%)`);
+            } else {
+                document.getElementById('quiz-score').style.color = 'var(--error)';
+                statusDiv.innerHTML = `<span style="color:var(--error);">FAILED - 80% REQUIRED TO PASS</span>`;
+                document.getElementById('quiz-retry-btn').style.display = 'inline-block';
+            }
+        }
+    </script>
+</body>
+</html>

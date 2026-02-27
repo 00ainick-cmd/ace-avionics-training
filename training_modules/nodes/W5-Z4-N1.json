@@ -1,0 +1,95 @@
+{
+  "id": "W5-Z4-N1",
+  "title": "Shielding & EMI basics",
+  "world": "Aircraft Wiring & Harness",
+  "zone": "Shielding & repairs",
+  "objectiveKeys": [
+    "q67",
+    "q77",
+    "q115",
+    "q162"
+  ],
+  "blocks": [
+    {
+      "type": "text-heading",
+      "content": "Introduction to Shielding & EMI basics"
+    },
+    {
+      "type": "text-paragraph",
+      "content": "Apply shielding/twisted pair separation concepts."
+    },
+    {
+      "type": "interactive-flashcard-grid",
+      "items": [
+        {
+          "term": "EMI Reduction Techniques",
+          "definition": "To reduce electromagnetic interference in aircraft wiring: separate power wires from signal wires (minimum 3-inch separation for most installations), use twisted-pair cables for differential signals, and use shielded cables for sensitive analog or digital signals near high-current wiring.",
+          "analogy": "Separating power and signal wires is like keeping your phone away from the microwave \u2014 the microwave radiates EMI that disrupts the phone's signal. Distance and shielding are the solutions."
+        },
+        {
+          "term": "Shield Termination \u2014 One End Only",
+          "definition": "The standard practice for cable shield termination is to ground the shield drain wire at one end only (typically the equipment/receiver end), leaving the other end floating \u2014 this prevents ground loops where differences in ground potential between two points create circulating current that radiates EMI.",
+          "analogy": "Grounding a shield at both ends creates a loop antenna \u2014 any AC difference between two ground points drives current through the loop, creating exactly the interference you wanted to prevent. Ground at one end: no loop, no noise."
+        },
+        {
+          "term": "Floating Shield \u2014 No EMI Protection",
+          "definition": "A shielded cable provides EMI protection only when the shield is connected to ground, creating a low-impedance path for induced interference currents to flow to ground rather than onto the signal wire. A floating shield (ungrounded at both ends) cannot divert induced currents and provides no practical shielding.",
+          "analogy": "A floating shield is like a security fence with no connection to the ground \u2014 charges can still build up on it, they just can't discharge safely. Without a ground path, the shield cannot do its job."
+        },
+        {
+          "term": "Shielded Wire \u2014 EMI Function",
+          "definition": "Shielded wire provides two-way EMI protection: (1) incoming \u2014 the conductive shield prevents external electromagnetic fields from coupling onto the signal conductor; (2) outgoing \u2014 the shield contains signal emissions and prevents them from interfering with adjacent systems.",
+          "analogy": "A shielded cable is like a room with soundproofing \u2014 it keeps outside noise from coming in AND keeps inside noise from going out. Both directions are protected."
+        }
+      ]
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Which wiring practices reduce EMI in a new aircraft lighting installation near avionics?",
+      "choices": [
+        "Route all wires in the same bundle to keep them organized and easy to inspect",
+        "Use the largest wire gauge available to reduce resistance and minimize voltage drop noise",
+        "Separate power and signal wires, and use twisted-pair or shielded cables for sensitive signal runs",
+        "Connect all shields to ground at both ends to ensure maximum noise reduction"
+      ],
+      "correctIndex": 2,
+      "feedback": "EMI reduction requires physical separation between power and signal wiring, plus twisted-pair (cancels magnetic field noise) or shielded cables (blocks capacitive coupling) for sensitive signal conductors."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why should an aircraft cable shield be grounded at one end only?",
+      "choices": [
+        "To prevent a ground loop \u2014 grounding both ends creates a conductive loop where potential differences between grounds circulate current and create EMI",
+        "To maximize shielding effectiveness by concentrating ground current at one point",
+        "To comply with ARINC 429 voltage specification requirements for shield termination",
+        "To allow the shield to float at one end for use as a second signal conductor"
+      ],
+      "correctIndex": 0,
+      "feedback": "Two ground points always have a small potential difference at AC frequencies. Grounding the shield at both ends forms a loop between the two grounds \u2014 current flows, creating a magnetic field that radiates EMI rather than rejecting it."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "An avionics technician installs a shielded cable but leaves both ends of the shield drain wire unconnected (floating). What will be the EMI performance?",
+      "choices": [
+        "Maximum EMI protection \u2014 floating shields are theoretically perfect insulators",
+        "No EMI protection \u2014 induced interference currents have no path to ground and will couple onto the signal conductors",
+        "Partial EMI protection \u2014 one floating end still provides some capacitive shielding",
+        "Improved EMI protection \u2014 no ground means no ground loop noise"
+      ],
+      "correctIndex": 1,
+      "feedback": "A floating shield cannot divert induced interference currents because there is no ground path. Induced currents have nowhere to go except onto the signal conductors \u2014 the shield provides no protection."
+    },
+    {
+      "type": "knowledge-check",
+      "question": "Why is shielded wire used for sensitive avionics signal wires?",
+      "choices": [
+        "To reduce the weight of the wiring harness by eliminating the need for additional cable supports",
+        "To ensure the wire maintains a fixed characteristic impedance regardless of run length",
+        "To increase the current-carrying capacity of the conductor by adding a second conducting layer",
+        "To prevent external EMI from coupling into the signal wire AND to prevent signal emissions from the wire from interfering with adjacent systems"
+      ],
+      "correctIndex": 3,
+      "feedback": "Shielded wire provides bidirectional EMI containment: the shield blocks external fields from disturbing sensitive signals (immunity) and contains signal energy within the cable (emission control)."
+    }
+  ]
+}
