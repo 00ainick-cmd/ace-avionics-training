@@ -140,7 +140,9 @@
                 <h2 class="section-title">Module Objectives</h2>
                 <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
                     <ul class="content-list">
-        <li>Explain how AHRS replaces mechanical gyros.</li>
+        <li>Contrast the physical mechanics of a traditional gyro with a solid-state MEMS sensor.</li>
+        <li>Detail the specific data distribution role of the Air Data Computer (ADC).</li>
+        <li>Explain the consolidation architecture of a modern Primary Flight Display (PFD).</li>
         </ul>
                 </div>
             </section>
@@ -148,13 +150,40 @@
             <section class="lesson-section">
                 <span class="section-label">Section 2.0 // Introduction</span>
                 <h2 class="section-title">Why Does This Matter?</h2>
-                <p class="body-text">AHRS is the heart of the glass cockpit.</p>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/ahrs_mems_chip.png" alt="A macro photograph of a modern, solid-state AHRS MEMS sensor circuit board, featuring sophisticated microchips" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A macro photograph of a modern, solid-state AHRS MEMS sensor circuit board, featuring sophisticated microchips</figcaption>
+                </figure>
+        <p class="body-text">A modern glass-cockpit Cirrus SR22 powers up on the ramp, but the pilot&#x27;s massive 10-inch Primary Flight Display (PFD) brutally shows a giant red &quot;X&quot; blazing across the entire attitude horizon and the heading compass rose simultaneously. In legacy aircraft, losing pitch, roll, and heading all at exactly the same time would basically mean the entire vacuum system and electrical bus exploded simultaneously. In the glass cockpit, this immense failure footprint points to exactly one specific box malfunctioning: the <strong>AHRS (Attitude and Heading Reference System)</strong>. Knowing how modern solid-state computing consolidates a dozen scattered instruments into two master data processors (AHRS and ADC) shifts troubleshooting from chasing pneumatic hoses to querying digital databuses.</p>
             </section>
 
             <section class="lesson-section">
                 <span class="section-label">Section 3.0 // Core Principles</span>
                 <h2 class="section-title">What You Need To Know</h2>
-                <p class="body-text">Attitude and Heading Reference Systems (AHRS) use solid-state MEMS sensors to calculate pitch, roll, and yaw, sending digital data to the Primary Flight Display (PFD).</p>
+                <h3 class="content-h3">The Transition to the Glass Cockpit</h3>
+        <p class="body-text">Historically, an instrument panel was cluttered with heavy brass gyros, fragile vacuum pumps, and scattered pneumatic dial gauges—a configuration affectionately called the &quot;Six-Pack.&quot; Modern avionics completely stripped out all mechanical moving parts and consolidated the physics into two highly advanced solid-state computers that digitally beam data onto high-definition screens.</p>
+        <h3 class="content-h3">Computer 1: Air Data Computer (ADC)</h3>
+        <p class="body-text">The ADC entirely replaces the mechanical plumbing of the altimeter, VSI, and airspeed indicator.</p>
+        <ul class="content-list">
+        <li>The external pitot tube and static ports physically plumb directly into the back of the small ADC chassis.</li>
+        <li>Internal digital pressure transducers violently sample the air pressures hundreds of times a second.</li>
+        <li>The computer&#x27;s processor mathematically crunches the raw barometric pressure data, compensating for intense temperature variables, to output brutally precise <strong>Digital Airspeed, Digital Altitude, and Vertical Speed Trend Vectors</strong>.</li>
+        <li>It then blasts this data out onto an ARINC 429 databus directed to the displays.</li>
+        </ul>
+        <h3 class="content-h3">Computer 2: The AHRS (Attitude &amp; Heading)</h3>
+        <p class="body-text">The <strong>AHRS (Attitude and Heading Reference System)</strong> completely obliterates the heavy, spinning brass vacuum gyroscopes, replacing them with motionless microchips. It utilizes three core layers of solid-state <strong>MEMS (Micro-Electro-Mechanical Systems)</strong> sensors:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Solid-State Rate Gyroscopes:</strong> Microscopic tuning forks etched into silicon chips that measure exact angular rate of rotation (Pitch, Roll, Yaw) through Coriolis acceleration physics.</li>
+        <li><strong>2.</strong> <strong>MEMS Accelerometers:</strong> Microchips that measure raw linear acceleration forces and gravity vectors to constantly re-establish the mathematical center &quot;downward&quot; vector.</li>
+        <li><strong>3.</strong> <strong>Flux-Gate Magnetometers:</strong> Remote electronic sensors mounted way out in the wingtips (away from engine interference) that constantly measure Earth&#x27;s 3D magnetic flux lines to provide incredibly stable, drift-free digital heading data.</li>
+        </ol>
+        <h3 class="content-h3">The Aggregator: Primary Flight Display (PFD)</h3>
+        <p class="body-text">The <strong>PFD</strong> is merely a high-definition computer monitor. It does not calculate physics; it only draws pictures.</p>
+        <ul class="content-list">
+        <li>It constantly listens to the data streams fired from the ADC and the AHRS simultaneously.</li>
+        <li>It seamlessly stitches the digital altitude, airspeed, attitude horizon, and magnetic heading into one consolidated, hyper-fluid graphical interface directly in the pilot&#x27;s line of sight.</li>
+        </ul>
             </section>
 
             <section class="lesson-section">
@@ -163,8 +192,18 @@
                 <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
                     <pre class="mermaid">
 graph TD
-    A[MEMS Sensors] --> B[AHRS Computer]
-    B --> C[PFD Screen]
+    A[Pitot and Static Pressure Lines] --> B[Air Data Computer ADC]
+    C[MEMS Accels / Rate Gyros / Magnetometer] --> D[AHRS Computer]
+    
+    B -->|Transmits Digital Airspeed and Altitude| E[Digital ARINC 429 Bus]
+    D -->|Transmits Digital Pitch, Roll, and Heading| E
+    
+    E --> F[Primary Flight Display PFD]
+    
+    F -->|Displays| G[Integrated Horizon, Speed Tape, Altimeter Tape, and Compass Rose]
+    
+    style E fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style G fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
                     </pre>
                 </div>
             </section>
@@ -174,7 +213,7 @@ graph TD
                 <h2 class="section-title">On The Job</h2>
                 <div class="callout info">
                     <div class="callout-title">Standard Operating Procedure</div>
-                    <p>AHRS units must be perfectly leveled and calibrated to the aircraft centerline during installation.</p>
+                    <p>When troubleshooting a glass PFD boasting multiple red X&#x27;s, analyze the pattern utilizing architectural logic. If only the Altitude and Airspeed tapes are violently red X&#x27;d, but the Attitude Horizon is moving perfectly level, the screen is fine—your ADC box has crashed, isolating the fault. Conversely, if the Horizon is a sprawling red X but the altimeter is working, the AHRS box has crashed. Never arbitrarily rip the $15,000 PFD screen out of the dash assuming the display is broken; the blank screen is just accurately reporting that the remote computing sensors in the avionics bay have violently stopped talking to it.</p>
                 </div>
             </section>
 
@@ -233,12 +272,48 @@ graph TD
                 <div class="study-figure" onclick="this.classList.toggle('flipped')">
                     <div class="study-figure-inner">
                         <div class="sf-front">
-                            <h3>MEMS</h3>
+                            <h3>AHRS (Attitude and Heading Reference System)</h3>
                             <div class="sf-hint">Tap to expand definition</div>
                         </div>
                         <div class="sf-back">
-                            <div class="sf-back-title">MEMS</div>
-                            <p>Micro-Electro-Mechanical Systems.</p>
+                            <div class="sf-back-title">AHRS (Attitude and Heading Reference System)</div>
+                            <p>A heavily sophisticated solid-state computer utilizing motionless microchips to calculate highly accurate pitch, roll, and magnetic heading vectors.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>ADC (Air Data Computer)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">ADC (Air Data Computer)</div>
+                            <p>An advanced digital LRU that converts raw analog pitot-static pneumatic pressures into hyper-precise digital airspeed, vertical speed, and altitude databus streams.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>MEMS (Micro-Electro-Mechanical Systems)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">MEMS (Micro-Electro-Mechanical Systems)</div>
+                            <p>The revolutionary solid-state sensing technology embedding microscopic mechanical accelerometers and tuning forks directly into rigid semiconductor silicon chips.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>PFD (Primary Flight Display)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">PFD (Primary Flight Display)</div>
+                            <p>The master cockpit glass display synthesizing AHRS and ADC databus feeds into a singular, highly integrated visual instrument cluster.</p>
                         </div>
                     </div>
                 </div>
@@ -361,7 +436,7 @@ graph TD
             <section class="lesson-section">
                 <div class="callout warning">
                     <div class="callout-title">The Bottom Line</div>
-                    <p><strong><strong>AHRS turned spinning mechanical gyros into solid-state digital sensors.</strong>
+                    <p><strong><strong>The ADC mathematically converts raw air pressures into digital altitude and speed; the AHRS leverages motionless MEMS microchips to perfectly map aircraft orientation; and the PFD aggressively stitches these databuses together into a single master display.</strong>
 
 ---</strong></p>
                 </div>
@@ -374,7 +449,7 @@ graph TD
         <div class="doc-footer">
             <a href="W8-Z4-N1_training.html" class="footer-nav">← Previous</a>
             <span class="footer-nav" style="color:var(--text-muted); cursor:default;">CAET Part 145 Training</span>
-            <a href="../index.html" class="footer-nav">Portal →</a>
+            <a href="../dashboard.html" class="footer-nav">Portal →</a>
         </div>
     </div> <!-- End document-container -->
     </div> <!-- End main-content -->
@@ -592,7 +667,7 @@ graph TD
                     durationSec: durationSec
                 });
             }
-            window.location.href = 'index.html';
+            window.location.href = '../dashboard.html';
         }
     </script>
     

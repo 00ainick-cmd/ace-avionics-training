@@ -577,7 +577,7 @@ When heavily installing or troubleshooting a Mode S transponder system, the sing
 ---
 ---
 
-# Node: ADS-B & TCAS Basics
+# Node: ADS-B/TCAS basics
 **Zone: Surveillance**
 
 ## 📋 OBJECTIVES
@@ -644,100 +644,5 @@ During a major flight line inspection, realize that ADS-B and TCAS are heavily i
 ## ⚡ THE BOTTOM LINE
 
 **ADS-B revolutionizes surveillance through continuous autonomous broadcasting of precision GPS coordinates, while TCAS acts as the ultimate safety net by actively interrogating intruders and mathematically negotiating drastic mid-air escape maneuvers.**
-
----
-
-
-# Node: ADS-B/TCAS basics
-**Zone: Surveillance**
-
-## 📋 OBJECTIVES
-- Define the function of ADS-B Out.
-
-## 🎯 WHY THIS MATTERS
-ADS-B is a global airspace mandate.
-
-## 📖 WHAT YOU NEED TO KNOW
-ADS-B Out continuously broadcasts precise GPS position to ATC and other aircraft, replacing ground-radar reliance with satellite precision.
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[Aircraft GPS] --> B[ADS-B Out Transponder]
-    B --> C[ATC Ground Station]
-```
-
-## 🔧 ON THE JOB
-Ensure the GPS serial connection to the transponder is configured to the correct baud rate for ADS-B compliance.
-
-## 🔑 KEY TERMS
-- **ADS-B** — Automatic Dependent Surveillance-Broadcast.
-
-## ⚡ THE BOTTOM LINE
-**ADS-B Broadcasts GPS position for airspace tracking.**
-
----
-
-
-# Node: ADS-B/TCAS basics
-**Zone: Surveillance**
-
-## 📋 OBJECTIVES
-- Define the core operational differences between Primary Radar, Secondary Radar (Transponders), and ADS-B.
-- Explain the role of the WAAS GPS position source in an ADS-B Out transmission.
-- Distinguish between ADS-B Out (transmission) and ADS-B In (reception/display) requirements and functionalities.
-- Identify how TCAS (Traffic Collision Avoidance System) actively interrogates nearby aircraft independently of ground stations.
-
-## 🎯 WHY THIS MATTERS
-A client aircraft is grounded for an "ADS-B Out Fail" CAS message. During troubleshooting, the inexperienced technician pulls out the $5,000 Mode-S transponder and sends it in for overhaul because "ADS-B comes from the transponder." Three weeks later, the exact same CAS message returns. The actual failure was the aircraft's independent WAAS GPS antenna feeding the transponder. ADS-B is a system of systems—if you do not fundamentally understand that ADS-B Out requires a flawless GPS position feed before it can broadcast anything, you will waste catastrophic amounts of time and money replacing the wrong components.
-
-## 📖 WHAT YOU NEED TO KNOW
-
-### The Evolution of Surveillance
-To understand ADS-B, you must understand what it replaced:
-1. **Primary Radar (The Echo):** A ground station blasts a massive MW-level radio wave and listens for the tiny physical echo bouncing back off an aircraft's aluminum skin. It only provides a raw 2D blip (bearing and distance) without any altitude or identity.
-2. **Secondary Radar / Transponders (The Interrogation):** The ground station actively interrogates the aircraft. The aircraft's transponder actively replies with its 4-digit squawk code (Mode A) and barometric altitude (Mode C). This is highly accurate but still requires expensive, rotating ground radar dishes to constantly sweep the sky.
-3. **ADS-B (The Broadcast):** Automatic Dependent Surveillance-Broadcast. Instead of waiting to be interrogated by a spinning radar dish, the aircraft independently determines its own exact 3D GPS position and automatically broadcasts it to the entire world, twice a second, via its Mode-S extended squitter transponder.
-
-### The ADS-B Subsystems (In vs. Out)
-**ADS-B Out (Mandatory):**
-The aircraft continuously transmits its 3D position, altitude, velocity, and tail number to ATC ground receivers and other aircraft.
-- **The Dependency:** It requires a high-integrity WAAS GPS position source. If the GPS fails, ADS-B Out fails, even if the transponder is perfectly healthy.
-- **The Broadcast Medium:** In the US, this is broadcast on either `1090 MHz` (via a Mode-S transponder) or `978 MHz` (via a dedicated UAT datalink).
-
-**ADS-B In (Optional):**
-The aircraft actively receives broadcasts from other ADS-B Out equipped aircraft and ground stations, displaying real-time traffic (TIS-B) and subscription-free weather data (FIS-B) directly on the cockpit MFD or a pilot's iPad.
-
-### TCAS: The Active Collision Shield
-While ADS-B is passive broadcasting, **TCAS (Traffic Collision Avoidance System)** is active defense.
-- A TCAS-equipped aircraft carries its own active interrogator (usually transmitting on `1030 MHz` and listening on `1090 MHz`).
-- It independently interrogates the transponders of all nearby aircraft, calculating their range, bearing, and altitude closure rates.
-- If it detects an imminent collision, it issues an RA (Resolution Advisory) automatically commanding the pilot to "CLIMB, CLIMB" while simultaneously coordinating with the opposing aircraft's TCAS to command it to "DESCEND, DESCEND."
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    subgraph ADS-B Out Architecture
-    A[WAAS GPS Receiver calculates precise 3D Position] -->|ARINC 429 Data| B
-    C[Air Data Computer calculates Baro Altitude] -->|ARINC 429 Data| B
-    B[Mode-S Extended Squitter Transponder] -->|Broadcasts on 1090 MHz| D[ATC Ground Stations]
-    B -->|Broadcasts on 1090 MHz| E[Other ADS-B In Aircraft]
-    end
-    
-    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
-    style A fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
-```
-
-## 🔧 ON THE JOB
-When troubleshooting an "ADS-B Fail" light, always look at the aircraft's GPS status first. Does the pilot's primary navigation display show a valid GPS 3D DGPS position? If the GPS has degraded, the transponder will deliberately refuse to broadcast ADS-B Out data because it knows its position is invalid. Your transponder and coax wiring are perfectly fine; you actually have a GPS antenna or GPS receiver problem.
-
-## 🔑 KEY TERMS
-- **ADS-B Out** — The continuous automatic broadcast of an aircraft's identity, GPS position, and velocity without requiring external radar interrogation.
-- **WAAS (Wide Area Augmentation System)** — The highly accurate, correction-augmented GPS signal required to provide the strict position integrity demanded by ADS-B regulations.
-- **Extended Squitter** — The specific transmission format utilized by Mode-S transponders to package and shotgun the long 112-bit ADS-B data packets on 1090 MHz.
-- **TCAS** — An active airborne collision avoidance system that independently interrogates nearby transponders to calculate collision threats and issue evasive maneuvers.
-
-## ⚡ THE BOTTOM LINE
-**ADS-B Out relies entirely on a flawless WAAS GPS position feed before the transponder can broadcast anything; if the GPS fails, ADS-B fails, regardless of transponder health.**
 
 ---

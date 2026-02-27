@@ -140,7 +140,9 @@
                 <h2 class="section-title">Module Objectives</h2>
                 <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
                     <ul class="content-list">
-        <li>Define the function of ADS-B Out.</li>
+        <li>Distinguish the autonomous, continuous broadcast nature of ADS-B Out from traditional interrogated radar.</li>
+        <li>Detail the highly specific data metrics packaged within an ADS-B squitter.</li>
+        <li>Describe the active interrogation and command resolution roles of a TCAS architecture.</li>
         </ul>
                 </div>
             </section>
@@ -148,13 +150,30 @@
             <section class="lesson-section">
                 <span class="section-label">Section 2.0 // Introduction</span>
                 <h2 class="section-title">Why Does This Matter?</h2>
-                <p class="body-text">ADS-B is a global airspace mandate.</p>
+                <p class="body-text">*Note: Visual illustration omitted; refer to system diagram for structural flow.*</p>
+        <p class="body-text">A corporate jet is cruising at FL350 when the cockpit erupts in a deafening, synthetic voice commanding: &quot;CLIMB, CLIMB!&quot; The pilot instantly disconnects the autopilot and violently pitches up. Simultaneously, 1,000 feet above, an oncoming jet&#x27;s cockpit demands: &quot;DESCEND, DESCEND!&quot; Seconds later, the aircraft safely pass each other, averting a catastrophic mid-air collision by 400 feet. The ATC controller never uttered a word. This miracle of automated physics is TCAS (Traffic Collision Avoidance System) operating totally independent of the ground, leveraging highly complex transponder interrogations. Understanding how TCAS coordinates with modern ADS-B broadcasts represents the absolute pinnacle of airframe safety systems.</p>
             </section>
 
             <section class="lesson-section">
                 <span class="section-label">Section 3.0 // Core Principles</span>
                 <h2 class="section-title">What You Need To Know</h2>
-                <p class="body-text">ADS-B Out continuously broadcasts precise GPS position to ATC and other aircraft, replacing ground-radar reliance with satellite precision.</p>
+                <h3 class="content-h3">The Revolution: ADS-B Out</h3>
+        <p class="body-text"><strong>ADS-B (Automatic Dependent Surveillance - Broadcast)</strong> represents the death of legacy radar. Instead of waiting for a spinning ground dish to interrogate the aircraft, an ADS-B equipped aircraft <strong>actively, continuously broadcasts its own highly precise state to the entire planet</strong> twice every second via a &quot;squitter&quot; burst on 1090 MHz.</p>
+        <ul class="content-list">
+        <li><strong>Automatic:</strong> It requires zero pilot input and zero external ground interrogation to function.</li>
+        <li><strong>Dependent:</strong> The entire system is totally dependent on highly accurate, WAAS-enhanced GPS data to formulate its package.</li>
+        <li><strong>Broadcast:</strong> The packet floods the airspace, sending out: High-precision 3D GPS Position, GPS Velocity/Track, Altitude, and the 24-bit ICAO Address.</li>
+        <li><strong>The Result:</strong> ATC controllers stare at screens showing sub-meter accuracy updates twice a second, compared to the 8-second delay of traditional sweep radar.</li>
+        </ul>
+        <h3 class="content-h3">The Shield: TCAS (Traffic Collision Avoidance System)</h3>
+        <p class="body-text">While ADS-B passively broadcasts, <strong>TCAS</strong> is a violently active, aggressive airborne hunter. It operates completely independently of ATC and ground radar to act as the absolute last line of defense against mid-air collisions.</p>
+        <ul class="content-list">
+        <li><strong>The Hunter:</strong> The heavy TCAS processor in the avionics bay actively transmits 1030 MHz interrogations outward, hunting for other Mode C/S transponders in its airspace perimeter.</li>
+        <li><strong>The Tracker:</strong> By analyzing the reply time and the directional antenna bearing, it constructs a 3D spherical map of every intruder aircraft.</li>
+        <li><strong>Traffic Advisory (TA):</strong> If an intruder breaches the outer safety bubble, TCAS issues a &#x27;TA&#x27; — drawing a yellow circle on the glass display and announcing &quot;Traffic, Traffic&quot; to draw crew visual attention.</li>
+        <li><strong>Resolution Advisory (RA):</strong> If the computer calculates a high-probability collision within the next 25 seconds, it issues an &#x27;RA&#x27; — drawing a stark red square and verbally commanding decisive vertical action (&quot;Climb&quot;, &quot;Descend&quot;, or &quot;Maintain Vertical Speed&quot;).</li>
+        <li><strong>The Coordination Matrix:</strong> Crucially, if both aircraft have TCAS II, the two computer systems establish an encrypted microwave data link and negotiate geometric escape maneuvers in a fraction of a second. TCAS computer A tells TCAS B: &quot;I am forcing my pilot to climb, you must force your pilot to descend.&quot;</li>
+        </ul>
             </section>
 
             <section class="lesson-section">
@@ -163,8 +182,24 @@
                 <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
                     <pre class="mermaid">
 graph TD
-    A[Aircraft GPS] --> B[ADS-B Out Transponder]
-    B --> C[ATC Ground Station]
+    A[ADS-B Out Architecture] --> B[Routinely Broadcasts WAAS Position twice a second]
+    B --> C[Ground stations and other aircraft passively see the data instantly]
+    
+    D[TCAS Architecture] --> E[Actively interrogates surrounding aircraft transponders]
+    E --> F{Calculates Time to Impact with Intruder}
+    
+    F -->|Greater than 40 seconds| G[Draws White Diamond on Display - No Threat]
+    
+    F -->|25 to 40 seconds| H[Issues Traffic Advisory TA - 'Traffic, Traffic']
+    H --> I[Draws Yellow Circle - Demands Visual Search]
+    
+    F -->|Less than 25 seconds| J[Issues Resolution Advisory RA - 'Climb, Climb!']
+    J --> K[Establishes data link with Intruder TCAS to negotiate avoidance maneuver]
+    K --> L[Forces pilot to execute violent vertical escape pitch]
+    
+    style B fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style J fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style K fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
                     </pre>
                 </div>
             </section>
@@ -174,7 +209,7 @@ graph TD
                 <h2 class="section-title">On The Job</h2>
                 <div class="callout info">
                     <div class="callout-title">Standard Operating Procedure</div>
-                    <p>Ensure the GPS serial connection to the transponder is configured to the correct baud rate for ADS-B compliance.</p>
+                    <p>During a major flight line inspection, realize that ADS-B and TCAS are heavily interconnected ecosystems. If the GPS antenna coax sustains water damage and drops the satellite lock, the transponder no longer has position data to broadcast, meaning ADS-B Out inherently fails and sets off FAA automated alarms. Furthermore, when executing a routine TCAS ramp test on the tarmac using a ground simulator box, you must cover the aircraft&#x27;s directional TCAS antennas with heavy RF shields. Otherwise, you will inadvertently broadcast a simulated collision resolution advisory, causing every widebody jet at the adjacent gates to trigger massive blaring cockpit alarms.</p>
                 </div>
             </section>
 
@@ -209,12 +244,36 @@ graph TD
                 <div class="study-figure" onclick="this.classList.toggle('flipped')">
                     <div class="study-figure-inner">
                         <div class="sf-front">
-                            <h3>ADS-B</h3>
+                            <h3>ADS-B (Automatic Dependent Surveillance-Broadcast)</h3>
                             <div class="sf-hint">Tap to expand definition</div>
                         </div>
                         <div class="sf-back">
-                            <div class="sf-back-title">ADS-B</div>
-                            <p>Automatic Dependent Surveillance-Broadcast.</p>
+                            <div class="sf-back-title">ADS-B (Automatic Dependent Surveillance-Broadcast)</div>
+                            <p>The modern surveillance pillar where aircraft autonomously and continuously broadcast exact GPS state data continuously outward.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Traffic Advisory (TA)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Traffic Advisory (TA)</div>
+                            <p>A preliminary TCAS alert mathematically warning the flight crew of encroaching traffic, explicitly prioritizing visual acquisition.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Resolution Advisory (RA)</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Resolution Advisory (RA)</div>
+                            <p>A definitive, severe TCAS command demanding immediate, decisive vertical action (climb/descend) to evade an imminent mid-air collision.</p>
                         </div>
                     </div>
                 </div>
@@ -287,7 +346,7 @@ graph TD
             <section class="lesson-section">
                 <div class="callout warning">
                     <div class="callout-title">The Bottom Line</div>
-                    <p><strong><strong>ADS-B Broadcasts GPS position for airspace tracking.</strong>
+                    <p><strong><strong>ADS-B revolutionizes surveillance through continuous autonomous broadcasting of precision GPS coordinates, while TCAS acts as the ultimate safety net by actively interrogating intruders and mathematically negotiating drastic mid-air escape maneuvers.</strong>
 
 ---</strong></p>
                 </div>
@@ -518,7 +577,7 @@ graph TD
                     durationSec: durationSec
                 });
             }
-            window.location.href = 'index.html';
+            window.location.href = '../dashboard.html';
         }
     </script>
     

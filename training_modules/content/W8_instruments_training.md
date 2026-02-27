@@ -75,7 +75,7 @@ When actively performing a 14 CFR 91.411 static system certification test, you a
 ---
 ---
 
-# Node: Altimeter, VSI & ASI Basics
+# Node: Altimeter/VSI/ASI basics
 **Zone: Instrument Behavior**
 
 ## 📋 OBJECTIVES
@@ -291,7 +291,7 @@ When tracking down erratic mechanical gyros, immediately check the panel vacuum 
 ---
 ---
 
-# Node: AHRS & PFD Basics
+# Node: AHRS/PFD basics
 **Zone: AHRS / Glass Cockpit**
 
 ## 📋 OBJECTIVES
@@ -359,69 +359,5 @@ When troubleshooting a glass PFD boasting multiple red X's, analyze the pattern 
 ## ⚡ THE BOTTOM LINE
 
 **The ADC mathematically converts raw air pressures into digital altitude and speed; the AHRS leverages motionless MEMS microchips to perfectly map aircraft orientation; and the PFD aggressively stitches these databuses together into a single master display.**
-
----
-
-
-# Node: Altimeter/VSI/ASI basics
-**Zone: Pitot-Static**
-
-## 📋 OBJECTIVES
-- Identify which instruments use pitot pressure vs static pressure.
-
-## 🎯 WHY THIS MATTERS
-Cross-referencing instruments isolates blockages.
-
-## 📖 WHAT YOU NEED TO KNOW
-Airspeed (ASI) uses both Pitot (ram) and Static pressure. Altimeter and Vertical Speed (VSI) use ONLY Static pressure.
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[Pitot Tube] --> B[ASI]
-    C[Static Port] --> B
-    C --> D[Altimeter]
-    C --> E[VSI]
-```
-
-## 🔧 ON THE JOB
-If ASI drops but Altimeter is fine, the Pitot tube is blocked.
-
-## 🔑 KEY TERMS
-- **Ram Air** — Pitot pressure.
-
-## ⚡ THE BOTTOM LINE
-**Only the Airspeed Indicator uses Ram Air.**
-
----
----
-
-# Node: AHRS/PFD basics
-**Zone: Advanced Instruments**
-
-## 📋 OBJECTIVES
-- Explain how AHRS replaces mechanical gyros.
-
-## 🎯 WHY THIS MATTERS
-AHRS is the heart of the glass cockpit.
-
-## 📖 WHAT YOU NEED TO KNOW
-Attitude and Heading Reference Systems (AHRS) use solid-state MEMS sensors to calculate pitch, roll, and yaw, sending digital data to the Primary Flight Display (PFD).
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[MEMS Sensors] --> B[AHRS Computer]
-    B --> C[PFD Screen]
-```
-
-## 🔧 ON THE JOB
-AHRS units must be perfectly leveled and calibrated to the aircraft centerline during installation.
-
-## 🔑 KEY TERMS
-- **MEMS** — Micro-Electro-Mechanical Systems.
-
-## ⚡ THE BOTTOM LINE
-**AHRS turned spinning mechanical gyros into solid-state digital sensors.**
 
 ---

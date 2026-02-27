@@ -140,7 +140,9 @@
                 <h2 class="section-title">Module Objectives</h2>
                 <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
                     <ul class="content-list">
-        <li>Identify which instruments use pitot pressure vs static pressure.</li>
+        <li>Explain the mechanical operation of an aneroid capsule within an altimeter.</li>
+        <li>Calculate the altitude error resulting from an incorrectly set Kollsman window.</li>
+        <li>Differentiate how the VSI measures pressure change versus how the altimeter measures absolute pressure.</li>
         </ul>
                 </div>
             </section>
@@ -148,13 +150,41 @@
             <section class="lesson-section">
                 <span class="section-label">Section 2.0 // Introduction</span>
                 <h2 class="section-title">Why Does This Matter?</h2>
-                <p class="body-text">Cross-referencing instruments isolates blockages.</p>
+                
+                <figure class="doc-figure" style="margin: 30px 0; border: 1px solid var(--border); padding: 10px; background-color: var(--bg-card);">
+                    <img src="assets/images/altimeter_kollsman_window.png" alt="A traditional mechanical aviation altimeter on a black instrument panel, with focus on the Kollsman window set to 29.92" style="width: 100%; display: block;">
+                    <figcaption style="font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 10px; text-transform: uppercase;">FIGURE // A traditional mechanical aviation altimeter on a black instrument panel, with focus on the Kollsman window set to 29.92</figcaption>
+                </figure>
+        <p class="body-text">A pilot departs a high-elevation airport. The actual local barometric pressure is a very high 30.42 inHg. However, the pilot carelessly leaves the altimeter set to standard 29.92. Because the altimeter receives no electrical data and relies purely on pressure physics, this 0.50 inHg error mathematically forces the altimeter to read approximately <strong>500 feet lower</strong> than the aircraft&#x27;s true physical altitude. During a night departure over mountainous terrain, that uncorrected 500-foot offset is completely fatal. For a technician, validating the strict accuracy of the Kollsman window gearing is a life-critical procedure.</p>
             </section>
 
             <section class="lesson-section">
                 <span class="section-label">Section 3.0 // Core Principles</span>
                 <h2 class="section-title">What You Need To Know</h2>
-                <p class="body-text">Airspeed (ASI) uses both Pitot (ram) and Static pressure. Altimeter and Vertical Speed (VSI) use ONLY Static pressure.</p>
+                <h3 class="content-h3">Altimeter Mechanics</h3>
+        <p class="body-text">A conventional mechanical altimeter measures <strong>barometric altitude</strong> by actively sensing changes in static pipeline pressure through a sealed <strong>aneroid capsule</strong> (a flexible corrugated metal pancake).</p>
+        <ul class="content-list">
+        <li>As the aircraft climbs, the ambient cabin and static pressure decreases.</li>
+        <li>The sealed capsule physically expands because the pressure outside it is now lower.</li>
+        <li>This microscopic expansion pushes a complex system of magnifying gears, ultimately turning the altitude pointer on the dial.</li>
+        <li><strong>The Kollsman Window:</strong> The small sub-dial where the pilot inputs the local barometric pressure. Turning the knob physically rotates the entire gear mechanism, shifting the baseline altitude reference.</li>
+        <li><strong>The Math:</strong> Every <strong>1.0 inHg of tuning error equates to exactly 1,000 feet</strong> of altitude indication error. (e.g., 29.92 vs 30.92 = 1,000 ft difference).</li>
+        </ul>
+        <h3 class="content-h3">Vertical Speed Indicator (VSI)</h3>
+        <p class="body-text">While the altimeter measures absolute pressure, the VSI strictly measures the <strong>rate of change</strong> of static pressure, displaying feet per minute (fpm).</p>
+        <ul class="content-list">
+        <li>The static line feeds directly into a flexible diaphragm inside the VSI.</li>
+        <li>The static line also feeds into the rigid casing *surrounding* the diaphragm, but it must pass through a highly precision <strong>calibrated leak</strong> (a microscopic capillary tube).</li>
+        <li>When climbing, pressure inside the diaphragm drops instantly. Pressure inside the casing drops slowly (delayed by the leak).</li>
+        <li>The temporary pressure difference forces the diaphragm to contract, registering a climb on the dial. When level, the pressures equalize to zero completely.</li>
+        </ul>
+        <h3 class="content-h3">Airspeed Indicator (ASI)</h3>
+        <p class="body-text">The ASI measures <strong>indicated airspeed</strong> exclusively by manipulating the vast differential between raw pitot (ram) pressure and ambient static pressure.</p>
+        <ul class="content-list">
+        <li>High airspeed rams massive pressure into the instrument diaphragm.</li>
+        <li>Static pressure is piped into the casing surrounding the diaphragm to act as the baseline reference.</li>
+        <li>The expanding diaphragm physically drives the speed needle. The higher the ram pressure relative to the static pressure, the higher the registered knot readout.</li>
+        </ul>
             </section>
 
             <section class="lesson-section">
@@ -163,10 +193,19 @@
                 <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
                     <pre class="mermaid">
 graph TD
-    A[Pitot Tube] --> B[ASI]
-    C[Static Port] --> B
-    C --> D[Altimeter]
-    C --> E[VSI]
+    A[Static System Pressure Drops due to Climb] --> B{How do the Instruments React?}
+    
+    B -->|Altimeter| C[Aneroid Capsule Expands]
+    C --> D[Gears turn needle to indicate higher altitude]
+    D --> E[Needle holds steady at new altitude]
+    
+    B -->|Vertical Speed Indicator VSI| F[Diaphragm pressure drops instantly]
+    F --> G[Casing pressure drops slowly through calibrated leak]
+    G --> H[Temporary differential forces needle to show Climb FPM]
+    H --> I[When level, pressures equalize, needle returns to ZER0]
+    
+    style E fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style I fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
                     </pre>
                 </div>
             </section>
@@ -176,7 +215,7 @@ graph TD
                 <h2 class="section-title">On The Job</h2>
                 <div class="callout info">
                     <div class="callout-title">Standard Operating Procedure</div>
-                    <p>If ASI drops but Altimeter is fine, the Pitot tube is blocked.</p>
+                    <p>When investigating a pilot complaint of a &quot;sluggish&quot; or &quot;lagging&quot; VSI, immediately inspect the tiny capillary tube or restriction fitting mounted on the back of the instrument casing. Microscopic dust, lint, or moisture freezing across that calibrated leak will vastly alter the bleed-off rate, rendering the instrument wildly inaccurate or completely seizing it at a false climb reading. Furthermore, altitude errors must be tested across the entire operational range (e.g., from -1,000 feet to +20,000 feet) to prove the complex aneroid gears haven&#x27;t worn down non-linearly over decades of service.</p>
                 </div>
             </section>
 
@@ -235,12 +274,48 @@ graph TD
                 <div class="study-figure" onclick="this.classList.toggle('flipped')">
                     <div class="study-figure-inner">
                         <div class="sf-front">
-                            <h3>Ram Air</h3>
+                            <h3>Aneroid Capsule</h3>
                             <div class="sf-hint">Tap to expand definition</div>
                         </div>
                         <div class="sf-back">
-                            <div class="sf-back-title">Ram Air</div>
-                            <p>Pitot pressure.</p>
+                            <div class="sf-back-title">Aneroid Capsule</div>
+                            <p>A sealed, highly flexible metallic chamber that physically expands or contracts in direct response to surrounding static pressure changes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Kollsman Window</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Kollsman Window</div>
+                            <p>The small barometric sub-dial on an altimeter allowing the pilot to manually calibrate the instrument to localized atmospheric pressure fields.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Calibrated Leak</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Calibrated Leak</div>
+                            <p>An ultra-precise capillary restriction on a VSI casing that deliberately delays pressure equalization, generating the required differential to calculate climb rates.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Indicated Airspeed</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Indicated Airspeed</div>
+                            <p>The raw, uncorrected speed registered on the ASI dial driven purely by the differential force between pitot ram pressure and static ambient pressure.</p>
                         </div>
                     </div>
                 </div>
@@ -363,7 +438,7 @@ graph TD
             <section class="lesson-section">
                 <div class="callout warning">
                     <div class="callout-title">The Bottom Line</div>
-                    <p><strong><strong>Only the Airspeed Indicator uses Ram Air.</strong>
+                    <p><strong><strong>The altimeter utilizes expanding aneroid capsules to measure absolute pressure; the VSI utilizes a calibrated leak to measure the rate of pressure change; an unchecked Kollsman window error of 1 inHg induces a massive 1,000-foot altitude discrepancy.</strong>
 
 ---
 ---</strong></p>
@@ -595,7 +670,7 @@ graph TD
                     durationSec: durationSec
                 });
             }
-            window.location.href = 'index.html';
+            window.location.href = '../dashboard.html';
         }
     </script>
     

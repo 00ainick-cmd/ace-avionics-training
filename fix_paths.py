@@ -15,9 +15,9 @@ for f in files:
             # Fix supabase path
             content = content.replace('../../../shared/js/supabase-client.js', '../shared/js/supabase-client.js')
             
-            # Fix index.html return link
-            content = content.replace('href="index.html"', 'href="../index.html"')
-            content = content.replace("href='index.html'", "href='../index.html'")
+            # Fix index.html return link to dashboard
+            content = content.replace('href="index.html"', 'href="../dashboard.html"')
+            content = content.replace("href='index.html'", "href='../dashboard.html'")
             
             # Write to temp file first to avoid truncation
             temp_file = f + '.tmp'

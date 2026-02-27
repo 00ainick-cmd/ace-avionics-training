@@ -760,7 +760,6 @@ Before you start any job, lay out your tools and count them. When you finish, co
 
 ---
 
-
 # Node: Chemical handling/storage/disposal awareness (generic)
 **Zone: Hazmat**
 
@@ -788,5 +787,69 @@ Always check the Safety Data Sheet (SDS) before mixing or disposing of any unkno
 
 ## ⚡ THE BOTTOM LINE
 **Aviation chemicals require engineered storage cabinets to prevent spontaneous combustion and vapor explosions.**
+
+---
+
+# Node: Toxic/chemical handling (Solvents, Skydrol, Sealants) basics
+**Zone: Personal & Shop Safety**
+
+## 📋 OBJECTIVES
+- Identify the most dangerous and common aviation-specific chemicals (Skydrol, MEK) and their biological hazards.
+- Define proper PPE (Personal Protective Equipment) requirements for handling aviation sealants and solvents.
+- Detail the correct first-aid response for acute chemical exposure, particularly Skydrol in the eyes.
+
+## 🎯 WHY THIS MATTERS
+A technician is replacing a hydraulic lines on the landing gear actuator of a commercial jet without wearing safety goggles. A pressurized line coupling snaps, spraying a fine mist of Skydrol hydraulic fluid directly into their face. Skydrol is notoriously aggressive; within seconds of ocular contact, it causes agonizing, debilitating pain that forces the eyes shut and blinds the technician, rendering them totally incapable of walking themselves to the eyewash station. An aviation shop is a chemical warzone filled with neurotoxins, aggressive acids, and blinding agents. Knowing how to protect yourself—and how to react when defense fails—is your only insurance policy against permanent injury.
+
+## 📖 WHAT YOU NEED TO KNOW
+
+### The "Big Three" Aviation Chemicals
+1. **Skydrol (Phosphate Ester Hydraulic Fluid):** Fire-resistant hydraulic fluid used universally in commercial jets. It will melt common plastics, strip aircraft paint to the bare metal, and cause excruciating, incapacitating pain if it contacts human eyes or open cuts. It is a severe skin irritant.
+2. **MEK (Methyl Ethyl Ketone):** An incredibly aggressive, highly volatile industrial solvent used for stripping sealants and degreasing avionics components. It evaporates rapidly, filling the airspace with toxic fumes that cause massive central nervous system depression, dizziness, and lung damage. It is ferociously flammable.
+3. **PR-1422 (Pro-Seal / Polysulfide Sealants):** Two-part epoxy sealants used heavily to seal antennas to the fuselage or seal integral fuel tanks. The curing compounds usually contain powerful chemical accelerators (like manganese dioxide) that cause severe allergic contact dermatitis and chemical burns over prolonged exposure.
+
+### Personal Protective Equipment (PPE) is Not Optional
+You cannot simply "wash your hands" after a day of working with aviation sealants. The chemicals absorb directly through the dermal barrier into your bloodstream.
+- **Nitrile or Butyl Gloves:** Latex melts instantly when subjected to MEK or Skydrol. You must specify heavy-duty Nitrile or specialized Butyl rubber gloves.
+- **Safety Goggles vs Glasses:** When working under the belly of an aircraft or around pressurized fluid lines, safety *glasses* are insufficient—fluids will bypass the sides. You must wear sealed safety *goggles* to prevent blinding chemical mists from reaching the eyes.
+- **Respirators:** Working with MEK or conformal coating sprays in a confined space (like an avionics bay) mandates an OSHA-approved half-mask respirator equipped with organic vapor cartridges.
+
+### First Aid: The Skydrol Strike
+If Skydrol hits the eyes, the victim will instantly go completely blind due to unendurable pain and involuntary eyelid clamping. 
+1. **Shout for help.** The victim literally cannot see the eyewash station. A coworker must physically guide them.
+2. **Force the eyes open.** The victim's physiological response is to squeeze the eyes shut. This traps the chemical against the cornea, burning it. You must violently force the eyelids open using your fingers.
+3. **Flush for 15 minutes continuously.** A quick splash of water is useless against Skydrol. 
+4. **Seek immediate medical treatment.** 
+
+## 🖼️ SYSTEM DIAGRAM
+```mermaid
+graph TD
+    A[Aviation Chemical Hazards] --> B[Solvents / MEK]
+    A --> C[Skydrol / Fluids]
+    A --> D[Pro-Seal / Sealants]
+    
+    B -->|Hazard| E[Inhalation Toxicity & Flammability]
+    C -->|Hazard| F[Severe Eye Damage & Skin Burns]
+    D -->|Hazard| G[Long-Term Contact Dermatitis]
+    
+    E -->|Defeat With| H[Organic Vapor Respirator]
+    F -->|Defeat With| I[Sealed Goggles & Butyl Gloves]
+    G -->|Defeat With| J[Thick Nitrile Gloves & Barrier Cream]
+    
+    style F fill:#991b1b,stroke:#7f1d1d,stroke-width:2px,color:#fff
+    style I fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
+```
+
+## 🔧 ON THE JOB
+Safety Data Sheets (SDS) are legally mandated literal cheat codes for surviving chemical exposure. Before you open a $500 kit of unknown aviation potting compound to seal a connector, flip to Section 4 (First-Aid Measures) and Section 8 (Exposure Controls/Personal Protection) of its SDS binder. If the SDS explicitly demands a respirator, do not play tough guy and inhale it over the bench. The avionics industry is filled with retired technicians suffering from permanent neurological tremors directly linked to decades of inhaling conformal coating vapors and MEK solvent without PPE. 
+
+## 🔑 KEY TERMS
+- **Skydrol** — The trade name for phosphate ester aviation hydraulic fluid, infamous for causing debilitating eye pain and melting standard plastics and paint.
+- **MEK** — Methyl Ethyl Ketone; an incredibly aggressive, volatile, and highly toxic aviation solvent utilized for heavy degreasing and paint stripping.
+- **PPE (Personal Protective Equipment)** — Specialized wearable gear (butyl gloves, organic vapor respirators, sealed goggles) engineered to defeat specific chemical hazards.
+- **SDS (Safety Data Sheet)** — The federally mandated 16-section document detailing the precise biological hazards, fire risks, and first-aid protocols for an industrial chemical.
+
+## ⚡ THE BOTTOM LINE
+**Aviation chemicals like Skydrol and MEK are aggressively toxic; surviving a hangar career with your vision and nervous system intact requires unyielding discipline with specialized PPE and immediate, forceful first-aid response to exposure emergencies.**
 
 ---

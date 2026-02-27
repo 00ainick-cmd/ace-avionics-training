@@ -457,102 +457,6 @@ When a complex digital system heavily acts up on the flight line, rigidly enforc
 
 ---
 
-
-# Node: ARINC 429 speed/timing awareness
-**Zone: ARINC 429 Architecture**
-
-## 📋 OBJECTIVES
-- Differentiate between High Speed and Low Speed ARINC 429.
-- Explain the timing gaps between words.
-
-## 🎯 WHY THIS MATTERS
-Connecting a 100kbps transmitter to a 12.5kbps receiver results in total data loss.
-
-## 📖 WHAT YOU NEED TO KNOW
-ARINC 429 operates at two strictly defined speeds: High Speed (100 kbps) and Low Speed (12.5 kbps). Words are separated by a 4-bit NULL gap (0V differential) to allow receivers to sync.
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[Transmitter] --> B(100 kbps)
-    B --> C[Receiver]
-```
-
-## 🔧 ON THE JOB
-Always verify baud rate settings on both units before condemning hardware.
-
-## 🔑 KEY TERMS
-- **High Speed** — 100 kbps.
-- **Low Speed** — 12.5 kbps.
-
-## ⚡ THE BOTTOM LINE
-**Speed mismatch is the #1 cause of new-install ARINC 429 failures.**
-
----
----
-
-# Node: RS-485/422 basics
-**Zone: Other Buses**
-
-## 📋 OBJECTIVES
-- Explain the advantage of RS-485 over RS-232.
-
-## 🎯 WHY THIS MATTERS
-RS-485 is used when you need serial communication over longer distances.
-
-## 📖 WHAT YOU NEED TO KNOW
-RS-422 and RS-485 use differential signaling (unlike RS-232), providing noise immunity similar to ARINC 429, allowing multiple receivers and long cable runs.
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[RS-485 Tx] --> B[Twisted Pair]
-    B --> C[Rx 1]
-    B --> D[Rx 2]
-```
-
-## 🔧 ON THE JOB
-Check for termination resistors on RS-485 networks to prevent signal reflection.
-
-## 🔑 KEY TERMS
-- **Differential Signaling** — High noise immunity.
-
-## ⚡ THE BOTTOM LINE
-**RS-485 adds differential wiring to serial comms for noise immunity.**
-
----
----
-
-# Node: Databus analyzer awareness
-**Zone: Databus Troubleshooting**
-
-## 📋 OBJECTIVES
-- Explain the use of a bus analyzer.
-
-## 🎯 WHY THIS MATTERS
-You cannot see digital data with a multimeter.
-
-## 📖 WHAT YOU NEED TO KNOW
-An analyzer decodes raw binary Hex into readable engineering labels (like Altitude).
-
-## 🖼️ SYSTEM DIAGRAM
-```mermaid
-graph TD
-    A[Raw Bus Data] --> B[Analyzer]
-    B --> C[Readable Labels]
-```
-
-## 🔧 ON THE JOB
-Always connect the analyzer to the Tx pins to isolate the LRU from the wiring.
-
-## 🔑 KEY TERMS
-- **Analyzer** — Decodes bus traffic.
-
-## ⚡ THE BOTTOM LINE
-**Analyzers definitively prove whether the box or the wiring is bad.**
-
----
-
 # Node: ARINC 429 speed/timing awareness
 **Zone: ARINC 429 Architecture**
 
@@ -673,6 +577,36 @@ If an entire VIP cabin management system (CMS) loses communication on an RS-485 
 **RS-422 and RS-485 abandoned the noisy, single-ended limits of RS-232, utilizing robust differential signaling to create long-range, multi-node networks perfectly suited for cabin systems and distributed sensors.**
 
 ---
+---
+
+# Node: Databus analyzer awareness
+**Zone: Databus Troubleshooting**
+
+## 📋 OBJECTIVES
+- Explain the use of a bus analyzer.
+
+## 🎯 WHY THIS MATTERS
+You cannot see digital data with a multimeter.
+
+## 📖 WHAT YOU NEED TO KNOW
+An analyzer decodes raw binary Hex into readable engineering labels (like Altitude).
+
+## 🖼️ SYSTEM DIAGRAM
+```mermaid
+graph TD
+    A[Raw Bus Data] --> B[Analyzer]
+    B --> C[Readable Labels]
+```
+
+## 🔧 ON THE JOB
+Always connect the analyzer to the Tx pins to isolate the LRU from the wiring.
+
+## 🔑 KEY TERMS
+- **Analyzer** — Decodes bus traffic.
+
+## ⚡ THE BOTTOM LINE
+**Analyzers definitively prove whether the box or the wiring is bad.**
+
 ---
 
 # Node: Databus analyzer awareness (cross-link)

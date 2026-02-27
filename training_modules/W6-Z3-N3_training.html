@@ -140,7 +140,9 @@
                 <h2 class="section-title">Module Objectives</h2>
                 <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
                     <ul class="content-list">
-        <li>Explain the advantage of RS-485 over RS-232.</li>
+        <li>Differentiate the electrical signaling of RS-485/422 from legacy RS-232.</li>
+        <li>Explain the multi-drop architecture capability of RS-485.</li>
+        <li>Identify common avionic applications for RS-485/422.</li>
         </ul>
                 </div>
             </section>
@@ -148,13 +150,37 @@
             <section class="lesson-section">
                 <span class="section-label">Section 2.0 // Introduction</span>
                 <h2 class="section-title">Why Does This Matter?</h2>
-                <p class="body-text">RS-485 is used when you need serial communication over longer distances.</p>
+                <p class="body-text">While RS-232 is famously limited to very short distances and strictly two devices, aircraft manufacturers needed a serial bus that was just as simple to implement but could connect multiple devices over long distances in electrically noisy environments (like running a camera feed from the tail to the cockpit). The solution was transitioning from single-ended (RS-232) to differential signaling (RS-422 and RS-485). Understanding why this transition was made allows you to troubleshoot these industrial-grade serial buses efficiently.</p>
             </section>
 
             <section class="lesson-section">
                 <span class="section-label">Section 3.0 // Core Principles</span>
                 <h2 class="section-title">What You Need To Know</h2>
-                <p class="body-text">RS-422 and RS-485 use differential signaling (unlike RS-232), providing noise immunity similar to ARINC 429, allowing multiple receivers and long cable runs.</p>
+                <h3 class="content-h3">RS-422 and RS-485 vs. RS-232</h3>
+        <p class="body-text">While RS-232 measures a voltage against a common ground interface (single-ended signaling), both <strong>RS-422</strong> and <strong>RS-485</strong> use <strong>differential signaling</strong>.</p>
+        <ul class="content-list">
+        <li>Just like ARINC 429, differential signaling transmits the data across two wires (A and B). The receiver measures the voltage difference *between* the two wires, rejecting any noise induced evenly along the cable.</li>
+        <li>This immediately solves RS-232&#x27;s fatal flaw: noise vulnerability. With differential signaling, RS-422/-485 can transmit data reliably over <strong>4,000 feet (1,200 meters)</strong>, completely dwarfing RS-232&#x27;s 50-foot limit.</li>
+        </ul>
+        <h3 class="content-h3">Architecture: Multi-Drop Networks</h3>
+        <ul class="content-list">
+        <li><strong>RS-422:</strong> Still primarily a point-to-point or single-master system (one transmitter sending data to up to 10 receivers). It is unidirectional from the transmitter&#x27;s perspective.</li>
+        <li><strong>RS-485:</strong> The true upgrade. It allows a <strong>Multi-Drop / Multi-Point architecture</strong> where up to 32 different devices can share the exact same two-wire bus, and *any* of them can take turns transmitting and receiving (Half-Duplex).</li>
+        </ul>
+        <h3 class="content-h3">Primary Avionic Applications</h3>
+        <p class="body-text">Because RS-485 is highly robust, lightweight (two wires), and can network multiple simple sensors without the rigid formatting overhead of ARINC 429, you will routinely find it used for:</p>
+        <ul class="content-list">
+        <li>Cabin Management Systems (CMS) interconnecting passenger control units.</li>
+        <li>In-Flight Entertainment (IFE) system data distribution.</li>
+        <li>FADEC (Engine Control) secondary interconnects or sensor polling.</li>
+        <li>FLIR/Camera mechanical turret controls spanning the length of the airframe.</li>
+        </ul>
+        <h3 class="content-h3">Troubleshooting RS-485 Networks</h3>
+        <p class="body-text">RS-485 buses are physically simple but architecturally strict. They require:</p>
+        <ol class="content-list">
+        <li><strong>1.</strong> <strong>Daisy-Chain Routing:</strong> The bus must route sequentially from Device A -&gt; B -&gt; C -&gt; D. You cannot &quot;Star&quot; or &quot;T-Tap&quot; the wiring out from a central hub. T-Taps cause signal reflections that corrupt data.</li>
+        <li><strong>2.</strong> <strong>Termination Resistors:</strong> Just as with ARINC 429 and CAN bus, an RS-485 bus must feature a 120-ohm termination resistor strapped across the A and B wires at the exact furthest physical ends of the line to prevent signal bounce.</li>
+        </ol>
             </section>
 
             <section class="lesson-section">
@@ -163,9 +189,17 @@
                 <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
                     <pre class="mermaid">
 graph TD
-    A[RS-485 Tx] --> B[Twisted Pair]
-    B --> C[Rx 1]
-    B --> D[Rx 2]
+    A[Cockpit Camera Controller] <-->|RS-485 Half-Duplex Bus| B[Cabin Camera]
+    B <-->|Daisy-Chained| C[Tail Camera]
+    C <-->|Daisy-Chained| D[Belly Camera]
+    
+    A -.->|120 Ohm Termination Resistor| A
+    D -.->|120 Ohm Termination Resistor| D
+    
+    E[Strict Rule] --> F[Star Topology or 'T-Splices' are forbidden]
+    F --> G[Must route strictly Device to Device]
+    
+    style A fill:#166534,stroke:#14532d,stroke-width:2px,color:#fff
                     </pre>
                 </div>
             </section>
@@ -175,7 +209,7 @@ graph TD
                 <h2 class="section-title">On The Job</h2>
                 <div class="callout info">
                     <div class="callout-title">Standard Operating Procedure</div>
-                    <p>Check for termination resistors on RS-485 networks to prevent signal reflection.</p>
+                    <p>If an entire VIP cabin management system (CMS) loses communication on an RS-485 bus after interior maintenance, grab a multimeter, power down the bus, and measure the resistance across the D(+) and D(-) pins. Because there should be two 120-ohm termination resistors in parallel at opposite ends of the daisy chain, you should read exactly <strong>60 ohms</strong>. If you read 120 ohms, one of the end-of-line resistors is broken or unplugged. If you read 0 ohms, the bus is directly shorted.</p>
                 </div>
             </section>
 
@@ -215,7 +249,43 @@ graph TD
                         </div>
                         <div class="sf-back">
                             <div class="sf-back-title">Differential Signaling</div>
-                            <p>High noise immunity.</p>
+                            <p>Transmitting data via the voltage difference between two wires, granting massive noise immunity and extended range.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Multi-Drop</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Multi-Drop</div>
+                            <p>An architecture where multiple devices (up to 32 in RS-485) tap into and share the exact same two-wire bus.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Daisy-Chain</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Daisy-Chain</div>
+                            <p>The mandatory physical wiring sequence for RS-485 where the cable loops directly through each device in a linear chain without branching or splitting.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Termination Resistor</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Termination Resistor</div>
+                            <p>A 120-ohm impedance-matching resistor required at the extreme ends of an RS-485 bus to prevent data corruption from signal reflections.</p>
                         </div>
                     </div>
                 </div>
@@ -288,7 +358,7 @@ graph TD
             <section class="lesson-section">
                 <div class="callout warning">
                     <div class="callout-title">The Bottom Line</div>
-                    <p><strong><strong>RS-485 adds differential wiring to serial comms for noise immunity.</strong>
+                    <p><strong><strong>RS-422 and RS-485 abandoned the noisy, single-ended limits of RS-232, utilizing robust differential signaling to create long-range, multi-node networks perfectly suited for cabin systems and distributed sensors.</strong>
 
 ---
 ---</strong></p>
@@ -520,7 +590,7 @@ graph TD
                     durationSec: durationSec
                 });
             }
-            window.location.href = 'index.html';
+            window.location.href = '../dashboard.html';
         }
     </script>
     

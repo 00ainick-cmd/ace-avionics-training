@@ -140,8 +140,9 @@
                 <h2 class="section-title">Module Objectives</h2>
                 <div class="callout" style="border-left-color: var(--accent); background-color: var(--bg-card);">
                     <ul class="content-list">
-        <li>Differentiate between High Speed and Low Speed ARINC 429.</li>
-        <li>Explain the timing gaps between words.</li>
+        <li>Distinguish between High-Speed and Low-Speed ARINC 429 specifications.</li>
+        <li>Understand how mismatched baud rates cause absolute communication failure.</li>
+        <li>Explain why ARINC 429 relies on the NULL gap for synchronization instead of a dedicated clock wire.</li>
         </ul>
                 </div>
             </section>
@@ -149,13 +150,26 @@
             <section class="lesson-section">
                 <span class="section-label">Section 2.0 // Introduction</span>
                 <h2 class="section-title">Why Does This Matter?</h2>
-                <p class="body-text">Connecting a 100kbps transmitter to a 12.5kbps receiver results in total data loss.</p>
+                <p class="body-text">A technician replaces a GPS navigator and configures its ARINC 429 output port to feed an older electromechanical HSI display. The GPS says it is transmitting flawlessly, but the HSI displays a red &quot;NAV&quot; flag, indicating it sees nothing. Both boxes pass bench testing. The problem? The technician configured the GPS output to High-Speed (100 kbps), but the legacy HSI receiver can only decipher Low-Speed (12.5 kbps) data. Sending 100 kbps data to a 12.5 kbps receiver is like speed-reading a technical manual to a beginner—the data is there, but the receiver is hopelessly overwhelmed and ignores the entire transmission.</p>
             </section>
 
             <section class="lesson-section">
                 <span class="section-label">Section 3.0 // Core Principles</span>
                 <h2 class="section-title">What You Need To Know</h2>
-                <p class="body-text">ARINC 429 operates at two strictly defined speeds: High Speed (100 kbps) and Low Speed (12.5 kbps). Words are separated by a 4-bit NULL gap (0V differential) to allow receivers to sync.</p>
+                <h3 class="content-h3">ARINC 429 Transmission Speeds</h3>
+        <p class="body-text">ARINC 429 operates almost exclusively on one of two standard transmission speeds (baud rates):</p>
+        <ul class="content-list">
+        <li><strong>Low-Speed:</strong> 12.5 to 14.5 kilobits per second (kbps). Traditionally used for basic navigational data, radio tuning, and analog-to-digital instrument conversions.</li>
+        <li><strong>High-Speed:</strong> 100 kilobits per second (kbps). Utilized for massive data-transfer applications like Flight Management Systems (FMS), EFIS display drives, and real-time attitude data update loops.</li>
+        </ul>
+        <h3 class="content-h3">The Speed Mismatch Law</h3>
+        <p class="body-text"><strong>The transmitter and receiver must operate at the exact same speed.</strong> If a High-Speed transmitter feeds a Low-Speed receiver, the receiver’s sampling clock cannot process the incoming voltage shifts quickly enough; it interprets the fast data bits as random noise. Conversely, if a Low-Speed transmitter feeds a High-Speed receiver, the receiver samples each long bit multiple times, perceiving one valid bit as a string of repeated bits, which immediately corrupts the word and fails the parity check.</p>
+        <h3 class="content-h3">Timing and Synchronization</h3>
+        <p class="body-text">ARINC 429 is an *asynchronous* bus—meaning there is no third wire dedicated solely to a central timing clock. Instead, it relies on strict temporal characteristics to stay synchronized:</p>
+        <ul class="content-list">
+        <li><strong>The NULL Gap:</strong> Every 32-bit word is followed by a mandatory 4-bit interval where the differential voltage drops perfectly to 0V (the NULL state). This 4-bit gap forces the receiver to reset its internal clock and definitively marks the separation between Words. Without this 0V gap, the receiver would merge subsequent words together into an unreadable mess.</li>
+        <li><strong>Bit Timing Validation:</strong> Receivers continuously analyze the exact duration of each +10V or -10V pulse to ensure they match the expected 12.5 or 100 kbps timing window precisely before accepting the bit as valid.</li>
+        </ul>
             </section>
 
             <section class="lesson-section">
@@ -164,8 +178,16 @@
                 <div class="technical-diagram" style="background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 4px; overflow-x: auto; margin: 30px 0;">
                     <pre class="mermaid">
 graph TD
-    A[Transmitter] --> B(100 kbps)
-    B --> C[Receiver]
+    A[ARINC 429 Transmitter] -->|Outputs 32-Bit Word| B{Is the Transmission Over?}
+    B -->|No - Still sending Bits 1 to 32| C[Differential Voltage alternates +10V or -10V]
+    B -->|Yes - Word 1 Complete| D[Mandatory 4-Bit NULL Gap]
+    
+    D --> E[Voltage drops to 0.0V for 4 Bit-times]
+    E -->|Receiver sees 0V gap| F[Receiver Resets Clock Synchronization]
+    F --> G[Transmitter begins sending Word 2]
+    
+    style E fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
+    style D fill:#1e40af,stroke:#1e3a8a,stroke-width:2px,color:#fff
                     </pre>
                 </div>
             </section>
@@ -175,7 +197,7 @@ graph TD
                 <h2 class="section-title">On The Job</h2>
                 <div class="callout info">
                     <div class="callout-title">Standard Operating Procedure</div>
-                    <p>Always verify baud rate settings on both units before condemning hardware.</p>
+                    <p>When configuring newly installed avionics via their setup menus, you must ensure both the Transmit (TX) speed of the source and the Receive (RX) speed of the destination match identically. Modern Garmin or Avidyne navigators usually allow you to independently configure the speed of each individual ARINC 429 output and input port (e.g., Output 1 = High Speed, Output 2 = Low Speed). Never assume a port auto-negotiates its speed—ARINC 429 is too primitive for auto-negotiation.</p>
                 </div>
             </section>
 
@@ -222,24 +244,48 @@ graph TD
                 <div class="study-figure" onclick="this.classList.toggle('flipped')">
                     <div class="study-figure-inner">
                         <div class="sf-front">
-                            <h3>High Speed</h3>
+                            <h3>High-Speed ARINC 429</h3>
                             <div class="sf-hint">Tap to expand definition</div>
                         </div>
                         <div class="sf-back">
-                            <div class="sf-back-title">High Speed</div>
-                            <p>100 kbps.</p>
+                            <div class="sf-back-title">High-Speed ARINC 429</div>
+                            <p>Data transmitted at 100 kbps, used for high-density flight critical data.</p>
                         </div>
                     </div>
                 </div>
                 <div class="study-figure" onclick="this.classList.toggle('flipped')">
                     <div class="study-figure-inner">
                         <div class="sf-front">
-                            <h3>Low Speed</h3>
+                            <h3>Low-Speed ARINC 429</h3>
                             <div class="sf-hint">Tap to expand definition</div>
                         </div>
                         <div class="sf-back">
-                            <div class="sf-back-title">Low Speed</div>
-                            <p>12.5 kbps.</p>
+                            <div class="sf-back-title">Low-Speed ARINC 429</div>
+                            <p>Data transmitted at 12.5 kbps to 14.5 kbps, used for legacy or low-priority status data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>NULL Gap</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">NULL Gap</div>
+                            <p>A mandatory 4-bit minimum period of 0V differential output inserted between each 32-bit word, serving as the timing synchronizer for the receiver.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="study-figure" onclick="this.classList.toggle('flipped')">
+                    <div class="study-figure-inner">
+                        <div class="sf-front">
+                            <h3>Baud Rate</h3>
+                            <div class="sf-hint">Tap to expand definition</div>
+                        </div>
+                        <div class="sf-back">
+                            <div class="sf-back-title">Baud Rate</div>
+                            <p>The speed of communication over a data channel, specified in bits per second.</p>
                         </div>
                     </div>
                 </div>
@@ -337,7 +383,7 @@ graph TD
             <section class="lesson-section">
                 <div class="callout warning">
                     <div class="callout-title">The Bottom Line</div>
-                    <p><strong><strong>Speed mismatch is the #1 cause of new-install ARINC 429 failures.</strong>
+                    <p><strong><strong>ARINC 429 transmitter and receiver configurations must perfectly match at either Low-Speed (12.5 kbps) or High-Speed (100 kbps) — if they are mismatched, absolute communication failure is guaranteed.</strong>
 
 ---
 ---</strong></p>
@@ -569,7 +615,7 @@ graph TD
                     durationSec: durationSec
                 });
             }
-            window.location.href = 'index.html';
+            window.location.href = '../dashboard.html';
         }
     </script>
     

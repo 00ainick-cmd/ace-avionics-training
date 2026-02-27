@@ -2558,33 +2558,34 @@
     };
 
     // ---- DATA LOADING ----
-    (async function loadQuestions() {
+    // ---- DATA LOADING ----
+    const DRILL_CATEGORIES = [
+      { id: 'cat-1-maintenance-regs', num: 'MOD 1', name: 'Maintenance Regs', iconColor: '#D4A853', path: '../training/caet/mod1-maintenance-regs/data/questions.json', icon: '📋' },
+      { id: 'cat-2-basic-electrical', num: 'MOD 2', name: 'Basic Electrical', iconColor: '#22d3ee', path: '../training/caet/mod2-basic-electrical/data/questions.json', icon: '⚡' },
+      { id: 'cat-3-cns-systems', num: 'MOD 3', name: 'CNS Systems', iconColor: '#34d399', path: '../training/caet/mod3-cns-systems/data/questions.json', icon: '📡' },
+      { id: 'cat-4-flight-instruments', num: 'MOD 4', name: 'Flight Instruments', iconColor: '#f472b6', path: '../training/caet/mod4-flight-instruments/data/questions.json', icon: '✈️' },
+      { id: 'cat-5-digital-databus', num: 'MOD 5', name: 'Digital Databuses', iconColor: '#a78bfa', path: '../training/caet/mod5-digital-databus/data/questions.json', icon: '💻' },
+      { id: 'cat-6-aircraft-wiring', num: 'MOD 6', name: 'Aircraft Wiring', iconColor: '#fb923c', path: '../training/caet/mod6-aircraft-wiring/data/questions.json', icon: '🔌' },
+      { id: 'cat-7-tools-test-equipment', num: 'MOD 7', name: 'Tools & Test Eq.', iconColor: '#facc15', path: '../training/caet/mod7-tools-test-equipment/data/questions.json', icon: '🛠️' },
+      { id: 'cat-8-shop-safety', num: 'MOD 8', name: 'Shop Safety', iconColor: '#ef4444', path: '../training/caet/mod8-shop-safety/data/questions.json', icon: '🧯' }
+    ];
+
+    async function loadSpecificData(url) {
       try {
-        const params = new URLSearchParams(location.search);
-        const fetchUrl = params.get('data') || 'data/master-bank.json';
-        console.log('[ACE Drill] Loading:', fetchUrl);
+        console.log('[ACE Drill] Loading specific data:', url);
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
 
-        const res = await fetch(fetchUrl);
-        if (!res.ok) throw new Error(`HTTP ${res.status} from ${fetchUrl}`);
-        const bank = await res.json();
-
-        if (!bank.questions || !Array.isArray(bank.questions)) {
-          throw new Error('Invalid JSON: missing questions array');
+        let targetQuestions = data.questions || [];
+        if (!Array.isArray(targetQuestions)) {
+          if (Array.isArray(data)) targetQuestions = data;
         }
 
-        // Build category map
-        const catMap = {};
-        if (bank.categories) {
-          bank.categories.forEach(c => {
-            catMap[c.id] = { id: c.id, name: c.name, icon: c.icon || '📋', iconColor: c.iconColor || '#58a6ff', items: [] };
-          });
-        }
-
-        // Collect questions — supports both flat format (CAET banks) and nested multipleChoice format
-        bank.questions.forEach(q => {
+        const validQuestions = [];
+        targetQuestions.forEach(q => {
           let entry;
           if (q.multipleChoice) {
-            // Nested format — supports both "choices" and "options" field names
             const mc = q.multipleChoice;
             const opts = mc.choices || mc.options;
             if (!mc.question || !opts || opts.length < 2) return;
@@ -2601,12 +2602,12 @@
               astmRef: q.astmRef || null
             };
           } else {
-            // Flat format (CAET question banks): { question, options, correct, explanation, category }
-            if (!q.question || !q.options || q.options.length < 2) return;
+            const opts = q.options || q.choices;
+            if (!q.question || !opts || opts.length < 2) return;
             entry = {
               id: q.id,
               question: q.question,
-              options: q.options,
+              options: opts,
               correct: q.correct !== undefined ? q.correct : 0,
               explanation: q.explanation || '',
               category: q.category || 'general',
@@ -2616,56 +2617,51 @@
               astmRef: q.astmRef || null
             };
           }
-          state.questions.push(entry);
-          if (catMap[entry.category]) {
-            catMap[entry.category].items.push(entry);
-          }
+          validQuestions.push(entry);
         });
-
-        // Build category list (only cats with questions)
-        window._categories = Object.values(catMap).filter(c => c.items.length > 0);
-
-        // If no category structure, treat all questions as one group
-        if (window._categories.length === 0 && state.questions.length > 0) {
-          window._categories = [{
-            id: 'all',
-            name: bank.metadata?.lessonTitle || 'All Questions',
-            icon: '📋',
-            iconColor: '#58a6ff',
-            items: state.questions
-          }];
-        }
-
-        console.log(`[ACE Drill] ${state.questions.length} questions, ${window._categories.length} categories`);
-        initApp();
-
-      } catch (err) {
-        console.error('[ACE Drill] Load error:', err);
-        document.body.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;font-family:system-ui;background:#0d1117;color:#e6edf3;gap:1rem;">
-        <div style="font-size:3rem;">⚠</div>
-        <h2 style="font-family:monospace;color:#f85149;">Could not load drill questions</h2>
-        <p style="color:#8b949e;">Run this from a local server (e.g., <code>npx serve</code>) from the project root.</p>
-        <p style="color:#6e7681;font-size:0.8rem;">${err.message}</p>
-        <button onclick="history.back()" style="margin-top:1rem;padding:0.75rem 1.5rem;background:#58a6ff;color:#0d1117;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Go Back</button>
-      </div>`;
-      }
-    })();
-
-    // ---- INIT ----
-    function initApp() {
-      renderCategories();
-      loadSessionStats();
-      bindEvents();
-      startTimer();
-
-      // Auto-select and auto-start when there's only one category (launched from module page)
-      if (window._categories.length === 1) {
-        selectCategory(window._categories[0].id);
-        // Auto-launch drill immediately — no need to manually click Launch
-        setTimeout(() => startDrill(), 300);
+        return validQuestions;
+      } catch (e) {
+        console.error('Failed to load data from ' + url, e);
+        return [];
       }
     }
+
+    (async function initApp() {
+      const params = new URLSearchParams(location.search);
+      const directData = params.get('data');
+
+      window._categories = DRILL_CATEGORIES;
+
+      if (directData) {
+        // Direct launch mode
+        const qs = await loadSpecificData(directData);
+        if (qs.length === 0) {
+          alert("Failed to load questions from " + directData);
+          return;
+        }
+        state.questions = qs;
+
+        document.getElementById('launchPanel').style.display = 'none';
+        state.drillQueue = shuffleArray([...qs]);
+
+        let titleParam = params.get('title') || 'Module Drill';
+        document.getElementById('drillCategoryTag').textContent = titleParam;
+
+        document.getElementById('drillOverlay').classList.add('active');
+        document.getElementById('btnEndDrill').classList.add('visible');
+
+        loadSessionStats();
+        bindEvents();
+        startTimer();
+        loadQuestion();
+      } else {
+        // Normal mode (show Launch Screen)
+        renderCategories();
+        loadSessionStats();
+        bindEvents();
+        startTimer();
+      }
+    })();
 
     // ---- RENDER CATEGORIES ----
     function renderCategories() {
@@ -2674,7 +2670,7 @@
     <div class="category-card" data-cat="${cat.id}">
       <div class="category-icon" style="color:${cat.iconColor}">${cat.icon}</div>
       <div class="category-name">${cat.name}</div>
-      <div class="category-count">${cat.items.length} questions</div>
+      <div class="category-count">${cat.num}</div>
     </div>
   `).join('');
       grid.querySelectorAll('.category-card').forEach(card => {
@@ -2695,10 +2691,6 @@
         c.classList.toggle('selected', selectedCatIds.includes(c.dataset.cat));
       });
       // Update summary
-      const totalQ = selectedCatIds.reduce((sum, id) => {
-        const cat = window._categories.find(c => c.id === id);
-        return sum + (cat ? cat.items.length : 0);
-      }, 0);
       const summaryEl = document.getElementById('selectedSummary');
       if (selectedCatIds.length === 0) {
         summaryEl.innerHTML = 'Select one or more categories to begin';
@@ -2708,7 +2700,7 @@
           const cat = window._categories.find(c => c.id === id);
           return cat ? cat.name.split(' ').slice(0, 2).join(' ') : id;
         });
-        summaryEl.innerHTML = `<strong>${selectedCatIds.length}</strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} · <strong>${totalQ}</strong> questions`;
+        summaryEl.innerHTML = `<strong>${selectedCatIds.length}</strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} selected`;
         document.getElementById('categoryBadge').textContent = selectedCatIds.length === 1 ? names[0] : `${selectedCatIds.length} categories`;
       }
       document.getElementById('btnStart').disabled = selectedCatIds.length === 0;
@@ -2746,38 +2738,53 @@
     }
 
     // ---- START DRILL ----
-    function startDrill() {
+    async function startDrill() {
       if (selectedCatIds.length === 0) return;
 
-      // Reset per-drill stats (keep session totals)
-      state.categoryStats = {};
-      state.loStats = {};
-      state.questionTimes = [];
-      state.answerLog = [];
-      state.weakList = [];
-      state.currentIdx = 0;
-      state.answered = false;
-
-      // Build queue from ALL selected categories
-      let pool = [];
-      selectedCatIds.forEach(catId => {
-        const cat = window._categories.find(c => c.id === catId);
-        if (cat) pool.push(...cat.items);
-      });
-      state.drillQueue = shuffleArray(pool);
+      const startBtn = document.getElementById('btnStart');
+      if (startBtn) startBtn.disabled = true;
 
       // Update drill header tag
       const tagText = selectedCatIds.length === 1
         ? window._categories.find(c => c.id === selectedCatIds[0])?.name || selectedCatIds[0]
-        : `${selectedCatIds.length} Categories · ${pool.length} Questions`;
+        : `${selectedCatIds.length} Categories`;
       document.getElementById('drillCategoryTag').textContent = tagText;
 
       // Door transition: show drill overlay
       doorsTransition(
-        () => loadQuestion(),
+        async () => {
+          // Load specific data files dynamically
+          let pool = [];
+          for (const catId of selectedCatIds) {
+            const cat = window._categories.find(c => c.id === catId);
+            if (cat && cat.path) {
+              const qs = await loadSpecificData(cat.path);
+              pool.push(...qs);
+            }
+          }
+
+          if (pool.length === 0) {
+            alert('No questions loaded. Check network or module selection.');
+            if (startBtn) startBtn.disabled = false;
+            return;
+          }
+
+          // Reset per-drill stats (keep session totals)
+          state.categoryStats = {};
+          state.loStats = {};
+          state.questionTimes = [];
+          state.answerLog = [];
+          state.weakList = [];
+          state.currentIdx = 0;
+          state.answered = false;
+
+          state.drillQueue = shuffleArray(pool);
+          loadQuestion();
+        },
         () => {
           document.getElementById('drillOverlay').classList.add('active');
           document.getElementById('btnEndDrill').classList.add('visible');
+          if (startBtn) startBtn.disabled = false;
         }
       );
     }
