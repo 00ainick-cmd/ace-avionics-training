@@ -14,397 +14,546 @@
         /* BASE & BACKGROUND */
         body {
             position: relative;
-            background-color: transparent !important;
+            background-color: #080C1A;
             overflow-x: hidden;
             min-height: 100vh;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
         }
 
-        /* PREMIUM COMMAND CENTER BACKGROUND */
         .cyber-bg {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 50% 100%, rgba(45, 189, 137, 0.05) 0%, transparent 50%),
-                        linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
-                        url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
-            z-index: -1; pointer-events: none;
-        }
-
-        .cyber-grid {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-            transform-origin: center top; opacity: 0.3; z-index: -2; pointer-events: none;
-            animation: gridMove 20s linear infinite;
-        }
-        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
-
-        .main {
-/* PREMIUM HERO BANNER */
-        .hero-banner {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            margin-bottom: 56px;
-            padding: 40px;
-            background: rgba(20, 24, 38, 0.5);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--blue), var(--gold));
-            box-shadow: 0 0 20px rgba(97, 175, 239, 0.8);
-        }
-
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(97, 175, 239, 0.08) 0%, transparent 50%);
-            animation: rotateSlow 20s linear infinite;
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(45, 189, 137, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
+                url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
             z-index: -1;
             pointer-events: none;
         }
 
-        @keyframes rotateSlow {
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            transform-origin: center top;
+            opacity: 0.3;
+            z-index: -2;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+
             100% {
-                transform: rotate(360deg);
+                background-position: 0 50px;
             }
         }
 
-        .hero-icon-wrap {
-            width: 72px;
-            height: 72px;
-            background: rgba(97, 175, 239, 0.1);
-            border: 1px solid rgba(97, 175, 239, 0.2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(97, 175, 239, 0.2) inset;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .hero-icon-wrap::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 24px;
-            background: linear-gradient(45deg, transparent, rgba(97, 175, 239, 0.3), transparent);
-            z-index: -1;
-            animation: borderPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes borderPulse {
-
-            0%,
-            100% {
-                opacity: 0.5;
-            }
-
-            50% {
+        @keyframes fadeUp {
+            to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .hero-icon-wrap svg {
-            width: 36px;
-            height: 36px;
-            color: var(--blue);
-            filter: drop-shadow(0 0 8px rgba(97, 175, 239, 0.5));
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px 100px;
+            position: relative;
+            z-index: 10;
         }
 
-        .hero-content {
-            flex: 1;
-        }
-
-        .hero-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 16px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            max-width: 800px;
-            font-weight: 400;
-        }
-
-        
-                /* CATEGORY ACCORDIONS */
-        .resource-section {
-            margin-bottom: 32px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .category-accordion {
-            background: rgba(20, 24, 38, 0.6);
+        /* HEADER */
+        .topbar {
+            background: rgba(8, 12, 26, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .category-accordion.open {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .accordion-header {
-            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            cursor: pointer;
-            user-select: none;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02));
+            padding: 16px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .accordion-header:hover {
-            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+        .topbar-logo img {
+            height: 32px;
+            filter: drop-shadow(0 0 8px rgba(212, 168, 83, 0.4));
+            transition: all 0.3s ease;
         }
 
-        .accordion-title-area {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .topbar-logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(212, 168, 83, 0.8));
         }
 
-        .accordion-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .accordion-subtitle {
+        .topbar-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
             font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .chevron {
-            width: 24px;
-            height: 24px;
-            color: var(--text-muted);
-            transition: transform 0.3s ease;
-        }
-
-        .category-accordion.open .chevron {
-            transform: rotate(180deg);
-            color: white;
-        }
-
-        .accordion-content {
-            display: none;
-            padding: 0 32px 32px 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .category-accordion.open .accordion-content {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Inner Content Grid */
-        .content-split {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            margin-top: 32px;
-        }
-
-        .content-column h3 {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
             font-weight: 600;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .content-column h3::after {
+
+        .topbar-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* HERO */
+        .deck-hero {
+            text-align: left;
+            margin-bottom: 48px;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(45, 189, 137, 0.1);
+            border: 1px solid rgba(45, 189, 137, 0.3);
+            color: #2DBD89;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(45, 189, 137, 0.15) inset;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #A0AEC0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* AI STUDY BOSS CALLOUT */
+        .ai-callout-card {
+            position: relative;
+            margin-top: 28px;
+            padding: 20px 24px;
+            background: rgba(45, 189, 137, 0.04);
+            border: 1px solid rgba(45, 189, 137, 0.15);
+            border-left: 3px solid #2DBD89;
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            box-shadow: 0 0 20px rgba(45, 189, 137, 0.08) inset;
+        }
+
+        .ai-callout-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(45, 189, 137, 0.1);
+            border: 1px solid rgba(45, 189, 137, 0.25);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .ai-callout-icon svg {
+            width: 22px;
+            height: 22px;
+            color: #2DBD89;
+            filter: drop-shadow(0 0 8px rgba(45, 189, 137, 0.4));
+        }
+
+        .ai-callout-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #2DBD89;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .ai-callout-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* "UP NEXT" FEATURED CARD */
+        .up-next-section {
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .section-label svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .featured-card {
+            position: relative;
+            background: rgba(20, 24, 38, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 32px 36px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            transform-style: preserve-3d;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 2;
+        }
+
+        .featured-card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.4), transparent, rgba(34, 211, 238, 0.2));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .featured-card:hover::after {
+            opacity: 1;
+        }
+
+        .featured-card .card-bg-gfx {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at right, rgba(212, 168, 83, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .featured-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .featured-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--gold);
+            filter: drop-shadow(0 0 10px rgba(212, 168, 83, 0.4));
+        }
+
+        .featured-card:hover .featured-icon {
+            background: rgba(212, 168, 83, 0.2);
+            border-color: rgba(212, 168, 83, 0.5);
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.2) inset;
+        }
+
+        .featured-info {
+            flex: 1;
+            z-index: 10;
+        }
+
+        .featured-recommend {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .featured-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .featured-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .featured-badge .cat-pill {
+            background: rgba(75, 139, 245, 0.15);
+            border: 1px solid rgba(75, 139, 245, 0.3);
+            color: #4B8BF5;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* CATEGORY SECTIONS */
+        .categories-container {
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .cat-section {
+            margin-bottom: 40px;
+        }
+
+        .cat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cat-header h2 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            margin: 0;
+        }
+
+        .cat-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(212, 168, 83, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+        }
+
+        .cat-header::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        .items-grid {
+        /* MODULE TRACK CARDS */
+        .module-grid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
-        /* Adjust card styles for accordion layout */
-        .resource-card {
-            display: flex; /* Back to flex, no longer inline */
-            width: 100%;
+        .module-card {
             position: relative;
-            align-items: center;
-            gap: 20px;
-            background: rgba(20, 24, 38, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 20px;
-            text-decoration: none;
-            color: inherit;
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-        
-        .card-cat-badge {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            z-index: 20;
-            background: var(--surface);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transform: translateZ(20px);
-        }
-        
-        .cat-mrd { color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); } /* Yellow */
-        .cat-bet { color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); } /* Blue */
-        .cat-cns { color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); } /* Purple */
-        .cat-fi { color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.3); } /* Pink */
-        .cat-dds { color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); } /* Emerald */
-        .cat-awh { color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); } /* Red */
-        .cat-tte { color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3); } /* Orange */
-        .cat-ssp { color: #a3e635; border: 1px solid rgba(163, 230, 53, 0.3); } /* Lime */
-        .cat-all { color: var(--gold); border: 1px solid rgba(212, 168, 83, 0.3); background: rgba(212, 168, 83, 0.1);}
-
-        .resource-card::before {
-            content: ''; position: absolute; inset: 0; border-radius: 16px;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
-            pointer-events: none; mix-blend-mode: overlay; z-index: 2;
-        }
-        .resource-card::after {
-            content: ''; position: absolute; inset: -2px;
-            background: linear-gradient(45deg, transparent, transparent, transparent);
-            border-radius: 18px; z-index: -1; opacity: 0; transition: opacity 0.3s;
-        }
-        .resource-card:hover::after { opacity: 1; }
-        .resource-card.rise::after { background: linear-gradient(135deg, rgba(212, 168, 83, 0.3), transparent); box-shadow: 0 0 30px rgba(212, 168, 83, 0.15); }
-        .resource-card.notebook::after { background: linear-gradient(135deg, rgba(45, 189, 137, 0.3), transparent); box-shadow: 0 0 30px rgba(45, 189, 137, 0.15); }
-
-        .resource-card:hover { z-index: 10; transform: translateY(-4px) scale(1.02); }
-
-        .resource-icon {
-            width: 48px; height: 48px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; transition: transform 300ms ease;
-            position: relative; transform: translateZ(30px);
-        }
-        .resource-card:hover .resource-icon { transform: translateZ(30px) scale(1.1) rotate(5deg); }
-
-        .resource-card.rise .resource-icon { background: rgba(212, 168, 83, 0.1); color: var(--gold); border: 1px solid rgba(212, 168, 83, 0.3); box-shadow: 0 0 15px rgba(212, 168, 83, 0.15) inset; }
-        .resource-card.notebook .resource-icon { background: rgba(45, 189, 137, 0.1); color: #2DBD89; border: 1px solid rgba(45, 189, 137, 0.3); box-shadow: 0 0 15px rgba(45, 189, 137, 0.15) inset; }
-        
-        .resource-icon svg { width: 24px; height: 24px; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)); }
-
-        .resource-info { flex: 1; min-width: 0; transform: translateZ(30px); }
-        .resource-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px; }
-        .resource-meta { font-size: 12px; color: var(--text-muted); line-height: 1.5; display: flex; align-items: center; gap: 6px; }
-
-        .resource-action {
-            width: 36px; height: 36px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03); display: flex; align-items: center; justify-content: center;
-            color: var(--text-muted); transition: all 400ms ease;
-            opacity: 0; border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: translateZ(30px) translateX(-10px) scale(0.8);
-        }
-        .resource-card:hover .resource-action { opacity: 1; transform: translateZ(30px) translateX(0) scale(1); }
-        .resource-card.rise:hover .resource-action { color: var(--gold); background: rgba(212, 168, 83, 0.15); border-color: rgba(212, 168, 83, 0.3); }
-        .resource-card.notebook:hover .resource-action { color: #2DBD89; background: rgba(45, 189, 137, 0.15); border-color: rgba(45, 189, 137, 0.3); }
-
-        /* Notebook Instructions */
-        .notebook-instructions {
-            background: rgba(45, 189, 137, 0.05);
-            border: 1px dashed rgba(45, 189, 137, 0.2);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 16px;
-        }
-        .notebook-instructions h4 {
-            color: #2DBD89;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 16px;
+            padding: 18px 24px;
+            background: rgba(20, 24, 38, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        .notebook-instructions ol {
-            margin: 0;
-            padding-left: 20px;
-            color: var(--text-muted);
-            font-size: 13px;
-            line-height: 1.6;
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.015) 2px, rgba(255, 255, 255, 0.015) 4px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 2;
         }
-        .notebook-instructions li::marker {
+
+        .module-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(20, 24, 38, 0.6);
+            transform: translateX(4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .module-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .module-card.rise .module-icon {
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            color: var(--gold);
+        }
+
+        .module-card.notebook .module-icon {
+            background: rgba(45, 189, 137, 0.1);
+            border: 1px solid rgba(45, 189, 137, 0.2);
             color: #2DBD89;
-            font-weight: bold;
         }
-@media (max-width: 768px) {
-            .resource-grid {
-                grid-template-columns: 1fr;
+
+        .module-card.rise:hover .module-icon {
+            background: rgba(212, 168, 83, 0.2);
+            border-color: rgba(212, 168, 83, 0.4);
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.2) inset;
+        }
+
+        .module-card.notebook:hover .module-icon {
+            background: rgba(45, 189, 137, 0.2);
+            border-color: rgba(45, 189, 137, 0.4);
+            box-shadow: 0 0 15px rgba(45, 189, 137, 0.2) inset;
+        }
+
+        .module-info {
+            flex: 1;
+            min-width: 0;
+            z-index: 10;
+        }
+
+        .module-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .module-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .module-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .module-arrow svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .module-card:hover .module-arrow {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px;
             }
 
-            .hero-banner {
+            .featured-card {
                 flex-direction: column;
                 text-align: center;
-                padding: 32px 24px;
+                padding: 24px;
             }
 
-            .hero-title {
-                font-size: 28px;
+            .featured-icon {
+                margin: 0 auto;
             }
         }
     </style>
@@ -413,6 +562,7 @@
 <body>
     <div class="cyber-bg"></div>
     <div class="cyber-grid"></div>
+
     <header class="topbar">
         <div class="topbar-logo">
             <a href="dashboard.html" style="text-decoration:none;">
@@ -420,57 +570,85 @@
             </a>
         </div>
         <div class="topbar-right">
-            <a href="javascript:history.back()" class="topbar-btn">Back</a>
+            <a href="javascript:history.back()" class="topbar-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back
+            </a>
         </div>
     </header>
+
     <main class="main">
-        <div class="hero-banner">
-            <div class="hero-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- HERO -->
+        <div class="deck-hero">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                 </svg>
+                Curriculum Hub
             </div>
-            <div class="hero-content">
-                <h1 class="hero-title">The Classroom</h1>
-                <p class="hero-desc">Deep-dive into the official curriculum. Read the textbooks, engage with the
-                    interactive Rise modules, and leverage AI to trace your knowledge in an immersive environment.</p>
+            <h1 class="hero-title">The Classroom</h1>
+            <p class="hero-desc">
+                Deep-dive into the official CAET curriculum. Each category contains interactive Rise training
+                modules for structured learning, and AI-powered Study Boss guides that let you chat with an AI tutor
+                pre-loaded with the official course material.
+            </p>
+
+            <!-- AI Study Boss callout -->
+            <div class="ai-callout-card">
+                <div class="ai-callout-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z" />
+                        <path d="M6 10H6.01" />
+                        <path d="M18 10H18.01" />
+                        <path d="M10 16H14" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="ai-callout-label">AI Study Boss</div>
+                    <div class="ai-callout-text">Look for the green <strong style="color:#2DBD89;">Study Boss</strong>
+                        cards in each category. These are dedicated AI tutors pre-loaded with official CAET
+                        documentation. Chat with them for instant explanations, practice quizzes, and chapter
+                        summaries.</div>
+                </div>
             </div>
         </div>
-                        <!-- MARQUEE: CONTINUE LEARNING -->
-        <div class="resource-section" style="margin-top: 24px;">
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-                <h2 style="font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); display: flex; align-items: center; gap: 12px;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
-                        <polygon points="5 3 19 12 5 21 5 3"/>
-                    </svg>
-                    Up Next For You
-                </h2>
-                <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(212, 168, 83, 0.3), transparent);"></div>
+
+        <!-- UP NEXT SECTION (shown dynamically) -->
+        <div class="up-next-section" id="upNextSection" style="display:none;">
+            <div class="section-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Up Next for You
             </div>
-            
-            <a href="shared/course-viewer.html?path=rise-modules/electricity-dc/fundamentals-of-direct-current&title=Direct Current Fundamentals" 
-               class="resource-card rise" style="padding: 32px; gap: 32px;">
-                <div class="card-cat-badge cat-bet">BET</div>
-                <div class="resource-icon" style="width: 80px; height: 80px; border-radius: 20px;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:40px; height:40px;">
-                    <polygon points="5 3 19 12 5 21 5 3"/>
-                  </svg>
+            <a href="#" class="featured-card" id="upNextCard">
+                <div class="card-bg-gfx"></div>
+                <div class="featured-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
                 </div>
-                <div class="resource-info">
-                  <div class="resource-meta" style="color: var(--gold); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Recommended Review</div>
-                  <div class="resource-name" style="font-size: 24px;">Direct Current Fundamentals</div>
-                  <div class="resource-meta" style="margin-top: 8px; color: rgba(255,255,255,0.6);">Based on your recent mock exam, you should review this module before proceeding to Alternating Current.</div>
+                <div class="featured-info">
+                    <div class="featured-recommend">Recommended Review</div>
+                    <div class="featured-name" id="upNextName">—</div>
+                    <div class="featured-desc" id="upNextDesc">Based on your recent mock exam, you should review this
+                        module before proceeding.</div>
                 </div>
-                <div class="resource-action" style="width: 56px; height: 56px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                <div class="featured-badge">
+                    <span class="cat-pill" id="upNextBadge">—</span>
+                </div>
             </a>
         </div>
 
-        <!-- CATEGORY ACCORDIONS AREA -->
-        <div class="resource-section" id="accordionContainer">
-            <!-- Populated by JS -->
-        </div>
+        <!-- CATEGORY SECTIONS -->
+        <div class="categories-container" id="categoryContainer"></div>
     </main>
+
     <script>
         const MODULES = [
             { num: 'MRD', name: 'Aviation Regulations, Forms & Records', path: 'shared/course-viewer.html?path=rise-modules/maintenance-regs/aviation-regulations-maintenance-forms-records-and-publications&title=Aviation Regulations, Forms & Records' },
@@ -495,7 +673,7 @@
             { num: 'SSP', name: 'Safety Essentials in Aviation', path: 'shared/course-viewer.html?path=rise-modules/shop-safety/safety-essentials-in-aviation&title=Safety Essentials in Aviation' }
         ];
 
-                                const NOTEBOOK_LINKS = [
+        const NOTEBOOK_LINKS = [
             { cat: 'ALL', name: 'CAET Study Boss (Comprehensive)', url: 'https://notebooklm.google.com/notebook/5bdd750c-8b81-4a09-9ec5-daf7e685f600' },
             { cat: 'MRD', name: 'Regulations, Forms & Records', url: 'https://notebooklm.google.com/notebook/4ec730e9-f975-4645-8224-381cd7cb1261' },
             { cat: 'BET', name: 'Fundamentals of Electricity', url: 'https://notebooklm.google.com/notebook/64f77e37-194f-48bf-b2f3-de3558ba1b62' },
@@ -513,164 +691,126 @@
         ];
 
         const CATEGORIES = [
-            { id: 'MRD', name: 'Maintenance Regulations', desc: 'Aviation Regulations, Forms & Records' },
-            { id: 'BET', name: 'Basic Electricity Tech', desc: 'DC, AC, Solid State, and Aircraft Electrical' },
-            { id: 'CNS', name: 'Comm, Nav & Surveillance', desc: 'Radio Comm, Dependent Navigation, Surveillance' },
-            { id: 'FI', name: 'Flight Instruments', desc: 'Pitot-Static and Primary Flight Instruments' },
-            { id: 'DDS', name: 'Digital Data Systems', desc: 'Digital Electronics and Data Bus' },
-            { id: 'AWH', name: 'Aircraft Wiring', desc: 'Building a Wire Harness' },
-            { id: 'TTE', name: 'Tools & Test Equipment', desc: 'Basic Hand Tools & Hardware' },
-            { id: 'SSP', name: 'Shop Safety', desc: 'Safety Essentials in Aviation' },
-            { id: 'ALL', name: 'General CAET Prep', desc: 'Comprehensive Study Guides' }
+            { id: 'MRD', name: 'Maintenance Regulations & Documentation' },
+            { id: 'BET', name: 'Basic Electricity Technology' },
+            { id: 'CNS', name: 'Communication, Navigation & Surveillance' },
+            { id: 'FI', name: 'Flight Instruments' },
+            { id: 'DDS', name: 'Digital Data Systems' },
+            { id: 'AWH', name: 'Aircraft Wiring & Harness' },
+            { id: 'TTE', name: 'Tools & Test Equipment' },
+            { id: 'SSP', name: 'Shop Safety Practices' }
         ];
 
-        function toggleAccordion(element) {
-            const accordion = element.closest('.category-accordion');
-            accordion.classList.toggle('open');
-        }
+        const RISE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+        const NOTEBOOK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/><path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/></svg>';
+        const ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        const EXTERNAL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>';
 
-        function buildAccordionHtml() {
+        function buildPage() {
             let html = '';
-            
-            CATEGORIES.forEach(cat => {
-                // Find modules and notebooks for this category
-                const catModules = MODULES.filter(m => m.num === cat.id);
-                const catNotebooks = NOTEBOOK_LINKS.filter(n => n.cat === cat.id);
-                
-                // Skip if category has no content
-                if (catModules.length === 0 && catNotebooks.length === 0) return;
-                
-                const modulesHtml = catModules.map(m => `
-                    <a href="${m.path}" class="resource-card rise">
-                        <div class="card-cat-badge cat-${m.num.toLowerCase()}">${m.num}</div>
-                        <div class="resource-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </div>
-                        <div class="resource-info">
-                            <div class="resource-name" title="${m.name}">${m.name}</div>
-                            <div class="resource-meta">Rise 360 &bull; Interactive</div>
-                        </div>
-                        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-                    </a>
-                `).join('');
 
-                const notebooksHtml = catNotebooks.map(n => `
-                    <a href="${n.url}" target="_blank" class="resource-card notebook">
-                        <div class="card-cat-badge cat-${n.cat.toLowerCase()}">${n.cat}</div>
-                        <div class="resource-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/>
-                                <path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/>
-                            </svg>
-                        </div>
-                        <div class="resource-info">
-                            <div class="resource-name" title="${n.name}">${n.name}</div>
-                            <div class="resource-meta">Study Boss &bull; Ask AI</div>
-                        </div>
-                        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></div>
-                    </a>
-                `).join('');
-
-                const instructionsHtml = catNotebooks.length > 0 ? `
-                    <div class="notebook-instructions">
-                        <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> How to use AI Guides</h4>
-                        <ol>
-                            <li>Download the official training PDF from Rise.</li>
-                            <li>Upload it to the NotebookLM guide linked above.</li>
-                            <li>Ask the AI to explain concepts, quiz you, or summarize chapters!</li>
-                        </ol>
-                    </div>
-                ` : '';
-
+            // Comprehensive AI Guide at the top
+            const allGuide = NOTEBOOK_LINKS.find(n => n.cat === 'ALL');
+            if (allGuide) {
                 html += `
-                <div class="category-accordion">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title-area">
-                            <span class="card-cat-badge cat-${cat.id.toLowerCase()}" style="position:static; margin:0; transform:none;">${cat.id}</span>
-                            <div>
-                                <div class="accordion-title">${cat.name}</div>
-                                <div class="accordion-subtitle">${cat.desc}</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <div style="display:flex; gap: 8px;">
-                                ${catModules.length > 0 ? `<span class="section-badge">${catModules.length} Modules</span>` : ''}
-                                ${catNotebooks.length > 0 ? `<span class="section-badge green">${catNotebooks.length} AI Guides</span>` : ''}
-                            </div>
-                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                        </div>
+                <div class="cat-section">
+                    <div class="cat-header">
+                        <h2>Comprehensive Study Guide</h2>
+                        <span class="cat-pill" style="background:rgba(45,189,137,0.1);color:#2DBD89;border-color:rgba(45,189,137,0.2);">AI</span>
                     </div>
-                    <div class="accordion-content">
-                        <div class="content-split">
-                            ${catModules.length > 0 ? `
-                            <div class="content-column">
-                                <h3>Interactive Training</h3>
-                                <div class="items-grid">
-                                    ${modulesHtml}
-                                </div>
+                    <div class="module-grid">
+                        <a href="${allGuide.url}" target="_blank" class="module-card notebook">
+                            <div class="module-icon">${NOTEBOOK_SVG}</div>
+                            <div class="module-info">
+                                <div class="module-name">${allGuide.name}</div>
+                                <div class="module-meta">Study Boss &bull; Covers all CAET categories</div>
                             </div>
-                            ` : '<div></div>'}
-                            
-                            ${catNotebooks.length > 0 ? `
-                            <div class="content-column">
-                                <h3>AI Study Guides</h3>
-                                <div class="items-grid">
-                                    ${notebooksHtml}
-                                </div>
-                                ${instructionsHtml}
-                            </div>
-                            ` : '<div></div>'}
-                        </div>
+                            <div class="module-arrow">${EXTERNAL_SVG}</div>
+                        </a>
                     </div>
-                </div>
-                `;
-            });
-            
-            document.getElementById('accordionContainer').innerHTML = html;
-        }
-
-        // Initialize accordion layout
-        buildAccordionHtml();
-
-    </script>
-
-    <!-- 3D Holographic Tilt Script -->
-    <script>
-        document.querySelectorAll('.resource-card').forEach(card => {
-            let rafId;
-            let currentX = 0; let currentY = 0;
-            let targetX = 0; let targetY = 0;
-            const ease = 0.1; 
-            const maxRot = 5; 
-
-            function animate() {
-                currentX += (targetX - currentX) * ease;
-                currentY += (targetY - currentY) * ease;
-                const rotateX = currentY * maxRot;
-                const rotateY = currentX * -maxRot;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                rafId = requestAnimationFrame(animate);
+                </div>`;
             }
 
-            card.addEventListener('mouseenter', () => { cancelAnimationFrame(rafId); animate(); });
+            CATEGORIES.forEach(cat => {
+                const catModules = MODULES.filter(m => m.num === cat.id);
+                const catNotebooks = NOTEBOOK_LINKS.filter(n => n.cat === cat.id);
 
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                targetX = (x - centerX) / centerX;
-                targetY = (y - centerY) / centerY;
+                if (catModules.length === 0 && catNotebooks.length === 0) return;
+
+                const moduleCount = catModules.length;
+                const notebookCount = catNotebooks.length;
+                const countLabel = `${moduleCount} Module${moduleCount !== 1 ? 's' : ''}  ${notebookCount} AI Guide${notebookCount !== 1 ? 's' : ''}`;
+
+                html += `<div class="cat-section">
+                    <div class="cat-header">
+                        <h2>${cat.name}</h2>
+                        <span class="cat-pill">${cat.id}</span>
+                    </div>
+                    <div class="module-grid">`;
+
+                catModules.forEach(m => {
+                    html += `
+                        <a href="${m.path}" class="module-card rise">
+                            <div class="module-icon">${RISE_SVG}</div>
+                            <div class="module-info">
+                                <div class="module-name">${m.name}</div>
+                                <div class="module-meta">Rise 360 &bull; Interactive Module</div>
+                            </div>
+                            <div class="module-arrow">${ARROW_SVG}</div>
+                        </a>`;
+                });
+
+                catNotebooks.forEach(n => {
+                    html += `
+                        <a href="${n.url}" target="_blank" class="module-card notebook">
+                            <div class="module-icon">${NOTEBOOK_SVG}</div>
+                            <div class="module-info">
+                                <div class="module-name">${n.name}</div>
+                                <div class="module-meta">Study Boss &bull; Ask AI</div>
+                            </div>
+                            <div class="module-arrow">${EXTERNAL_SVG}</div>
+                        </a>`;
+                });
+
+                html += `</div></div>`;
             });
-            
-            card.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(rafId);
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                targetX = 0; targetY = 0; currentX = 0; currentY = 0;
-            });
-        });
+
+            document.getElementById('categoryContainer').innerHTML = html;
+        }
+
+        // Populate "Up Next" from exam results
+        function loadUpNext() {
+            try {
+                const rawData = localStorage.getItem('ace_final_result');
+                if (!rawData) return;
+                const result = JSON.parse(rawData);
+                if (!result.questions) return;
+
+                // Find first missed category
+                const misses = {};
+                result.questions.forEach(q => {
+                    if (!q.isCorrect && q.category) {
+                        misses[q.category] = (misses[q.category] || 0) + 1;
+                    }
+                });
+
+                const topCat = Object.keys(misses).sort((a, b) => misses[b] - misses[a])[0];
+                if (!topCat) return;
+
+                const module = MODULES.find(m => m.num === topCat);
+                if (!module) return;
+
+                document.getElementById('upNextName').textContent = module.name;
+                document.getElementById('upNextBadge').textContent = module.num;
+                document.getElementById('upNextCard').href = module.path;
+                document.getElementById('upNextSection').style.display = '';
+            } catch (e) {
+                console.warn('Up Next load error:', e);
+            }
+        }
+
+        buildPage();
+        loadUpNext();
     </script>
 </body>
 

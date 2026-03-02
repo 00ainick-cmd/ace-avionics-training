@@ -7,165 +7,545 @@
     <title>Learner's Journey | CAET Prep</title>
     <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="shared/ace-theme.css">
 
     <style>
-        .main {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 32px 24px 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            min-height: 80vh;
-            justify-content: center;
-        }
-
-        .journey-hero {
+        /* BASE & BACKGROUND */
+        body {
             position: relative;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .journey-ace {
-            width: 180px;
-            height: 180px;
-            image-rendering: pixelated;
-        }
-
-        .journey-title {
-            font-size: 32px;
-            font-weight: 800;
+            background-color: #080C1A;
+            overflow-x: hidden;
+            min-height: 100vh;
             color: var(--text-primary);
-            margin-top: 20px;
-            margin-bottom: 12px;
-        }
-
-        .journey-title .highlight {
-            color: var(--gold);
-        }
-
-        .journey-desc {
-            font-size: 15px;
-            color: var(--text-muted);
-            max-width: 600px;
-            line-height: 1.5;
-            margin-bottom: 24px;
-            text-align: left;
-            background: var(--surface-2);
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .journey-desc h3 {
-            color: var(--gold);
-            margin-top: 0;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-
-        .journey-desc ul {
-            padding-left: 20px;
+            font-family: var(--font-sans);
             margin: 0;
-            color: var(--text-primary);
+            padding: 0;
         }
 
-        .journey-desc li {
-            margin-bottom: 8px;
-        }
-
-        .roadmap-preview {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            opacity: 0.5;
+        /* HD Cinematic Background */
+        .cyber-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(45, 189, 137, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
+                url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
+            z-index: -1;
             pointer-events: none;
         }
 
-        .node {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: var(--surface-2);
-            border: 2px dashed var(--border);
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            transform-origin: center top;
+            opacity: 0.3;
+            z-index: -2;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 0 50px;
+            }
+        }
+
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* HEADER */
+        .topbar {
+            background: rgba(8, 12, 26, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 18px;
+            justify-content: space-between;
+            padding: 16px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .node.active {
-            border: 2px solid var(--gold);
-            background: var(--gold-soft);
-            color: var(--gold);
-            box-shadow: 0 0 20px rgba(212, 168, 83, 0.3);
-        }
-
-        .connector {
-            width: 4px;
+        .topbar-logo img {
             height: 32px;
-            background: var(--border);
-            border-radius: 2px;
+            filter: drop-shadow(0 0 8px rgba(212, 168, 83, 0.4));
+            transition: all 0.3s ease;
         }
 
-        .back-btn {
+        .topbar-logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(212, 168, 83, 0.8));
+        }
+
+        .topbar-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* DECK HERO */
+        .deck-hero {
+            text-align: left;
+            margin-bottom: 48px;
+            position: relative;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 24px;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.3);
+            color: var(--gold);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.15) inset;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #A0AEC0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CONTENT LAYOUT */
+        .journey-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        /* HOLOGRAPHIC CARDS */
+        .holo-card {
+            position: relative;
+            background: rgba(20, 24, 38, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            overflow: hidden;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Scanline Overlay */
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 2;
+        }
+
+        /* Ambient Glow */
+        .holo-card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, transparent, transparent, transparent);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .holo-card:hover::after {
+            opacity: 1;
+        }
+
+        /* HOW IT WORKS CARD */
+        .card-briefing {
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .card-briefing::after {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), transparent, rgba(34, 211, 238, 0.1));
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
+        }
+
+        .card-briefing .card-bg-gfx {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.1) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .briefing-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 40px 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .briefing-icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            flex-shrink: 0;
+        }
+
+        .briefing-icon-wrap svg {
+            width: 28px;
+            height: 28px;
+            color: #22d3ee;
+            filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.4));
+        }
+
+        .briefing-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #22d3ee;
+            margin-bottom: 2px;
+        }
+
+        .briefing-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .briefing-content {
+            padding: 24px 40px 36px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .briefing-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .briefing-content li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .briefing-content li .li-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            color: var(--gold);
+        }
+
+        .briefing-content li .li-icon svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* LAUNCH CTA CARD */
+        .card-launch {
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card-launch::after {
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.5), transparent, rgba(212, 168, 83, 0.2));
+            box-shadow: 0 0 40px rgba(212, 168, 83, 0.2);
+        }
+
+        .card-launch .card-bg-gfx {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at bottom right, rgba(212, 168, 83, 0.12) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .launch-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 36px 40px;
+            z-index: 10;
+            position: relative;
+            gap: 24px;
+        }
+
+        .launch-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .launch-icon-wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.3);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .launch-icon-wrap svg {
+            width: 36px;
+            height: 36px;
+            color: var(--gold);
+            filter: drop-shadow(0 0 15px rgba(212, 168, 83, 0.5));
+        }
+
+        .card-launch:hover .launch-icon-wrap {
+            background: rgba(212, 168, 83, 0.2);
+            border-color: rgba(212, 168, 83, 0.5);
+            box-shadow: 0 0 25px rgba(212, 168, 83, 0.3) inset;
+            transform: scale(1.05);
+        }
+
+        .launch-text .launch-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .launch-text .launch-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .launch-text .launch-title span {
+            color: var(--gold);
+        }
+
+        /* Action Arrow */
+        .card-arrow {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(-10px);
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+
+        .holo-card:hover .card-arrow {
+            transform: translateX(0);
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-launch:hover .card-arrow {
+            color: #000;
+            background: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        /* ACE MASCOT */
+        .ace-mascot {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .ace-mascot img {
+            width: 100px;
+            height: 100px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 0 20px rgba(212, 168, 83, 0.2));
+        }
+
+        .ace-speech {
+            padding: 14px 20px;
+            background: rgba(212, 168, 83, 0.06);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            border-left: 3px solid var(--gold);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.08) inset;
+        }
+
+        .ace-speech strong {
+            color: var(--gold);
+        }
+
+        /* BACK BUTTON */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 200ms ease;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            transition: all 0.2s;
+            margin-top: 12px;
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
-        .back-btn:hover {
-            background: var(--surface-3);
-            border-color: var(--border-hover);
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .launch-btn {
-            background: var(--gold);
-            color: #000;
-            font-size: 15px;
-            padding: 12px 28px;
-            border: none;
-            box-shadow: 0 4px 12px rgba(212, 168, 83, 0.4);
-            text-transform: uppercase;
-        }
+        @media (max-width: 700px) {
+            .hero-title {
+                font-size: 32px;
+            }
 
-        .launch-btn:hover {
-            background: #e5b651;
-            box-shadow: 0 6px 16px rgba(212, 168, 83, 0.6);
-            transform: translateY(-1px);
-        }
+            .launch-inner {
+                flex-direction: column;
+                text-align: center;
+            }
 
-        @media (max-width: 600px) {
-            .journey-ace {
-                width: 140px;
-                height: 140px;
+            .launch-left {
+                flex-direction: column;
+            }
+
+            .briefing-header {
+                padding: 24px 24px 0;
+            }
+
+            .briefing-content {
+                padding: 20px 24px 28px;
+            }
+
+            .ace-mascot {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
 </head>
 
 <body>
+
+    <div class="cyber-bg"></div>
+    <div class="cyber-grid"></div>
 
     <header class="topbar">
         <div class="topbar-logo">
@@ -174,63 +554,191 @@
             </a>
         </div>
         <div class="topbar-right">
-            <a href="dashboard.html" class="topbar-btn">Back to Hub</a>
+            <a href="dashboard.html" class="topbar-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back to Hub
+            </a>
         </div>
     </header>
 
     <main class="main">
-        <div class="journey-hero">
-            <img src="shared/ace-sprites/ace-192-proud.png" alt="ACE" class="journey-ace">
+
+        <!-- ACE MASCOT -->
+        <div class="ace-mascot">
+            <img src="shared/ace-sprites/ace-192-proud.png" alt="ACE">
+            <div class="ace-speech">
+                Welcome to the <strong>Learner's Journey</strong>. This is your guided path through every CAET
+                objective — one node at a time. Build your technical foundation here.
+            </div>
         </div>
 
-        <h1 class="journey-title">The <span class="highlight">Learner's Journey</span></h1>
-
-        <div class="journey-desc">
-            <h3>How it Works</h3>
-            <ul>
-                <li>The Journey is composed of sequential learning nodes, grouped by CAET
-                    categories.</li>
-                <li>Use the <strong>left sidebar navigation</strong> in the portal to jump
-                    between modules and topics.</li>
-                <li>Read the <strong>Objectives</strong>, <strong>Core Principles</strong>,
-                    and complete any interactive checkpoints.</li>
-                <li>As you master nodes, your <strong>Readiness Grade</strong> and <strong>XP</strong> will
-                    automatically track on your Dashboard.</li>
-            </ul>
-        </div>
-
-        <a href="training_modules/W1-Z1-N1_training.html" class="back-btn launch-btn"
-            style="display:flex; flex-direction:column; padding: 20px 32px; gap: 12px;">
-            <span style="font-size: 15px; font-weight: 500; text-transform: none; color: #141826;">
-                "Welcome to the <strong>Learner's Journey</strong>. It's time to build your technical foundation!"
-            </span>
-            <span style="display:flex; align-items:center; font-size: 18px; font-weight: 800;">
-                LAUNCH JOURNEY
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    style="width:24px;height:24px; margin-left: 8px;">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
+        <!-- HERO -->
+        <div class="deck-hero">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
-            </span>
-        </a>
+                Flight Plan
+            </div>
+            <h1 class="hero-title">The Learner's Journey</h1>
+            <p class="hero-desc">A guided, node-based microlesson adventure. Master CAET standards step-by-step through
+                sequential learning nodes grouped by category.</p>
+        </div>
 
-        <a href="dashboard.html" class="back-btn">
+        <div class="journey-layout">
+
+            <!-- BRIEFING CARD -->
+            <div class="holo-card card-briefing" id="cardBriefing">
+                <div class="card-bg-gfx"></div>
+                <div class="briefing-header">
+                    <div class="briefing-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="briefing-label">Mission Briefing</div>
+                        <div class="briefing-title">How It Works</div>
+                    </div>
+                </div>
+                <div class="briefing-content">
+                    <ul>
+                        <li>
+                            <div class="li-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            </div>
+                            <span>The Journey is composed of <strong>sequential learning nodes</strong>, grouped by
+                                CAET categories.</span>
+                        </li>
+                        <li>
+                            <div class="li-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            </div>
+                            <span>Use the <strong>left sidebar navigation</strong> in the portal to jump between modules
+                                and topics.</span>
+                        </li>
+                        <li>
+                            <div class="li-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            </div>
+                            <span>Read the <strong>Objectives</strong>, <strong>Core Principles</strong>, and complete
+                                any interactive checkpoints.</span>
+                        </li>
+                        <li>
+                            <div class="li-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            </div>
+                            <span>As you master nodes, your <strong>Readiness Grade</strong> and <strong>XP</strong>
+                                will automatically track on your Dashboard.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- LAUNCH CTA -->
+            <a href="training_modules/W1-Z1-N1_training.html" class="holo-card card-launch" id="cardLaunch">
+                <div class="card-bg-gfx"></div>
+                <div class="launch-inner">
+                    <div class="launch-left">
+                        <div class="launch-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path
+                                    d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                                <path
+                                    d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                                <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                            </svg>
+                        </div>
+                        <div class="launch-text">
+                            <div class="launch-subtitle">Begin your technical foundation</div>
+                            <div class="launch-title">Launch <span>Journey</span></div>
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- BACK LINK -->
+        <a href="dashboard.html" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
             Return to Hub
         </a>
+
     </main>
 
-    <footer class="page-footer">
-        ACE Avionics Training &middot; CAET Entry Prep &middot; Learner's Journey
-    </footer>
-
+    <!-- 3D Holographic Tilt Script -->
     <script>
+        document.querySelectorAll('.holo-card').forEach(card => {
+            let rafId;
+            let currentX = 0;
+            let currentY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            const ease = 0.1;
+            const maxRot = 6;
+
+            function animate() {
+                currentX += (targetX - currentX) * ease;
+                currentY += (targetY - currentY) * ease;
+                const rotateX = currentY * maxRot;
+                const rotateY = currentX * -maxRot;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                rafId = requestAnimationFrame(animate);
+            }
+
+            card.addEventListener('mouseenter', () => {
+                cancelAnimationFrame(rafId);
+                animate();
+            });
+
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                targetX = (x - centerX) / centerX;
+                targetY = (y - centerY) / centerY;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(rafId);
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                targetX = 0;
+                targetY = 0;
+                currentX = 0;
+                currentY = 0;
+            });
+        });
+
+        // Dynamic launch link from URL params
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const node = params.get('node');
             if (node) {
-                const launchBtn = document.querySelector('.back-btn[href^="training_modules/"]');
+                const launchBtn = document.querySelector('.card-launch');
                 if (launchBtn) {
                     launchBtn.href = `training_modules/${node}_training.html`;
                 }

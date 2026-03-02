@@ -4,315 +4,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAET Instructor Dashboard</title>
+    <title>CAET — Instructor Command Center</title>
     <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="shared/ace-theme.css">
 
     <style>
+        /* ===========================
+           LAYOUT
+           =========================== */
         body {
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Ambient Glow Background */
-        .ambient-bg {
+        .ambient-glow {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at top left, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at bottom right, rgba(212, 168, 83, 0.05) 0%, transparent 40%);
             z-index: -1;
             pointer-events: none;
+            background:
+                radial-gradient(ellipse at 15% 10%, rgba(212, 168, 83, 0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 90%, rgba(96, 165, 250, 0.04) 0%, transparent 50%);
         }
 
-        .main-container {
-            flex: 1;
-            max-width: 1200px;
+        .page-shell {
+            max-width: 1340px;
             margin: 0 auto;
-            width: 100%;
-            padding: 40px 24px;
+            padding: 32px 24px 64px;
         }
 
-        .dashboard-header {
-            margin-bottom: 40px;
+        /* ===========================
+           HEADER BAR
+           =========================== */
+        .admin-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            gap: 24px;
+            flex-wrap: wrap;
         }
 
-        .page-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, #a0aec0);
+        .admin-header h1 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 30%, var(--gold));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
         }
 
-        .page-subtitle {
-            font-size: 16px;
+        .admin-header .subtitle {
+            font-size: 14px;
             color: var(--text-muted);
             font-family: var(--font-mono);
         }
 
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .metric-card {
+        /* ===========================
+           BUTTONS
+           =========================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .btn svg {
+            flex-shrink: 0;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), #c9952e);
+            color: #0e0e10;
+            border-color: var(--gold);
+        }
+
+        .btn-gold:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 4px 20px rgba(212, 168, 83, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border);
+        }
+
+        .btn-outline:hover {
+            background: var(--surface-2);
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+        }
+
+        .btn-green {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-green:hover {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: #34d399;
+        }
+
+        .btn-red {
+            background: rgba(239, 68, 68, 0.08);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-red:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #f87171;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* ===========================
+           METRIC TILES
+           =========================== */
+        .metrics-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .tile {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .metric-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-value {
-            font-size: 36px;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            color: var(--gold);
-        }
-
-        .table-container {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
+            padding: 20px 24px;
+            position: relative;
             overflow: hidden;
         }
 
-        .table-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface-2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            opacity: 0.5;
         }
 
-        .table-title {
-            font-size: 18px;
-            font-weight: 600;
+        .tile-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .tile-value {
+            font-size: 32px;
+            font-weight: 900;
+            font-family: var(--font-mono);
             color: var(--text-primary);
+        }
+
+        .tile-value.gold {
+            color: var(--gold);
+        }
+
+        .tile-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-family: var(--font-mono);
+        }
+
+        /* ===========================
+           TOOLBAR ROW
+           =========================== */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            width: 280px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* ===========================
+           TABLE
+           =========================== */
+        .table-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
         }
 
         th {
-            padding: 16px 24px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
+            padding: 14px 20px;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--text-muted);
             border-bottom: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--surface-2);
+            text-align: left;
         }
 
         td {
-            padding: 16px 24px;
+            padding: 14px 20px;
             font-size: 14px;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
-        tr:hover {
-            background: var(--surface-2);
-        }
-
-        .avatar-cell {
+        .name-cell {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .student-avatar {
-            width: 32px;
-            height: 32px;
+        .avatar {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: var(--surface-3);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .avatar-mil {
+            background: rgba(52, 211, 153, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .avatar-147 {
+            background: rgba(96, 165, 250, 0.12);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .avatar-tech {
+            background: rgba(212, 168, 83, 0.12);
             color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, 0.2);
         }
 
-        .student-name {
+        .avatar-other {
+            background: var(--surface-3);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .name-primary {
             font-weight: 600;
-            color: var(--text-primary);
         }
 
-        .student-unit {
+        .name-sub {
             font-size: 12px;
             color: var(--text-muted);
             margin-top: 2px;
         }
 
-        .badge {
+        .badge-pill {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
             font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .badge-military {
+        .pill-mil {
             background: rgba(52, 211, 153, 0.1);
             color: #34d399;
-            border: 1px solid rgba(52, 211, 153, 0.2);
+            border: 1px solid rgba(52, 211, 153, 0.15);
         }
 
-        .badge-147 {
+        .pill-147 {
             background: rgba(96, 165, 250, 0.1);
             color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.15);
         }
 
-        .badge-tech {
+        .pill-tech {
             background: rgba(212, 168, 83, 0.1);
             color: var(--gold);
-            border: 1px solid rgba(212, 168, 83, 0.2);
+            border: 1px solid rgba(212, 168, 83, 0.15);
         }
 
-        .badge-other {
+        .pill-other {
             background: var(--surface-3);
             color: var(--text-secondary);
             border: 1px solid var(--border);
         }
 
-        .score-bar-mini {
-            width: 100px;
+        .score-bar-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .score-track {
+            width: 90px;
             height: 6px;
             background: var(--surface-3);
             border-radius: 3px;
             overflow: hidden;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
         }
 
-        .score-fill-mini {
+        .score-fill {
             height: 100%;
             border-radius: 3px;
         }
 
-        .btn-action {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
+        .fill-red {
+            background: #ef4444;
+        }
+
+        .fill-yellow {
+            background: #f59e0b;
+        }
+
+        .fill-green {
+            background: #10b981;
+        }
+
+        .score-num {
+            font-family: var(--font-mono);
+            font-weight: 700;
             font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 35px;
+        }
+
+        .actions-cell {
             display: flex;
-            align-items: center;
             gap: 6px;
+            justify-content: flex-end;
         }
 
-        .btn-action:hover {
-            background: var(--surface-3);
-            color: var(--text-primary);
-            border-color: var(--text-muted);
+        /* ===========================
+           EMPTY STATE
+           =========================== */
+        .empty-state {
+            padding: 80px 20px;
+            text-align: center;
+            display: none;
         }
 
-        .btn-danger {
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, 0.3);
+        .empty-state svg {
+            margin-bottom: 16px;
+            opacity: 0.3;
         }
 
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, 0.5);
+        .empty-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
         }
 
-        /* MODAL */
+        .empty-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ===========================
+           MODAL
+           =========================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 100;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 200;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 24px;
         }
 
-        .modal-overlay.active {
+        .modal-overlay.open {
             display: flex;
         }
 
-        .modal-card {
+        .modal {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            animation: modalIn 0.3s ease;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+            animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes modalIn {
+        @keyframes modalPop {
             from {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.92) translateY(10px);
             }
 
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1) translateY(0);
             }
         }
 
-        .modal-header {
-            padding: 24px;
+        .modal-head {
+            padding: 24px 28px 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .modal-head h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
         .modal-close {
-            background: transparent;
+            background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
@@ -325,40 +507,222 @@
         }
 
         .modal-body {
-            padding: 24px;
+            padding: 24px 28px 28px;
         }
 
-        /* Stats Grid in Modal */
-        .stats-grid {
+        /* Form inside modal */
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--gold);
+        }
+
+        .checkbox-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            accent-color: var(--gold);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Detail panel in modal */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 24px;
             background: var(--surface-2);
-            padding: 16px;
+            padding: 16px 20px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
         }
 
-        .stat-item {
-            font-size: 13px;
-        }
-
-        .stat-label {
+        .detail-item .dl {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: var(--text-muted);
             margin-bottom: 4px;
         }
 
-        .stat-val {
+        .detail-item .dv {
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
+        }
+
+        .chart-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .chart-label {
+            width: 120px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .chart-track {
+            flex: 1;
+            height: 10px;
+            background: var(--surface-3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .chart-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .chart-val {
+            width: 40px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* ===========================
+           TOAST
+           =========================== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: toastIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.success {
+            border-left: 3px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 3px solid #ef4444;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===========================
+           RESPONSIVE
+           =========================== */
+        @media (max-width: 900px) {
+            .metrics-strip {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .metrics-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="ambient-bg"></div>
+    <div class="ambient-glow"></div>
 
     <header class="topbar">
         <div class="topbar-logo">
@@ -366,345 +730,596 @@
                 <img src="shared/logo.png" alt="ACE Avionics Training" class="logo-img">
             </a>
             <span
-                style="font-family: var(--font-mono); font-size: 12px; color: var(--gold); border-left: 1px solid var(--border); padding-left: 16px; margin-left: 16px;">ADMIN
-                CONSOLE</span>
+                style="font-family: var(--font-mono); font-size: 12px; color: var(--gold); border-left: 1px solid var(--border); padding-left: 16px; margin-left: 16px; font-weight: 700; letter-spacing: 1px;">INSTRUCTOR
+                OPS</span>
         </div>
         <div class="topbar-right">
-            <a href="dashboard.html" class="topbar-btn">
-                Exit Admin
-            </a>
+            <a href="dashboard.html" class="topbar-btn">← Return to Dashboard</a>
         </div>
     </header>
 
-    <main class="main-container">
+    <div class="page-shell">
 
-        <div class="dashboard-header">
+        <!-- HEADER -->
+        <div class="admin-header">
             <div>
-                <h1 class="page-title">Roster Operations</h1>
-                <div class="page-subtitle">Manage student intelligence and diagnostic data via local server sync.</div>
+                <h1>Roster Command Center</h1>
+                <div class="subtitle">Manage student enrollment, diagnostic data, and generate test accounts.</div>
             </div>
-            <button class="btn-primary" onclick="loadStudents()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 2v6h-6" />
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                    <path d="M3 2v6h6" />
-                </svg>
-                Sync Database
-            </button>
-        </div>
-
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-title">Total Students Enrolled</div>
-                <div class="metric-value" id="metric-total">0</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-title">Military Transitioning</div>
-                <div class="metric-value" id="metric-mil">0</div>
-            </div>
-            <div class="metric-card"
-                style="border-color: rgba(212, 168, 83, 0.3); background: rgba(212, 168, 83, 0.05);">
-                <div class="metric-title" style="color: var(--gold);">Average Diagnostic Score</div>
-                <div class="metric-value" id="metric-avg">0%</div>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <div class="table-header">
-                <div class="table-title">Student Roster</div>
-            </div>
-            <div style="overflow-x: auto;">
-                <table id="roster-table">
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Background & Unit</th>
-                            <th>Experience</th>
-                            <th>Diagnostic Avg</th>
-                            <th style="text-align: right;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="roster-body">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
-
-                <div id="empty-state" style="display: none; padding: 60px 20px; text-align: center;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--border)"
-                        stroke-width="1.5" style="margin-bottom: 16px;">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            <div class="header-actions">
+                <button class="btn btn-green" onclick="openAddModal()" id="btn-add-student">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <line x1="20" y1="8" x2="20" y2="14" />
+                        <line x1="23" y1="11" x2="17" y2="11" />
                     </svg>
-                    <div style="font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">No Students Found
-                    </div>
-                    <div style="font-size: 14px; color: var(--text-muted);">The local database is currently empty.
-                        Direct users to the onboarding flow.</div>
-                </div>
+                    Add Student
+                </button>
+                <button class="btn btn-gold" onclick="seedStudents()" id="btn-seed">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path
+                            d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                    </svg>
+                    Generate 10 Test Accounts
+                </button>
+                <button class="btn btn-outline" onclick="refreshRoster()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 2v6h-6" />
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                        <path d="M3 22v-6h6" />
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    </svg>
+                    Refresh
+                </button>
+                <button class="btn btn-red" onclick="purgeAll()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Purge All
+                </button>
             </div>
         </div>
 
-    </main>
+        <!-- METRICS -->
+        <div class="metrics-strip">
+            <div class="tile">
+                <div class="tile-label">Total Enrolled</div>
+                <div class="tile-value" id="m-total">—</div>
+            </div>
+            <div class="tile">
+                <div class="tile-label">Military Transitioning</div>
+                <div class="tile-value" id="m-mil">—</div>
+                <div class="tile-sub" id="m-mil-pct"></div>
+            </div>
+            <div class="tile">
+                <div class="tile-label">Avg Diagnostic Score</div>
+                <div class="tile-value gold" id="m-avg">—</div>
+            </div>
+            <div class="tile">
+                <div class="tile-label">At-Risk (&lt;60%)</div>
+                <div class="tile-value" id="m-risk" style="color: #f87171;">—</div>
+                <div class="tile-sub" id="m-risk-sub"></div>
+            </div>
+        </div>
 
-    <!-- Detailed Modal -->
-    <div class="modal-overlay" id="student-modal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div>
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;"
-                        id="modal-name">Student Name</h3>
-                    <div style="font-family: var(--font-mono); font-size: 13px; color: var(--gold);" id="modal-id">ID:
-                        000</div>
-                </div>
-                <button class="modal-close" onclick="closeModal()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- SEARCH / TOOLBAR -->
+        <div class="toolbar">
+            <input type="text" class="search-box" id="search-input"
+                placeholder="Filter by name, employer, background..." oninput="filterTable()">
+            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">
+                Showing <span id="showing-count">0</span> records
+            </div>
+        </div>
+
+        <!-- DATA TABLE -->
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Background</th>
+                        <th>Employer / Unit</th>
+                        <th>Experience</th>
+                        <th>Certs</th>
+                        <th>Diagnostic Avg</th>
+                        <th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roster-body"></tbody>
+            </table>
+
+            <div class="empty-state" id="empty-state">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <div class="empty-title">No Students in Database</div>
+                <div class="empty-sub">Click <strong>"Generate 10 Test Accounts"</strong> to seed dummy data, or
+                    <strong>"Add Student"</strong> to create a record manually.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================
+         ADD STUDENT MODAL
+         ============================ -->
+    <div class="modal-overlay" id="modal-add">
+        <div class="modal">
+            <div class="modal-head">
+                <h2>✚ Manually Add Student</h2>
+                <button class="modal-close" onclick="closeModal('modal-add')">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18" />
                         <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                 </button>
             </div>
             <div class="modal-body">
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">Background</div>
-                        <div class="stat-val" id="modal-bg">-</div>
+                <form id="add-student-form" onsubmit="submitNewStudent(event)">
+                    <div class="form-row">
+                        <div class="field">
+                            <label>Full Name *</label>
+                            <input type="text" id="f-name" required placeholder="e.g. Alex Johnson">
+                        </div>
+                        <div class="field">
+                            <label>Employer / Unit</label>
+                            <input type="text" id="f-employer" placeholder="e.g. Delta Air Lines">
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Employer / Unit</div>
-                        <div class="stat-val" id="modal-employer">-</div>
+                    <div class="form-row">
+                        <div class="field">
+                            <label>Background *</label>
+                            <select id="f-bg" required onchange="toggleMilFields()">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="military">Military Transitioning</option>
+                                <option value="part147">Part 147 Graduate</option>
+                                <option value="technician">Working Technician</option>
+                                <option value="other">Career Changer / Other</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Years of Experience</label>
+                            <select id="f-exp">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="0-2">0 – 2 years</option>
+                                <option value="3-5">3 – 5 years</option>
+                                <option value="5-10">5 – 10 years</option>
+                                <option value="10+">10+ years</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Experience</div>
-                        <div class="stat-val" id="modal-exp">-</div>
+                    <div class="form-row" id="mil-fields" style="display:none;">
+                        <div class="field">
+                            <label>Branch of Service</label>
+                            <select id="f-branch">
+                                <option value="">Select branch...</option>
+                                <option value="Air Force">Air Force</option>
+                                <option value="Army">Army</option>
+                                <option value="Navy">Navy</option>
+                                <option value="Marines">Marines</option>
+                                <option value="Coast Guard">Coast Guard</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>MOS / AFSC / Rating</label>
+                            <input type="text" id="f-mos" placeholder="e.g. 2A373">
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Certifications</div>
-                        <div class="stat-val" id="modal-certs">-</div>
+                    <div class="form-row single">
+                        <div class="field">
+                            <label>Certifications</label>
+                            <div class="checkbox-row">
+                                <label><input type="checkbox" name="f-cert" value="A&P"> A&P License</label>
+                                <label><input type="checkbox" name="f-cert" value="NCATT"> NCATT AET</label>
+                                <label><input type="checkbox" name="f-cert" value="FCC GROL"> FCC GROL</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <h4
-                    style="font-size: 16px; font-weight: 600; color: var(--text-secondary); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
-                    Diagnostic Breakdown</h4>
-                <div id="modal-charts" style="display: flex; flex-direction: column; gap: 12px;">
-                    <!-- JS populated bars -->
-                </div>
-
+                    <div
+                        style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('modal-add')">Cancel</button>
+                        <button type="submit" class="btn btn-gold">Save Student Record</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
+    <!-- ============================
+         VIEW STUDENT DETAIL MODAL
+         ============================ -->
+    <div class="modal-overlay" id="modal-detail">
+        <div class="modal">
+            <div class="modal-head">
+                <div>
+                    <h2 id="d-name">—</h2>
+                    <div style="font-family: var(--font-mono); font-size: 13px; color: var(--gold); margin-top: 2px;"
+                        id="d-id">ID: —</div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modal-detail')">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="dl">Background</div>
+                        <div class="dv" id="d-bg">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="dl">Employer / Unit</div>
+                        <div class="dv" id="d-emp">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="dl">Experience</div>
+                        <div class="dv" id="d-exp">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="dl">Certifications</div>
+                        <div class="dv" id="d-certs">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="dl">Branch / MOS</div>
+                        <div class="dv" id="d-mil">—</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="dl">Enrolled</div>
+                        <div class="dv" id="d-date">—</div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h3>Diagnostic Breakdown by Category</h3>
+                    <div id="d-charts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            loadStudents();
-        });
+        // ===========================
+        // STATE
+        // ===========================
+        let allStudents = [];
+        const studentsLookup = {};
 
-        const studentsData = {}; // ID -> Student Data
+        // ===========================
+        // INIT
+        // ===========================
+        document.addEventListener('DOMContentLoaded', refreshRoster);
 
-        async function loadStudents() {
+        // ===========================
+        // API CALLS
+        // ===========================
+        async function refreshRoster() {
             try {
                 const res = await fetch('/api/students');
-                if (!res.ok) throw new Error("Server response " + res.status);
-
-                const data = await res.json();
-                renderTable(data);
-
+                if (!res.ok) throw new Error('Server returned ' + res.status);
+                allStudents = await res.json();
+                allStudents.forEach(s => studentsLookup[s.id] = s);
+                renderTable(allStudents);
+                updateMetrics(allStudents);
             } catch (e) {
-                console.error("Failed to fetch from local server:", e);
+                console.error(e);
+                showToast('Database offline — ensure python server.py is running.', 'error');
                 document.getElementById('empty-state').style.display = 'block';
-                document.getElementById('empty-state').innerHTML = `
-                    <div style="color: var(--danger); font-weight: 600; margin-bottom: 8px;">Database Offline</div>
-                    <div style="font-size: 14px; color: var(--text-muted);">Ensure \`python server.py\` is running. Fetch error: ${e.message}</div>
-                `;
             }
         }
 
+        async function seedStudents() {
+            try {
+                showToast('Generating 10 test accounts...', 'success');
+                const res = await fetch('/api/students/seed', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ count: 10 })
+                });
+                if (!res.ok) throw new Error('Seed failed');
+                const result = await res.json();
+                showToast(`✓ Created ${result.created} test students with diagnostic data.`, 'success');
+                refreshRoster();
+            } catch (e) {
+                showToast('Failed to seed test accounts.', 'error');
+            }
+        }
+
+        async function purgeAll() {
+            if (!confirm('⚠ DANGER: This will permanently delete ALL student data. Are you sure?')) return;
+            if (!confirm('This is your last chance. Proceed with full database purge?')) return;
+            try {
+                const res = await fetch('/api/students/all', { method: 'DELETE' });
+                if (!res.ok) throw new Error('Purge failed');
+                showToast('Database purged. All records deleted.', 'success');
+                refreshRoster();
+            } catch (e) {
+                showToast('Failed to purge database.', 'error');
+            }
+        }
+
+        async function deleteStudent(id, name) {
+            if (!confirm(`Delete ${name} and all their diagnostic data? This cannot be undone.`)) return;
+            try {
+                const res = await fetch(`/api/students/${id}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error('Delete failed');
+                showToast(`Removed ${name} from roster.`, 'success');
+                refreshRoster();
+            } catch (e) {
+                showToast('Delete failed.', 'error');
+            }
+        }
+
+        async function submitNewStudent(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('f-name').value.trim();
+            const employer = document.getElementById('f-employer').value.trim();
+            const bg = document.getElementById('f-bg').value;
+            const exp = document.getElementById('f-exp').value;
+            const branch = document.getElementById('f-branch').value;
+            const mos = document.getElementById('f-mos').value.trim();
+            const certs = [];
+            document.querySelectorAll('input[name="f-cert"]:checked').forEach(cb => certs.push(cb.value));
+
+            if (!name || !bg) {
+                showToast('Name and Background are required.', 'error');
+                return;
+            }
+
+            const payload = {
+                profile: { name, background: bg, employer, experience: exp, branch, mos, certs },
+                scores: [] // No scores for manually added students
+            };
+
+            try {
+                const res = await fetch('/api/students', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Save failed');
+                showToast(`✓ ${name} added to roster.`, 'success');
+                closeModal('modal-add');
+                document.getElementById('add-student-form').reset();
+                refreshRoster();
+            } catch (e) {
+                showToast('Failed to save student.', 'error');
+            }
+        }
+
+        // ===========================
+        // RENDER
+        // ===========================
         function renderTable(students) {
             const tbody = document.getElementById('roster-body');
-            const emptyState = document.getElementById('empty-state');
+            const emptyEl = document.getElementById('empty-state');
             tbody.innerHTML = '';
 
             if (students.length === 0) {
-                emptyState.style.display = 'block';
+                emptyEl.style.display = 'block';
+                document.getElementById('showing-count').textContent = '0';
                 return;
             }
-            emptyState.style.display = 'none';
-
-            let militaryCount = 0;
-            let sumAvg = 0;
+            emptyEl.style.display = 'none';
+            document.getElementById('showing-count').textContent = students.length;
 
             students.forEach(s => {
-                studentsData[s.id] = s; // Save for modal
-
-                if (s.background === 'military') militaryCount++;
-
-                // Calc their avg score
-                let totalScoreCtx = 0;
-                let scoreAvg = 0;
-                if (s.scores && s.scores.length > 0) {
-                    s.scores.forEach(score => totalScoreCtx += score.score_percent);
-                    scoreAvg = Math.round(totalScoreCtx / s.scores.length);
-                }
-                sumAvg += scoreAvg;
-
-                // Format Background
-                let badgeClass = 'badge-other';
-                let bgText = s.background;
-                if (s.background === 'military') { badgeClass = 'badge-military'; bgText = 'MIL: ' + (s.branch || 'Transitioning'); }
-                if (s.background === 'part147') { badgeClass = 'badge-147'; bgText = 'Part 147 Grad'; }
-                if (s.background === 'technician') { badgeClass = 'badge-tech'; bgText = 'Technician'; }
-
+                const avg = calcAvg(s);
                 const initials = s.name.substring(0, 2).toUpperCase();
+                const avatarClass = getAvatarClass(s.background);
+                const pillClass = getPillClass(s.background);
+                const bgLabel = getBgLabel(s);
+                const certStr = parseCerts(s.certs);
 
                 const tr = document.createElement('tr');
+                tr.dataset.search = `${s.name} ${s.employer || ''} ${s.background} ${s.branch || ''} ${s.mos || ''}`.toLowerCase();
                 tr.innerHTML = `
                     <td>
-                        <div class="avatar-cell">
-                            <div class="student-avatar">${initials}</div>
+                        <div class="name-cell">
+                            <div class="avatar ${avatarClass}">${initials}</div>
                             <div>
-                                <div class="student-name">${escapeHTML(s.name)}</div>
+                                <div class="name-primary">${esc(s.name)}</div>
+                                <div class="name-sub">ID #${s.id}</div>
                             </div>
                         </div>
                     </td>
+                    <td><span class="badge-pill ${pillClass}">${bgLabel}</span></td>
+                    <td>${esc(s.employer || '—')}</td>
+                    <td style="font-family:var(--font-mono); font-size:13px;">${esc(s.experience || '—')}</td>
+                    <td style="font-size:13px; color:var(--text-secondary);">${certStr || '—'}</td>
                     <td>
-                        <span class="badge ${badgeClass}">${bgText}</span>
-                        <div class="student-unit">${escapeHTML(s.employer || 'Unspecified Unit')}</div>
-                    </td>
-                    <td>${escapeHTML(s.experience || 'N/A')}</td>
-                    <td>
-                        <div class="score-bar-mini">
-                            <div class="score-fill-mini ${getColorClass(scoreAvg)}" style="width: ${scoreAvg}%"></div>
+                        <div class="score-bar-cell">
+                            <div class="score-track"><div class="score-fill ${getFillClass(avg)}" style="width:${avg}%"></div></div>
+                            <span class="score-num">${avg}%</span>
                         </div>
-                        <span style="font-family: var(--font-mono); font-weight: 600; font-size: 13px;">${scoreAvg}%</span>
                     </td>
-                    <td style="text-align: right;">
-                        <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                            <button class="btn-action" onclick="viewStudent(${s.id})">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <td>
+                        <div class="actions-cell">
+                            <button class="btn btn-outline btn-sm" onclick="viewStudent(${s.id})">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                 View
                             </button>
-                            <button class="btn-action btn-danger" onclick="deleteStudent(${s.id}, '${escapeHTML(s.name)}')">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            <button class="btn btn-red btn-sm" onclick="deleteStudent(${s.id}, '${esc(s.name)}')">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                             </button>
                         </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
-
-            // Update Metrics
-            document.getElementById('metric-total').textContent = students.length;
-            document.getElementById('metric-mil').textContent = militaryCount;
-            const globalAvg = students.length > 0 ? Math.round(sumAvg / students.length) : 0;
-            document.getElementById('metric-avg').textContent = globalAvg + '%';
         }
 
-        async function deleteStudent(id, name) {
-            if (!confirm(`Are you sure you want to permanently delete ${name}? This cannot be undone.`)) return;
+        function updateMetrics(students) {
+            const total = students.length;
+            const mil = students.filter(s => s.background === 'military').length;
+            const avgs = students.map(calcAvg);
+            const globalAvg = total > 0 ? Math.round(avgs.reduce((a, b) => a + b, 0) / total) : 0;
+            const atRisk = avgs.filter(a => a < 60).length;
 
-            try {
-                const res = await fetch(`/api/students/${id}`, { method: 'DELETE' });
-                if (res.ok) {
-                    loadStudents(); // refresh table
-                } else {
-                    alert("Failed to delete student.");
-                }
-            } catch (e) {
-                console.error("Delete failed:", e);
-                alert("Database request failed.");
-            }
+            document.getElementById('m-total').textContent = total;
+            document.getElementById('m-mil').textContent = mil;
+            document.getElementById('m-mil-pct').textContent = total > 0 ? `${Math.round(mil / total * 100)}% of roster` : '';
+            document.getElementById('m-avg').textContent = globalAvg + '%';
+            document.getElementById('m-risk').textContent = atRisk;
+            document.getElementById('m-risk-sub').textContent = total > 0 ? `${Math.round(atRisk / total * 100)}% need intervention` : '';
+        }
+
+        // ===========================
+        // SEARCH / FILTER
+        // ===========================
+        function filterTable() {
+            const q = document.getElementById('search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#roster-body tr');
+            let count = 0;
+            rows.forEach(tr => {
+                const match = tr.dataset.search.includes(q);
+                tr.style.display = match ? '' : 'none';
+                if (match) count++;
+            });
+            document.getElementById('showing-count').textContent = count;
+        }
+
+        // ===========================
+        // MODALS
+        // ===========================
+        function openAddModal() {
+            document.getElementById('modal-add').classList.add('open');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+
+        function toggleMilFields() {
+            const bg = document.getElementById('f-bg').value;
+            document.getElementById('mil-fields').style.display = bg === 'military' ? 'grid' : 'none';
         }
 
         function viewStudent(id) {
-            const s = studentsData[id];
+            const s = studentsLookup[id];
             if (!s) return;
 
-            document.getElementById('modal-name').textContent = s.name;
-            document.getElementById('modal-id').textContent = `DB ID: ${s.id}`;
-            document.getElementById('modal-bg').textContent = s.background === 'military' && s.branch ? `${s.branch} (${s.mos})` : s.background;
-            document.getElementById('modal-employer').textContent = s.employer || 'N/A';
-            document.getElementById('modal-exp').textContent = s.experience || 'N/A';
+            document.getElementById('d-name').textContent = s.name;
+            document.getElementById('d-id').textContent = `DB Record #${s.id}`;
+            document.getElementById('d-bg').textContent = getBgLabel(s);
+            document.getElementById('d-emp').textContent = s.employer || '—';
+            document.getElementById('d-exp').textContent = s.experience ? s.experience + ' years' : '—';
+            document.getElementById('d-certs').textContent = parseCerts(s.certs) || 'None';
+            document.getElementById('d-mil').textContent = s.branch ? `${s.branch} / ${s.mos}` : 'N/A';
+            document.getElementById('d-date').textContent = s.date_joined ? new Date(s.date_joined).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
-            // parse certs
-            let certString = "None";
-            if (s.certs) {
-                try {
-                    const parsed = JSON.parse(s.certs);
-                    if (parsed.length > 0) certString = parsed.join(', ');
-                } catch (e) { }
-            }
-            document.getElementById('modal-certs').textContent = certString;
-
-            // Render Charts
-            const chartArea = document.getElementById('modal-charts');
+            const chartArea = document.getElementById('d-charts');
             chartArea.innerHTML = '';
 
             if (s.scores && s.scores.length > 0) {
-                // sort weakest first
-                s.scores.sort((a, b) => a.score_percent - b.score_percent);
-
-                s.scores.forEach(score => {
+                const sorted = [...s.scores].sort((a, b) => a.score_percent - b.score_percent);
+                sorted.forEach(sc => {
                     const row = document.createElement('div');
-                    row.style.display = 'flex';
-                    row.style.alignItems = 'center';
-                    row.style.gap = '16px';
+                    row.className = 'chart-row';
                     row.innerHTML = `
-                        <div style="width: 150px; font-size: 13px; font-weight: 500; color: var(--text-secondary); text-align: right;">${escapeHTML(score.category)}</div>
-                        <div style="flex: 1; height: 10px; background: var(--surface-3); border-radius: 5px; overflow: hidden;">
-                            <div style="height: 100%; width: ${score.score_percent}%; border-radius: 5px; background: ${getHexColor(score.score_percent)};"></div>
+                        <div class="chart-label">${esc(sc.category)}</div>
+                        <div class="chart-track">
+                            <div class="chart-fill ${getFillClass(sc.score_percent)}" style="width: 0%"></div>
                         </div>
-                        <div style="width: 40px; font-family: var(--font-mono); font-size: 13px; font-weight: 700;">${score.score_percent}%</div>
+                        <div class="chart-val">${sc.score_percent}%</div>
                     `;
                     chartArea.appendChild(row);
+                    // Animate
+                    setTimeout(() => {
+                        row.querySelector('.chart-fill').style.width = sc.score_percent + '%';
+                    }, 50);
                 });
             } else {
-                chartArea.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No diagnostic data recorded.</div>';
+                chartArea.innerHTML = '<div style="color:var(--text-muted); font-size:14px; padding: 12px 0;">No diagnostic data — student was added manually or hasn\'t completed assessment.</div>';
             }
 
-            document.getElementById('student-modal').classList.add('active');
+            document.getElementById('modal-detail').classList.add('open');
         }
 
-        function closeModal() {
-            document.getElementById('student-modal').classList.remove('active');
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.classList.remove('open');
+            });
+        });
+
+        // ===========================
+        // TOAST NOTIFICATIONS
+        // ===========================
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${type === 'success' ? '#10b981' : '#ef4444'}" stroke-width="2">
+                    ${type === 'success' ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>'}
+                </svg>
+                ${msg}
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
         }
 
-        function getColorClass(val) {
-            if (val < 60) return 'bg-danger'; // Requires css bg classes or dynamic styles. Using custom below.
-            if (val < 80) return 'bg-warning';
-            return 'bg-success';
+        // ===========================
+        // HELPERS
+        // ===========================
+        function calcAvg(s) {
+            if (!s.scores || s.scores.length === 0) return 0;
+            return Math.round(s.scores.reduce((sum, sc) => sum + sc.score_percent, 0) / s.scores.length);
         }
 
-        // Dynamic inject of pure styles for the mini bars
-        const dangerColor = '#ef4444';
-        const warningColor = '#f59e0b';
-        const successColor = '#10b981';
-
-        document.head.insertAdjacentHTML("beforeend", `<style>
-            .bg-danger { background-color: ${dangerColor}; }
-            .bg-warning { background-color: ${warningColor}; }
-            .bg-success { background-color: ${successColor}; }
-        </style>`);
-
-        function getHexColor(val) {
-            if (val < 60) return dangerColor;
-            if (val < 80) return warningColor;
-            return successColor;
+        function getAvatarClass(bg) {
+            if (bg === 'military') return 'avatar-mil';
+            if (bg === 'part147') return 'avatar-147';
+            if (bg === 'technician') return 'avatar-tech';
+            return 'avatar-other';
         }
 
-        function escapeHTML(str) {
+        function getPillClass(bg) {
+            if (bg === 'military') return 'pill-mil';
+            if (bg === 'part147') return 'pill-147';
+            if (bg === 'technician') return 'pill-tech';
+            return 'pill-other';
+        }
+
+        function getBgLabel(s) {
+            if (s.background === 'military') return s.branch ? `MIL / ${s.branch}` : 'Military';
+            if (s.background === 'part147') return 'Part 147';
+            if (s.background === 'technician') return 'Technician';
+            return 'Other';
+        }
+
+        function getFillClass(val) {
+            if (val < 60) return 'fill-red';
+            if (val < 80) return 'fill-yellow';
+            return 'fill-green';
+        }
+
+        function parseCerts(raw) {
+            if (!raw) return '';
+            try {
+                const arr = JSON.parse(raw);
+                return arr.length > 0 ? arr.join(', ') : '';
+            } catch (e) { return raw; }
+        }
+
+        function esc(str) {
             if (!str) return '';
-            return str.replace(/[&<>'"]/g,
-                tag => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    "'": '&#39;',
-                    '"': '&quot;'
-                }[tag] || tag)
-            );
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
         }
     </script>
 </body>

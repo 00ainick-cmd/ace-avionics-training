@@ -2807,7 +2807,7 @@
         if (window._categories.length > 0) {
           renderCategories();
         } else {
-          document.getElementById('categoryGrid').innerHTML = '<p style="color:var(--danger)">No categories loaded. Check master-bank.json.</p>';
+          document.getElementById('categoryGrid').innerHTML = '<p style="color:var(--danger)">No categories loaded. Check master-bank.json.<\/p>';
         }
         loadSessionStats();
         bindEvents();
@@ -2823,16 +2823,16 @@
       const allQ = window._allQuestions || [];
       grid.innerHTML = window._categories.map(cat => {
         const qCount = allQ.filter(q => q.category === cat.id).length;
-        return `<div class="category-card holo-card-js" data-cat="${cat.id}">
-      <div class="category-card-check">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-      </div>
-      <div class="category-icon" style="color:${cat.iconColor}">${cat.icon}</div>
-      <div class="category-name">${cat.name}</div>
-      <div class="category-count">${qCount} questions</div>
-    </div>`;
+        return '<div class="category-card holo-card-js" data-cat="' + cat.id + '">' +
+          '<div class="category-card-check">' +
+            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">' +
+              '<polyline points="20 6 9 17 4 12"><\/polyline>' +
+            '<\/svg>' +
+          '<\/div>' +
+          '<div class="category-icon" style="color:' + cat.iconColor + '">' + cat.icon + '<\/div>' +
+          '<div class="category-name">' + cat.name + '<\/div>' +
+          '<div class="category-count">' + qCount + ' questions<\/div>' +
+        '<\/div>';
       }).join('');
       grid.querySelectorAll('.category-card').forEach(card => {
         card.addEventListener('click', () => selectCategory(card.dataset.cat));
@@ -2861,7 +2861,7 @@
           const cat = window._categories.find(c => c.id === id);
           return cat ? cat.name.split(' ').slice(0, 2).join(' ') : id;
         });
-        summaryEl.innerHTML = `<strong>${selectedCatIds.length}</strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} selected`;
+        summaryEl.innerHTML = `<strong>${selectedCatIds.length}<\/strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} selected`;
         document.getElementById('categoryBadge').textContent = selectedCatIds.length === 1 ? names[0] : `${selectedCatIds.length} categories`;
       }
       document.getElementById('btnStart').disabled = selectedCatIds.length === 0;
@@ -2965,7 +2965,7 @@
 
       // Tags
       const tagsEl = document.getElementById('qTags');
-      tagsEl.innerHTML = q.tags.map(t => `<span class="q-tag">${t}</span>`).join('');
+      tagsEl.innerHTML = q.tags.map(t => `<span class="q-tag">${t}<\/span>`).join('');
 
       // Reset card state
       const qCard = document.getElementById('qCard');
@@ -2981,9 +2981,9 @@
         const cleanOpt = opt.replace(/^[A-D]\.\s*/, '');
         return `
       <button class="option-btn" data-idx="${i}" onclick="selectAnswer(${i})">
-        <div class="option-letter">${LETTERS[i] || i}</div>
-        <div class="option-text">${cleanOpt}</div>
-      </button>`;
+        <div class="option-letter">${LETTERS[i] || i}<\/div>
+        <div class="option-text">${cleanOpt}<\/div>
+      <\/button>`;
       }).join('');
     }
 
@@ -3220,16 +3220,16 @@
           const color = catPct >= 75 ? 'var(--success)' : catPct >= 50 ? 'var(--warning)' : 'var(--danger)';
           return `
         <div class="topic-row">
-          <div class="topic-name">${cs.name}</div>
+          <div class="topic-name">${cs.name}<\/div>
           <div class="topic-bar-wrap">
-            <div class="topic-bar-fill" style="width:${catPct}%;background:${color}"></div>
-          </div>
-          <div class="topic-pct" style="color:${color}">${catPct}%</div>
-          <div class="topic-count">${cs.correct}/${cs.total}</div>
-        </div>`;
+            <div class="topic-bar-fill" style="width:${catPct}%;background:${color}"><\/div>
+          <\/div>
+          <div class="topic-pct" style="color:${color}">${catPct}%<\/div>
+          <div class="topic-count">${cs.correct}/${cs.total}<\/div>
+        <\/div>`;
         }).join('');
       } else {
-        topicList.innerHTML = '<p style="font-size:0.8rem;color:var(--text-muted);font-style:italic;">No category data available.</p>';
+        topicList.innerHTML = '<p style="font-size:0.8rem;color:var(--text-muted);font-style:italic;">No category data available.<\/p>';
       }
 
       // --- 7. WEAK AREAS ---
@@ -3240,9 +3240,9 @@
         weakSection.style.display = 'block';
         weakList2.innerHTML = weakCats.map(([, cs]) => `
       <div class="weak-area-item">
-        <div class="weak-dot"></div>
-        <span><strong>${cs.name}</strong> — ${Math.round((cs.correct / cs.total) * 100)}% (${cs.correct}/${cs.total} correct). Review this topic.</span>
-      </div>`).join('');
+        <div class="weak-dot"><\/div>
+        <span><strong>${cs.name}<\/strong> — ${Math.round((cs.correct / cs.total) * 100)}% (${cs.correct}/${cs.total} correct). Review this topic.<\/span>
+      <\/div>`).join('');
       } else {
         weakSection.style.display = 'none';
       }
@@ -3341,7 +3341,7 @@
         let cls = 'blue';
         if (catPct < 40) cls = 'red';
         else if (catPct < 65) cls = 'yellow';
-        return `<span class="res-focus-tag ${cls}">${cs.name}</span>`;
+        return `<span class="res-focus-tag ${cls}">${cs.name}<\/span>`;
       }).join('');
     }
 
@@ -3386,7 +3386,7 @@
       // ── TOP 5 FOCUS AREAS ──
       const weakest = enriched.filter(l => l.pct < 80).sort((a, b) => a.pct - b.pct).slice(0, 5);
       if (weakest.length > 0) {
-        let fHtml = `<div class="lo-focus-card"><div class="lo-focus-title"><span>&#9888;</span> Priority Review Areas</div>`;
+        let fHtml = `<div class="lo-focus-card"><div class="lo-focus-title"><span>&#9888;<\/span> Priority Review Areas<\/div>`;
         weakest.forEach((lo, i) => {
           const c = lo.pct < 40 ? 'var(--danger)' : lo.pct < 65 ? 'var(--warning)' : 'var(--ace-blue,#58a6ff)';
           const trendIcon = lo.trend === 'up' ? '&#8593;' : lo.trend === 'down' ? '&#8595;' : lo.trend === 'flat' ? '=' : '--';
@@ -3395,22 +3395,22 @@
           const dispText = lo.text.length > 120 ? lo.text.substring(0, 117) + '...' : lo.text;
           fHtml += `
         <div class="lo-focus-item">
-          <div class="lo-focus-rank">${i + 1}</div>
+          <div class="lo-focus-rank">${i + 1}<\/div>
           <div class="lo-focus-body">
-            <div class="lo-focus-obj">${dispText}</div>
+            <div class="lo-focus-obj">${dispText}<\/div>
             <div class="lo-focus-meta">
-              <span class="lo-focus-pct" style="color:${c}">${lo.pct}%</span>
-              <span class="lo-trend ${trendClass}">${trendIcon}</span>
-              <div class="lo-focus-bar"><div class="lo-focus-bar-fill" style="width:${lo.pct}%;background:${c}"></div></div>
-              <span class="lo-focus-cat">${lo.catName}</span>
-            </div>
-          </div>
-        </div>`;
+              <span class="lo-focus-pct" style="color:${c}">${lo.pct}%<\/span>
+              <span class="lo-trend ${trendClass}">${trendIcon}<\/span>
+              <div class="lo-focus-bar"><div class="lo-focus-bar-fill" style="width:${lo.pct}%;background:${c}"><\/div><\/div>
+              <span class="lo-focus-cat">${lo.catName}<\/span>
+            <\/div>
+          <\/div>
+        <\/div>`;
         });
-        fHtml += '</div>';
+        fHtml += '<\/div>';
         focusEl.innerHTML = fHtml;
       } else {
-        focusEl.innerHTML = `<div class="lo-focus-card" style="border-color:rgba(63,185,80,0.25);background:linear-gradient(135deg,rgba(63,185,80,0.06) 0%,rgba(63,185,80,0.02) 100%)"><div class="lo-focus-title" style="color:var(--success)"><span>&#10003;</span> All objectives at or above 80% — great work!</div></div>`;
+        focusEl.innerHTML = `<div class="lo-focus-card" style="border-color:rgba(63,185,80,0.25);background:linear-gradient(135deg,rgba(63,185,80,0.06) 0%,rgba(63,185,80,0.02) 100%)"><div class="lo-focus-title" style="color:var(--success)"><span>&#10003;<\/span> All objectives at or above 80% — great work!<\/div><\/div>`;
       }
 
       // ── COLLAPSIBLE CATEGORY CARDS ──
@@ -3430,35 +3430,35 @@
 
         cHtml += `<div class="lo-cat-card" id="${uid}">
       <div class="lo-cat-summary" onclick="document.getElementById('${uid}').classList.toggle('open')">
-        <span class="lo-cat-chevron">&#9654;</span>
-        <div class="lo-cat-ring"><canvas width="72" height="72" data-pct="${avgPct}" data-color="${ringColor}"></canvas><div class="lo-cat-ring-pct" style="color:${ringColor}">${avgPct}%</div></div>
+        <span class="lo-cat-chevron">&#9654;<\/span>
+        <div class="lo-cat-ring"><canvas width="72" height="72" data-pct="${avgPct}" data-color="${ringColor}"><\/canvas><div class="lo-cat-ring-pct" style="color:${ringColor}">${avgPct}%<\/div><\/div>
         <div class="lo-cat-info">
-          <div class="lo-cat-name">${group.name}</div>
-          <div class="lo-cat-subtitle">${catTotal} objective${catTotal !== 1 ? 's' : ''} assessed</div>
-        </div>
-        <div class="lo-cat-mastered">${mastered}/${catTotal}</div>
-      </div>
+          <div class="lo-cat-name">${group.name}<\/div>
+          <div class="lo-cat-subtitle">${catTotal} objective${catTotal !== 1 ? 's' : ''} assessed<\/div>
+        <\/div>
+        <div class="lo-cat-mastered">${mastered}/${catTotal}<\/div>
+      <\/div>
       <div class="lo-cat-detail">`;
 
         group.items.sort((a, b) => a.pct - b.pct).forEach(lo => {
           const c = lo.pct >= 80 ? 'var(--success)' : lo.pct >= 50 ? 'var(--warning)' : 'var(--danger)';
-          const icon = lo.pct >= 80 ? '<span class="lo-item-icon" style="color:var(--success)">&#10003;</span>' : '<span class="lo-item-icon" style="color:var(--danger)">&#10007;</span>';
+          const icon = lo.pct >= 80 ? '<span class="lo-item-icon" style="color:var(--success)">&#10003;<\/span>' : '<span class="lo-item-icon" style="color:var(--danger)">&#10007;<\/span>';
           const trendIcon = lo.trend === 'up' ? '&#8593;' : lo.trend === 'down' ? '&#8595;' : lo.trend === 'flat' ? '=' : '--';
           cHtml += `
         <div class="lo-item">
           ${icon}
           <div class="lo-item-body">
-            <div class="lo-item-text">${lo.text}</div>
+            <div class="lo-item-text">${lo.text}<\/div>
             <div class="lo-item-row">
-              <div class="lo-bar-wrap"><div class="lo-bar-fill" style="width:${lo.pct}%;background:${c}"></div></div>
-              <div class="lo-pct" style="color:${c}">${lo.pct}%</div>
-              <span class="lo-trend ${lo.trend}">${trendIcon}</span>
-            </div>
-          </div>
-        </div>`;
+              <div class="lo-bar-wrap"><div class="lo-bar-fill" style="width:${lo.pct}%;background:${c}"><\/div><\/div>
+              <div class="lo-pct" style="color:${c}">${lo.pct}%<\/div>
+              <span class="lo-trend ${lo.trend}">${trendIcon}<\/span>
+            <\/div>
+          <\/div>
+        <\/div>`;
         });
 
-        cHtml += '</div></div>';
+        cHtml += '<\/div><\/div>';
       });
 
       cardsEl.innerHTML = cHtml;
@@ -3664,21 +3664,21 @@
       const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
       if (log.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">No answers recorded.</p>';
+        container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">No answers recorded.<\/p>';
       } else {
         container.innerHTML = log.map((entry, idx) => {
           const correctText = (entry.options[entry.correct] || '').replace(/^[A-D]\.\s*/, '');
           const selectedText = (entry.options[entry.selected] || '').replace(/^[A-D]\.\s*/, '');
           return `
         <div class="review-item ${entry.isCorrect ? 'ri-correct' : 'ri-wrong'}">
-          <div class="review-q-num">Question ${idx + 1} ${entry.isCorrect ? '— Correct' : '— Wrong'}</div>
-          <div class="review-q-text">${entry.question}</div>
+          <div class="review-q-num">Question ${idx + 1} ${entry.isCorrect ? '— Correct' : '— Wrong'}<\/div>
+          <div class="review-q-text">${entry.question}<\/div>
           <div class="review-answer-row">
-            <span class="correct-ans">Correct: ${LETTERS[entry.correct]}. ${correctText}</span>
-            ${!entry.isCorrect ? `<br><span class="your-ans">Your answer: ${LETTERS[entry.selected]}. ${selectedText}</span>` : ''}
-          </div>
-          ${entry.lo ? `<div class="review-lo">LO: ${entry.lo}</div>` : ''}
-        </div>`;
+            <span class="correct-ans">Correct: ${LETTERS[entry.correct]}. ${correctText}<\/span>
+            ${!entry.isCorrect ? `<br><span class="your-ans">Your answer: ${LETTERS[entry.selected]}. ${selectedText}<\/span>` : ''}
+          <\/div>
+          ${entry.lo ? `<div class="review-lo">LO: ${entry.lo}<\/div>` : ''}
+        <\/div>`;
         }).join('');
       }
 
@@ -3739,17 +3739,17 @@
     function updateWeakList() {
       const el = document.getElementById('weakList');
       if (state.weakList.length === 0) {
-        el.innerHTML = '<p class="weak-empty">Miss a question and it shows up here.</p>';
+        el.innerHTML = '<p class="weak-empty">Miss a question and it shows up here.<\/p>';
       } else {
         el.innerHTML = state.weakList.map(q => {
           const correctText = q.options[q.correct] || '';
           const clean = correctText.replace(/^[A-D]\.\s*/, '');
           return `
         <div class="weak-item">
-          <div class="weak-item-q">${q.question}</div>
-          <div class="weak-item-a">✓ ${clean}</div>
-          <div class="weak-item-tags">${(q.tags || []).map(t => `<span class="weak-item-tag">${t}</span>`).join('')}</div>
-        </div>`;
+          <div class="weak-item-q">${q.question}<\/div>
+          <div class="weak-item-a">✓ ${clean}<\/div>
+          <div class="weak-item-tags">${(q.tags || []).map(t => `<span class="weak-item-tag">${t}<\/span>`).join('')}<\/div>
+        <\/div>`;
         }).join('');
       }
     }
@@ -3942,7 +3942,7 @@
           summaryEl.innerHTML = 'Select one or more categories to begin';
           document.getElementById('categoryBadge').textContent = 'None';
         } else {
-          summaryEl.innerHTML = `<strong>${selectedCatIds.length}</strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} · <strong>${totalQ}</strong> questions`;
+          summaryEl.innerHTML = `<strong>${selectedCatIds.length}<\/strong> ${selectedCatIds.length === 1 ? 'category' : 'categories'} · <strong>${totalQ}<\/strong> questions`;
           document.getElementById('categoryBadge').textContent = `${selectedCatIds.length} categories`;
         }
         document.getElementById('btnStart').disabled = selectedCatIds.length === 0;

@@ -2250,142 +2250,192 @@
       background: var(--tile);
     }
 
-    /* ═══ MODULE SELECTOR LANDING PAGE ═══ */
-    .module-selector {
+    /* ═══ LOADING INTRO SCREEN ═══ */
+    .loading-intro {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: linear-gradient(135deg, #080C1A 0%, #0f1629 50%, #1a1040 100%);
+      background: linear-gradient(180deg, #080C1A 0%, #0f1629 40%, #1a1040 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 40px 20px;
-      overflow-y: auto;
+      justify-content: center;
       font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    .module-selector.hidden {
-      display: none;
-    }
-
-    .ms-header {
-      text-align: center;
-      margin-bottom: 36px;
-    }
-
-    .ms-header h1 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #D4A853 0%, #f0d78c 50%, #D4A853 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 0 0 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .ms-header p {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    .ms-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-      width: 100%;
-      max-width: 960px;
-    }
-
-    .ms-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(212, 168, 83, 0.15);
-      border-radius: 12px;
-      padding: 20px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
       overflow: hidden;
     }
 
-    .ms-card::before {
-      content: '';
+    .loading-intro.hidden {
+      display: none;
+    }
+
+    /* Radial spotlight behind Ace */
+    .li-spotlight {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--card-accent, #D4A853);
-      opacity: 0;
-      transition: opacity 0.25s ease;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at center,
+          rgba(212, 168, 83, 0.22) 0%, rgba(212, 168, 83, 0.08) 35%, transparent 70%);
+      border-radius: 50%;
+      animation: spotlight-breathe 3s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    .ms-card:hover {
+    /* Title */
+    .li-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #D4A853 0%, #f0d78c 50%, #D4A853 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+      letter-spacing: -0.5px;
+      animation: title-glow 2s ease-in-out infinite;
+    }
+
+    .li-subtitle {
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Avatar */
+    .li-ace {
+      width: 200px;
+      height: 200px;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 0 30px rgba(212, 168, 83, 0.5));
+      animation: ace-float 3s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 24px;
+    }
+
+    /* Loading bar */
+    .li-progress-track {
+      width: 280px;
+      height: 6px;
       background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(212, 168, 83, 0.4);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 2;
     }
 
-    .ms-card:hover::before {
-      opacity: 1;
+    .li-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #D4A853, #f0d78c);
+      border-radius: 99px;
+      transition: width 0.4s ease;
     }
 
-    .ms-card-number {
-      font-size: 0.7rem;
-      font-weight: 700;
+    /* Status text */
+    .li-status {
+      font-size: 0.8rem;
+      color: rgba(212, 168, 83, 0.7);
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: rgba(212, 168, 83, 0.6);
-      margin-bottom: 6px;
+      font-weight: 600;
+      margin-bottom: 32px;
+      min-height: 1.2em;
+      position: relative;
+      z-index: 2;
     }
 
-    .ms-card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-      line-height: 1.3;
+    /* Career stats */
+    .li-stats {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      gap: 28px;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
     }
 
-    .ms-card-stats {
-      display: flex;
-      gap: 12px;
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
+    .li-stat {
+      text-align: center;
     }
 
-    .ms-card-stats span {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .ms-card-categories {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .ms-cat-tag {
+    .li-stat-label {
       font-size: 0.65rem;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(212, 168, 83, 0.1);
-      color: rgba(212, 168, 83, 0.7);
-      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 4px;
+    }
+
+    .li-stat-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .li-stat-divider {
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Enter button */
+    .li-enter-btn {
+      padding: 16px 44px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #D4A853, #c49440);
+      border: none;
+      color: #0a0a0a;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 10px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.2s ease;
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      box-shadow: 0 4px 20px rgba(212, 168, 83, 0.3);
+    }
+
+    .li-enter-btn.ready {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: btn-pulse 2s ease-in-out infinite;
+    }
+
+    .li-enter-btn:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 8px 32px rgba(212, 168, 83, 0.5);
+      background: linear-gradient(135deg, #e8c87a, #D4A853);
     }
 
     @media (max-width: 640px) {
-      .ms-grid {
-        grid-template-columns: 1fr;
+      .li-title {
+        font-size: 1.8rem;
       }
 
-      .ms-header h1 {
-        font-size: 1.6rem;
+      .li-ace {
+        width: 140px;
+        height: 140px;
+      }
+
+      .li-stats {
+        gap: 16px;
+        padding: 10px 18px;
+      }
+
+      .li-enter-btn {
+        padding: 14px 32px;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -2393,15 +2443,18 @@
 
 <body>
 
-  <!-- ═══ MODULE SELECTOR ═══ -->
-  <div class="module-selector hidden" id="moduleSelector">
-    <div class="ms-header">
-      <h1>⚡ Battle Ace</h1>
-      <p>Choose a module to begin your Jeopardy challenge</p>
+  <!-- ═══ LOADING INTRO ═══ -->
+  <div class="loading-intro hidden" id="loadingIntro">
+    <div class="li-spotlight"></div>
+    <img class="li-ace stage-ace-avatar" src="ace-sprites/ace-192-idle.png" alt="Ace">
+    <div class="li-title">⚡ Battle Ace</div>
+    <div class="li-subtitle">All-Module Arena Challenge</div>
+    <div class="li-progress-track">
+      <div class="li-progress-fill" id="liProgressFill"></div>
     </div>
-    <div class="ms-grid" id="moduleGrid">
-      <!-- populated by JS -->
-    </div>
+    <div class="li-status" id="liStatus">Initializing...</div>
+    <div class="li-stats" id="liStats"></div>
+    <button class="li-enter-btn" id="liEnterBtn">⚡ Enter the Arena</button>
   </div>
 
   <!-- ═══ CINEMATIC INTRO ═══ -->
@@ -2666,46 +2719,43 @@
     ];
 
     // ================================================================
-    // MODULE SELECTOR — show picker when no ?data= param provided
+    // LOADING INTRO — shown when no ?data= param (all-module arena)
     // ================================================================
-    function showModuleSelector() {
-      const selector = document.getElementById('moduleSelector');
-      const grid = document.getElementById('moduleGrid');
+    function showLoadingIntro() {
+      const intro = document.getElementById('loadingIntro');
       const gameWrap = document.querySelector('.wrap');
       if (gameWrap) gameWrap.style.display = 'none';
 
-      grid.innerHTML = MODULE_REGISTRY.map(mod => `
-        <div class="ms-card" style="--card-accent:${mod.color}" onclick="selectModule('${mod.id}')">
-          <div class="ms-card-number">Module ${mod.num} · ${mod.abbr}</div>
-          <div class="ms-card-title">${mod.title}</div>
-          <div class="ms-card-stats">
-            <span>🎯 6 categories</span>
-            <span>⚡ Randomized each game</span>
-          </div>
-          <div class="ms-card-categories">
-            ${mod.categories.map(c => `<span class="ms-cat-tag">${c}</span>`).join('')}
-          </div>
+      // Inject career stats
+      const stats = loadSummaryStats();
+      const wins = stats.jeopardy?.wins || 0;
+      const money = stats.jeopardy?.totalMoneyEarned || 0;
+      const totalPlayed = stats.jeopardy?.gamesPlayed || 0;
+      const missed = stats.jeopardy?.missedTiles || 0;
+
+      document.getElementById('liStats').innerHTML = `
+        <div class="li-stat">
+          <div class="li-stat-label">Career Earnings</div>
+          <div class="li-stat-value" style="color:#10b981;">$${money.toLocaleString()}</div>
         </div>
-      `).join('');
+        <div class="li-stat-divider"></div>
+        <div class="li-stat">
+          <div class="li-stat-label">Tiles Missed</div>
+          <div class="li-stat-value" style="color:#ef4444;">${missed}</div>
+        </div>
+        <div class="li-stat-divider"></div>
+        <div class="li-stat">
+          <div class="li-stat-label">Ace Defeats</div>
+          <div class="li-stat-value" style="color:#D4A853;">${wins} <span style="font-size:0.85rem;color:#71717a;">/ ${totalPlayed}</span></div>
+        </div>
+      `;
 
-      selector.classList.remove('hidden');
+      intro.classList.remove('hidden');
     }
 
-    function selectModule(catId) {
-      const mod = MODULE_REGISTRY.find(m => m.id === catId);
-      if (!mod) return;
-      // Reload the page with the correct params
-      const params = new URLSearchParams();
-      params.set('data', mod.path);
-      params.set('cat', mod.id);
-      params.set('title', `${mod.abbr}: ${mod.title}`);
-      params.set('color', mod.color);
-      window.location.search = params.toString();
-    }
-
-    // Check if we need to show the module selector
-    if (!_jParams.get('data') && !_jParams.get('cat')) {
-      showModuleSelector();
+    function updateLoadingStatus(text, progress) {
+      document.getElementById('liStatus').textContent = text;
+      document.getElementById('liProgressFill').style.width = progress + '%';
     }
 
     function showCinematicIntro(callback) {
@@ -2752,10 +2802,196 @@
 
     // Load questions and dialogue from JSON files
     (async function loadJeopardyData() {
-      // If no data param, don't try to load — the module selector is shown
+      // ════════════════════════════════════════════════════════════════
+      // ALL-MODULE ARENA: when no ?data= param, load ALL modules
+      // ════════════════════════════════════════════════════════════════
       if (!_jParams.get('data') && !_jParams.get('cat')) {
-        showModuleSelector();
+        showLoadingIntro();
+        updateLoadingStatus('Loading question banks...', 5);
+
+        try {
+          // Load dialogue first
+          let dialogueLoaded = false;
+          try {
+            const dialogueResp = await fetch('ace-sprites/ACE-DIALOGUES.json');
+            if (dialogueResp.ok) {
+              const dialogueData = await dialogueResp.json();
+              const jd = dialogueData.jeopardy_specific;
+              ACE_DIALOGUE = {
+                introLines: dialogueData.welcome.jeopardy,
+                playerCorrect: jd.player_correct,
+                playerWrong: jd.player_wrong,
+                aceWins: jd.ace_wins_buzz,
+                playerBeatAce: jd.player_beat_ace,
+                timeout: jd.timeout,
+                gameWinPlayer: jd.player_wins,
+                gameWinAce: jd.player_loses,
+                gameTie: jd.game_tie
+              };
+              dialogueLoaded = true;
+            }
+          } catch (e) { /* fallback below */ }
+          if (!dialogueLoaded) ACE_DIALOGUE = getDefaultDialogue();
+
+          updateLoadingStatus('Loading all 8 modules...', 15);
+
+          // Fetch all module JSON files in parallel
+          const results = await Promise.allSettled(
+            MODULE_REGISTRY.map(mod => fetch(mod.path).then(r => {
+              if (!r.ok) throw new Error(`HTTP ${r.status}`);
+              return r.json().then(data => ({ mod, data }));
+            }))
+          );
+
+          // Gather all categories from successful loads
+          const allCats = []; // { catName, pool, moduleId, moduleTitle }
+          const allFinals = [];
+          let loadedCount = 0;
+
+          results.forEach((result, i) => {
+            if (result.status === 'fulfilled') {
+              const { mod, data } = result.value;
+              loadedCount++;
+              const catNames = Object.keys(data.categories || {});
+              catNames.forEach(catName => {
+                allCats.push({
+                  catName,
+                  pool: data.categories[catName],
+                  moduleId: mod.id,
+                  moduleTitle: mod.title
+                });
+              });
+              if (data.final) {
+                const finals = Array.isArray(data.final) ? data.final : [data.final];
+                allFinals.push(...finals);
+              }
+              updateLoadingStatus(`Loaded ${loadedCount} of ${MODULE_REGISTRY.length} modules...`, 15 + (loadedCount / MODULE_REGISTRY.length) * 60);
+            } else {
+              console.warn(`[Battle Ace] Could not load module ${MODULE_REGISTRY[i].abbr}:`, result.reason);
+            }
+          });
+
+          if (allCats.length < 6) {
+            throw new Error(`Not enough categories loaded (found ${allCats.length}, need at least 6).`);
+          }
+
+          updateLoadingStatus('Randomizing your arena...', 85);
+
+          // Shuffle and pick 6 categories, max 2 from any single module
+          const shuffled = allCats.sort(() => Math.random() - 0.5);
+          const picked = [];
+          const modCount = {};
+
+          for (const cat of shuffled) {
+            if (picked.length >= 6) break;
+            const mc = modCount[cat.moduleId] || 0;
+            if (mc < 2) {
+              picked.push(cat);
+              modCount[cat.moduleId] = mc + 1;
+            }
+          }
+
+          // If we still don't have 6 (unlikely), fill from remaining
+          if (picked.length < 6) {
+            for (const cat of shuffled) {
+              if (picked.length >= 6) break;
+              if (!picked.includes(cat)) picked.push(cat);
+            }
+          }
+
+          // Build the QUESTION_BANK
+          const round1Values = [100, 200, 300, 400, 500];
+          const round2Values = [200, 400, 600, 800, 1000];
+
+          for (let i = 0; i < 3; i++) {
+            QUESTION_BANK[picked[i].catName] = pickQuestionsGlobal(picked[i].pool, round1Values);
+          }
+          for (let i = 3; i < 6; i++) {
+            QUESTION_BANK[picked[i].catName] = pickQuestionsGlobal(picked[i].pool, round2Values);
+          }
+
+          // Final Jeopardy
+          const selectedFinal = allFinals.length > 0
+            ? allFinals[Math.floor(Math.random() * allFinals.length)]
+            : { category: 'Final Challenge', clue: 'No final question available', choices: ['A', 'B', 'C', 'D'], correctIndex: 0, explanation: '' };
+          QUESTION_BANK['FINAL'] = {
+            cat: selectedFinal.category || 'Final Challenge',
+            question: selectedFinal.clue || selectedFinal.question || '',
+            answers: selectedFinal.choices || ['A', 'B', 'C', 'D'],
+            correctIndex: selectedFinal.correctIndex || 0,
+            explanation: selectedFinal.explanation || '',
+            reference: selectedFinal.source || 'CAET Training'
+          };
+
+          updateLoadingStatus('Arena ready — ' + loadedCount + ' modules loaded', 100);
+
+          const totalCats = allCats.length;
+          console.log(`[Battle Ace] All-module arena: ${loadedCount} modules, ${totalCats} total categories, 6 selected`);
+          picked.forEach((c, i) => console.log(`  ${i < 3 ? 'R1' : 'R2'} "${c.catName}" (${c.moduleTitle})`));
+
+          // Show enter button
+          const enterBtn = document.getElementById('liEnterBtn');
+          setTimeout(() => enterBtn.classList.add('ready'), 400);
+
+          enterBtn.onclick = () => {
+            const intro = document.getElementById('loadingIntro');
+            intro.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            intro.style.transform = 'scale(1.05)';
+            intro.style.opacity = '0';
+            buzzSound();
+            setTimeout(() => {
+              intro.style.display = 'none';
+              init();
+            }, 500);
+          };
+
+        } catch (error) {
+          console.error('[Battle Ace] Error loading all modules:', error);
+          document.getElementById('liStatus').textContent = 'Error: ' + error.message;
+          document.getElementById('liStatus').style.color = '#ef4444';
+        }
         return;
+      }
+
+      // Helper shared between all-module and single-module loaders
+      function pickQuestionsGlobal(pool, values) {
+        let picked = [];
+        let available = [...pool];
+        const getNumDiff = (q) => {
+          if (typeof q.difficulty === 'number') return q.difficulty;
+          if (q.difficulty === 'easy') return 100;
+          if (q.difficulty === 'hard') return 500;
+          return 300;
+        };
+        const tiers = [100, 200, 300, 400, 500];
+        tiers.forEach(targetDiff => {
+          const tierQs = available.filter(q => getNumDiff(q) === targetDiff);
+          if (tierQs.length > 0) {
+            const randIdx = Math.floor(Math.random() * tierQs.length);
+            const selected = tierQs[randIdx];
+            picked.push(selected);
+            available.splice(available.indexOf(selected), 1);
+          } else {
+            if (available.length === 0) available = [...pool];
+            const randIdx = Math.floor(Math.random() * available.length);
+            const selected = available[randIdx];
+            picked.push(selected);
+            available.splice(randIdx, 1);
+          }
+        });
+        picked.sort((a, b) => getNumDiff(a) - getNumDiff(b));
+        return picked.map((q, i) => ({
+          id: q.id || `q-${i + 1}`,
+          difficulty: i + 1,
+          pointValue: values[i],
+          timeLimit: 30 + (i * 5),
+          question: q.clue || q.question || 'Question not available',
+          answers: q.choices || ['A', 'B', 'C', 'D'],
+          correctIndex: q.correctIndex != null ? q.correctIndex : 0,
+          explanation: q.explanation || '',
+          reference: q.source || 'CAET Training',
+          learningObjective: q.learningObjective || null
+        }));
       }
 
       function showModuleSelector() {
