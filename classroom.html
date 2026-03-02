@@ -169,58 +169,9 @@
             max-width: 700px;
         }
 
-        /* AI STUDY BOSS CALLOUT */
-        .ai-callout-card {
-            position: relative;
-            margin-top: 28px;
-            padding: 20px 24px;
-            background: rgba(45, 189, 137, 0.04);
-            border: 1px solid rgba(45, 189, 137, 0.15);
-            border-left: 3px solid #2DBD89;
-            border-radius: 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            box-shadow: 0 0 20px rgba(45, 189, 137, 0.08) inset;
-        }
-
-        .ai-callout-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(45, 189, 137, 0.1);
-            border: 1px solid rgba(45, 189, 137, 0.25);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .ai-callout-icon svg {
-            width: 22px;
-            height: 22px;
-            color: #2DBD89;
-            filter: drop-shadow(0 0 8px rgba(45, 189, 137, 0.4));
-        }
-
-        .ai-callout-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #2DBD89;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 4px;
-        }
-
-        .ai-callout-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* "UP NEXT" FEATURED CARD */
+        /* ── "UP NEXT" FEATURED CARD ────────────────────── */
         .up-next-section {
-            margin-bottom: 48px;
+            margin-bottom: 40px;
             opacity: 0;
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
         }
@@ -247,7 +198,7 @@
             background: rgba(20, 24, 38, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 32px 36px;
+            padding: 28px 32px;
             text-decoration: none;
             color: inherit;
             display: flex;
@@ -294,9 +245,9 @@
         }
 
         .featured-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
             background: rgba(212, 168, 83, 0.1);
             border: 1px solid rgba(212, 168, 83, 0.3);
             display: flex;
@@ -308,15 +259,14 @@
         }
 
         .featured-icon svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             color: var(--gold);
             filter: drop-shadow(0 0 10px rgba(212, 168, 83, 0.4));
         }
 
         .featured-card:hover .featured-icon {
             background: rgba(212, 168, 83, 0.2);
-            border-color: rgba(212, 168, 83, 0.5);
             box-shadow: 0 0 20px rgba(212, 168, 83, 0.2) inset;
         }
 
@@ -331,65 +281,27 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--gold);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .featured-name {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             color: white;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .featured-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             line-height: 1.5;
         }
 
-        .featured-badge {
+        .featured-badge-wrap {
             position: absolute;
-            top: 16px;
-            right: 20px;
+            top: 14px;
+            right: 16px;
             z-index: 10;
-        }
-
-        .featured-badge .cat-pill {
-            background: rgba(75, 139, 245, 0.15);
-            border: 1px solid rgba(75, 139, 245, 0.3);
-            color: #4B8BF5;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        /* CATEGORY SECTIONS */
-        .categories-container {
-            opacity: 0;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-        }
-
-        .cat-section {
-            margin-bottom: 40px;
-        }
-
-        .cat-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .cat-header h2 {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            margin: 0;
         }
 
         .cat-pill {
@@ -402,43 +314,34 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: rgba(212, 168, 83, 0.1);
-            color: var(--gold);
-            border: 1px solid rgba(212, 168, 83, 0.2);
+            background: rgba(75, 139, 245, 0.15);
+            border: 1px solid rgba(75, 139, 245, 0.3);
+            color: #4B8BF5;
         }
 
-        .cat-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* MODULE TRACK CARDS */
-        .module-grid {
+        /* ── CATEGORY ACCORDION CARDS ────────────────────── */
+        .cat-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
-        .module-card {
+        .cat-card {
             position: relative;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 18px 24px;
-            background: rgba(20, 24, 38, 0.4);
+            background: rgba(20, 24, 38, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            text-decoration: none;
-            color: inherit;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.25s ease;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transform-style: preserve-3d;
+            box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.3);
         }
 
-        .module-card::before {
+        .cat-card::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -448,14 +351,73 @@
             z-index: 2;
         }
 
-        .module-card:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-            background: rgba(20, 24, 38, 0.6);
-            transform: translateX(4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        .cat-card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .module-icon {
+        .cat-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.4);
+        }
+
+        .cat-card:hover::after {
+            opacity: 1;
+        }
+
+        .cat-card.open {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Category-specific glow colors */
+        .cat-card[data-accent="gold"]::after {
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.3), transparent, rgba(212, 168, 83, 0.1));
+            box-shadow: 0 0 30px rgba(212, 168, 83, 0.15);
+        }
+
+        .cat-card[data-accent="blue"]::after {
+            background: linear-gradient(135deg, rgba(75, 139, 245, 0.3), transparent, rgba(75, 139, 245, 0.1));
+            box-shadow: 0 0 30px rgba(75, 139, 245, 0.15);
+        }
+
+        .cat-card[data-accent="emerald"]::after {
+            background: linear-gradient(135deg, rgba(45, 189, 137, 0.3), transparent, rgba(45, 189, 137, 0.1));
+            box-shadow: 0 0 30px rgba(45, 189, 137, 0.15);
+        }
+
+        .cat-card[data-accent="cyan"]::after {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), transparent, rgba(34, 211, 238, 0.1));
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
+        }
+
+        .cat-card[data-accent="purple"]::after {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), transparent, rgba(168, 85, 247, 0.1));
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Card Header (always visible) */
+        .cat-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 28px;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+
+        .cat-card-header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .cat-icon {
             width: 44px;
             height: 44px;
             border-radius: 12px;
@@ -463,46 +425,197 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .cat-icon[data-color="gold"] {
+            background: rgba(212, 168, 83, 0.12);
+            border: 1px solid rgba(212, 168, 83, 0.25);
+            color: var(--gold);
+        }
+
+        .cat-icon[data-color="blue"] {
+            background: rgba(75, 139, 245, 0.12);
+            border: 1px solid rgba(75, 139, 245, 0.25);
+            color: #4B8BF5;
+        }
+
+        .cat-icon[data-color="emerald"] {
+            background: rgba(45, 189, 137, 0.12);
+            border: 1px solid rgba(45, 189, 137, 0.25);
+            color: #2DBD89;
+        }
+
+        .cat-icon[data-color="cyan"] {
+            background: rgba(34, 211, 238, 0.12);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            color: #22d3ee;
+        }
+
+        .cat-icon[data-color="purple"] {
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            color: #A855F7;
+        }
+
+        .cat-card:hover .cat-icon {
+            transform: scale(1.08);
+        }
+
+        .cat-card.open .cat-icon {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .cat-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cat-card-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .cat-card-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .cat-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .cat-card-chevron {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--text-muted);
+        }
+
+        .cat-card-chevron svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .cat-card.open .cat-card-chevron {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .cat-card.open .cat-card-chevron svg {
+            transform: rotate(180deg);
+        }
+
+        .cat-card:hover .cat-card-chevron {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Expandable Content */
+        .cat-card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cat-card.open .cat-card-body {
+            max-height: 600px;
+        }
+
+        .cat-card-body-inner {
+            padding: 0 28px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 16px;
+        }
+
+        /* Module Links inside expanded cards */
+        .mod-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            position: relative;
             z-index: 10;
         }
 
-        .module-icon svg {
-            width: 22px;
-            height: 22px;
+        .mod-link:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
         }
 
-        .module-card.rise .module-icon {
+        .mod-link-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mod-link-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .mod-link.rise .mod-link-icon {
             background: rgba(212, 168, 83, 0.1);
             border: 1px solid rgba(212, 168, 83, 0.2);
             color: var(--gold);
         }
 
-        .module-card.notebook .module-icon {
+        .mod-link.notebook .mod-link-icon {
             background: rgba(45, 189, 137, 0.1);
             border: 1px solid rgba(45, 189, 137, 0.2);
             color: #2DBD89;
         }
 
-        .module-card.rise:hover .module-icon {
+        .mod-link:hover.rise .mod-link-icon {
             background: rgba(212, 168, 83, 0.2);
-            border-color: rgba(212, 168, 83, 0.4);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.2) inset;
+            box-shadow: 0 0 12px rgba(212, 168, 83, 0.2) inset;
         }
 
-        .module-card.notebook:hover .module-icon {
+        .mod-link:hover.notebook .mod-link-icon {
             background: rgba(45, 189, 137, 0.2);
-            border-color: rgba(45, 189, 137, 0.4);
-            box-shadow: 0 0 15px rgba(45, 189, 137, 0.2) inset;
+            box-shadow: 0 0 12px rgba(45, 189, 137, 0.2) inset;
         }
 
-        .module-info {
+        .mod-link-info {
             flex: 1;
             min-width: 0;
-            z-index: 10;
         }
 
-        .module-name {
-            font-size: 15px;
+        .mod-link-name {
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
             white-space: nowrap;
@@ -510,34 +623,67 @@
             text-overflow: ellipsis;
         }
 
-        .module-meta {
-            font-size: 12px;
+        .mod-link-meta {
+            font-size: 11px;
             color: var(--text-muted);
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
-        .module-arrow {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+        .mod-link-arrow {
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
             color: var(--text-muted);
             opacity: 0;
             transition: all 0.2s;
-            z-index: 10;
+            flex-shrink: 0;
         }
 
-        .module-arrow svg {
-            width: 16px;
-            height: 16px;
+        .mod-link-arrow svg {
+            width: 14px;
+            height: 14px;
         }
 
-        .module-card:hover .module-arrow {
+        .mod-link:hover .mod-link-arrow {
             opacity: 1;
             color: var(--gold);
+            transform: translateX(3px);
+        }
+
+        /* AI STUDY BOSS — Compact inline callout */
+        .ai-callout-inline {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 12px;
+            padding: 14px 20px;
+            background: rgba(45, 189, 137, 0.04);
+            border: 1px solid rgba(45, 189, 137, 0.12);
+            border-left: 3px solid #2DBD89;
+            border-radius: 14px;
+            box-shadow: 0 0 12px rgba(45, 189, 137, 0.06) inset;
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .ai-callout-inline svg {
+            width: 20px;
+            height: 20px;
+            color: #2DBD89;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 6px rgba(45, 189, 137, 0.4));
+        }
+
+        .ai-callout-inline span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .ai-callout-inline strong {
+            color: #2DBD89;
         }
 
         /* Responsive */
@@ -546,14 +692,22 @@
                 font-size: 32px;
             }
 
+            .cat-card-header {
+                padding: 16px 20px;
+            }
+
+            .cat-card-body-inner {
+                padding: 0 20px 20px;
+            }
+
+            .cat-card-meta {
+                display: none;
+            }
+
             .featured-card {
                 flex-direction: column;
                 text-align: center;
-                padding: 24px;
-            }
-
-            .featured-icon {
-                margin: 0 auto;
+                padding: 20px;
             }
         }
     </style>
@@ -591,34 +745,26 @@
             </div>
             <h1 class="hero-title">The Classroom</h1>
             <p class="hero-desc">
-                Deep-dive into the official CAET curriculum. Each category contains interactive Rise training
-                modules for structured learning, and AI-powered Study Boss guides that let you chat with an AI tutor
-                pre-loaded with the official course material.
+                Deep-dive into the official CAET curriculum. Each category below contains interactive Rise training
+                modules and AI-powered Study Boss guides pre-loaded with the official course material.
             </p>
 
-            <!-- AI Study Boss callout -->
-            <div class="ai-callout-card">
-                <div class="ai-callout-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z" />
-                        <path d="M6 10H6.01" />
-                        <path d="M18 10H18.01" />
-                        <path d="M10 16H14" />
-                    </svg>
-                </div>
-                <div>
-                    <div class="ai-callout-label">AI Study Boss</div>
-                    <div class="ai-callout-text">Look for the green <strong style="color:#2DBD89;">Study Boss</strong>
-                        cards in each category. These are dedicated AI tutors pre-loaded with official CAET
-                        documentation. Chat with them for instant explanations, practice quizzes, and chapter
-                        summaries.</div>
-                </div>
+            <!-- AI Study Boss micro-callout -->
+            <div class="ai-callout-inline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z" />
+                    <path d="M6 10H6.01" />
+                    <path d="M18 10H18.01" />
+                    <path d="M10 16H14" />
+                </svg>
+                <span>Look for <strong>Study Boss</strong> cards inside each category — AI tutors grounded in official
+                    CAET docs.</span>
             </div>
         </div>
 
-        <!-- UP NEXT SECTION (shown dynamically) -->
+        <!-- UP NEXT (dynamic) -->
         <div class="up-next-section" id="upNextSection" style="display:none;">
             <div class="section-label">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -639,37 +785,30 @@
                     <div class="featured-desc" id="upNextDesc">Based on your recent mock exam, you should review this
                         module before proceeding.</div>
                 </div>
-                <div class="featured-badge">
+                <div class="featured-badge-wrap">
                     <span class="cat-pill" id="upNextBadge">—</span>
                 </div>
             </a>
         </div>
 
-        <!-- CATEGORY SECTIONS -->
-        <div class="categories-container" id="categoryContainer"></div>
+        <!-- CATEGORY ACCORDION CARDS -->
+        <div class="cat-grid" id="catGrid"></div>
     </main>
 
     <script>
         const MODULES = [
             { num: 'MRD', name: 'Aviation Regulations, Forms & Records', path: 'shared/course-viewer.html?path=rise-modules/maintenance-regs/aviation-regulations-maintenance-forms-records-and-publications&title=Aviation Regulations, Forms & Records' },
-
             { num: 'BET', name: 'Direct Current Fundamentals', path: 'shared/course-viewer.html?path=rise-modules/electricity-dc/fundamentals-of-direct-current&title=Direct Current Fundamentals' },
             { num: 'BET', name: 'Alternating Current Fundamentals', path: 'shared/course-viewer.html?path=rise-modules/electricity-ac/fundamentals-of-alternating-current&title=Alternating Current Fundamentals' },
             { num: 'BET', name: 'Solid State Devices', path: 'shared/course-viewer.html?path=rise-modules/electricity-solid/solid-state-devices&title=Solid State Devices' },
             { num: 'BET', name: 'Aircraft Electrical Systems', path: 'shared/course-viewer.html?path=rise-modules/basic-electrical/aircraft-electrical&title=Aircraft Electrical Systems' },
-
             { num: 'CNS', name: 'Dependent Navigation Systems', path: 'shared/course-viewer.html?path=rise-modules/cns-systems/dependent-navigation-systems&title=Dependent Navigation Systems' },
             { num: 'CNS', name: 'Radio Communication Systems', path: 'shared/course-viewer.html?path=rise-modules/cns-systems/radio-communication-systems&title=Radio Communication Systems' },
             { num: 'CNS', name: 'Surveillance Systems', path: 'shared/course-viewer.html?path=rise-modules/cns-systems/surveillance-systems&title=Surveillance Systems' },
-
             { num: 'FI', name: 'Flight Instruments', path: 'shared/course-viewer.html?path=rise-modules/flight-instruments/flight-instruments&title=Flight Instruments' },
-
             { num: 'DDS', name: 'Digital Electronics', path: 'shared/course-viewer.html?path=rise-modules/databus-systems/digital-electronics&title=Digital Electronics' },
-
             { num: 'AWH', name: 'Building a Wire Harness', path: 'shared/course-viewer.html?path=rise-modules/wiring-hardware/building-a-wire-harness&title=Building a Wire Harness' },
-
             { num: 'TTE', name: 'Basic Hand Tools & Hardware', path: 'shared/course-viewer.html?path=rise-modules/tools-test-equipment/basic-hand-tools-and-hardware&title=Basic Hand Tools & Hardware' },
-
             { num: 'SSP', name: 'Safety Essentials in Aviation', path: 'shared/course-viewer.html?path=rise-modules/shop-safety/safety-essentials-in-aviation&title=Safety Essentials in Aviation' }
         ];
 
@@ -691,126 +830,165 @@
         ];
 
         const CATEGORIES = [
-            { id: 'MRD', name: 'Maintenance Regulations & Documentation' },
-            { id: 'BET', name: 'Basic Electricity Technology' },
-            { id: 'CNS', name: 'Communication, Navigation & Surveillance' },
-            { id: 'FI', name: 'Flight Instruments' },
-            { id: 'DDS', name: 'Digital Data Systems' },
-            { id: 'AWH', name: 'Aircraft Wiring & Harness' },
-            { id: 'TTE', name: 'Tools & Test Equipment' },
-            { id: 'SSP', name: 'Shop Safety Practices' }
+            { id: 'MRD', name: 'Maintenance Regulations', sub: 'Regulations, Forms & Documentation', accent: 'gold', color: 'gold' },
+            { id: 'BET', name: 'Basic Electricity Tech', sub: 'DC, AC, Solid State & Aircraft Electrical', accent: 'blue', color: 'blue' },
+            { id: 'CNS', name: 'Comm, Nav & Surveillance', sub: 'Radio Communication, Navigation, Surveillance', accent: 'purple', color: 'purple' },
+            { id: 'FI', name: 'Flight Instruments', sub: 'Pitot-Static and Primary Flight Instruments', accent: 'cyan', color: 'cyan' },
+            { id: 'DDS', name: 'Digital Data Systems', sub: 'Digital Electronics and Data Bus', accent: 'blue', color: 'blue' },
+            { id: 'AWH', name: 'Aircraft Wiring & Harness', sub: 'Wire Harness Fabrication & Installation', accent: 'gold', color: 'gold' },
+            { id: 'TTE', name: 'Tools & Test Equipment', sub: 'Hand Tools, Hardware & Test Procedures', accent: 'emerald', color: 'emerald' },
+            { id: 'SSP', name: 'Shop Safety Practices', sub: 'Safety Essentials in Aviation Maintenance', accent: 'cyan', color: 'cyan' }
         ];
 
         const RISE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
         const NOTEBOOK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/><path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/></svg>';
         const ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
         const EXTERNAL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>';
+        const CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
 
         function buildPage() {
+            const grid = document.getElementById('catGrid');
             let html = '';
 
-            // Comprehensive AI Guide at the top
+            // Comprehensive AI Guide as first card
             const allGuide = NOTEBOOK_LINKS.find(n => n.cat === 'ALL');
             if (allGuide) {
                 html += `
-                <div class="cat-section">
-                    <div class="cat-header">
-                        <h2>Comprehensive Study Guide</h2>
-                        <span class="cat-pill" style="background:rgba(45,189,137,0.1);color:#2DBD89;border-color:rgba(45,189,137,0.2);">AI</span>
+                <a href="${allGuide.url}" target="_blank" class="featured-card" style="margin-bottom:8px;">
+                    <div class="card-bg-gfx" style="background:radial-gradient(circle at right, rgba(45,189,137,0.08) 0%, transparent 60%);"></div>
+                    <div class="featured-icon" style="background:rgba(45,189,137,0.1);border-color:rgba(45,189,137,0.3);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2DBD89" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 10px rgba(45,189,137,0.4));">
+                            <path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/>
+                            <path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/>
+                        </svg>
                     </div>
-                    <div class="module-grid">
-                        <a href="${allGuide.url}" target="_blank" class="module-card notebook">
-                            <div class="module-icon">${NOTEBOOK_SVG}</div>
-                            <div class="module-info">
-                                <div class="module-name">${allGuide.name}</div>
-                                <div class="module-meta">Study Boss &bull; Covers all CAET categories</div>
-                            </div>
-                            <div class="module-arrow">${EXTERNAL_SVG}</div>
-                        </a>
+                    <div class="featured-info">
+                        <div class="featured-recommend" style="color:#2DBD89;">Comprehensive AI Guide</div>
+                        <div class="featured-name">${allGuide.name}</div>
+                        <div class="featured-desc">Covers all 8 CAET categories — Ask questions, get quizzes, explore concepts.</div>
                     </div>
-                </div>`;
+                    <div class="mod-link-arrow" style="opacity:0.5;">
+                        ${EXTERNAL_SVG}
+                    </div>
+                </a>`;
             }
 
+            // Category accordion cards
             CATEGORIES.forEach(cat => {
                 const catModules = MODULES.filter(m => m.num === cat.id);
                 const catNotebooks = NOTEBOOK_LINKS.filter(n => n.cat === cat.id);
-
                 if (catModules.length === 0 && catNotebooks.length === 0) return;
 
-                const moduleCount = catModules.length;
-                const notebookCount = catNotebooks.length;
-                const countLabel = `${moduleCount} Module${moduleCount !== 1 ? 's' : ''}  ${notebookCount} AI Guide${notebookCount !== 1 ? 's' : ''}`;
+                const mc = catModules.length;
+                const nc = catNotebooks.length;
+                const countStr = `${mc} Module${mc !== 1 ? 's' : ''}  ${nc} AI Guide${nc !== 1 ? 's' : ''}`;
 
-                html += `<div class="cat-section">
-                    <div class="cat-header">
-                        <h2>${cat.name}</h2>
-                        <span class="cat-pill">${cat.id}</span>
+                html += `
+                <div class="cat-card" data-accent="${cat.accent}">
+                    <div class="cat-card-header" onclick="toggleCard(this)">
+                        <div class="cat-icon" data-color="${cat.color}">${cat.id}</div>
+                        <div class="cat-card-info">
+                            <div class="cat-card-name">${cat.name}</div>
+                            <div class="cat-card-sub">${cat.sub}</div>
+                        </div>
+                        <div class="cat-card-meta">${countStr}</div>
+                        <div class="cat-card-chevron">${CHEVRON_SVG}</div>
                     </div>
-                    <div class="module-grid">`;
+                    <div class="cat-card-body">
+                        <div class="cat-card-body-inner">`;
 
                 catModules.forEach(m => {
                     html += `
-                        <a href="${m.path}" class="module-card rise">
-                            <div class="module-icon">${RISE_SVG}</div>
-                            <div class="module-info">
-                                <div class="module-name">${m.name}</div>
-                                <div class="module-meta">Rise 360 &bull; Interactive Module</div>
-                            </div>
-                            <div class="module-arrow">${ARROW_SVG}</div>
-                        </a>`;
+                            <a href="${m.path}" class="mod-link rise">
+                                <div class="mod-link-icon">${RISE_SVG}</div>
+                                <div class="mod-link-info">
+                                    <div class="mod-link-name">${m.name}</div>
+                                    <div class="mod-link-meta">Rise 360 • Interactive Module</div>
+                                </div>
+                                <div class="mod-link-arrow">${ARROW_SVG}</div>
+                            </a>`;
                 });
 
                 catNotebooks.forEach(n => {
                     html += `
-                        <a href="${n.url}" target="_blank" class="module-card notebook">
-                            <div class="module-icon">${NOTEBOOK_SVG}</div>
-                            <div class="module-info">
-                                <div class="module-name">${n.name}</div>
-                                <div class="module-meta">Study Boss &bull; Ask AI</div>
-                            </div>
-                            <div class="module-arrow">${EXTERNAL_SVG}</div>
-                        </a>`;
+                            <a href="${n.url}" target="_blank" class="mod-link notebook">
+                                <div class="mod-link-icon">${NOTEBOOK_SVG}</div>
+                                <div class="mod-link-info">
+                                    <div class="mod-link-name">${n.name}</div>
+                                    <div class="mod-link-meta">Study Boss • Ask AI</div>
+                                </div>
+                                <div class="mod-link-arrow">${EXTERNAL_SVG}</div>
+                            </a>`;
                 });
 
-                html += `</div></div>`;
+                html += `
+                        </div>
+                    </div>
+                </div>`;
             });
 
-            document.getElementById('categoryContainer').innerHTML = html;
+            grid.innerHTML = html;
         }
 
-        // Populate "Up Next" from exam results
+        function toggleCard(headerEl) {
+            const card = headerEl.closest('.cat-card');
+            card.classList.toggle('open');
+        }
+
+        // "Up Next" from exam results
         function loadUpNext() {
             try {
                 const rawData = localStorage.getItem('ace_final_result');
                 if (!rawData) return;
                 const result = JSON.parse(rawData);
                 if (!result.questions) return;
-
-                // Find first missed category
                 const misses = {};
                 result.questions.forEach(q => {
                     if (!q.isCorrect && q.category) {
                         misses[q.category] = (misses[q.category] || 0) + 1;
                     }
                 });
-
                 const topCat = Object.keys(misses).sort((a, b) => misses[b] - misses[a])[0];
                 if (!topCat) return;
-
                 const module = MODULES.find(m => m.num === topCat);
                 if (!module) return;
-
                 document.getElementById('upNextName').textContent = module.name;
                 document.getElementById('upNextBadge').textContent = module.num;
                 document.getElementById('upNextCard').href = module.path;
                 document.getElementById('upNextSection').style.display = '';
-            } catch (e) {
-                console.warn('Up Next load error:', e);
-            }
+            } catch (e) { console.warn('Up Next load error:', e); }
         }
 
         buildPage();
         loadUpNext();
+
+        // 3D Tilt on category cards
+        document.querySelectorAll('.cat-card').forEach(card => {
+            let rafId;
+            let currentX = 0, currentY = 0;
+            let targetX = 0, targetY = 0;
+            const ease = 0.1;
+            const maxRot = 4;
+
+            function animate() {
+                currentX += (targetX - currentX) * ease;
+                currentY += (targetY - currentY) * ease;
+                card.style.transform = `perspective(1200px) rotateX(${currentY * maxRot}deg) rotateY(${currentX * -maxRot}deg) scale3d(1.01, 1.01, 1.01)`;
+                rafId = requestAnimationFrame(animate);
+            }
+
+            card.addEventListener('mouseenter', () => { cancelAnimationFrame(rafId); animate(); });
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                targetX = ((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2);
+                targetY = ((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2);
+            });
+            card.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(rafId);
+                card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+                targetX = 0; targetY = 0; currentX = 0; currentY = 0;
+            });
+        });
     </script>
 </body>
 
