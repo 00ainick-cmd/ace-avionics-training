@@ -14,87 +14,35 @@
         /* BASE & BACKGROUND */
         body {
             position: relative;
-            background-color: #080C1A;
+            background-color: transparent !important;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* Animated Background Orbs */
-        .bg-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
+        /* PREMIUM COMMAND CENTER BACKGROUND */
+        .cyber-bg {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 50% 100%, rgba(45, 189, 137, 0.05) 0%, transparent 50%),
+                        linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
+                        url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
+            z-index: -1; pointer-events: none;
         }
 
-        .orb-1 {
-            position: absolute;
-            top: -15%;
-            left: -10%;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(97, 175, 239, 0.08) 0%, transparent 70%);
-            filter: blur(60px);
-            animation: float 20s ease-in-out infinite alternate;
+        .cyber-grid {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            transform-origin: center top; opacity: 0.3; z-index: -2; pointer-events: none;
+            animation: gridMove 20s linear infinite;
         }
-
-        .orb-2 {
-            position: absolute;
-            bottom: -20%;
-            right: -10%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(212, 168, 83, 0.06) 0%, transparent 70%);
-            filter: blur(60px);
-            animation: float 25s ease-in-out infinite alternate-reverse;
-        }
-
-        .orb-3 {
-            position: absolute;
-            top: 40%;
-            left: 40%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(45, 189, 137, 0.05) 0%, transparent 70%);
-            filter: blur(60px);
-            animation: pulse 15s ease-in-out infinite alternate;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            100% {
-                transform: translate(50px, 80px) scale(1.1);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
 
         .main {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 40px 24px 100px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* PREMIUM HERO BANNER */
+/* PREMIUM HERO BANNER */
         .hero-banner {
             position: relative;
             display: flex;
@@ -207,257 +155,244 @@
             font-weight: 400;
         }
 
-        /* SECTION STYLING */
+        
+                /* CATEGORY ACCORDIONS */
         .resource-section {
-            margin-bottom: 56px;
+            margin-bottom: 32px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .section-header {
+        .category-accordion {
+            background: rgba(20, 24, 38, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .category-accordion.open {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .accordion-header {
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02));
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+        }
+
+        .accordion-title-area {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
         }
 
-        .section-title {
-            font-size: 15px;
+        .accordion-title {
+            font-size: 18px;
             font-weight: 700;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .accordion-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .chevron {
+            width: 24px;
+            height: 24px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .category-accordion.open .chevron {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 32px 32px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-accordion.open .accordion-content {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Inner Content Grid */
+        .content-split {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 32px;
+        }
+
+        .content-column h3 {
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-primary);
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
-
-        .section-badge {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            background: rgba(212, 168, 83, 0.1);
-            color: var(--gold);
-            border: 1px solid rgba(212, 168, 83, 0.3);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.15) inset;
-        }
-
-        .section-badge.green {
-            background: rgba(45, 189, 137, 0.1);
-            color: #2DBD89;
-            border: 1px solid rgba(45, 189, 137, 0.3);
-            box-shadow: 0 0 15px rgba(45, 189, 137, 0.15) inset;
-        }
-
-        .section-line {
+        
+        .content-column h3::after {
+            content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
         }
 
-        .resource-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 24px;
-        }
-
-        /* GLASSMORPHIC CARDS */
-        .resource-card {
-            position: relative;
+        .items-grid {
             display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Adjust card styles for accordion layout */
+        .resource-card {
+            display: flex; /* Back to flex, no longer inline */
+            width: 100%;
+            position: relative;
             align-items: center;
             gap: 20px;
-            background: rgba(20, 24, 38, 0.5);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 24px;
+            background: rgba(20, 24, 38, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
             text-decoration: none;
             color: inherit;
-            transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
             z-index: 1;
+            transition: all 0.3s ease;
         }
+        
+        .card-cat-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            z-index: 20;
+            background: var(--surface);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transform: translateZ(20px);
+        }
+        
+        .cat-mrd { color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); } /* Yellow */
+        .cat-bet { color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); } /* Blue */
+        .cat-cns { color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); } /* Purple */
+        .cat-fi { color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.3); } /* Pink */
+        .cat-dds { color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); } /* Emerald */
+        .cat-awh { color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); } /* Red */
+        .cat-tte { color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3); } /* Orange */
+        .cat-ssp { color: #a3e635; border: 1px solid rgba(163, 230, 53, 0.3); } /* Lime */
+        .cat-all { color: var(--gold); border: 1px solid rgba(212, 168, 83, 0.3); background: rgba(212, 168, 83, 0.1);}
 
         .resource-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 300ms ease;
-            z-index: -1;
+            content: ''; position: absolute; inset: 0; border-radius: 16px;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+            pointer-events: none; mix-blend-mode: overlay; z-index: 2;
         }
-
         .resource-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: transparent;
-            transition: all 300ms ease;
+            content: ''; position: absolute; inset: -2px;
+            background: linear-gradient(45deg, transparent, transparent, transparent);
+            border-radius: 18px; z-index: -1; opacity: 0; transition: opacity 0.3s;
         }
+        .resource-card:hover::after { opacity: 1; }
+        .resource-card.rise::after { background: linear-gradient(135deg, rgba(212, 168, 83, 0.3), transparent); box-shadow: 0 0 30px rgba(212, 168, 83, 0.15); }
+        .resource-card.notebook::after { background: linear-gradient(135deg, rgba(45, 189, 137, 0.3), transparent); box-shadow: 0 0 30px rgba(45, 189, 137, 0.15); }
 
-        /* Hover States based on type */
-        .resource-card.rise {
-            border-left: 1px solid rgba(212, 168, 83, 0.2);
-        }
-
-        .resource-card.rise:hover {
-            border-color: rgba(212, 168, 83, 0.5);
-            box-shadow: 0 16px 40px rgba(212, 168, 83, 0.2), inset 0 0 20px rgba(212, 168, 83, 0.05);
-            transform: translateY(-6px) scale(1.02);
-            z-index: 10;
-        }
-
-        .resource-card.rise:hover::after {
-            background: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
-        }
-
-        .resource-card.notebook {
-            border-left: 1px solid rgba(45, 189, 137, 0.2);
-        }
-
-        .resource-card.notebook:hover {
-            border-color: rgba(45, 189, 137, 0.5);
-            box-shadow: 0 16px 40px rgba(45, 189, 137, 0.2), inset 0 0 20px rgba(45, 189, 137, 0.05);
-            transform: translateY(-6px) scale(1.02);
-            z-index: 10;
-        }
-
-        .resource-card.notebook:hover::after {
-            background: #2DBD89;
-            box-shadow: 0 0 15px #2DBD89;
-        }
-
-        .resource-card.book {
-            border-left: 1px solid rgba(97, 175, 239, 0.2);
-        }
-
-        .resource-card.book:hover {
-            border-color: rgba(97, 175, 239, 0.5);
-            box-shadow: 0 16px 40px rgba(97, 175, 239, 0.2), inset 0 0 20px rgba(97, 175, 239, 0.05);
-            transform: translateY(-6px) scale(1.02);
-            z-index: 10;
-        }
-
-        .resource-card.book:hover::after {
-            background: var(--blue);
-            box-shadow: 0 0 15px var(--blue);
-        }
+        .resource-card:hover { z-index: 10; transform: translateY(-4px) scale(1.02); }
 
         .resource-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: transform 300ms ease;
+            position: relative; transform: translateZ(30px);
         }
+        .resource-card:hover .resource-icon { transform: translateZ(30px) scale(1.1) rotate(5deg); }
 
-        .resource-card:hover .resource-icon {
-            transform: scale(1.15) rotate(5deg);
+        .resource-card.rise .resource-icon { background: rgba(212, 168, 83, 0.1); color: var(--gold); border: 1px solid rgba(212, 168, 83, 0.3); box-shadow: 0 0 15px rgba(212, 168, 83, 0.15) inset; }
+        .resource-card.notebook .resource-icon { background: rgba(45, 189, 137, 0.1); color: #2DBD89; border: 1px solid rgba(45, 189, 137, 0.3); box-shadow: 0 0 15px rgba(45, 189, 137, 0.15) inset; }
+        
+        .resource-icon svg { width: 24px; height: 24px; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)); }
+
+        .resource-info { flex: 1; min-width: 0; transform: translateZ(30px); }
+        .resource-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px; }
+        .resource-meta { font-size: 12px; color: var(--text-muted); line-height: 1.5; display: flex; align-items: center; gap: 6px; }
+
+        .resource-action {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03); display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); transition: all 400ms ease;
+            opacity: 0; border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateZ(30px) translateX(-10px) scale(0.8);
         }
+        .resource-card:hover .resource-action { opacity: 1; transform: translateZ(30px) translateX(0) scale(1); }
+        .resource-card.rise:hover .resource-action { color: var(--gold); background: rgba(212, 168, 83, 0.15); border-color: rgba(212, 168, 83, 0.3); }
+        .resource-card.notebook:hover .resource-action { color: #2DBD89; background: rgba(45, 189, 137, 0.15); border-color: rgba(45, 189, 137, 0.3); }
 
-        /* Colors for icons */
-        .resource-card.rise .resource-icon {
-            background: rgba(212, 168, 83, 0.1);
-            color: var(--gold);
-            border: 1px solid rgba(212, 168, 83, 0.3);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.15) inset;
+        /* Notebook Instructions */
+        .notebook-instructions {
+            background: rgba(45, 189, 137, 0.05);
+            border: 1px dashed rgba(45, 189, 137, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
         }
-
-        .resource-card.notebook .resource-icon {
-            background: rgba(45, 189, 137, 0.1);
+        .notebook-instructions h4 {
             color: #2DBD89;
-            border: 1px solid rgba(45, 189, 137, 0.3);
-            box-shadow: 0 0 15px rgba(45, 189, 137, 0.15) inset;
-        }
-
-        .resource-card.book .resource-icon {
-            background: rgba(97, 175, 239, 0.1);
-            color: var(--blue);
-            border: 1px solid rgba(97, 175, 239, 0.3);
-            box-shadow: 0 0 15px rgba(97, 175, 239, 0.15) inset;
-        }
-
-        .resource-icon svg {
-            width: 28px;
-            height: 28px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-        }
-
-        .resource-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .resource-name {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            letter-spacing: -0.3px;
-        }
-
-        .resource-meta {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-
-        .resource-action {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .notebook-instructions ol {
+            margin: 0;
+            padding-left: 20px;
             color: var(--text-muted);
-            transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: translateX(-15px) scale(0.8);
-            opacity: 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            line-height: 1.6;
         }
-
-        .resource-card:hover .resource-action {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-        }
-
-        .resource-card.rise:hover .resource-action {
-            color: var(--gold);
-            background: rgba(212, 168, 83, 0.15);
-            border-color: rgba(212, 168, 83, 0.3);
-        }
-
-        .resource-card.notebook:hover .resource-action {
+        .notebook-instructions li::marker {
             color: #2DBD89;
-            background: rgba(45, 189, 137, 0.15);
-            border-color: rgba(45, 189, 137, 0.3);
+            font-weight: bold;
         }
-
-        .resource-card.book:hover .resource-action {
-            color: var(--blue);
-            background: rgba(97, 175, 239, 0.15);
-            border-color: rgba(97, 175, 239, 0.3);
-        }
-
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
             .resource-grid {
                 grid-template-columns: 1fr;
             }
@@ -476,11 +411,8 @@
 </head>
 
 <body>
-    <div class="bg-orbs">
-        <div class="orb-1"></div>
-        <div class="orb-2"></div>
-        <div class="orb-3"></div>
-    </div>
+    <div class="cyber-bg"></div>
+    <div class="cyber-grid"></div>
     <header class="topbar">
         <div class="topbar-logo">
             <a href="dashboard.html" style="text-decoration:none;">
@@ -505,38 +437,38 @@
                     interactive Rise modules, and leverage AI to trace your knowledge in an immersive environment.</p>
             </div>
         </div>
-        <div class="resource-section">
-            <div class="section-header">
-                <div class="section-title">Rise Modules <span class="section-badge">8 Available</span></div>
-                <div class="section-line"></div>
-            </div>
-            <div class="resource-grid" id="riseModulesList">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-        <div class="resource-section" style="margin-top: 64px;">
-            <div class="section-header" style="justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <div class="section-title" style="color: #fff;">Study Materials & AI Guides <span
-                            class="section-badge green">Tools</span></div>
-                    <div class="section-line" style="width: 50px; flex: none;"></div>
-                </div>
-                <button
-                    onclick="alert('NotebookLM Tutorial: 1. Download course PDF. 2. Upload to NotebookLM. 3. Ask it questions about the material!')"
-                    class="section-badge"
-                    style="cursor: pointer; background: transparent; color: var(--text-muted); border-color: rgba(255,255,255,0.2);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        style="width:14px;height:14px; margin-right:6px; vertical-align:middle;">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 16v-4" />
-                        <path d="M12 8h.01" />
+                        <!-- MARQUEE: CONTINUE LEARNING -->
+        <div class="resource-section" style="margin-top: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                <h2 style="font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); display: flex; align-items: center; gap: 12px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
                     </svg>
-                    How to use AI Guides
-                </button>
+                    Up Next For You
+                </h2>
+                <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(212, 168, 83, 0.3), transparent);"></div>
             </div>
-            <div class="resource-grid" id="aiGuidesList">
-                <!-- Populated by JS -->
-            </div>
+            
+            <a href="shared/course-viewer.html?path=rise-modules/electricity-dc/fundamentals-of-direct-current&title=Direct Current Fundamentals" 
+               class="resource-card rise" style="padding: 32px; gap: 32px;">
+                <div class="card-cat-badge cat-bet">BET</div>
+                <div class="resource-icon" style="width: 80px; height: 80px; border-radius: 20px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:40px; height:40px;">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                </div>
+                <div class="resource-info">
+                  <div class="resource-meta" style="color: var(--gold); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Recommended Review</div>
+                  <div class="resource-name" style="font-size: 24px;">Direct Current Fundamentals</div>
+                  <div class="resource-meta" style="margin-top: 8px; color: rgba(255,255,255,0.6);">Based on your recent mock exam, you should review this module before proceeding to Alternating Current.</div>
+                </div>
+                <div class="resource-action" style="width: 56px; height: 56px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+        </div>
+
+        <!-- CATEGORY ACCORDIONS AREA -->
+        <div class="resource-section" id="accordionContainer">
+            <!-- Populated by JS -->
         </div>
     </main>
     <script>
@@ -563,23 +495,7 @@
             { num: 'SSP', name: 'Safety Essentials in Aviation', path: 'shared/course-viewer.html?path=rise-modules/shop-safety/safety-essentials-in-aviation&title=Safety Essentials in Aviation' }
         ];
 
-        const listHtml = MODULES.map(m => `
-      <a href="${m.path}" class="resource-card rise">
-        <div class="resource-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-        </div>
-        <div class="resource-info">
-          <div class="resource-name">${m.name}</div>
-          <div class="resource-meta">Category ${m.num} &bull; Interactive Module</div>
-        </div>
-        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-    `).join('');
-        document.getElementById('riseModulesList').innerHTML = listHtml;
-
-        const NOTEBOOK_LINKS = [
+                                const NOTEBOOK_LINKS = [
             { cat: 'ALL', name: 'CAET Study Boss (Comprehensive)', url: 'https://notebooklm.google.com/notebook/5bdd750c-8b81-4a09-9ec5-daf7e685f600' },
             { cat: 'MRD', name: 'Regulations, Forms & Records', url: 'https://notebooklm.google.com/notebook/4ec730e9-f975-4645-8224-381cd7cb1261' },
             { cat: 'BET', name: 'Fundamentals of Electricity', url: 'https://notebooklm.google.com/notebook/64f77e37-194f-48bf-b2f3-de3558ba1b62' },
@@ -596,26 +512,165 @@
             { cat: 'SSP', name: 'Aviation Safety', url: 'https://notebooklm.google.com/notebook/73ca69b8-23b9-44fe-b18d-cf5b83810be2' }
         ];
 
-        const aiHtml = NOTEBOOK_LINKS.map(n => `
-      <a href="${n.url}" target="_blank" class="resource-card notebook">
-        <div class="resource-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/>
-            <path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/>
-          </svg>
-        </div>
-        <div class="resource-info">
-          <div class="resource-name">${n.name}</div>
-          <div class="resource-meta">Category ${n.cat} &bull; Ask the AI</div>
-        </div>
-        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></div>
-      </a>
-    `).join('');
-        document.getElementById('aiGuidesList').innerHTML = aiHtml;
+        const CATEGORIES = [
+            { id: 'MRD', name: 'Maintenance Regulations', desc: 'Aviation Regulations, Forms & Records' },
+            { id: 'BET', name: 'Basic Electricity Tech', desc: 'DC, AC, Solid State, and Aircraft Electrical' },
+            { id: 'CNS', name: 'Comm, Nav & Surveillance', desc: 'Radio Comm, Dependent Navigation, Surveillance' },
+            { id: 'FI', name: 'Flight Instruments', desc: 'Pitot-Static and Primary Flight Instruments' },
+            { id: 'DDS', name: 'Digital Data Systems', desc: 'Digital Electronics and Data Bus' },
+            { id: 'AWH', name: 'Aircraft Wiring', desc: 'Building a Wire Harness' },
+            { id: 'TTE', name: 'Tools & Test Equipment', desc: 'Basic Hand Tools & Hardware' },
+            { id: 'SSP', name: 'Shop Safety', desc: 'Safety Essentials in Aviation' },
+            { id: 'ALL', name: 'General CAET Prep', desc: 'Comprehensive Study Guides' }
+        ];
 
-        // Update the badge count dynamically
-        document.querySelector('.section-badge').textContent = `${MODULES.length} Available`;
-        document.querySelector('.section-badge.green').textContent = `${NOTEBOOK_LINKS.length} Notebooks`;
+        function toggleAccordion(element) {
+            const accordion = element.closest('.category-accordion');
+            accordion.classList.toggle('open');
+        }
+
+        function buildAccordionHtml() {
+            let html = '';
+            
+            CATEGORIES.forEach(cat => {
+                // Find modules and notebooks for this category
+                const catModules = MODULES.filter(m => m.num === cat.id);
+                const catNotebooks = NOTEBOOK_LINKS.filter(n => n.cat === cat.id);
+                
+                // Skip if category has no content
+                if (catModules.length === 0 && catNotebooks.length === 0) return;
+                
+                const modulesHtml = catModules.map(m => `
+                    <a href="${m.path}" class="resource-card rise">
+                        <div class="card-cat-badge cat-${m.num.toLowerCase()}">${m.num}</div>
+                        <div class="resource-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-name" title="${m.name}">${m.name}</div>
+                            <div class="resource-meta">Rise 360 &bull; Interactive</div>
+                        </div>
+                        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    </a>
+                `).join('');
+
+                const notebooksHtml = catNotebooks.map(n => `
+                    <a href="${n.url}" target="_blank" class="resource-card notebook">
+                        <div class="card-cat-badge cat-${n.cat.toLowerCase()}">${n.cat}</div>
+                        <div class="resource-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2A2 2 0 0 1 14 4V6H20A2 2 0 0 1 22 8V18A2 2 0 0 1 20 20H4A2 2 0 0 1 2 18V8A2 2 0 0 1 4 6H10V4A2 2 0 0 1 12 2z"/>
+                                <path d="M6 10H6.01"/><path d="M18 10H18.01"/><path d="M10 16H14"/>
+                            </svg>
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-name" title="${n.name}">${n.name}</div>
+                            <div class="resource-meta">Study Boss &bull; Ask AI</div>
+                        </div>
+                        <div class="resource-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></div>
+                    </a>
+                `).join('');
+
+                const instructionsHtml = catNotebooks.length > 0 ? `
+                    <div class="notebook-instructions">
+                        <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> How to use AI Guides</h4>
+                        <ol>
+                            <li>Download the official training PDF from Rise.</li>
+                            <li>Upload it to the NotebookLM guide linked above.</li>
+                            <li>Ask the AI to explain concepts, quiz you, or summarize chapters!</li>
+                        </ol>
+                    </div>
+                ` : '';
+
+                html += `
+                <div class="category-accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-area">
+                            <span class="card-cat-badge cat-${cat.id.toLowerCase()}" style="position:static; margin:0; transform:none;">${cat.id}</span>
+                            <div>
+                                <div class="accordion-title">${cat.name}</div>
+                                <div class="accordion-subtitle">${cat.desc}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="display:flex; gap: 8px;">
+                                ${catModules.length > 0 ? `<span class="section-badge">${catModules.length} Modules</span>` : ''}
+                                ${catNotebooks.length > 0 ? `<span class="section-badge green">${catNotebooks.length} AI Guides</span>` : ''}
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-split">
+                            ${catModules.length > 0 ? `
+                            <div class="content-column">
+                                <h3>Interactive Training</h3>
+                                <div class="items-grid">
+                                    ${modulesHtml}
+                                </div>
+                            </div>
+                            ` : '<div></div>'}
+                            
+                            ${catNotebooks.length > 0 ? `
+                            <div class="content-column">
+                                <h3>AI Study Guides</h3>
+                                <div class="items-grid">
+                                    ${notebooksHtml}
+                                </div>
+                                ${instructionsHtml}
+                            </div>
+                            ` : '<div></div>'}
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            
+            document.getElementById('accordionContainer').innerHTML = html;
+        }
+
+        // Initialize accordion layout
+        buildAccordionHtml();
+
+    </script>
+
+    <!-- 3D Holographic Tilt Script -->
+    <script>
+        document.querySelectorAll('.resource-card').forEach(card => {
+            let rafId;
+            let currentX = 0; let currentY = 0;
+            let targetX = 0; let targetY = 0;
+            const ease = 0.1; 
+            const maxRot = 5; 
+
+            function animate() {
+                currentX += (targetX - currentX) * ease;
+                currentY += (targetY - currentY) * ease;
+                const rotateX = currentY * maxRot;
+                const rotateY = currentX * -maxRot;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                rafId = requestAnimationFrame(animate);
+            }
+
+            card.addEventListener('mouseenter', () => { cancelAnimationFrame(rafId); animate(); });
+
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                targetX = (x - centerX) / centerX;
+                targetY = (y - centerY) / centerY;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(rafId);
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                targetX = 0; targetY = 0; currentX = 0; currentY = 0;
+            });
+        });
     </script>
 </body>
 

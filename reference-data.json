@@ -1,0 +1,995 @@
+{
+  "meta": {
+    "version": "3.0.0",
+    "description": "CAET Training Quick Reference Data - Comprehensive Entry Level Reference",
+    "lastUpdated": "2025-12"
+  },
+  "dc": [
+    {
+      "id": "dc-ohm-v",
+      "name": "Ohm's Law (Voltage)",
+      "formula": "V = I x R",
+      "description": "Voltage equals current times resistance. Voltage is the electrical pressure that pushes current through a circuit.",
+      "keywords": ["voltage", "ohm", "current", "resistance"],
+      "category": "ohms-law"
+    },
+    {
+      "id": "dc-ohm-i",
+      "name": "Ohm's Law (Current)",
+      "formula": "I = V / R",
+      "description": "Current equals voltage divided by resistance. Current is the flow of electrons measured in Amperes.",
+      "keywords": ["current", "ohm", "voltage", "resistance"],
+      "category": "ohms-law"
+    },
+    {
+      "id": "dc-ohm-r",
+      "name": "Ohm's Law (Resistance)",
+      "formula": "R = V / I",
+      "description": "Resistance equals voltage divided by current. Resistance opposes current flow, measured in Ohms.",
+      "keywords": ["resistance", "ohm", "voltage", "current"],
+      "category": "ohms-law"
+    },
+    {
+      "id": "dc-power-vi",
+      "name": "Power (Basic)",
+      "formula": "P = V x I",
+      "description": "Power equals voltage times current. Measured in Watts (W). This is the rate of energy consumption.",
+      "keywords": ["power", "watt", "voltage", "current"],
+      "category": "power"
+    },
+    {
+      "id": "dc-power-i2r",
+      "name": "Power (Current Form)",
+      "formula": "P = I² x R",
+      "description": "Power equals current squared times resistance. Use when you know I and R but not V.",
+      "keywords": ["power", "watt", "current", "resistance"],
+      "category": "power"
+    },
+    {
+      "id": "dc-power-v2r",
+      "name": "Power (Voltage Form)",
+      "formula": "P = V² / R",
+      "description": "Power equals voltage squared divided by resistance. Use when you know V and R but not I.",
+      "keywords": ["power", "watt", "voltage", "resistance"],
+      "category": "power"
+    },
+    {
+      "id": "dc-energy",
+      "name": "Electrical Energy",
+      "formula": "E = P x t",
+      "description": "Energy equals power times time. Measured in Watt-hours (Wh) or Joules (J). 1 Wh = 3600 J.",
+      "keywords": ["energy", "power", "time", "watt-hour", "joule"],
+      "category": "power"
+    },
+    {
+      "id": "dc-series-r",
+      "name": "Series Resistance",
+      "formula": "R_total = R1 + R2 + R3...",
+      "description": "Add all resistances in series. Current is the same through all components in series.",
+      "keywords": ["series", "resistance", "total"],
+      "category": "series"
+    },
+    {
+      "id": "dc-series-v",
+      "name": "Series Voltage",
+      "formula": "V_total = V1 + V2 + V3...",
+      "description": "Total voltage equals sum of all voltage drops. Voltages divide across series components.",
+      "keywords": ["series", "voltage", "total", "drops"],
+      "category": "series"
+    },
+    {
+      "id": "dc-voltage-divider",
+      "name": "Voltage Divider",
+      "formula": "V_out = V_in x (R2 / (R1 + R2))",
+      "description": "Output voltage across R2 in a series circuit. Used to create reference voltages.",
+      "keywords": ["voltage", "divider", "series", "ratio"],
+      "category": "series"
+    },
+    {
+      "id": "dc-parallel-r-2",
+      "name": "Parallel Resistance (2 resistors)",
+      "formula": "R_total = (R1 x R2) / (R1 + R2)",
+      "description": "Product over sum for two parallel resistors. Quick method for calculating two resistors in parallel.",
+      "keywords": ["parallel", "resistance", "product", "sum"],
+      "category": "parallel"
+    },
+    {
+      "id": "dc-parallel-r-general",
+      "name": "Parallel Resistance (General)",
+      "formula": "1/R_t = 1/R1 + 1/R2 + 1/R3...",
+      "description": "Reciprocal method for any number of parallel resistors. Total is always less than smallest resistor.",
+      "keywords": ["parallel", "resistance", "reciprocal", "general"],
+      "category": "parallel"
+    },
+    {
+      "id": "dc-parallel-equal",
+      "name": "Parallel Equal Resistors",
+      "formula": "R_total = R / n",
+      "description": "For n equal resistors in parallel, divide resistance by number of resistors.",
+      "keywords": ["parallel", "equal", "resistance"],
+      "category": "parallel"
+    },
+    {
+      "id": "dc-current-divider",
+      "name": "Current Divider",
+      "formula": "I1 = I_total x (R2 / (R1 + R2))",
+      "description": "Current through R1 when in parallel with R2. More current flows through smaller resistance.",
+      "keywords": ["current", "divider", "parallel", "ratio"],
+      "category": "parallel"
+    },
+    {
+      "id": "dc-kcl",
+      "name": "Kirchhoff's Current Law (KCL)",
+      "formula": "I_in = I_out",
+      "description": "Current entering a junction equals current leaving. Sum of currents at a node is zero.",
+      "keywords": ["kirchhoff", "kcl", "current", "junction", "node"],
+      "category": "kirchhoff"
+    },
+    {
+      "id": "dc-kvl",
+      "name": "Kirchhoff's Voltage Law (KVL)",
+      "formula": "V_source = V1 + V2 + V3...",
+      "description": "Sum of voltage drops around a closed loop equals source voltage. Voltage rises = voltage drops.",
+      "keywords": ["kirchhoff", "kvl", "voltage", "loop"],
+      "category": "kirchhoff"
+    },
+    {
+      "id": "dc-conductance",
+      "name": "Conductance",
+      "formula": "G = 1 / R",
+      "description": "Conductance is the reciprocal of resistance. Measured in Siemens (S). Higher G = easier current flow.",
+      "keywords": ["conductance", "siemens", "resistance", "reciprocal"],
+      "category": "ohms-law"
+    },
+    {
+      "id": "dc-wire-resistance",
+      "name": "Wire Resistance",
+      "formula": "R = (rho x L) / A",
+      "description": "Resistance of wire depends on resistivity (rho), length (L), and cross-sectional area (A).",
+      "keywords": ["wire", "resistance", "length", "area", "resistivity"],
+      "category": "ohms-law"
+    },
+    {
+      "id": "dc-short-circuit",
+      "name": "Short Circuit",
+      "formula": "R = 0 Ohms (ideally)",
+      "description": "A short circuit has near-zero resistance, causing maximum current flow. Can be dangerous!",
+      "keywords": ["short", "circuit", "zero", "resistance"],
+      "category": "troubleshooting"
+    },
+    {
+      "id": "dc-open-circuit",
+      "name": "Open Circuit",
+      "formula": "R = Infinity (OL on meter)",
+      "description": "An open circuit has infinite resistance, no current flows. Meter shows OL (overload).",
+      "keywords": ["open", "circuit", "infinite", "resistance"],
+      "category": "troubleshooting"
+    }
+  ],
+  "ac": [
+    {
+      "id": "ac-xl",
+      "name": "Inductive Reactance",
+      "formula": "X_L = 2 x pi x f x L",
+      "description": "Opposition to AC by an inductor. Increases with frequency. X_L in Ohms, f in Hz, L in Henrys.",
+      "keywords": ["reactance", "inductive", "inductor", "xl"],
+      "category": "reactance"
+    },
+    {
+      "id": "ac-xc",
+      "name": "Capacitive Reactance",
+      "formula": "X_C = 1 / (2 x pi x f x C)",
+      "description": "Opposition to AC by a capacitor. Decreases with frequency. X_C in Ohms, f in Hz, C in Farads.",
+      "keywords": ["reactance", "capacitive", "capacitor", "xc"],
+      "category": "reactance"
+    },
+    {
+      "id": "ac-impedance",
+      "name": "Impedance (Series RL or RC)",
+      "formula": "Z = sqrt(R² + X²)",
+      "description": "Total opposition to AC. Combines resistance and reactance. Measured in Ohms.",
+      "keywords": ["impedance", "resistance", "reactance", "total"],
+      "category": "impedance"
+    },
+    {
+      "id": "ac-impedance-rlc",
+      "name": "Impedance (Series RLC)",
+      "formula": "Z = sqrt(R² + (X_L - X_C)²)",
+      "description": "Series RLC impedance. X_L and X_C oppose each other, use net reactance.",
+      "keywords": ["impedance", "rlc", "series", "reactance"],
+      "category": "impedance"
+    },
+    {
+      "id": "ac-ohms-law",
+      "name": "Ohm's Law for AC",
+      "formula": "V = I x Z",
+      "description": "AC version of Ohm's Law using impedance (Z) instead of resistance.",
+      "keywords": ["ohm", "ac", "impedance", "voltage", "current"],
+      "category": "impedance"
+    },
+    {
+      "id": "ac-frequency",
+      "name": "Frequency",
+      "formula": "f = 1 / T",
+      "description": "Frequency equals reciprocal of period. Measured in Hertz (Hz). Cycles per second.",
+      "keywords": ["frequency", "period", "hertz", "cycle"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-period",
+      "name": "Period",
+      "formula": "T = 1 / f",
+      "description": "Time for one complete cycle. Measured in seconds. US power: T = 1/60 = 16.67ms.",
+      "keywords": ["period", "frequency", "time", "cycle"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-wavelength",
+      "name": "Wavelength",
+      "formula": "lambda = c / f",
+      "description": "Wavelength equals speed of light divided by frequency. Important for RF applications.",
+      "keywords": ["wavelength", "frequency", "light", "rf"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-rms-voltage",
+      "name": "RMS Voltage",
+      "formula": "V_rms = 0.707 x V_peak",
+      "description": "Effective AC voltage that produces same heating as DC. This is what meters read.",
+      "keywords": ["rms", "voltage", "effective", "peak"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-peak-voltage",
+      "name": "Peak Voltage",
+      "formula": "V_peak = 1.414 x V_rms",
+      "description": "Maximum instantaneous voltage of sine wave. 120V RMS = 170V peak.",
+      "keywords": ["peak", "voltage", "maximum", "rms"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-peak-to-peak",
+      "name": "Peak-to-Peak Voltage",
+      "formula": "V_pp = 2 x V_peak",
+      "description": "Total voltage swing from negative peak to positive peak. What you see on oscilloscope.",
+      "keywords": ["peak", "voltage", "pp", "oscilloscope"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-average-voltage",
+      "name": "Average Voltage (Full Wave)",
+      "formula": "V_avg = 0.637 x V_peak",
+      "description": "Average value of rectified AC. Used in DC power supply calculations.",
+      "keywords": ["average", "voltage", "rectified", "dc"],
+      "category": "waveform"
+    },
+    {
+      "id": "ac-true-power",
+      "name": "True Power (Real Power)",
+      "formula": "P = V x I x cos(theta)",
+      "description": "Actual power consumed. Measured in Watts (W). Only resistive loads consume true power.",
+      "keywords": ["true", "power", "real", "watts", "resistive"],
+      "category": "power"
+    },
+    {
+      "id": "ac-reactive-power",
+      "name": "Reactive Power",
+      "formula": "Q = V x I x sin(theta)",
+      "description": "Power stored and returned by inductors/capacitors. Measured in VAR (Volt-Amps Reactive).",
+      "keywords": ["reactive", "power", "var", "inductor", "capacitor"],
+      "category": "power"
+    },
+    {
+      "id": "ac-apparent-power",
+      "name": "Apparent Power",
+      "formula": "S = V x I",
+      "description": "Total power delivered. Measured in VA (Volt-Amps). S = sqrt(P² + Q²).",
+      "keywords": ["apparent", "power", "va", "total"],
+      "category": "power"
+    },
+    {
+      "id": "ac-power-factor",
+      "name": "Power Factor",
+      "formula": "PF = cos(theta) = P / S",
+      "description": "Ratio of true power to apparent power. PF of 1 is ideal (purely resistive).",
+      "keywords": ["power", "factor", "cosine", "pf", "efficiency"],
+      "category": "power"
+    },
+    {
+      "id": "ac-resonant-freq",
+      "name": "Resonant Frequency",
+      "formula": "f_r = 1 / (2 x pi x sqrt(L x C))",
+      "description": "Frequency where X_L = X_C. Circuit is purely resistive at resonance.",
+      "keywords": ["resonant", "frequency", "lc", "tuned"],
+      "category": "resonance"
+    },
+    {
+      "id": "ac-q-factor",
+      "name": "Quality Factor (Q)",
+      "formula": "Q = X_L / R (at resonance)",
+      "description": "Measure of circuit selectivity. Higher Q = sharper resonance, narrower bandwidth.",
+      "keywords": ["quality", "factor", "q", "selectivity", "bandwidth"],
+      "category": "resonance"
+    },
+    {
+      "id": "ac-bandwidth",
+      "name": "Bandwidth",
+      "formula": "BW = f_r / Q",
+      "description": "Range of frequencies passed by a resonant circuit. Measured in Hz.",
+      "keywords": ["bandwidth", "frequency", "resonance", "q"],
+      "category": "resonance"
+    },
+    {
+      "id": "ac-phase-angle",
+      "name": "Phase Angle",
+      "formula": "theta = arctan(X / R)",
+      "description": "Angle between voltage and current. Positive for inductive, negative for capacitive.",
+      "keywords": ["phase", "angle", "theta", "inductive", "capacitive"],
+      "category": "impedance"
+    },
+    {
+      "id": "ac-eli-ice",
+      "name": "ELI the ICE man",
+      "formula": "ELI: V leads I | ICE: I leads V",
+      "description": "Memory aid: In inductors (L), E (voltage) leads I. In capacitors (C), I leads E.",
+      "keywords": ["eli", "ice", "phase", "lead", "lag"],
+      "category": "impedance"
+    },
+    {
+      "id": "ac-time-constant-rc",
+      "name": "RC Time Constant",
+      "formula": "tau = R x C",
+      "description": "Time to charge/discharge to 63.2%. 5 tau = 99.3% charged. Tau in seconds.",
+      "keywords": ["time", "constant", "rc", "charge", "discharge"],
+      "category": "timing"
+    },
+    {
+      "id": "ac-time-constant-rl",
+      "name": "RL Time Constant",
+      "formula": "tau = L / R",
+      "description": "Time for current to reach 63.2% of final value in RL circuit.",
+      "keywords": ["time", "constant", "rl", "inductor"],
+      "category": "timing"
+    }
+  ],
+  "solid": [
+    {
+      "id": "ss-diode-symbol",
+      "name": "Diode Symbol",
+      "formula": "Anode -->|-- Cathode",
+      "description": "Arrow points direction of conventional current flow. Cathode has the bar (negative side).",
+      "keywords": ["diode", "symbol", "anode", "cathode"],
+      "category": "symbols"
+    },
+    {
+      "id": "ss-npn-symbol",
+      "name": "NPN Transistor",
+      "formula": "Arrow points OUT on emitter",
+      "description": "NPN: Arrow Not Pointing iN. Most common BJT type. Current flows from collector to emitter.",
+      "keywords": ["npn", "transistor", "symbol", "bjt"],
+      "category": "symbols"
+    },
+    {
+      "id": "ss-pnp-symbol",
+      "name": "PNP Transistor",
+      "formula": "Arrow points IN on emitter",
+      "description": "PNP: Pointing iN Proudly. Current flows from emitter to collector (opposite of NPN).",
+      "keywords": ["pnp", "transistor", "symbol", "bjt"],
+      "category": "symbols"
+    },
+    {
+      "id": "ss-fet-symbol",
+      "name": "FET Terminals",
+      "formula": "Gate - Drain - Source (G-D-S)",
+      "description": "FET controlled by voltage on Gate. Current flows Drain to Source (N-channel).",
+      "keywords": ["fet", "mosfet", "jfet", "gate", "drain", "source"],
+      "category": "symbols"
+    },
+    {
+      "id": "ss-diode-test",
+      "name": "Diode Test (DMM)",
+      "formula": "Forward: ~0.6V | Reverse: OL",
+      "description": "Good silicon diode reads 0.5-0.7V forward, OL (open) reverse. Shorted reads 0V both ways.",
+      "keywords": ["diode", "test", "dmm", "troubleshoot"],
+      "category": "testing"
+    },
+    {
+      "id": "ss-transistor-test",
+      "name": "Transistor Test (DMM)",
+      "formula": "B-E and B-C: ~0.6V | E-C: OL",
+      "description": "Test BJT like two diodes. Base to Emitter and Base to Collector should read 0.6V.",
+      "keywords": ["transistor", "test", "bjt", "dmm"],
+      "category": "testing"
+    },
+    {
+      "id": "ss-voltage-drops",
+      "name": "Forward Voltage Drops",
+      "formula": "Silicon: 0.7V | Germanium: 0.3V",
+      "description": "Silicon diodes drop 0.7V, germanium drops 0.3V when forward biased.",
+      "keywords": ["voltage", "drop", "forward", "silicon", "germanium"],
+      "category": "diode"
+    },
+    {
+      "id": "ss-led-drops",
+      "name": "LED Voltage Drops",
+      "formula": "Red: 1.8V | Yellow: 2.0V | Green: 2.2V | Blue/White: 3.0-3.5V",
+      "description": "LED forward voltage varies by color. Blue and white LEDs have highest drop.",
+      "keywords": ["led", "voltage", "drop", "color"],
+      "category": "diode"
+    },
+    {
+      "id": "ss-led-resistor",
+      "name": "LED Current Limiting Resistor",
+      "formula": "R = (V_supply - V_LED) / I_LED",
+      "description": "Calculate resistor to limit LED current. Typical LED current is 10-20mA.",
+      "keywords": ["led", "resistor", "current", "limit"],
+      "category": "diode"
+    },
+    {
+      "id": "ss-zener-operation",
+      "name": "Zener Diode Operation",
+      "formula": "Operates in REVERSE breakdown",
+      "description": "Zener diodes regulate voltage by operating in reverse breakdown. Used for voltage references.",
+      "keywords": ["zener", "diode", "breakdown", "voltage", "regulation"],
+      "category": "diode"
+    },
+    {
+      "id": "ss-bjt-beta",
+      "name": "BJT Current Gain (Beta)",
+      "formula": "Beta (hFE) = I_C / I_B",
+      "description": "DC current gain. Collector current = Beta times Base current. Typical beta: 50-300.",
+      "keywords": ["beta", "gain", "bjt", "transistor", "hfe"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-bjt-currents",
+      "name": "BJT Current Relationship",
+      "formula": "I_E = I_C + I_B",
+      "description": "Emitter current is sum of collector and base currents. I_E is largest current.",
+      "keywords": ["bjt", "current", "emitter", "collector", "base"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-bjt-saturation",
+      "name": "BJT Saturation",
+      "formula": "V_CE(sat) = 0.2V to 0.3V",
+      "description": "When fully ON (saturated), collector-emitter voltage is very low. Acts like closed switch.",
+      "keywords": ["saturation", "bjt", "switch", "vce"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-bjt-cutoff",
+      "name": "BJT Cutoff",
+      "formula": "I_C = 0, V_CE = V_CC",
+      "description": "When OFF (cutoff), no collector current flows. All supply voltage across transistor.",
+      "keywords": ["cutoff", "bjt", "off", "switch"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-fet-advantage",
+      "name": "FET vs BJT",
+      "formula": "FET: Voltage controlled | BJT: Current controlled",
+      "description": "FETs have very high input impedance and are controlled by gate voltage, not current.",
+      "keywords": ["fet", "bjt", "compare", "impedance", "voltage"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-half-wave",
+      "name": "Half-Wave Rectifier",
+      "formula": "V_DC = 0.318 x V_peak",
+      "description": "Uses one diode. Only half the AC cycle is used. High ripple, inefficient.",
+      "keywords": ["rectifier", "half-wave", "diode", "dc"],
+      "category": "rectifier"
+    },
+    {
+      "id": "ss-full-wave",
+      "name": "Full-Wave Rectifier",
+      "formula": "V_DC = 0.637 x V_peak",
+      "description": "Uses bridge (4 diodes) or center-tap transformer. Both halves of AC cycle used.",
+      "keywords": ["rectifier", "full-wave", "bridge", "dc"],
+      "category": "rectifier"
+    },
+    {
+      "id": "ss-filter-cap",
+      "name": "Filter Capacitor",
+      "formula": "C = I / (f x V_ripple)",
+      "description": "Larger capacitor = less ripple. Full-wave needs less capacitance than half-wave.",
+      "keywords": ["filter", "capacitor", "ripple", "power supply"],
+      "category": "rectifier"
+    },
+    {
+      "id": "ss-power-dissipation",
+      "name": "Transistor Power Dissipation",
+      "formula": "P_D = V_CE x I_C",
+      "description": "Power dissipated as heat. Must not exceed device rating. Use heatsink if needed.",
+      "keywords": ["power", "dissipation", "heat", "transistor"],
+      "category": "transistor"
+    },
+    {
+      "id": "ss-op-amp-gain",
+      "name": "Op-Amp Inverting Gain",
+      "formula": "A_v = -R_f / R_in",
+      "description": "Voltage gain of inverting op-amp. Negative sign indicates phase inversion.",
+      "keywords": ["op-amp", "gain", "inverting", "amplifier"],
+      "category": "op-amp"
+    },
+    {
+      "id": "ss-op-amp-noninvert",
+      "name": "Op-Amp Non-Inverting Gain",
+      "formula": "A_v = 1 + (R_f / R_in)",
+      "description": "Voltage gain of non-inverting op-amp. Minimum gain is 1 (unity).",
+      "keywords": ["op-amp", "gain", "non-inverting", "amplifier"],
+      "category": "op-amp"
+    }
+  ],
+  "digital": [
+    {
+      "id": "dig-and-gate",
+      "name": "AND Gate",
+      "formula": "Y = A AND B",
+      "description": "Output HIGH only when ALL inputs are HIGH. Like series switches.",
+      "keywords": ["and", "gate", "logic"],
+      "category": "gates",
+      "truthTable": [["0","0","0"], ["0","1","0"], ["1","0","0"], ["1","1","1"]]
+    },
+    {
+      "id": "dig-or-gate",
+      "name": "OR Gate",
+      "formula": "Y = A OR B",
+      "description": "Output HIGH when ANY input is HIGH. Like parallel switches.",
+      "keywords": ["or", "gate", "logic"],
+      "category": "gates",
+      "truthTable": [["0","0","0"], ["0","1","1"], ["1","0","1"], ["1","1","1"]]
+    },
+    {
+      "id": "dig-not-gate",
+      "name": "NOT Gate (Inverter)",
+      "formula": "Y = NOT A",
+      "description": "Output is opposite of input. Also called an inverter. Has only one input.",
+      "keywords": ["not", "inverter", "gate"],
+      "category": "gates",
+      "truthTable": [["0","1"], ["1","0"]]
+    },
+    {
+      "id": "dig-nand-gate",
+      "name": "NAND Gate",
+      "formula": "Y = NOT(A AND B)",
+      "description": "AND then NOT. Universal gate - can build any logic function using only NANDs.",
+      "keywords": ["nand", "gate", "universal"],
+      "category": "gates",
+      "truthTable": [["0","0","1"], ["0","1","1"], ["1","0","1"], ["1","1","0"]]
+    },
+    {
+      "id": "dig-nor-gate",
+      "name": "NOR Gate",
+      "formula": "Y = NOT(A OR B)",
+      "description": "OR then NOT. Also a universal gate. Can build any logic function.",
+      "keywords": ["nor", "gate", "universal"],
+      "category": "gates",
+      "truthTable": [["0","0","1"], ["0","1","0"], ["1","0","0"], ["1","1","0"]]
+    },
+    {
+      "id": "dig-xor-gate",
+      "name": "XOR Gate (Exclusive OR)",
+      "formula": "Y = A XOR B",
+      "description": "Output HIGH when inputs are DIFFERENT. Used in comparators and adders.",
+      "keywords": ["xor", "exclusive", "gate", "different"],
+      "category": "gates",
+      "truthTable": [["0","0","0"], ["0","1","1"], ["1","0","1"], ["1","1","0"]]
+    },
+    {
+      "id": "dig-xnor-gate",
+      "name": "XNOR Gate (Exclusive NOR)",
+      "formula": "Y = NOT(A XOR B)",
+      "description": "Output HIGH when inputs are SAME. Also called equivalence gate.",
+      "keywords": ["xnor", "exclusive", "gate", "same", "equivalence"],
+      "category": "gates",
+      "truthTable": [["0","0","1"], ["0","1","0"], ["1","0","0"], ["1","1","1"]]
+    },
+    {
+      "id": "dig-buffer",
+      "name": "Buffer Gate",
+      "formula": "Y = A",
+      "description": "Output equals input. Used for signal isolation, driving capacity, and delay.",
+      "keywords": ["buffer", "gate", "driver"],
+      "category": "gates",
+      "truthTable": [["0","0"], ["1","1"]]
+    },
+    {
+      "id": "dig-binary-place",
+      "name": "Binary Place Values",
+      "formula": "... 16 - 8 - 4 - 2 - 1",
+      "description": "Each position is a power of 2. Right to left: 2^0, 2^1, 2^2, 2^3, 2^4...",
+      "keywords": ["binary", "place", "value", "power"],
+      "category": "number"
+    },
+    {
+      "id": "dig-bin-to-dec",
+      "name": "Binary to Decimal",
+      "formula": "Add place values where bit = 1",
+      "description": "Example: 1011 = 8+0+2+1 = 11 decimal. Read each 1 bit's place value and add.",
+      "keywords": ["binary", "decimal", "convert"],
+      "category": "number"
+    },
+    {
+      "id": "dig-dec-to-bin",
+      "name": "Decimal to Binary",
+      "formula": "Divide by 2, record remainders",
+      "description": "Divide by 2, write remainder. Repeat. Read remainders bottom to top.",
+      "keywords": ["decimal", "binary", "convert", "divide"],
+      "category": "number"
+    },
+    {
+      "id": "dig-hex-values",
+      "name": "Hex Digits",
+      "formula": "A=10, B=11, C=12, D=13, E=14, F=15",
+      "description": "Hexadecimal uses 0-9 plus A-F (16 total values). Each hex digit = 4 binary bits.",
+      "keywords": ["hex", "hexadecimal", "digits"],
+      "category": "number"
+    },
+    {
+      "id": "dig-hex-binary",
+      "name": "Hex to Binary",
+      "formula": "Each hex digit = 4 bits",
+      "description": "Example: 0xA3 = 1010 0011. Convert each hex digit separately, then combine.",
+      "keywords": ["hex", "binary", "convert", "nibble"],
+      "category": "number"
+    },
+    {
+      "id": "dig-octal",
+      "name": "Octal Number System",
+      "formula": "Base 8: Uses digits 0-7",
+      "description": "Each octal digit = 3 binary bits. Example: Octal 7 = Binary 111.",
+      "keywords": ["octal", "base", "eight", "convert"],
+      "category": "number"
+    },
+    {
+      "id": "dig-bcd",
+      "name": "BCD (Binary Coded Decimal)",
+      "formula": "Each decimal digit = 4 bits",
+      "description": "Represents decimal digits 0-9 in 4-bit binary. Example: 25 = 0010 0101 BCD.",
+      "keywords": ["bcd", "binary", "coded", "decimal"],
+      "category": "number"
+    },
+    {
+      "id": "dig-demorgan1",
+      "name": "DeMorgan's Theorem 1",
+      "formula": "NOT(A AND B) = (NOT A) OR (NOT B)",
+      "description": "Break the bar, change AND to OR. NAND equivalent.",
+      "keywords": ["demorgan", "theorem", "boolean", "nand"],
+      "category": "boolean"
+    },
+    {
+      "id": "dig-demorgan2",
+      "name": "DeMorgan's Theorem 2",
+      "formula": "NOT(A OR B) = (NOT A) AND (NOT B)",
+      "description": "Break the bar, change OR to AND. NOR equivalent.",
+      "keywords": ["demorgan", "theorem", "boolean", "nor"],
+      "category": "boolean"
+    },
+    {
+      "id": "dig-boolean-and",
+      "name": "Boolean AND Rules",
+      "formula": "A AND 0 = 0 | A AND 1 = A | A AND A = A",
+      "description": "ANDing with 0 gives 0 (masking). ANDing with 1 passes the value through.",
+      "keywords": ["boolean", "and", "rules", "identity"],
+      "category": "boolean"
+    },
+    {
+      "id": "dig-boolean-or",
+      "name": "Boolean OR Rules",
+      "formula": "A OR 0 = A | A OR 1 = 1 | A OR A = A",
+      "description": "ORing with 0 passes through. ORing with 1 gives 1 (setting).",
+      "keywords": ["boolean", "or", "rules", "identity"],
+      "category": "boolean"
+    },
+    {
+      "id": "dig-boolean-not",
+      "name": "Boolean NOT Rules",
+      "formula": "NOT(NOT A) = A | A AND (NOT A) = 0 | A OR (NOT A) = 1",
+      "description": "Double inversion cancels. Variable AND its complement = 0. Variable OR its complement = 1.",
+      "keywords": ["boolean", "not", "complement", "rules"],
+      "category": "boolean"
+    },
+    {
+      "id": "dig-sr-latch",
+      "name": "SR Latch",
+      "formula": "S=Set, R=Reset (S=R=1 invalid)",
+      "description": "Basic memory element. S=1 sets output HIGH. R=1 resets output LOW.",
+      "keywords": ["sr", "latch", "flip-flop", "memory", "set", "reset"],
+      "category": "sequential"
+    },
+    {
+      "id": "dig-d-flipflop",
+      "name": "D Flip-Flop",
+      "formula": "Q follows D on clock edge",
+      "description": "Data flip-flop. Output Q copies input D on clock edge. Most common flip-flop.",
+      "keywords": ["d", "flip-flop", "data", "clock", "edge"],
+      "category": "sequential"
+    },
+    {
+      "id": "dig-jk-flipflop",
+      "name": "JK Flip-Flop",
+      "formula": "J=Set, K=Reset, J=K=1 toggles",
+      "description": "Like SR but J=K=1 toggles output. No invalid state.",
+      "keywords": ["jk", "flip-flop", "toggle", "clock"],
+      "category": "sequential"
+    },
+    {
+      "id": "dig-counter-mod",
+      "name": "Counter Modulus",
+      "formula": "States = 2^n (for n flip-flops)",
+      "description": "A counter with n flip-flops counts from 0 to 2^n - 1. Example: 4 FFs = mod-16.",
+      "keywords": ["counter", "modulus", "flip-flop", "states"],
+      "category": "sequential"
+    },
+    {
+      "id": "dig-555-astable",
+      "name": "555 Timer Astable Frequency",
+      "formula": "f = 1.44 / ((R1 + 2xR2) x C)",
+      "description": "Frequency of 555 timer in astable (oscillator) mode.",
+      "keywords": ["555", "timer", "astable", "frequency", "oscillator"],
+      "category": "timing"
+    },
+    {
+      "id": "dig-555-duty",
+      "name": "555 Timer Duty Cycle",
+      "formula": "Duty = (R1 + R2) / (R1 + 2xR2)",
+      "description": "Duty cycle of 555 astable. Always > 50% with standard circuit.",
+      "keywords": ["555", "timer", "duty", "cycle"],
+      "category": "timing"
+    },
+    {
+      "id": "dig-7seg-common",
+      "name": "7-Segment Display Types",
+      "formula": "Common Cathode: Logic HIGH lights | Common Anode: Logic LOW lights",
+      "description": "Common cathode: HIGH = ON. Common anode: LOW = ON. Check display type before wiring.",
+      "keywords": ["7-segment", "display", "cathode", "anode", "led"],
+      "category": "display"
+    },
+    {
+      "id": "dig-adc-resolution",
+      "name": "ADC Resolution",
+      "formula": "Step size = V_ref / 2^n",
+      "description": "Resolution of n-bit ADC. 8-bit with 5V ref: 5V/256 = 19.5mV per step.",
+      "keywords": ["adc", "resolution", "analog", "digital", "converter"],
+      "category": "conversion"
+    }
+  ],
+  "units": [
+    {
+      "id": "unit-giga",
+      "name": "Giga (G)",
+      "formula": "1 G = 1,000,000,000",
+      "description": "One billion. Example: 2.4 GHz = 2,400,000,000 Hz.",
+      "keywords": ["giga", "billion", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-mega",
+      "name": "Mega (M)",
+      "formula": "1 M = 1,000,000",
+      "description": "One million. Example: 2.2 MOhm = 2,200,000 Ohm.",
+      "keywords": ["mega", "million", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-kilo",
+      "name": "Kilo (k)",
+      "formula": "1 k = 1,000",
+      "description": "One thousand. Example: 4.7 kOhm = 4,700 Ohm.",
+      "keywords": ["kilo", "thousand", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-milli",
+      "name": "Milli (m)",
+      "formula": "1 m = 0.001 (10^-3)",
+      "description": "One thousandth. Example: 20 mA = 0.020 A.",
+      "keywords": ["milli", "thousandth", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-micro",
+      "name": "Micro (u or mu)",
+      "formula": "1 u = 0.000001 (10^-6)",
+      "description": "One millionth. Example: 100 uF = 0.000100 F.",
+      "keywords": ["micro", "millionth", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-nano",
+      "name": "Nano (n)",
+      "formula": "1 n = 0.000000001 (10^-9)",
+      "description": "One billionth. Example: 10 nF = 0.00000001 F. Common for capacitors.",
+      "keywords": ["nano", "billionth", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-pico",
+      "name": "Pico (p)",
+      "formula": "1 p = 0.000000000001 (10^-12)",
+      "description": "One trillionth. Example: 100 pF = 0.0000000001 F. Common for small capacitors.",
+      "keywords": ["pico", "trillionth", "prefix"],
+      "category": "prefix"
+    },
+    {
+      "id": "unit-ma-a",
+      "name": "Milliamps to Amps",
+      "formula": "Amps = mA / 1000",
+      "description": "Divide by 1000. Example: 250 mA = 0.25 A.",
+      "keywords": ["milliamp", "amp", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-a-ma",
+      "name": "Amps to Milliamps",
+      "formula": "mA = Amps x 1000",
+      "description": "Multiply by 1000. Example: 0.5 A = 500 mA.",
+      "keywords": ["amp", "milliamp", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-kohm-ohm",
+      "name": "Kilohms to Ohms",
+      "formula": "Ohms = kOhm x 1000",
+      "description": "Multiply by 1000. Example: 4.7 kOhm = 4700 Ohm.",
+      "keywords": ["kilohm", "ohm", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-ohm-kohm",
+      "name": "Ohms to Kilohms",
+      "formula": "kOhm = Ohms / 1000",
+      "description": "Divide by 1000. Example: 2200 Ohm = 2.2 kOhm.",
+      "keywords": ["ohm", "kilohm", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-uf-nf",
+      "name": "Microfarads to Nanofarads",
+      "formula": "nF = uF x 1000",
+      "description": "Multiply by 1000. Example: 0.1 uF = 100 nF.",
+      "keywords": ["microfarad", "nanofarad", "capacitor", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-nf-pf",
+      "name": "Nanofarads to Picofarads",
+      "formula": "pF = nF x 1000",
+      "description": "Multiply by 1000. Example: 4.7 nF = 4700 pF.",
+      "keywords": ["nanofarad", "picofarad", "capacitor", "convert"],
+      "category": "conversion"
+    },
+    {
+      "id": "unit-color-code",
+      "name": "Resistor Color Code",
+      "formula": "Bk=0, Br=1, Rd=2, Or=3, Ye=4, Gr=5, Bl=6, Vi=7, Gy=8, Wh=9",
+      "description": "First bands = digits, next = multiplier, last = tolerance. Bad Boys Race Our Young Girls But Violet Generally Wins.",
+      "keywords": ["resistor", "color", "code"],
+      "category": "reference"
+    },
+    {
+      "id": "unit-color-multiplier",
+      "name": "Color Code Multipliers",
+      "formula": "Bk=1, Br=10, Rd=100, Or=1k, Ye=10k, Gr=100k, Bl=1M",
+      "description": "Multiplier band value. Gold = 0.1, Silver = 0.01.",
+      "keywords": ["resistor", "color", "multiplier"],
+      "category": "reference"
+    },
+    {
+      "id": "unit-color-tolerance",
+      "name": "Resistor Tolerance Colors",
+      "formula": "Brown=1%, Red=2%, Gold=5%, Silver=10%, None=20%",
+      "description": "Tolerance band (usually last). Gold (5%) is most common. Tighter tolerance costs more.",
+      "keywords": ["resistor", "tolerance", "color"],
+      "category": "reference"
+    },
+    {
+      "id": "unit-awg",
+      "name": "AWG Wire Gauge",
+      "formula": "Lower AWG = Thicker wire = More current",
+      "description": "American Wire Gauge. Common: 22 AWG for signals, 18-14 AWG for power, 10-12 for high current.",
+      "keywords": ["awg", "wire", "gauge", "current"],
+      "category": "reference"
+    },
+    {
+      "id": "unit-db",
+      "name": "Decibels (Power)",
+      "formula": "dB = 10 x log10(P2/P1)",
+      "description": "Logarithmic ratio. +3dB = double power, -3dB = half power, +10dB = 10x power.",
+      "keywords": ["decibel", "db", "power", "ratio"],
+      "category": "reference"
+    },
+    {
+      "id": "unit-db-voltage",
+      "name": "Decibels (Voltage)",
+      "formula": "dB = 20 x log10(V2/V1)",
+      "description": "For voltage ratios. +6dB = double voltage, +20dB = 10x voltage.",
+      "keywords": ["decibel", "db", "voltage", "ratio"],
+      "category": "reference"
+    }
+  ],
+  "constants": [
+    {
+      "id": "const-pi",
+      "name": "Pi",
+      "formula": "pi = 3.14159",
+      "description": "Used in AC reactance formulas (2 x pi x f). Also written as 3.14 for quick calculations.",
+      "keywords": ["pi", "circle", "constant"],
+      "category": "math"
+    },
+    {
+      "id": "const-707",
+      "name": "RMS Conversion Factor",
+      "formula": "0.707 = 1/sqrt(2)",
+      "description": "RMS = Peak x 0.707. Converts peak AC voltage to RMS (effective) value.",
+      "keywords": ["rms", "peak", "conversion", "0.707"],
+      "category": "math"
+    },
+    {
+      "id": "const-1414",
+      "name": "Peak Conversion Factor",
+      "formula": "1.414 = sqrt(2)",
+      "description": "Peak = RMS x 1.414. Converts RMS to peak value. 120V RMS = 170V peak.",
+      "keywords": ["peak", "rms", "conversion", "1.414"],
+      "category": "math"
+    },
+    {
+      "id": "const-637",
+      "name": "Average Conversion Factor",
+      "formula": "0.637 = 2/pi",
+      "description": "Average = Peak x 0.637 (for full-wave rectified). Used in DC power supply calculations.",
+      "keywords": ["average", "peak", "conversion", "rectified"],
+      "category": "math"
+    },
+    {
+      "id": "const-speed-light",
+      "name": "Speed of Light",
+      "formula": "c = 3 x 10^8 m/s",
+      "description": "Speed of light and electromagnetic waves. Used in wavelength calculations: lambda = c/f.",
+      "keywords": ["light", "speed", "electromagnetic", "wavelength"],
+      "category": "physics"
+    },
+    {
+      "id": "const-electron-charge",
+      "name": "Electron Charge",
+      "formula": "e = 1.6 x 10^-19 Coulombs",
+      "description": "Charge of single electron. 1 Amp = 6.24 x 10^18 electrons per second.",
+      "keywords": ["electron", "charge", "coulomb"],
+      "category": "physics"
+    },
+    {
+      "id": "const-line-voltage",
+      "name": "US Line Voltage",
+      "formula": "120V RMS, 60 Hz",
+      "description": "Standard US household power. 240V for large appliances. Peak voltage is 170V.",
+      "keywords": ["line", "voltage", "household", "us", "60hz"],
+      "category": "reference"
+    },
+    {
+      "id": "const-logic-levels",
+      "name": "TTL Logic Levels",
+      "formula": "LOW: 0-0.8V | HIGH: 2.0-5.0V",
+      "description": "Standard 5V TTL levels. Inputs: LOW < 0.8V, HIGH > 2.0V. Outputs: LOW < 0.4V, HIGH > 2.4V.",
+      "keywords": ["ttl", "logic", "level", "voltage", "digital"],
+      "category": "reference"
+    },
+    {
+      "id": "const-cmos-levels",
+      "name": "CMOS Logic Levels (5V)",
+      "formula": "LOW: 0-1.5V | HIGH: 3.5-5.0V",
+      "description": "5V CMOS logic levels. Wider noise margins than TTL. Also works with 3.3V and other supplies.",
+      "keywords": ["cmos", "logic", "level", "voltage", "digital"],
+      "category": "reference"
+    },
+    {
+      "id": "const-room-temp",
+      "name": "Room Temperature",
+      "formula": "25 degrees C = 77 degrees F = 298 K",
+      "description": "Standard reference temperature for component specifications and calculations.",
+      "keywords": ["temperature", "room", "celsius", "fahrenheit", "kelvin"],
+      "category": "reference"
+    }
+  ]
+}

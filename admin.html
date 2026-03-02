@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAET Instructor Dashboard</title>
+    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="shared/ace-theme.css">
+
+    <style>
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(212, 168, 83, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 40px 24px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, #a0aec0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--gold);
+        }
+
+        .table-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 16px 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            padding: 16px 24px;
+            font-size: 14px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--surface-2);
+        }
+
+        .avatar-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--surface-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--gold);
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .student-unit {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: var(--font-mono);
+        }
+
+        .badge-military {
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .badge-147 {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .badge-tech {
+            background: rgba(212, 168, 83, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+        }
+
+        .badge-other {
+            background: var(--surface-3);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .score-bar-mini {
+            width: 100px;
+            height: 6px;
+            background: var(--surface-3);
+            border-radius: 3px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .score-fill-mini {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .btn-action {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action:hover {
+            background: var(--surface-3);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
+
+        .btn-danger {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        /* Stats Grid in Modal */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+            background: var(--surface-2);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .stat-item {
+            font-size: 13px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-val {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <header class="topbar">
+        <div class="topbar-logo">
+            <a href="dashboard.html" style="text-decoration:none;">
+                <img src="shared/logo.png" alt="ACE Avionics Training" class="logo-img">
+            </a>
+            <span
+                style="font-family: var(--font-mono); font-size: 12px; color: var(--gold); border-left: 1px solid var(--border); padding-left: 16px; margin-left: 16px;">ADMIN
+                CONSOLE</span>
+        </div>
+        <div class="topbar-right">
+            <a href="dashboard.html" class="topbar-btn">
+                Exit Admin
+            </a>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <div class="dashboard-header">
+            <div>
+                <h1 class="page-title">Roster Operations</h1>
+                <div class="page-subtitle">Manage student intelligence and diagnostic data via local server sync.</div>
+            </div>
+            <button class="btn-primary" onclick="loadStudents()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 2v6h-6" />
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 2v6h6" />
+                </svg>
+                Sync Database
+            </button>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Total Students Enrolled</div>
+                <div class="metric-value" id="metric-total">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Military Transitioning</div>
+                <div class="metric-value" id="metric-mil">0</div>
+            </div>
+            <div class="metric-card"
+                style="border-color: rgba(212, 168, 83, 0.3); background: rgba(212, 168, 83, 0.05);">
+                <div class="metric-title" style="color: var(--gold);">Average Diagnostic Score</div>
+                <div class="metric-value" id="metric-avg">0%</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">Student Roster</div>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="roster-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Background & Unit</th>
+                            <th>Experience</th>
+                            <th>Diagnostic Avg</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roster-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+
+                <div id="empty-state" style="display: none; padding: 60px 20px; text-align: center;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--border)"
+                        stroke-width="1.5" style="margin-bottom: 16px;">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <div style="font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">No Students Found
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-muted);">The local database is currently empty.
+                        Direct users to the onboarding flow.</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Detailed Modal -->
+    <div class="modal-overlay" id="student-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;"
+                        id="modal-name">Student Name</h3>
+                    <div style="font-family: var(--font-mono); font-size: 13px; color: var(--gold);" id="modal-id">ID:
+                        000</div>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Background</div>
+                        <div class="stat-val" id="modal-bg">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Employer / Unit</div>
+                        <div class="stat-val" id="modal-employer">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Experience</div>
+                        <div class="stat-val" id="modal-exp">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Certifications</div>
+                        <div class="stat-val" id="modal-certs">-</div>
+                    </div>
+                </div>
+
+                <h4
+                    style="font-size: 16px; font-weight: 600; color: var(--text-secondary); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                    Diagnostic Breakdown</h4>
+                <div id="modal-charts" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- JS populated bars -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStudents();
+        });
+
+        const studentsData = {}; // ID -> Student Data
+
+        async function loadStudents() {
+            try {
+                const res = await fetch('/api/students');
+                if (!res.ok) throw new Error("Server response " + res.status);
+
+                const data = await res.json();
+                renderTable(data);
+
+            } catch (e) {
+                console.error("Failed to fetch from local server:", e);
+                document.getElementById('empty-state').style.display = 'block';
+                document.getElementById('empty-state').innerHTML = `
+                    <div style="color: var(--danger); font-weight: 600; margin-bottom: 8px;">Database Offline</div>
+                    <div style="font-size: 14px; color: var(--text-muted);">Ensure \`python server.py\` is running. Fetch error: ${e.message}</div>
+                `;
+            }
+        }
+
+        function renderTable(students) {
+            const tbody = document.getElementById('roster-body');
+            const emptyState = document.getElementById('empty-state');
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            let militaryCount = 0;
+            let sumAvg = 0;
+
+            students.forEach(s => {
+                studentsData[s.id] = s; // Save for modal
+
+                if (s.background === 'military') militaryCount++;
+
+                // Calc their avg score
+                let totalScoreCtx = 0;
+                let scoreAvg = 0;
+                if (s.scores && s.scores.length > 0) {
+                    s.scores.forEach(score => totalScoreCtx += score.score_percent);
+                    scoreAvg = Math.round(totalScoreCtx / s.scores.length);
+                }
+                sumAvg += scoreAvg;
+
+                // Format Background
+                let badgeClass = 'badge-other';
+                let bgText = s.background;
+                if (s.background === 'military') { badgeClass = 'badge-military'; bgText = 'MIL: ' + (s.branch || 'Transitioning'); }
+                if (s.background === 'part147') { badgeClass = 'badge-147'; bgText = 'Part 147 Grad'; }
+                if (s.background === 'technician') { badgeClass = 'badge-tech'; bgText = 'Technician'; }
+
+                const initials = s.name.substring(0, 2).toUpperCase();
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="avatar-cell">
+                            <div class="student-avatar">${initials}</div>
+                            <div>
+                                <div class="student-name">${escapeHTML(s.name)}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge ${badgeClass}">${bgText}</span>
+                        <div class="student-unit">${escapeHTML(s.employer || 'Unspecified Unit')}</div>
+                    </td>
+                    <td>${escapeHTML(s.experience || 'N/A')}</td>
+                    <td>
+                        <div class="score-bar-mini">
+                            <div class="score-fill-mini ${getColorClass(scoreAvg)}" style="width: ${scoreAvg}%"></div>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-weight: 600; font-size: 13px;">${scoreAvg}%</span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                            <button class="btn-action" onclick="viewStudent(${s.id})">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                View
+                            </button>
+                            <button class="btn-action btn-danger" onclick="deleteStudent(${s.id}, '${escapeHTML(s.name)}')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update Metrics
+            document.getElementById('metric-total').textContent = students.length;
+            document.getElementById('metric-mil').textContent = militaryCount;
+            const globalAvg = students.length > 0 ? Math.round(sumAvg / students.length) : 0;
+            document.getElementById('metric-avg').textContent = globalAvg + '%';
+        }
+
+        async function deleteStudent(id, name) {
+            if (!confirm(`Are you sure you want to permanently delete ${name}? This cannot be undone.`)) return;
+
+            try {
+                const res = await fetch(`/api/students/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    loadStudents(); // refresh table
+                } else {
+                    alert("Failed to delete student.");
+                }
+            } catch (e) {
+                console.error("Delete failed:", e);
+                alert("Database request failed.");
+            }
+        }
+
+        function viewStudent(id) {
+            const s = studentsData[id];
+            if (!s) return;
+
+            document.getElementById('modal-name').textContent = s.name;
+            document.getElementById('modal-id').textContent = `DB ID: ${s.id}`;
+            document.getElementById('modal-bg').textContent = s.background === 'military' && s.branch ? `${s.branch} (${s.mos})` : s.background;
+            document.getElementById('modal-employer').textContent = s.employer || 'N/A';
+            document.getElementById('modal-exp').textContent = s.experience || 'N/A';
+
+            // parse certs
+            let certString = "None";
+            if (s.certs) {
+                try {
+                    const parsed = JSON.parse(s.certs);
+                    if (parsed.length > 0) certString = parsed.join(', ');
+                } catch (e) { }
+            }
+            document.getElementById('modal-certs').textContent = certString;
+
+            // Render Charts
+            const chartArea = document.getElementById('modal-charts');
+            chartArea.innerHTML = '';
+
+            if (s.scores && s.scores.length > 0) {
+                // sort weakest first
+                s.scores.sort((a, b) => a.score_percent - b.score_percent);
+
+                s.scores.forEach(score => {
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.gap = '16px';
+                    row.innerHTML = `
+                        <div style="width: 150px; font-size: 13px; font-weight: 500; color: var(--text-secondary); text-align: right;">${escapeHTML(score.category)}</div>
+                        <div style="flex: 1; height: 10px; background: var(--surface-3); border-radius: 5px; overflow: hidden;">
+                            <div style="height: 100%; width: ${score.score_percent}%; border-radius: 5px; background: ${getHexColor(score.score_percent)};"></div>
+                        </div>
+                        <div style="width: 40px; font-family: var(--font-mono); font-size: 13px; font-weight: 700;">${score.score_percent}%</div>
+                    `;
+                    chartArea.appendChild(row);
+                });
+            } else {
+                chartArea.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No diagnostic data recorded.</div>';
+            }
+
+            document.getElementById('student-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('student-modal').classList.remove('active');
+        }
+
+        function getColorClass(val) {
+            if (val < 60) return 'bg-danger'; // Requires css bg classes or dynamic styles. Using custom below.
+            if (val < 80) return 'bg-warning';
+            return 'bg-success';
+        }
+
+        // Dynamic inject of pure styles for the mini bars
+        const dangerColor = '#ef4444';
+        const warningColor = '#f59e0b';
+        const successColor = '#10b981';
+
+        document.head.insertAdjacentHTML("beforeend", `<style>
+            .bg-danger { background-color: ${dangerColor}; }
+            .bg-warning { background-color: ${warningColor}; }
+            .bg-success { background-color: ${successColor}; }
+        </style>`);
+
+        function getHexColor(val) {
+            if (val < 60) return dangerColor;
+            if (val < 80) return warningColor;
+            return successColor;
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g,
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+
+</html>

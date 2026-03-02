@@ -41,10 +41,53 @@
 
     body {
       font-family: var(--font-sans);
-      background: var(--bg);
+      background-color: #080C1A;
       color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* HD Cinematic Background */
+    .cyber-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(45, 189, 137, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
+        url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+      transform-origin: center top;
+      opacity: 0.3;
+      z-index: -2;
+      pointer-events: none;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 0 50px;
+      }
     }
 
     /* ===================== HANGAR DOORS ===================== */
@@ -330,94 +373,71 @@
       letter-spacing: 0.04em;
     }
 
-    /* ===================== LAUNCH SCREEN ===================== */
     .launch-screen {
       display: block;
-    }
-
-    .intro-hero {
       position: relative;
-      background: rgba(20, 24, 38, 0.5);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      padding: 2.5rem 2rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      overflow: hidden;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    .intro-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
-      pointer-events: none;
+    /* SIMULATION DECK HERO */
+    .deck-hero {
+      text-align: left;
+      margin-bottom: 24px;
+      position: relative;
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px);
     }
 
-    .intro-icon {
-      font-size: 3rem;
-      margin-bottom: 0.75rem;
-      filter: drop-shadow(0 0 12px rgba(88, 166, 255, 0.5));
-    }
-
-    .intro-title {
-      font-family: var(--font-sans);
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--gold);
-      letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
-    }
-
-    .intro-subtitle {
-      font-family: var(--font-sans);
-      font-size: 12px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .intro-desc {
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-      max-width: 520px;
-      margin: 0 auto 1.25rem;
-    }
-
-    .intro-features {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .intro-feature {
-      display: flex;
+    .hero-badge {
+      display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: var(--text-dim);
+      gap: 8px;
+      background: rgba(212, 168, 83, 0.1);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      color: var(--gold);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.15) inset;
     }
 
-    .intro-feature-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
+    .hero-title {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #A0AEC0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    /* Category grid */
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Category grid (Holographic Cards) */
     .category-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.875rem;
       margin-bottom: 1.25rem;
+      perspective: 1000px;
     }
 
     .category-card {
@@ -429,53 +449,91 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      background: rgba(20, 24, 38, 0.5);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(20, 24, 38, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1.1rem 0.875rem;
       cursor: pointer;
-      transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.1s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      box-shadow:
+        0 10px 30px -10px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
       overflow: hidden;
       z-index: 1;
     }
 
+    /* Scanline Overlay */
     .category-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-      opacity: 0;
-      transition: opacity 300ms ease;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 4px);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 2;
+      opacity: 0.5;
+    }
+
+    /* Ambient Glow Behind Card */
+    .category-card::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, transparent, transparent, transparent);
+      border-radius: 18px;
       z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     .category-card:hover {
-      border-color: rgba(212, 168, 83, 0.5);
       box-shadow: 0 16px 40px rgba(212, 168, 83, 0.15), inset 0 0 20px rgba(212, 168, 83, 0.05);
-      transform: translateY(-4px) scale(1.02);
       z-index: 10;
     }
 
-    .category-card:hover::before {
+    .category-card:hover::after {
       opacity: 1;
     }
 
     .category-card.selected {
       border-color: var(--gold);
       background: rgba(212, 168, 83, 0.15);
-      box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.3);
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.2) inset, 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
 
-    .category-card.selected::before {
-      content: '✓';
+    .category-card.selected::after {
+      background: linear-gradient(135deg, rgba(212, 168, 83, 0.4), transparent, rgba(212, 168, 83, 0.1));
+      opacity: 1;
+    }
+
+    .category-card-check {
       position: absolute;
-      top: 6px;
-      right: 8px;
-      font-size: 0.7rem;
-      color: var(--accent);
-      font-weight: 700;
+      top: 8px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+    }
+
+    .category-card.selected .category-card-check {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .category-icon {
@@ -2179,6 +2237,9 @@
 
 <body>
 
+  <div class="cyber-bg"></div>
+  <div class="cyber-grid"></div>
+
   <!-- Achievement Popup -->
   <div class="achievement-popup" id="achievementPopup"></div>
 
@@ -2222,30 +2283,17 @@
         <div class="panel-badge" id="categoryBadge">Select Category</div>
       </div>
 
-      <!-- Hero intro -->
-      <div class="intro-hero">
-        <div class="intro-icon">🛩</div>
-        <div class="intro-title">Drill Mode</div>
-        <div class="intro-subtitle">Immediate Feedback Practice</div>
-        <p class="intro-desc">
-          Select one or more categories and fire up the drill. Answer each question — you'll get instant
-          feedback, an explanation, and an ACE mentor comment after every question.
-          No score pressure. Just build knowledge.
-        </p>
-        <div class="intro-features">
-          <div class="intro-feature">
-            <div class="intro-feature-dot"></div>Instant feedback
-          </div>
-          <div class="intro-feature">
-            <div class="intro-feature-dot"></div>Explanations shown
-          </div>
-          <div class="intro-feature">
-            <div class="intro-feature-dot"></div>Shuffled questions
-          </div>
-          <div class="intro-feature">
-            <div class="intro-feature-dot"></div>Weak area tracking
-          </div>
+      <div class="deck-hero">
+        <div class="hero-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Simulation Deck
         </div>
+        <h1 class="hero-title">Drill Mode</h1>
+        <p class="hero-desc">Immediate feedback practice. Select categories to load the intelligence bank. Answer
+          questions to get instant explanations and mentor guidance. No score pressure. Just build knowledge.</p>
       </div>
 
       <!-- Category grid (populated by JS) -->
@@ -2558,87 +2606,88 @@
     };
 
     // ---- DATA LOADING ----
-    // ---- DATA LOADING ----
-    const DRILL_CATEGORIES = [
-      { id: 'cat-1-maintenance-regs', num: 'MOD 1', name: 'Maintenance Regs', iconColor: '#D4A853', path: '../training/caet/mod1-maintenance-regs/data/questions.json', icon: '📋' },
-      { id: 'cat-2-basic-electrical', num: 'MOD 2', name: 'Basic Electrical', iconColor: '#22d3ee', path: '../training/caet/mod2-basic-electrical/data/questions.json', icon: '⚡' },
-      { id: 'cat-3-cns-systems', num: 'MOD 3', name: 'CNS Systems', iconColor: '#34d399', path: '../training/caet/mod3-cns-systems/data/questions.json', icon: '📡' },
-      { id: 'cat-4-flight-instruments', num: 'MOD 4', name: 'Flight Instruments', iconColor: '#f472b6', path: '../training/caet/mod4-flight-instruments/data/questions.json', icon: '✈️' },
-      { id: 'cat-5-digital-databus', num: 'MOD 5', name: 'Digital Databuses', iconColor: '#a78bfa', path: '../training/caet/mod5-digital-databus/data/questions.json', icon: '💻' },
-      { id: 'cat-6-aircraft-wiring', num: 'MOD 6', name: 'Aircraft Wiring', iconColor: '#fb923c', path: '../training/caet/mod6-aircraft-wiring/data/questions.json', icon: '🔌' },
-      { id: 'cat-7-tools-test-equipment', num: 'MOD 7', name: 'Tools & Test Eq.', iconColor: '#facc15', path: '../training/caet/mod7-tools-test-equipment/data/questions.json', icon: '🛠️' },
-      { id: 'cat-8-shop-safety', num: 'MOD 8', name: 'Shop Safety', iconColor: '#ef4444', path: '../training/caet/mod8-shop-safety/data/questions.json', icon: '🧯' }
-    ];
+    // We will dynamically populate this from master-bank.json
+    let DRILL_CATEGORIES = [];
 
-    async function loadSpecificData(url) {
+    async function loadMasterBank() {
       try {
-        console.log('[ACE Drill] Loading specific data:', url);
-        const res = await fetch(url);
+        console.log('[ACE Drill] Loading master question bank...');
+        // Path is relative to shared/drill.html -> ../master-bank.json
+        const res = await fetch('../master-bank.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
-        let targetQuestions = data.questions || [];
-        if (!Array.isArray(targetQuestions)) {
-          if (Array.isArray(data)) targetQuestions = data;
+        // Populate Categories
+        if (data.categories) {
+          DRILL_CATEGORIES = data.categories.map(cat => ({
+            id: cat.id,
+            num: 'MOD ' + (cat.id.match(/\d+/)?.[0] || '?'),
+            name: cat.name,
+            iconColor: cat.iconColor || '#D4A853',
+            icon: cat.icon || '📋'
+          }));
         }
 
+        let targetQuestions = data.questions || [];
         const validQuestions = [];
         targetQuestions.forEach(q => {
           let entry;
           if (q.multipleChoice) {
             const mc = q.multipleChoice;
             const opts = mc.choices || mc.options;
-            if (!mc.question || !opts || opts.length < 2) return;
+            if (!mc.question && !mc.stem) return; // 'stem' is used in the new format
+            if (!opts || opts.length < 2) return;
             entry = {
               id: q.id,
-              question: mc.question,
+              question: mc.question || mc.stem,
               options: opts,
               correct: mc.correctIndex !== undefined ? mc.correctIndex : 0,
               explanation: mc.explanation || q.explanation || '',
               category: q.category || 'general',
               tags: q.tags || [],
               difficulty: q.difficulty || 'medium',
-              learningObjective: q.learningObjective || null,
+              learningObjective: q.learningObjective || q.objective || null,
               astmRef: q.astmRef || null
             };
           } else {
             const opts = q.options || q.choices;
-            if (!q.question || !opts || opts.length < 2) return;
+            if (!q.question && !q.stem) return;
+            if (!opts || opts.length < 2) return;
             entry = {
               id: q.id,
-              question: q.question,
+              question: q.question || q.stem,
               options: opts,
               correct: q.correct !== undefined ? q.correct : 0,
               explanation: q.explanation || '',
               category: q.category || 'general',
               tags: q.tags || [],
               difficulty: q.difficulty || 'medium',
-              learningObjective: q.learningObjective || null,
+              learningObjective: q.learningObjective || q.objective || null,
               astmRef: q.astmRef || null
             };
           }
           validQuestions.push(entry);
         });
-        return validQuestions;
+
+        return { categories: DRILL_CATEGORIES, questions: validQuestions };
       } catch (e) {
-        console.error('Failed to load data from ' + url, e);
-        return [];
+        console.error('Failed to load data from master-bank.json', e);
+        return { categories: [], questions: [] };
       }
     }
 
-    (async function initApp() {
+    async function initApp() {
       const params = new URLSearchParams(location.search);
-      const directData = params.get('data');
+      const directData = params.get('data'); // Legacy, but we'll adapt if needed
 
-      window._categories = DRILL_CATEGORIES;
+      const masterData = await loadMasterBank();
+      window._categories = masterData.categories;
+      // Store all valid questions globally so startDrill can filter them
+      window._allQuestions = masterData.questions;
 
-      if (directData) {
-        // Direct launch mode
-        const qs = await loadSpecificData(directData);
-        if (qs.length === 0) {
-          alert("Failed to load questions from " + directData);
-          return;
-        }
+      if (directData && masterData.questions.length > 0) {
+        // Direct launch mode - filter by category if needed, or just run all
+        const qs = masterData.questions;
         state.questions = qs;
 
         document.getElementById('launchPanel').style.display = 'none';
@@ -2656,21 +2705,32 @@
         loadQuestion();
       } else {
         // Normal mode (show Launch Screen)
-        renderCategories();
+        if (window._categories.length > 0) {
+          renderCategories();
+        } else {
+          document.getElementById('categoryGrid').innerHTML = '<p style="color:var(--danger)">No categories loaded. Check master-bank.json.</p>';
+        }
         loadSessionStats();
         bindEvents();
         startTimer();
       }
-    })();
+    }
 
-    // ---- RENDER CATEGORIES ----
+    // Kick off initialization
+    initApp();
+
     function renderCategories() {
       const grid = document.getElementById('categoryGrid');
       grid.innerHTML = window._categories.map(cat => `
-    <div class="category-card" data-cat="${cat.id}">
+    <div class="category-card holo-card-js" data-cat="${cat.id}">
+      <div class="category-card-check">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
       <div class="category-icon" style="color:${cat.iconColor}">${cat.icon}</div>
       <div class="category-name">${cat.name}</div>
-      <div class="category-count">${cat.num}</div>
+      <div class="category-count">MOD ${cat.id.match(/\d+/)?.[0] || '?'}</div>
     </div>
   `).join('');
       grid.querySelectorAll('.category-card').forEach(card => {
@@ -2753,18 +2813,11 @@
       // Door transition: show drill overlay
       doorsTransition(
         async () => {
-          // Load specific data files dynamically
-          let pool = [];
-          for (const catId of selectedCatIds) {
-            const cat = window._categories.find(c => c.id === catId);
-            if (cat && cat.path) {
-              const qs = await loadSpecificData(cat.path);
-              pool.push(...qs);
-            }
-          }
+          // Filter questions from the globally loaded master bank
+          let pool = window._allQuestions.filter(q => selectedCatIds.includes(q.category));
 
           if (pool.length === 0) {
-            alert('No questions loaded. Check network or module selection.');
+            alert('No questions loaded for the selected categories. Check master-bank.json data.');
             if (startBtn) startBtn.disabled = false;
             return;
           }
@@ -3782,10 +3835,7 @@
         const btn = document.getElementById('btnSelectAll');
         btn.textContent = selectedCatIds.length === allIds.length ? 'Clear All' : 'Select All';
         // Update the summary
-        const totalQ = selectedCatIds.reduce((sum, id) => {
-          const cat = window._categories.find(c => c.id === id);
-          return sum + (cat ? cat.items.length : 0);
-        }, 0);
+        const totalQ = window._allQuestions ? window._allQuestions.filter(q => selectedCatIds.includes(q.category)).length : 0;
         const summaryEl = document.getElementById('selectedSummary');
         if (selectedCatIds.length === 0) {
           summaryEl.innerHTML = 'Select one or more categories to begin';
