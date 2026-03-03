@@ -12,6 +12,172 @@
     <link rel="stylesheet" href="shared/ace-theme.css">
 
     <style>
+
+        /* ===== HAMBURGER BUTTON ===== */
+        .sn-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 8px;
+            flex-shrink: 0;
+            z-index: 1001;
+        }
+        .sn-hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #D4A853;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .sn-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .sn-hamburger.active span:nth-child(2) { opacity: 0; }
+        .sn-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== OVERLAY ===== */
+        .sn-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+        #sideNav.open + .sn-overlay { display: block; }
+
+        /* ===== SIDE PANEL ===== */
+        .sn-panel {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background: #0c0f1e;
+            border-right: 1px solid rgba(212,168,83,0.15);
+            z-index: 1000;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sn-panel.open { left: 0; }
+
+        .sn-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+
+        .sn-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .sn-scroll::-webkit-scrollbar { width: 4px; }
+        .sn-scroll::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.3); border-radius: 4px; }
+
+        .sn-home-link {
+            display: block;
+            padding: 10px 16px;
+            color: #8891a8;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 4px;
+        }
+        .sn-home-link:hover { color: #D4A853; }
+
+        /* ===== WORLD ACCORDION ===== */
+        .sn-world { border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .sn-world-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            gap: 8px;
+            text-align: left;
+        }
+        .sn-world-btn:hover { background: rgba(212,168,83,0.06); }
+        .sn-world-icon { font-size: 16px; flex-shrink: 0; }
+        .sn-world-name { flex: 1; }
+        .sn-chevron { flex-shrink: 0; transition: transform 0.2s; color: #6b7280; }
+        .sn-world.open .sn-chevron { transform: rotate(180deg); }
+
+        .sn-world-content {
+            display: none;
+            padding: 0 0 8px 0;
+        }
+        .sn-world.open .sn-world-content { display: block; }
+
+        /* ===== ZONE ===== */
+        .sn-zone { padding: 4px 0; }
+        .sn-zone-label {
+            padding: 4px 16px 4px 36px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* ===== NODE LINKS ===== */
+        .sn-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px 7px 40px;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 12px;
+            line-height: 1.4;
+            transition: all 0.15s;
+        }
+        .sn-node:hover { color: #D4A853; background: rgba(212,168,83,0.06); }
+        .sn-node-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #3f3f46;
+            flex-shrink: 0;
+        }
+        .sn-node:hover .sn-node-dot { background: #D4A853; }
+
+        /* ===== MOBILE: Show hamburger ===== */
+        @media (max-width: 768px) {
+            .sn-hamburger { display: flex; }
+        }
+
+        /* ===== DESKTOP: Always visible sidebar ===== */
+        @media (min-width: 769px) {
+            .sn-panel {
+                left: 0;
+                width: 260px;
+                border-right: 1px solid rgba(255,255,255,0.06);
+            }
+            .sn-overlay { display: none !important; }
+            .main {
+                margin-left: 260px;
+                max-width: 700px;
+            }
+            .topbar {
+                padding-left: 276px;
+            }
+        }
+
         /* BASE & BACKGROUND */
         body {
             position: relative;
@@ -544,10 +710,96 @@
 
 <body>
 
+    
+    <!-- SIDE NAVIGATION -->
+    <nav class="sn-panel" id="sideNav">
+        <div class="sn-header">
+            <img src="shared/logo.png" alt="ACE" style="height:24px;">
+            <span style="font-weight:700;color:#D4A853;margin-left:8px;">Navigation</span>
+        </div>
+        <div class="sn-scroll">
+            <a class="sn-home-link" href="dashboard.html">← Back to Dashboard</a>
+<div class="sn-world" data-world="W1"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">🛡️</span><span class="sn-world-name">Safety</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Safety mindset & reporting</div><a class="sn-node" href="journey-nodes/W1-Z1-N1_training.html" data-node="W1-Z1-N1"><span class="sn-node-dot"></span>Hazard recognition (stop-work mindset)</a>
+<a class="sn-node" href="journey-nodes/W1-Z1-N2_training.html" data-node="W1-Z1-N2"><span class="sn-node-dot"></span>Housekeeping & clean work area discipline</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Basic PPE</div><a class="sn-node" href="journey-nodes/W1-Z2-N1_training.html" data-node="W1-Z2-N1"><span class="sn-node-dot"></span>Eye, hearing, and chemical glove basics</a>
+<a class="sn-node" href="journey-nodes/W1-Z2-N2_training.html" data-node="W1-Z2-N2"><span class="sn-node-dot"></span>Electrical shock first action</a>
+<a class="sn-node" href="journey-nodes/W1-Z2-N3_training.html" data-node="W1-Z2-N3"><span class="sn-node-dot"></span>Ramp/rotor awareness (optional)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">SDS / chemicals</div><a class="sn-node" href="journey-nodes/W1-Z3-N1_training.html" data-node="W1-Z3-N1"><span class="sn-node-dot"></span>SDS / HazCom basics</a>
+<a class="sn-node" href="journey-nodes/W1-Z3-N2_training.html" data-node="W1-Z3-N2"><span class="sn-node-dot"></span>Chemical handling/storage/disposal awareness (generic)</a>
+<a class="sn-node" href="journey-nodes/W1-Z3-N3_training.html" data-node="W1-Z3-N3"><span class="sn-node-dot"></span>Solvent fumes / exposure awareness</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Fire safety basics</div><a class="sn-node" href="journey-nodes/W1-Z4-N1_training.html" data-node="W1-Z4-N1"><span class="sn-node-dot"></span>Fire safety basics (no extinguisher classes)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">ESD/FOD discipline</div><a class="sn-node" href="journey-nodes/W1-Z5-N1_training.html" data-node="W1-Z5-N1"><span class="sn-node-dot"></span>ESD-safe handling basics</a>
+<a class="sn-node" href="journey-nodes/W1-Z5-N2_training.html" data-node="W1-Z5-N2"><span class="sn-node-dot"></span>FOD and tool accountability</a></div></div></div>
+<div class="sn-world" data-world="W2"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">📋</span><span class="sn-world-name">Regulations</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Regulatory framework</div><a class="sn-node" href="journey-nodes/W2-Z1-N1_training.html" data-node="W2-Z1-N1"><span class="sn-node-dot"></span>Parts 145/43/91 basics (recognition)</a>
+<a class="sn-node" href="journey-nodes/W2-Z1-N2_training.html" data-node="W2-Z1-N2"><span class="sn-node-dot"></span>Maintenance vs preventive maintenance (recognition)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Scope & technical data</div><a class="sn-node" href="journey-nodes/W2-Z2-N1_training.html" data-node="W2-Z2-N1"><span class="sn-node-dot"></span>Ratings/capability limits (stay in your lane)</a>
+<a class="sn-node" href="journey-nodes/W2-Z2-N2_training.html" data-node="W2-Z2-N2"><span class="sn-node-dot"></span>Current manuals / technical data requirement</a>
+<a class="sn-node" href="journey-nodes/W2-Z2-N3_training.html" data-node="W2-Z2-N3"><span class="sn-node-dot"></span>Manual-first troubleshooting start point</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Documentation basics</div><a class="sn-node" href="journey-nodes/W2-Z3-N1_training.html" data-node="W2-Z3-N1"><span class="sn-node-dot"></span>Maintenance record elements (Part 43.9 level)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Approved data / changes</div><a class="sn-node" href="journey-nodes/W2-Z4-N1_training.html" data-node="W2-Z4-N1"><span class="sn-node-dot"></span>Major alteration basics</a>
+<a class="sn-node" href="journey-nodes/W2-Z4-N2_training.html" data-node="W2-Z4-N2"><span class="sn-node-dot"></span>STC and TSO replacement basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Standards & calibration awareness</div><a class="sn-node" href="journey-nodes/W2-Z5-N1_training.html" data-node="W2-Z5-N1"><span class="sn-node-dot"></span>Installation standards awareness (cross-link)</a>
+<a class="sn-node" href="journey-nodes/W2-Z5-N2_training.html" data-node="W2-Z5-N2"><span class="sn-node-dot"></span>Calibration label check (cross-link)</a></div></div></div>
+<div class="sn-world" data-world="W3"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">⚡</span><span class="sn-world-name">Electrical</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">DC fundamentals</div><a class="sn-node" href="journey-nodes/W3-Z1-N1_training.html" data-node="W3-Z1-N1"><span class="sn-node-dot"></span>Ohm’s Law basics</a>
+<a class="sn-node" href="journey-nodes/W3-Z1-N2_training.html" data-node="W3-Z1-N2"><span class="sn-node-dot"></span>Power basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Circuit behavior</div><a class="sn-node" href="journey-nodes/W3-Z2-N1_training.html" data-node="W3-Z2-N1"><span class="sn-node-dot"></span>Series/parallel circuit behavior</a>
+<a class="sn-node" href="journey-nodes/W3-Z2-N2_training.html" data-node="W3-Z2-N2"><span class="sn-node-dot"></span>Circuit protection (fuses/breakers)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Aircraft DC systems</div><a class="sn-node" href="journey-nodes/W3-Z3-N1_training.html" data-node="W3-Z3-N1"><span class="sn-node-dot"></span>Buses and distribution</a>
+<a class="sn-node" href="journey-nodes/W3-Z3-N2_training.html" data-node="W3-Z3-N2"><span class="sn-node-dot"></span>Batteries and grounding/bonding</a>
+<a class="sn-node" href="journey-nodes/W3-Z3-N3_training.html" data-node="W3-Z3-N3"><span class="sn-node-dot"></span>Power generation and regulation</a></div>
+<div class="sn-zone"><div class="sn-zone-label">AC fundamentals</div><a class="sn-node" href="journey-nodes/W3-Z4-N1_training.html" data-node="W3-Z4-N1"><span class="sn-node-dot"></span>AC fundamentals (frequency/waveform/reactance/transformer)</a></div></div></div>
+<div class="sn-world" data-world="W4"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">🔧</span><span class="sn-world-name">Tools & Test</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Hand tools</div><a class="sn-node" href="journey-nodes/W4-Z1-N1_training.html" data-node="W4-Z1-N1"><span class="sn-node-dot"></span>Hand tools & precision basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Multimeters</div><a class="sn-node" href="journey-nodes/W4-Z2-N1_training.html" data-node="W4-Z2-N1"><span class="sn-node-dot"></span>DMM basics (modes & connections)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Fault finding</div><a class="sn-node" href="journey-nodes/W4-Z3-N1_training.html" data-node="W4-Z3-N1"><span class="sn-node-dot"></span>Voltage drop & resistance clues</a>
+<a class="sn-node" href="journey-nodes/W4-Z3-N2_training.html" data-node="W4-Z3-N2"><span class="sn-node-dot"></span>Basic fault isolation (opens/shorts/parasitic)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Scope & specialty instruments</div><a class="sn-node" href="journey-nodes/W4-Z4-N1_training.html" data-node="W4-Z4-N1"><span class="sn-node-dot"></span>Oscilloscope & specialty instruments awareness</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Tool governance</div><a class="sn-node" href="journey-nodes/W4-Z5-N1_training.html" data-node="W4-Z5-N1"><span class="sn-node-dot"></span>Wattmeter basics (authoring gap)</a></div></div></div>
+<div class="sn-world" data-world="W5"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">🔌</span><span class="sn-world-name">Wiring</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Wire/cable fundamentals</div><a class="sn-node" href="journey-nodes/W5-Z1-N1_training.html" data-node="W5-Z1-N1"><span class="sn-node-dot"></span>Wire types & insulation</a>
+<a class="sn-node" href="journey-nodes/W5-Z1-N2_training.html" data-node="W5-Z1-N2"><span class="sn-node-dot"></span>Wire gauge sizing</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Terminations/connectors</div><a class="sn-node" href="journey-nodes/W5-Z2-N1_training.html" data-node="W5-Z2-N1"><span class="sn-node-dot"></span>Crimping fundamentals</a>
+<a class="sn-node" href="journey-nodes/W5-Z2-N2_training.html" data-node="W5-Z2-N2"><span class="sn-node-dot"></span>Connectors & backshells</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Harness fab/routing</div><a class="sn-node" href="journey-nodes/W5-Z3-N1_training.html" data-node="W5-Z3-N1"><span class="sn-node-dot"></span>Harness fabrication basics</a>
+<a class="sn-node" href="journey-nodes/W5-Z3-N2_training.html" data-node="W5-Z3-N2"><span class="sn-node-dot"></span>Routing & protection</a>
+<a class="sn-node" href="journey-nodes/W5-Z3-N3_training.html" data-node="W5-Z3-N3"><span class="sn-node-dot"></span>Service loops & routing discipline</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Shielding & repairs</div><a class="sn-node" href="journey-nodes/W5-Z4-N1_training.html" data-node="W5-Z4-N1"><span class="sn-node-dot"></span>Shielding & EMI basics</a>
+<a class="sn-node" href="journey-nodes/W5-Z4-N2_training.html" data-node="W5-Z4-N2"><span class="sn-node-dot"></span>Soldering awareness</a>
+<a class="sn-node" href="journey-nodes/W5-Z4-N3_training.html" data-node="W5-Z4-N3"><span class="sn-node-dot"></span>Heat shrink / solder sleeves (authoring gap)</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Inspection & prohibited</div><a class="sn-node" href="journey-nodes/W5-Z5-N1_training.html" data-node="W5-Z5-N1"><span class="sn-node-dot"></span>Prohibited practices</a>
+<a class="sn-node" href="journey-nodes/W5-Z5-N2_training.html" data-node="W5-Z5-N2"><span class="sn-node-dot"></span>Safety wire twist rate (optional)</a></div></div></div>
+<div class="sn-world" data-world="W6"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">💻</span><span class="sn-world-name">Digital Databus</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">ARINC 429 architecture</div><a class="sn-node" href="journey-nodes/W6-Z2-N1_training.html" data-node="W6-Z2-N1"><span class="sn-node-dot"></span>ARINC 429 architecture basics</a>
+<a class="sn-node" href="journey-nodes/W6-Z2-N2_training.html" data-node="W6-Z2-N2"><span class="sn-node-dot"></span>ARINC 429 word structure basics</a>
+<a class="sn-node" href="journey-nodes/W6-Z2-N3_training.html" data-node="W6-Z2-N3"><span class="sn-node-dot"></span>ARINC 429 speed/timing awareness</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Why digital buses</div><a class="sn-node" href="journey-nodes/W6-Z1-N1_training.html" data-node="W6-Z1-N1"><span class="sn-node-dot"></span>Why digital databuses exist</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Other buses</div><a class="sn-node" href="journey-nodes/W6-Z3-N1_training.html" data-node="W6-Z3-N1"><span class="sn-node-dot"></span>MIL-STD-1553 basics</a>
+<a class="sn-node" href="journey-nodes/W6-Z3-N2_training.html" data-node="W6-Z3-N2"><span class="sn-node-dot"></span>RS-232 basics</a>
+<a class="sn-node" href="journey-nodes/W6-Z3-N3_training.html" data-node="W6-Z3-N3"><span class="sn-node-dot"></span>RS-485/422 basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Databus troubleshooting</div><a class="sn-node" href="journey-nodes/W6-Z4-N1_training.html" data-node="W6-Z4-N1"><span class="sn-node-dot"></span>Databus troubleshooting basics</a>
+<a class="sn-node" href="journey-nodes/W6-Z4-N2_training.html" data-node="W6-Z4-N2"><span class="sn-node-dot"></span>Databus analyzer awareness (cross-link)</a></div></div></div>
+<div class="sn-world" data-world="W7"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">📡</span><span class="sn-world-name">CNS Systems</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Audio & comm path</div><a class="sn-node" href="journey-nodes/W7-Z1-N1_training.html" data-node="W7-Z1-N1"><span class="sn-node-dot"></span>Audio panel/intercom basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Communications</div><a class="sn-node" href="journey-nodes/W7-Z2-N1_training.html" data-node="W7-Z2-N1"><span class="sn-node-dot"></span>VHF/HF comm basics</a>
+<a class="sn-node" href="journey-nodes/W7-Z2-N2_training.html" data-node="W7-Z2-N2"><span class="sn-node-dot"></span>Antennas & RF safety basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Navigation</div><a class="sn-node" href="journey-nodes/W7-Z3-N1_training.html" data-node="W7-Z3-N1"><span class="sn-node-dot"></span>VOR basics</a>
+<a class="sn-node" href="journey-nodes/W7-Z3-N2_training.html" data-node="W7-Z3-N2"><span class="sn-node-dot"></span>ILS/marker basics</a>
+<a class="sn-node" href="journey-nodes/W7-Z3-N3_training.html" data-node="W7-Z3-N3"><span class="sn-node-dot"></span>Other nav basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">GPS/WAAS</div><a class="sn-node" href="journey-nodes/W7-Z4-N1_training.html" data-node="W7-Z4-N1"><span class="sn-node-dot"></span>GPS/WAAS basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Surveillance</div><a class="sn-node" href="journey-nodes/W7-Z5-N1_training.html" data-node="W7-Z5-N1"><span class="sn-node-dot"></span>Transponder basics</a>
+<a class="sn-node" href="journey-nodes/W7-Z5-N2_training.html" data-node="W7-Z5-N2"><span class="sn-node-dot"></span>ADS-B/TCAS basics</a></div></div></div>
+<div class="sn-world" data-world="W8"><button class="sn-world-btn" onclick="this.parentElement.classList.toggle('open')"><span class="sn-world-icon">✈️</span><span class="sn-world-name">Flight Instruments</span><svg class="sn-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="sn-world-content"><div class="sn-zone"><div class="sn-zone-label">Pitot-static fundamentals</div><a class="sn-node" href="journey-nodes/W8-Z1-N1_training.html" data-node="W8-Z1-N1"><span class="sn-node-dot"></span>Pitot-static components basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Instrument behavior</div><a class="sn-node" href="journey-nodes/W8-Z2-N1_training.html" data-node="W8-Z2-N1"><span class="sn-node-dot"></span>Altimeter/VSI/ASI basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Blockage scenarios</div><a class="sn-node" href="journey-nodes/W8-Z3-N1_training.html" data-node="W8-Z3-N1"><span class="sn-node-dot"></span>Pitot/static blockage symptoms</a></div>
+<div class="sn-zone"><div class="sn-zone-label">Gyro fundamentals</div><a class="sn-node" href="journey-nodes/W8-Z4-N1_training.html" data-node="W8-Z4-N1"><span class="sn-node-dot"></span>Gyro instruments basics</a></div>
+<div class="sn-zone"><div class="sn-zone-label">AHRS/glass cockpit</div><a class="sn-node" href="journey-nodes/W8-Z5-N1_training.html" data-node="W8-Z5-N1"><span class="sn-node-dot"></span>AHRS/PFD basics</a></div></div></div>
+        </div>
+    </nav>
+    <div class="sn-overlay" id="snOverlay" onclick="document.getElementById('sideNav').classList.remove('open'); document.getElementById('snHamburger').classList.remove('active')"></div>
+
     <div class="cyber-bg"></div>
     <div class="cyber-grid"></div>
 
     <header class="topbar">
+        <button class="sn-hamburger" id="snHamburger" onclick="document.getElementById('sideNav').classList.toggle('open'); this.classList.toggle('active')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
         <div class="topbar-logo">
             <a href="dashboard.html" style="text-decoration:none;">
                 <img src="shared/logo.png" alt="ACE Avionics Training" class="logo-img">
