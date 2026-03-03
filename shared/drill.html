@@ -2816,7 +2816,23 @@
     }
 
     // Kick off initialization
-    initApp();
+    initApp().catch(async (e) => {
+      console.error('[Drill] initApp failed, attempting recovery:', e);
+      // Attempt to render categories even if something else failed
+      try {
+        const masterData = await loadMasterBank();
+        window._categories = masterData.categories;
+        window._allQuestions = masterData.questions;
+        if (window._categories && window._categories.length > 0) {
+          renderCategories();
+        }
+        loadSessionStats();
+        bindEvents();
+        startTimer();
+      } catch(e2) {
+        console.error('[Drill] Recovery also failed:', e2);
+      }
+    });
 
     function renderCategories() {
       const grid = document.getElementById('categoryGrid');
@@ -3981,6 +3997,48 @@
       } catch (e) { }
     })();
   </script>
+
+<script>
+// FALLBACK: Force-render categories after page load
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var grid = document.getElementById('categoryGrid');
+    if (grid && grid.children.length === 0) {
+      console.log('[Drill Fallback] Main script failed to render categories, injecting now');
+      fetch('../master-bank.json').then(r => r.json()).then(function(data) {
+        var cats = data.categories || [];
+        var allQ = data.questions || [];
+        window._categories = cats.map(function(cat) {
+          return { id: cat.id, num: 'MOD ' + (cat.id.match(/\d+/) || ['?'])[0], name: cat.name, iconColor: cat.iconColor || '#D4A853', icon: cat.icon || '📋' };
+        });
+        window._allQuestions = [];
+        allQ.forEach(function(q) {
+          var mc = q.multipleChoice || q.practice || q.jeopardy;
+          if (!mc) return;
+          window._allQuestions.push({ id: q.id, question: mc.question || mc.stem || '', options: mc.choices || mc.options || [], correct: mc.correctIndex !== undefined ? mc.correctIndex : 0, explanation: mc.explanation || q.explanation || '', category: q.category || 'general', tags: q.tags || [], difficulty: q.difficulty || 'medium', learningObjective: q.learningObjective || null });
+        });
+
+        grid.innerHTML = window._categories.map(function(cat) {
+          var qCount = window._allQuestions.filter(function(q) { return q.category === cat.id; }).length;
+          return '<div class="category-card holo-card-js" data-cat="' + cat.id + '">' +
+            '<div class="category-card-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>' +
+            '<div class="category-icon" style="color:' + cat.iconColor + '">' + cat.icon + '</div>' +
+            '<div class="category-name">' + cat.name + '</div>' +
+            '<div class="category-count">' + qCount + ' questions</div></div>';
+        }).join('');
+
+        // Add click handlers
+        grid.querySelectorAll('.category-card').forEach(function(card) {
+          card.addEventListener('click', function() { card.classList.toggle('selected'); });
+        });
+
+        console.log('[Drill Fallback] Rendered ' + window._categories.length + ' categories');
+      });
+    }
+  }, 1500);
+});
+</script>
+
 </body>
 
 </html>

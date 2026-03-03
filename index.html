@@ -1,11 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=dashboard.html">
-  <title>ACE Avionics Training</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACE Avionics Training — CAET Certification Prep</title>
+    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/js/ace-auth.js"></script>
+    <script>
+    // If already enrolled, go straight to dashboard
+    (async function() {
+        const session = await AceAuth.getSession();
+        if (session) window.location.href = 'dashboard.html';
+    })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a1a; color: #e0e0e0; }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
+        .logo { width: 80px; height: 80px; margin-bottom: 24px; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+        .hero h1 span { color: #7fdbca; }
+        .hero .sub { color: #8891a8; font-size: 1.15rem; max-width: 560px; line-height: 1.7; margin-bottom: 40px; }
+        .cta-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 16px 36px; border-radius: 10px; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.2s; }
+        .btn-main { background: #7fdbca; color: #0a0a1a; }
+        .btn-main:hover { background: #6bc9b8; transform: translateY(-2px); }
+        .btn-ghost { background: transparent; border: 1px solid #2a2a4a; color: #8891a8; }
+        .btn-ghost:hover { border-color: #7fdbca; color: #7fdbca; }
+        .stats-bar { display: flex; gap: 40px; margin-top: 48px; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 1.8rem; font-weight: 800; color: #7fdbca; }
+        .stat-lbl { font-size: 12px; color: #8891a8; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+        .badge { display: inline-block; background: rgba(127,219,202,0.12); color: #7fdbca; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
+        @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } .stats-bar { gap: 24px; } }
+    </style>
 </head>
 <body>
-  <p>Redirecting to <a href="dashboard.html">ACE Dashboard</a>...</p>
+    <div class="hero">
+        <img src="shared/ace-sprites/ace-48-happy.png" alt="ACE" class="logo">
+        <div class="badge">The only CAET-specific prep platform</div>
+        <h1>Pass the <span>CAET Exam</span><br>on Your First Try</h1>
+        <p class="sub">8 modules. 233+ practice questions. Adaptive diagnostics. Military crosswalk. Mock certification exams. Built by avionics professionals for avionics professionals.</p>
+        <div class="cta-row">
+            <a href="checkout.html" class="btn btn-main">Get Started — $247</a>
+            <a href="enrollment.html" class="btn btn-ghost">I Have a Code</a>
+        </div>
+        <div class="stats-bar">
+            <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">Modules</div></div>
+            <div class="stat"><div class="stat-num">233+</div><div class="stat-lbl">Questions</div></div>
+            <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Practice Modes</div></div>
+            <div class="stat"><div class="stat-num">24</div><div class="stat-lbl">Diagnostic Questions</div></div>
+        </div>
+    </div>
 </body>
 </html>

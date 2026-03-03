@@ -2689,7 +2689,7 @@
     // GLOBAL DYNAMIC PARAMETERS
     // ========================================================================
     const _jParams = new URLSearchParams(location.search);
-    let _backUrl = '../dashboard.html';
+    let _backUrl = '../practice.html';
     const GLOBAL_CAT_ID = _jParams.get('cat') || 'jeopardy';
     const GLOBAL_TITLE = _jParams.get('title') || 'Battle Ace';
     const GLOBAL_COLOR = _jParams.get('color');
@@ -3060,7 +3060,7 @@
 
       try {
         // Read data path from URL param, fall back to jeopardy.json
-        _backUrl = _jParams.get('back') || '../dashboard.html';
+        _backUrl = _jParams.get('back') || '../practice.html';
         let fetchUrl = _jParams.get('data') || 'data/jeopardy.json';
         // Auto-upgrade old references from questions.json → jeopardy.json
         if (fetchUrl.endsWith('questions.json')) {

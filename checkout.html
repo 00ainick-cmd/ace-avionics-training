@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACE Avionics Training — Get Started</title>
+    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+    <link rel="stylesheet" href="shared/ace-theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+        .hero { text-align: center; padding: 60px 20px 40px; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
+        .hero h1 span { color: #7fdbca; }
+        .hero p { color: #8891a8; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .badge { display: inline-block; background: rgba(127,219,202,0.15); color: #7fdbca; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+        .plans { display: flex; gap: 24px; justify-content: center; padding: 0 20px 60px; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
+        .plan-card { background: #12122a; border: 1px solid #1e1e3a; border-radius: 16px; padding: 40px 32px; flex: 1; min-width: 280px; max-width: 360px; position: relative; transition: transform 0.2s, border-color 0.2s; }
+        .plan-card:hover { transform: translateY(-4px); border-color: #7fdbca; }
+        .plan-card.popular { border-color: #7fdbca; }
+        .popular-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #7fdbca; color: #0a0a1a; padding: 4px 16px; border-radius: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .plan-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: #c0c0d0; }
+        .plan-price { font-size: 2.8rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+        .plan-price span { font-size: 1rem; font-weight: 400; color: #8891a8; }
+        .plan-desc { color: #8891a8; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+        .plan-features { list-style: none; margin-bottom: 32px; }
+        .plan-features li { padding: 8px 0; font-size: 14px; color: #c0c0d0; display: flex; align-items: center; gap: 10px; }
+        .plan-features li::before { content: '✓'; color: #7fdbca; font-weight: 700; }
+        .btn-buy { display: block; width: 100%; padding: 16px; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; text-align: center; transition: all 0.2s; }
+        .btn-yearly { background: #1e1e3a; color: #7fdbca; border: 1px solid #7fdbca; }
+        .btn-yearly:hover { background: rgba(127,219,202,0.1); }
+        .btn-lifetime { background: #7fdbca; color: #0a0a1a; }
+        .btn-lifetime:hover { background: #6bc9b8; }
+        .guarantee { text-align: center; padding: 0 20px 40px; color: #8891a8; font-size: 13px; }
+        .guarantee strong { color: #c0c0d0; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto 60px; padding: 0 20px; }
+        .feature-item { background: #12122a; border: 1px solid #1e1e3a; border-radius: 12px; padding: 24px; }
+        .feature-item h3 { font-size: 15px; margin-bottom: 6px; color: #e0e0e0; }
+        .feature-item p { font-size: 13px; color: #8891a8; line-height: 1.5; }
+        .feature-icon { font-size: 24px; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="badge">🎓 CAET Certification Prep</div>
+        <h1>Pass the <span>CAET Exam</span> on Your First Try</h1>
+        <p>The only dedicated prep platform for the Certified Aircraft Electronics Technician exam. Built by avionics professionals, powered by adaptive learning.</p>
+    </div>
+
+    <div class="plans">
+        <div class="plan-card">
+            <div class="plan-name">Yearly Access</div>
+            <div class="plan-price">$247 <span>/ year</span></div>
+            <div class="plan-desc">Full platform access for 365 days. Perfect if you're testing within the year.</div>
+            <ul class="plan-features">
+                <li>All 8 CAET modules</li>
+                <li>233+ practice questions</li>
+                <li>Battle ACE, Drill, Flashcards</li>
+                <li>Adaptive diagnostic & study plan</li>
+                <li>Mock certification exams</li>
+                <li>Progress tracking & analytics</li>
+            </ul>
+            <a href="https://buy.stripe.com/28E14mcy96JX253e1MbZe07" class="btn-buy btn-yearly">Get Yearly Access →</a>
+        </div>
+
+        <div class="plan-card popular">
+            <div class="popular-tag">Best Value</div>
+            <div class="plan-name">Lifetime Access</div>
+            <div class="plan-price">$397 <span>one-time</span></div>
+            <div class="plan-desc">Never expires. Includes all future updates and new content forever.</div>
+            <ul class="plan-features">
+                <li>Everything in Yearly</li>
+                <li>Never expires</li>
+                <li>All future content updates</li>
+                <li>Priority support</li>
+                <li>Military crosswalk included</li>
+                <li>Personalized study path</li>
+            </ul>
+            <a href="https://buy.stripe.com/bJe7sK0Pr2tHeRP9LwbZe08" class="btn-buy btn-lifetime">Get Lifetime Access →</a>
+        </div>
+    </div>
+
+    <div class="guarantee">
+        <strong>30-Day Money-Back Guarantee</strong> — If the platform doesn't help you prepare, we'll refund you. No questions asked.
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon">🎮</div>
+            <h3>Battle ACE Mode</h3>
+            <p>Jeopardy-style challenge across all 8 categories. Compete against the clock.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🧠</div>
+            <h3>Adaptive Onboarding</h3>
+            <p>Military crosswalk identifies what you already know. Your study plan starts where you need it.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <h3>Real-Time Analytics</h3>
+            <p>Track mastery per category. See exactly where you're strong and where to focus.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🎯</div>
+            <h3>Mock Certification Exam</h3>
+            <p>60-question timed exam simulating the real CAET test. Know you're ready before exam day.</p>
+        </div>
+    </div>
+</body>
+</html>

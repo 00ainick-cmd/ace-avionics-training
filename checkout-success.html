@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ACE Avionics Training!</title>
+    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { text-align: center; padding: 40px 20px; max-width: 500px; }
+        .check { font-size: 64px; margin-bottom: 20px; }
+        h1 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+        h1 span { color: #7fdbca; }
+        .msg { color: #8891a8; font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
+        .steps { background: #12122a; border: 1px solid #1e1e3a; border-radius: 12px; padding: 24px; text-align: left; margin-bottom: 32px; }
+        .steps h3 { color: #7fdbca; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; }
+        .steps ol { padding-left: 20px; }
+        .steps li { padding: 6px 0; color: #c0c0d0; font-size: 14px; }
+        .btn { display: inline-block; padding: 16px 40px; background: #7fdbca; color: #0a0a1a; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
+        .btn:hover { background: #6bc9b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="check">✅</div>
+        <h1>You're <span>in!</span></h1>
+        <p class="msg">Payment confirmed. Your access code is being generated and will be sent to your email within the next few minutes.</p>
+        <div class="steps">
+            <h3>Next Steps</h3>
+            <ol>
+                <li>Check your email for your access code (ACE-XXXX-XXXX)</li>
+                <li>Go to the enrollment page and enter your code</li>
+                <li>Complete the onboarding diagnostic</li>
+                <li>Start training!</li>
+            </ol>
+        </div>
+        <a href="enrollment.html" class="btn">Go to Enrollment →</a>
+    </div>
+</body>
+</html>

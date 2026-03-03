@@ -449,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 6. Sync Data to Python SQLite Server
         await syncToDatabase(resultsArray);
+        localStorage.setItem('caet-onboarding-complete', 'true');
     }
 
     async function syncToDatabase(resultsArray) {
