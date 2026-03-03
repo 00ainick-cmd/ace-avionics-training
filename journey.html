@@ -178,6 +178,11 @@
             }
         }
 
+        
+        @media (max-width: 480px) {
+            #moduleGrid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+        }
+
         /* BASE & BACKGROUND */
         body {
             position: relative;
@@ -839,6 +844,30 @@
                 sequential learning nodes grouped by category.</p>
         </div>
 
+        
+            <!-- PROGRESS DASHBOARD -->
+            <div class="holo-card" id="progressDashboard" style="padding:28px;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(212,168,83,0.12);display:flex;align-items:center;justify-content:center;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4A853" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;font-weight:600;">Your Progress</div>
+                        <div style="font-size:18px;font-weight:700;color:#e0e0e0;">Journey Completion</div>
+                    </div>
+                    <div id="overallBadge" style="margin-left:auto;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;"></div>
+                </div>
+
+                <!-- Overall progress bar -->
+                <div style="background:rgba(255,255,255,0.06);border-radius:8px;height:8px;margin-bottom:24px;overflow:hidden;">
+                    <div id="overallBar" style="height:100%;border-radius:8px;transition:width 0.6s ease;background:linear-gradient(90deg, #D4A853, #f59e0b);width:0%;"></div>
+                </div>
+                <div id="overallLabel" style="text-align:center;font-size:13px;color:#8891a8;margin-bottom:24px;"></div>
+
+                <!-- Module circles grid -->
+                <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;"></div>
+            </div>
+
         <div class="journey-layout">
 
             <!-- BRIEFING CARD -->
@@ -891,8 +920,7 @@
                                     <polyline points="20 6 9 17 4 12" />
                                 </svg>
                             </div>
-                            <span>As you master nodes, your <strong>Readiness Grade</strong> and <strong>XP</strong>
-                                will automatically track on your Dashboard.</span>
+                            <span>Complete lessons and pass knowledge checks to fill your progress circles. Score <strong>75% or higher</strong> in every module to achieve <strong>Journey Complete</strong> status.</span>
                         </li>
                     </ul>
                 </div>
@@ -997,6 +1025,133 @@
             }
         });
     </script>
+
+    <script>
+    (function() {
+        const WORLDS = [
+          { short: 'Safety', icon: '🛡️', color: '#10b981', nodes: ['W1-Z1-N1', 'W1-Z1-N2', 'W1-Z2-N1', 'W1-Z2-N2', 'W1-Z3-N1', 'W1-Z3-N2', 'W1-Z3-N3', 'W1-Z4-N1', 'W1-Z5-N1', 'W1-Z5-N2', 'W1-Z2-N3'] },
+          { short: 'Regulations', icon: '📋', color: '#3b82f6', nodes: ['W2-Z1-N1', 'W2-Z1-N2', 'W2-Z2-N1', 'W2-Z2-N2', 'W2-Z2-N3', 'W2-Z3-N1', 'W2-Z4-N1', 'W2-Z4-N2', 'W2-Z5-N1', 'W2-Z5-N2'] },
+          { short: 'Electrical', icon: '⚡', color: '#f59e0b', nodes: ['W3-Z1-N1', 'W3-Z1-N2', 'W3-Z2-N1', 'W3-Z2-N2', 'W3-Z3-N1', 'W3-Z3-N2', 'W3-Z3-N3', 'W3-Z4-N1'] },
+          { short: 'Tools & Test', icon: '🔧', color: '#8b5cf6', nodes: ['W4-Z1-N1', 'W4-Z2-N1', 'W4-Z3-N1', 'W4-Z3-N2', 'W4-Z4-N1', 'W4-Z5-N1'] },
+          { short: 'Wiring', icon: '🔌', color: '#ec4899', nodes: ['W5-Z1-N1', 'W5-Z1-N2', 'W5-Z2-N1', 'W5-Z2-N2', 'W5-Z3-N1', 'W5-Z3-N2', 'W5-Z3-N3', 'W5-Z4-N1', 'W5-Z4-N2', 'W5-Z4-N3', 'W5-Z5-N1', 'W5-Z5-N2'] },
+          { short: 'Digital Databus', icon: '💻', color: '#06b6d4', nodes: ['W6-Z2-N1', 'W6-Z2-N2', 'W6-Z2-N3', 'W6-Z1-N1', 'W6-Z3-N1', 'W6-Z3-N2', 'W6-Z3-N3', 'W6-Z4-N1', 'W6-Z4-N2'] },
+          { short: 'CNS Systems', icon: '📡', color: '#14b8a6', nodes: ['W7-Z1-N1', 'W7-Z2-N1', 'W7-Z2-N2', 'W7-Z3-N1', 'W7-Z3-N2', 'W7-Z3-N3', 'W7-Z4-N1', 'W7-Z5-N1', 'W7-Z5-N2'] },
+          { short: 'Flight Instruments', icon: '✈️', color: '#f97316', nodes: ['W8-Z1-N1', 'W8-Z2-N1', 'W8-Z3-N1', 'W8-Z4-N1', 'W8-Z5-N1'] }
+        ];
+        // Reads completion from training modules' localStorage keys (completed_NODE_ID)
+        const PASS_THRESHOLD = 0.75;
+
+        function getCompleted() {
+            // Read from training module completion keys (completed_W1-Z1-N1, etc.)
+            var all = [];
+            WORLDS.forEach(function(w) {
+                w.nodes.forEach(function(nodeId) {
+                    if (localStorage.getItem('completed_' + nodeId) === 'true') {
+                        all.push(nodeId);
+                    }
+                });
+            });
+            return all;
+        }
+
+        function markCompleted(nodeId) {
+            const completed = getCompleted();
+            if (!completed.includes(nodeId)) {
+                completed.push(nodeId);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
+            }
+        }
+
+        // Expose globally so training pages can call it
+        window.JourneyTracker = { getCompleted, markCompleted, WORLDS, PASS_THRESHOLD };
+
+        function buildCircleSVG(pct, color, size) {
+            const r = (size - 8) / 2;
+            const circ = 2 * Math.PI * r;
+            const offset = circ - (pct / 100) * circ;
+            return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="transform:rotate(-90deg)">' +
+                '<circle cx="' + (size/2) + '" cy="' + (size/2) + '" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>' +
+                '<circle cx="' + (size/2) + '" cy="' + (size/2) + '" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="5" ' +
+                'stroke-dasharray="' + circ.toFixed(1) + '" stroke-dashoffset="' + offset.toFixed(1) + '" stroke-linecap="round" ' +
+                'style="transition:stroke-dashoffset 0.8s ease"/>' +
+                '</svg>';
+        }
+
+        function renderProgress() {
+            const completed = getCompleted();
+            const grid = document.getElementById('moduleGrid');
+            const overallBar = document.getElementById('overallBar');
+            const overallLabel = document.getElementById('overallLabel');
+            const overallBadge = document.getElementById('overallBadge');
+            if (!grid) return;
+
+            let totalNodes = 0;
+            let totalDone = 0;
+            let allWorldsPassed = true;
+
+            grid.innerHTML = WORLDS.map(function(w) {
+                const done = w.nodes.filter(function(n) { return completed.includes(n); }).length;
+                const total = w.nodes.length;
+                const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+                totalNodes += total;
+                totalDone += done;
+
+                const passed = pct >= (PASS_THRESHOLD * 100);
+                if (!passed) allWorldsPassed = false;
+
+                const statusColor = passed ? '#10b981' : (pct > 0 ? w.color : '#3f3f46');
+                const statusText = passed ? '✓ Complete' : (pct > 0 ? pct + '%' : 'Not started');
+                const statusStyle = passed ? 'color:#10b981;font-weight:700;' : 'color:#8891a8;';
+
+                return '<div style="text-align:center;">' +
+                    '<div style="position:relative;display:inline-block;margin-bottom:8px;">' +
+                    buildCircleSVG(pct, statusColor, 72) +
+                    '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:' + statusColor + ';">' +
+                    (passed ? '✓' : pct + '%') + '</div>' +
+                    '</div>' +
+                    '<div style="font-size:11px;font-weight:600;color:#e0e0e0;margin-bottom:2px;">' + w.icon + ' ' + w.short + '</div>' +
+                    '<div style="font-size:10px;' + statusStyle + '">' + statusText + '</div>' +
+                    '<div style="font-size:9px;color:#52525b;margin-top:2px;">' + done + '/' + total + ' lessons</div>' +
+                    '</div>';
+            }).join('');
+
+            // Overall
+            const overallPct = totalNodes > 0 ? Math.round((totalDone / totalNodes) * 100) : 0;
+            overallBar.style.width = overallPct + '%';
+            overallLabel.textContent = totalDone + ' of ' + totalNodes + ' lessons completed (' + overallPct + '%)';
+
+            if (allWorldsPassed && totalDone > 0) {
+                overallBar.style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+                overallBadge.textContent = '🏆 JOURNEY COMPLETE';
+                overallBadge.style.cssText = 'margin-left:auto;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3);';
+            } else if (overallPct > 0) {
+                overallBadge.textContent = 'IN PROGRESS';
+                overallBadge.style.cssText = 'margin-left:auto;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(212,168,83,0.15);color:#D4A853;border:1px solid rgba(212,168,83,0.3);';
+            } else {
+                overallBadge.textContent = 'NOT STARTED';
+                overallBadge.style.cssText = 'margin-left:auto;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(255,255,255,0.05);color:#6b7280;border:1px solid rgba(255,255,255,0.08);';
+            }
+        }
+
+        // Also mark nodes in the side nav as completed
+        function updateNavStatus() {
+            const completed = getCompleted();
+            document.querySelectorAll('.sn-node').forEach(function(el) {
+                const nodeId = el.getAttribute('data-node');
+                if (nodeId && completed.includes(nodeId)) {
+                    el.querySelector('.sn-node-dot').style.background = '#10b981';
+                    el.style.color = '#10b981';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProgress();
+            updateNavStatus();
+        });
+    })();
+    </script>
+
 </body>
 
 </html>
