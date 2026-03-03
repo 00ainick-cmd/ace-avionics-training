@@ -400,8 +400,10 @@
       margin-bottom: 20px;
     }
 
-    
-    .stage-ace-avatar, .li-ace, .buzzer-ace-face {
+
+    .stage-ace-avatar,
+    .li-ace,
+    .buzzer-ace-face {
       object-fit: contain !important;
       max-width: 100%;
       height: auto;
@@ -724,14 +726,16 @@
       }
 
       .intro-ace-avatar,
-      
-    .stage-ace-avatar, .li-ace, .buzzer-ace-face {
-      object-fit: contain !important;
-      max-width: 100%;
-      height: auto;
-    }
 
-    .stage-ace-avatar {
+      .stage-ace-avatar,
+      .li-ace,
+      .buzzer-ace-face {
+        object-fit: contain !important;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .stage-ace-avatar {
         width: 128px;
         height: 128px;
       }
@@ -778,14 +782,52 @@
         width: 200px;
       }
     }
-  
-    .ms-card { display:block; background:#12122a; border:1px solid #1e1e3a; border-radius:12px; padding:24px; text-decoration:none; color:#e0e0e0; transition:all 0.2s; }
-    .ms-card:hover { border-color:#D4A853; transform:translateY(-2px); }
-    .ms-card-number { font-size:12px; text-transform:uppercase; letter-spacing:2px; color:#D4A853; font-weight:700; margin-bottom:8px; }
-    .ms-card-title { font-size:16px; font-weight:600; margin-bottom:12px; }
-    .ms-cat-tag { display:inline-block; background:rgba(212,168,83,0.12); color:#D4A853; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; margin-right:4px; }
-    .hidden { display:none !important; }
 
+    .ms-card {
+      display: block;
+      background: #12122a;
+      border: 1px solid #1e1e3a;
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: #e0e0e0;
+      transition: all 0.2s;
+    }
+
+    .ms-card:hover {
+      border-color: #D4A853;
+      transform: translateY(-2px);
+    }
+
+    .ms-card-number {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #D4A853;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .ms-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .ms-cat-tag {
+      display: inline-block;
+      background: rgba(212, 168, 83, 0.12);
+      color: #D4A853;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
   <style>
     /* ==================== JEOPARDY GAME SKIN — navy+gold ====================
@@ -2477,6 +2519,9 @@
     <div class="li-status" id="liStatus">Initializing...</div>
     <div class="li-stats" id="liStats"></div>
     <button class="li-enter-btn" id="liEnterBtn">⚡ Enter the Arena</button>
+    <a href="../practice.html"
+      style="display:block;margin-top:20px;color:#8891a8;text-decoration:none;font-size:14px;transition:color 0.2s;"
+      onmouseover="this.style.color='#D4A853'" onmouseout="this.style.color='#8891a8'">← Back to Practice</a>
   </div>
 
   <!-- ═══ CINEMATIC INTRO ═══ -->
@@ -2502,7 +2547,8 @@
     <div class="ms-header" style="text-align:center;margin-bottom:32px;">
       <h1 style="font-size:2rem;font-weight:800;color:#D4A853;margin-bottom:8px;">⚡ Battle ACE</h1>
       <p style="color:#8891a8;font-size:14px;">Choose a module to challenge ACE in Jeopardy-style combat</p>
-      <p style="color:#6b7280;font-size:12px;margin-top:4px;">Each game picks 6 random categories across all modules — test your knowledge from every angle!</p>
+      <p style="color:#6b7280;font-size:12px;margin-top:4px;">Each game picks 6 random categories across all modules —
+        test your knowledge from every angle!</p>
     </div>
     <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
     <div style="text-align:center;margin-top:24px;">
@@ -2512,7 +2558,8 @@
 
   <div class="wrap">
     <div class="top">
-      <a href="../dashboard.html" style="display:block;flex-shrink:0;"><img src="logo.png" alt="ACE Avionics Training" style="height:26px;width:auto;display:block;"></a>
+      <a href="../dashboard.html" style="display:block;flex-shrink:0;"><img src="logo.png" alt="ACE Avionics Training"
+          style="height:26px;width:auto;display:block;"></a>
       <div class="badge" id="gameTitleBadge">Battle Ace</div>
       <div class="meta">
         <span class="round-indicator" id="roundIndicator">ROUND 1: JEOPARDY</span>
@@ -4105,6 +4152,23 @@
           category: currentQ.category || 'general',
           module: 'jeopardy'
         });
+
+        // ── Supabase Cloud Tracking ──
+        try {
+          if (window.AceSupabase && typeof window.AceSupabase.trackQuestionEvent === 'function') {
+            window.AceSupabase.trackQuestionEvent({
+              lessonId: 'jeopardy',
+              questionId: currentQ.id || `jeo-${Date.now()}`,
+              format: 'jeopardy',
+              loId: currentQ.learningObjective || null,
+              category: currentQ.category || null,
+              selectedIndex: answerIdx,
+              correctIndex: correct,
+              isCorrect: isCorrect,
+              points: isCorrect ? value : -value
+            });
+          }
+        } catch (e) { console.warn('[Jeopardy] Supabase tracking error:', e); }
       }
 
       if (isCorrect) {
@@ -4382,8 +4446,21 @@
           window.jeopardyTracker.recordGameEnd({ questionsAnswered: 0, questionsCorrect: 0 }).then(results => {
             console.log('☁️ Jeopardy cloud tracking complete:', results);
           }).catch(e => console.log('Cloud tracking skipped:', e.message));
-        } catch(e) { console.log('Cloud tracking skipped'); }
+        } catch (e) { console.log('Cloud tracking skipped'); }
       }
+
+      // ── Supabase Session Summary ──
+      try {
+        if (window.AceSupabase && typeof window.AceSupabase.trackSessionSummary === 'function') {
+          window.AceSupabase.trackSessionSummary({
+            lessonId: 'jeopardy',
+            format: 'jeopardy',
+            questionsSeen: questionsAnswered || 0,
+            questionsCorrect: questionsCorrect || 0,
+            durationSec: null
+          });
+        }
+      } catch (e) { console.warn('[Jeopardy] Session summary tracking error:', e); }
 
       const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
@@ -4487,10 +4564,10 @@
         try {
           trackJeopardyGameEnd(playerScore > aiScore);
           if (window.jeopardyTracker && typeof window.jeopardyTracker.recordGameEnd === 'function') {
-            window.jeopardyTracker.recordGameEnd({ questionsAnswered: 0, questionsCorrect: 0 }).catch(function(){});
+            window.jeopardyTracker.recordGameEnd({ questionsAnswered: 0, questionsCorrect: 0 }).catch(function () { });
           }
           reportJeopardyScore(playerScore, aiScore);
-        } catch(e) { console.log('Stats save error:', e); }
+        } catch (e) { console.log('Stats save error:', e); }
 
         // Go back to practice
         window.location.href = _backUrl;

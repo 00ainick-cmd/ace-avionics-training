@@ -13,9 +13,10 @@
         rel="stylesheet">
     <link rel="stylesheet" href="ace-theme.css">
     <style>
-        
         @media (max-width: 768px) {
-            .deck-grid[style*="repeat(3"] { grid-template-columns: 1fr !important; }
+            .deck-grid[style*="repeat(3"] {
+                grid-template-columns: 1fr !important;
+            }
         }
 
         /* BASE & BACKGROUND — matches journey.html / practice.html exactly */
@@ -970,7 +971,7 @@
             </div>
         </div>
 
-        
+
         <!-- ROW 2.5: ACTIVITY STATS — Jeopardy, Drill, Journey -->
         <div class="section-label anim-3">Activity & Performance</div>
         <div class="deck-grid anim-3" style="grid-template-columns: repeat(3, 1fr);">
@@ -979,8 +980,12 @@
                 <div class="card-bg-gfx"></div>
                 <div class="card-content">
                     <div class="card-hdr">
-                        <div class="card-icon-wrap" style="background:rgba(239,68,68,0.12);"><span style="font-size:20px;">⚡</span></div>
-                        <div><div class="card-hdr-title">Battle ACE</div><div class="card-hdr-sub">Jeopardy stats</div></div>
+                        <div class="card-icon-wrap" style="background:rgba(239,68,68,0.12);"><span
+                                style="font-size:20px;">⚡</span></div>
+                        <div>
+                            <div class="card-hdr-title">Battle ACE</div>
+                            <div class="card-hdr-sub">Jeopardy stats</div>
+                        </div>
                     </div>
                     <div id="jeopardyStats" style="padding-top:12px;"></div>
                 </div>
@@ -990,8 +995,12 @@
                 <div class="card-bg-gfx"></div>
                 <div class="card-content">
                     <div class="card-hdr">
-                        <div class="card-icon-wrap" style="background:rgba(59,130,246,0.12);"><span style="font-size:20px;">🎯</span></div>
-                        <div><div class="card-hdr-title">Drill Mode</div><div class="card-hdr-sub">Practice accuracy</div></div>
+                        <div class="card-icon-wrap" style="background:rgba(59,130,246,0.12);"><span
+                                style="font-size:20px;">🎯</span></div>
+                        <div>
+                            <div class="card-hdr-title">Drill Mode</div>
+                            <div class="card-hdr-sub">Practice accuracy</div>
+                        </div>
                     </div>
                     <div id="drillStats" style="padding-top:12px;"></div>
                 </div>
@@ -1001,8 +1010,12 @@
                 <div class="card-bg-gfx"></div>
                 <div class="card-content">
                     <div class="card-hdr">
-                        <div class="card-icon-wrap" style="background:rgba(16,185,129,0.12);"><span style="font-size:20px;">🗺️</span></div>
-                        <div><div class="card-hdr-title">Journey</div><div class="card-hdr-sub">Lesson completion</div></div>
+                        <div class="card-icon-wrap" style="background:rgba(16,185,129,0.12);"><span
+                                style="font-size:20px;">🗺️</span></div>
+                        <div>
+                            <div class="card-hdr-title">Journey</div>
+                            <div class="card-hdr-sub">Lesson completion</div>
+                        </div>
                     </div>
                     <div id="journeyStats" style="padding-top:12px;"></div>
                 </div>
@@ -1092,18 +1105,60 @@
             ];
             const TM = CATS.reduce((s, c) => s + c.t.length, 0);
             const ls = (k, fb = null) => { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; } catch (e) { return fb; } };
-            const catM = id => ls(`ace_cat_${id}_mastery`, 0);
             const catXP = id => ls(`ace_cat_${id}_xp`, 0);
             const modDone = (c, m) => localStorage.getItem(`ace_cat_${c}_training_${m}_complete`) === 'true';
             function xpLvl(xp) { let l = 1, th = 500; while (xp >= th) { xp -= th; l++; th = 500 * l; } return { l, c: xp, r: th }; }
             function grade(a) { if (a >= 95) return 'A+'; if (a >= 90) return 'A'; if (a >= 85) return 'B+'; if (a >= 80) return 'B'; if (a >= 75) return 'C+'; if (a >= 70) return 'C'; if (a >= 60) return 'D'; return 'F'; }
-            function gCls(g) { if (g[0] === 'A') return 'grade-a'; if (g[0] === 'B') return 'grade-b'; if (g[0] === 'C') return 'grade-c'; if (g === 'D') return 'grade-d'; return 'grade-f'; }
+            function gCls(g) { if (g === '—') return ''; if (g[0] === 'A') return 'grade-a'; if (g[0] === 'B') return 'grade-b'; if (g[0] === 'C') return 'grade-c'; if (g === 'D') return 'grade-d'; return 'grade-f'; }
             function bCls(p) { return p >= 80 ? 'h' : p >= 60 ? 'm' : 'l'; }
 
+            // ── COMPUTE MASTERY FROM ALL AVAILABLE DATA SOURCES ──
+            // Source 1: Existing ace_cat_*_mastery keys (if any)
+            // Source 2: LO mastery data from drill sessions (ace_lo_mastery_*)
+            // Source 3: Diagnostic pre-assessment baseline
+            function computeCatMastery(catId) {
+                // Check if explicit mastery is already stored
+                const explicit = ls(`ace_cat_${catId}_mastery`, null);
+                if (explicit !== null && explicit > 0) return explicit;
+
+                // Aggregate from LO mastery data written by drill
+                let loCorrect = 0, loTotal = 0;
+                for (let i = 0; i < localStorage.length; i++) {
+                    const k = localStorage.key(i);
+                    if (!k || !k.startsWith('ace_lo_mastery_')) continue;
+                    try {
+                        const d = JSON.parse(localStorage.getItem(k));
+                        // LO key format: ace_lo_mastery_{lessonId}_{loId}
+                        // Check if this LO belongs to a lesson in this category
+                        const cat = CATS.find(c => c.id === catId);
+                        if (cat && cat.t.some(t => k.includes(t))) {
+                            loCorrect += (d.correct || 0);
+                            loTotal += (d.total || 0);
+                        }
+                    } catch (e) { }
+                }
+                if (loTotal > 0) {
+                    const pct = Math.round((loCorrect / loTotal) * 100);
+                    // Cache it for next load
+                    try { localStorage.setItem(`ace_cat_${catId}_mastery`, JSON.stringify(pct)); } catch (e) { }
+                    return pct;
+                }
+
+                // Fall back to diagnostic baseline
+                const baseline = ls('caet-diagnostic-baseline', null);
+                if (baseline && baseline.categories) {
+                    const match = baseline.categories.find(c => c.id === catId);
+                    if (match) return match.pct;
+                }
+
+                return 0;
+            }
+
             const xp = ls('ace_xp_total', 0), lv = xpLvl(xp), streak = ls('ace_streak_days', 0);
-            const masts = CATS.map(c => catM(c.id));
-            const avg = Math.round(masts.reduce((a, b) => a + b, 0) / CATS.length);
-            const g = grade(avg);
+            const masts = CATS.map(c => computeCatMastery(c.id));
+            const hasAnyData = masts.some(m => m > 0) || xp > 0;
+            const avg = hasAnyData ? Math.round(masts.reduce((a, b) => a + b, 0) / CATS.length) : 0;
+            const g = hasAnyData ? grade(avg) : '—';
             let md = 0; CATS.forEach(c => c.t.forEach(m => { if (modDone(c.id, m)) md++; }));
             const eb = ls('ace_final_exam_best', null);
 
@@ -1121,7 +1176,7 @@
             document.getElementById('statsRow').innerHTML = h;
 
             // Time est
-            let est = 0; CATS.forEach(c => { c.t.forEach(m => { if (!modDone(c.id, m)) est += 2; }); if (catM(c.id) < 70) est += 1.5; });
+            let est = 0; CATS.forEach((c, ci) => { c.t.forEach(m => { if (!modDone(c.id, m)) est += 2; }); if (masts[ci] < 70) est += 1.5; });
             document.getElementById('timeEst').textContent = est <= 0 ? 'Exam ready!' : est < 1 ? '< 1 hr remaining' : `~${Math.round(est)} hrs remaining`;
 
             // 2. RADAR
@@ -1182,11 +1237,11 @@
                 el.innerHTML = h;
             })();
 
-            
+
             // ACTIVITY STATS
-            (function() {
+            (function () {
                 // Jeopardy
-                var ss = {}; try { ss = JSON.parse(localStorage.getItem('caet_summary_stats')) || {}; } catch(e) {}
+                var ss = {}; try { ss = JSON.parse(localStorage.getItem('caet_summary_stats')) || {}; } catch (e) { }
                 var jp = ss.jeopardy || {};
                 var jGames = jp.gamesPlayed || 0;
                 var jWins = jp.wins || 0;
@@ -1201,7 +1256,7 @@
                         '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:#D4A853;">' + jWins + '<span style="font-size:14px;color:#52525b;">/' + jGames + '</span></div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Wins</div></div>' +
                         '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:#3b82f6;">' + jTiles + '</div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Tiles</div></div>' +
                         '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:' + (jAcc >= 70 ? '#10b981' : '#fbbf24') + ';">' + jAcc + '%</div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Accuracy</div></div>' +
-                    '</div>';
+                        '</div>';
                     if (jGames === 0) jEl.innerHTML = '<div style="color:#52525b;text-align:center;padding:16px;font-size:13px;">No games played yet.<br><a href="jeopardy.html" style="color:#D4A853;">Challenge Ace →</a></div>';
                 }
 
@@ -1229,19 +1284,19 @@
 
                 // Journey Progress
                 var JOURNEY_WORLDS = [
-                    { short: 'Safety', nodes: ['W1-Z1-N1','W1-Z1-N2','W1-Z2-N1','W1-Z2-N2','W1-Z2-N3','W1-Z3-N1','W1-Z3-N2','W1-Z3-N3','W1-Z4-N1','W1-Z5-N1','W1-Z5-N2'] },
-                    { short: 'Regulations', nodes: ['W2-Z1-N1','W2-Z1-N2','W2-Z2-N1','W2-Z2-N2','W2-Z2-N3','W2-Z3-N1','W2-Z4-N1','W2-Z4-N2','W2-Z5-N1','W2-Z5-N2'] },
-                    { short: 'Electrical', nodes: ['W3-Z1-N1','W3-Z1-N2','W3-Z2-N1','W3-Z2-N2','W3-Z3-N1','W3-Z3-N2','W3-Z3-N3','W3-Z4-N1'] },
-                    { short: 'Tools', nodes: ['W4-Z1-N1','W4-Z2-N1','W4-Z3-N1','W4-Z3-N2','W4-Z4-N1','W4-Z5-N1'] },
-                    { short: 'Wiring', nodes: ['W5-Z1-N1','W5-Z1-N2','W5-Z2-N1','W5-Z2-N2','W5-Z3-N1','W5-Z3-N2','W5-Z3-N3','W5-Z4-N1','W5-Z4-N2','W5-Z4-N3','W5-Z5-N1','W5-Z5-N2'] },
-                    { short: 'Databus', nodes: ['W6-Z1-N1','W6-Z2-N1','W6-Z2-N2','W6-Z2-N3','W6-Z3-N1','W6-Z3-N2','W6-Z3-N3','W6-Z4-N1','W6-Z4-N2'] },
-                    { short: 'CNS', nodes: ['W7-Z1-N1','W7-Z2-N1','W7-Z2-N2','W7-Z3-N1','W7-Z3-N2','W7-Z3-N3','W7-Z4-N1','W7-Z5-N1','W7-Z5-N2'] },
-                    { short: 'Instruments', nodes: ['W8-Z1-N1','W8-Z2-N1','W8-Z3-N1','W8-Z4-N1','W8-Z5-N1'] }
+                    { short: 'Safety', nodes: ['W1-Z1-N1', 'W1-Z1-N2', 'W1-Z2-N1', 'W1-Z2-N2', 'W1-Z2-N3', 'W1-Z3-N1', 'W1-Z3-N2', 'W1-Z3-N3', 'W1-Z4-N1', 'W1-Z5-N1', 'W1-Z5-N2'] },
+                    { short: 'Regulations', nodes: ['W2-Z1-N1', 'W2-Z1-N2', 'W2-Z2-N1', 'W2-Z2-N2', 'W2-Z2-N3', 'W2-Z3-N1', 'W2-Z4-N1', 'W2-Z4-N2', 'W2-Z5-N1', 'W2-Z5-N2'] },
+                    { short: 'Electrical', nodes: ['W3-Z1-N1', 'W3-Z1-N2', 'W3-Z2-N1', 'W3-Z2-N2', 'W3-Z3-N1', 'W3-Z3-N2', 'W3-Z3-N3', 'W3-Z4-N1'] },
+                    { short: 'Tools', nodes: ['W4-Z1-N1', 'W4-Z2-N1', 'W4-Z3-N1', 'W4-Z3-N2', 'W4-Z4-N1', 'W4-Z5-N1'] },
+                    { short: 'Wiring', nodes: ['W5-Z1-N1', 'W5-Z1-N2', 'W5-Z2-N1', 'W5-Z2-N2', 'W5-Z3-N1', 'W5-Z3-N2', 'W5-Z3-N3', 'W5-Z4-N1', 'W5-Z4-N2', 'W5-Z4-N3', 'W5-Z5-N1', 'W5-Z5-N2'] },
+                    { short: 'Databus', nodes: ['W6-Z1-N1', 'W6-Z2-N1', 'W6-Z2-N2', 'W6-Z2-N3', 'W6-Z3-N1', 'W6-Z3-N2', 'W6-Z3-N3', 'W6-Z4-N1', 'W6-Z4-N2'] },
+                    { short: 'CNS', nodes: ['W7-Z1-N1', 'W7-Z2-N1', 'W7-Z2-N2', 'W7-Z3-N1', 'W7-Z3-N2', 'W7-Z3-N3', 'W7-Z4-N1', 'W7-Z5-N1', 'W7-Z5-N2'] },
+                    { short: 'Instruments', nodes: ['W8-Z1-N1', 'W8-Z2-N1', 'W8-Z3-N1', 'W8-Z4-N1', 'W8-Z5-N1'] }
                 ];
                 var totalNodes = 0, doneNodes = 0;
                 var jRows = '';
-                JOURNEY_WORLDS.forEach(function(w) {
-                    var done = w.nodes.filter(function(n) { return localStorage.getItem('completed_' + n) === 'true'; }).length;
+                JOURNEY_WORLDS.forEach(function (w) {
+                    var done = w.nodes.filter(function (n) { return localStorage.getItem('completed_' + n) === 'true'; }).length;
                     totalNodes += w.nodes.length;
                     doneNodes += done;
                     var pct = Math.round((done / w.nodes.length) * 100);
@@ -1290,6 +1345,7 @@
             card.addEventListener('mouseleave', () => { cancelAnimationFrame(rafId); card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)'; targetX = 0; targetY = 0; currentX = 0; currentY = 0; });
         });
     </script>
+    <script src="js/ace-auth.js"></script>
 </body>
 
 </html>

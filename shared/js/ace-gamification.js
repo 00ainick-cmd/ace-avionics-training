@@ -32,23 +32,9 @@ window.AceGamification = {
 
             let finalEvents = events || [];
 
-            // --- FALLBACK DATA ---
-            // If the user's Supabase account is brand new and has 0 events, 
-            // the dashboard looks "broken" because everything is empty. 
-            // We inject a few events here just so the UI populates for them to see.
+            // If brand new user with 0 events, dashboard will show starter state
             if (finalEvents.length === 0) {
-                console.log("[Gamification] 0 events found. Injecting a few fallback events so the dashboard isn't completely empty...");
-                const now = Date.now();
-
-                // Add enough XP to hit LVL 2
-                for (let i = 0; i < 11; i++) {
-                    finalEvents.push({ created_at: new Date(now).toISOString(), is_correct: true, points: 50, format: 'jeopardy', lo_id: 'entry:q91' });
-                }
-
-                // Add 3 failed attempts for a specific LO so the Coaching banner triggers
-                finalEvents.push({ created_at: new Date(now).toISOString(), is_correct: false, points: 0, format: 'drill', lo_id: 'entry:q29' });
-                finalEvents.push({ created_at: new Date(now).toISOString(), is_correct: false, points: 0, format: 'drill', lo_id: 'entry:q29' });
-                finalEvents.push({ created_at: new Date(now).toISOString(), is_correct: false, points: 0, format: 'drill', lo_id: 'entry:q29' });
+                console.log("[Gamification] No events found yet. Complete some drills or jeopardy rounds to start tracking your progress!");
             }
 
             this.processAndRenderStats(finalEvents);

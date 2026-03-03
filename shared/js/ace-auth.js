@@ -1,91 +1,103 @@
 // shared/js/ace-auth.js
-// ACE Avionics — Enrollment Auth
-// Validates access codes, manages session, gates all pages
+// =============================================
+// ACE Platform Auth Guard & Logout
+// =============================================
+// Include this script on any page that requires login.
+// Usage:
+//   <script src="shared/js/ace-auth.js"></script>
+//   -- automatically checks for enrollment on load
+//   -- provides aceLogout() function
+//   -- provides aceGetProfile() function
 
-const SUPABASE_URL      = 'https://gwxgnlasxzpbipcdavcd.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3eGdubGFzeHpwYmlwY2RhdmNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4ODAyNDIsImV4cCI6MjA4NzQ1NjI0Mn0.cjTXz8OLtX4Yt6CX2Sx3n0GXwbrHqS_uH-mK5PivKTk'
+(function () {
+  'use strict';
 
-const LS_KEY = 'ace_enrollment'  // stores { id, name, plan, expires_at, code }
+  const ENROLLMENT_KEY = 'ace_enrollment';
+  const SESSION_KEY = 'ace_session_id';
+  const LOGIN_PAGE = '/enrollment.html';
 
-const _db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  // Pages that don't require auth
+  const PUBLIC_PAGES = ['enrollment.html', 'checkout.html', 'checkout-success.html', 'index.html'];
 
-window.AceAuth = {
-
-  // ── Get stored session (null if none or expired) ───────────────────────
-  async getSession() {
-    const raw = localStorage.getItem(LS_KEY)
-    if (!raw) return null
-    let session
-    try { session = JSON.parse(raw) } catch { return null }
-
-    // Check expiry client-side first (fast)
-    if (session.expires_at && new Date(session.expires_at) < new Date()) {
-      localStorage.removeItem(LS_KEY)
-      return null
-    }
-    return session
-  },
-
-  // ── Validate code + activate enrollment ───────────────────────────────
-  async activate(code, name) {
-    const { data, error } = await _db
-      .from('ace_enrollments')
-      .select('id, plan, expires_at, is_active, activated_at, student_name')
-      .eq('access_code', code.toUpperCase())
-      .single()
-
-    if (error || !data) return { success: false, error: 'Access code not found. Check your email and try again.' }
-    if (!data.is_active)  return { success: false, error: 'This access code has been deactivated. Contact support.' }
-    if (data.expires_at && new Date(data.expires_at) < new Date()) {
-      return { success: false, error: 'Your access has expired. Purchase a renewal to continue.' }
-    }
-
-    // First activation — save name + activated_at
-    if (!data.activated_at) {
-      await _db.from('ace_enrollments').update({
-        student_name: name,
-        activated_at: new Date().toISOString()
-      }).eq('id', data.id)
-    }
-
-    // Store session locally
-    const session = {
-      id:         data.id,
-      name:       name || data.student_name || 'Student',
-      plan:       data.plan,
-      expires_at: data.expires_at,
-      code:       code.toUpperCase()
-    }
-    localStorage.setItem(LS_KEY, JSON.stringify(session))
-    return { success: true, session }
-  },
-
-  // ── Require valid enrollment — redirect to enrollment.html if not ──────
-  // Call this at the top of every protected page.
-  // Usage: const session = await AceAuth.require()
-  async require() {
-    const session = await this.getSession()
-    if (!session) {
-      // Preserve the current page so we can return after enrollment
-      const returnTo = encodeURIComponent(window.location.pathname + window.location.search)
-      window.location.href = `/enrollment.html?return=${returnTo}`
-      return null  // page will redirect, never reaches further code
-    }
-    return session
-  },
-
-  // ── Sign out ───────────────────────────────────────────────────────────
-  signOut() {
-    localStorage.removeItem(LS_KEY)
-    window.location.href = '/enrollment.html'
-  },
-
-  // ── Get the Supabase client (for use by ace-sync.js) ──────────────────
-  getDB() { return _db },
-
-  // ── Get just the enrollment ID (for DB writes) ────────────────────────
-  async getEnrollmentId() {
-    const session = await this.getSession()
-    return session?.id ?? null
+  function isPublicPage() {
+    const path = window.location.pathname.toLowerCase();
+    return PUBLIC_PAGES.some(p => path.endsWith(p) || path === '/');
   }
-}
+
+  function getProfile() {
+    try {
+      const raw = localStorage.getItem(ENROLLMENT_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function isLoggedIn() {
+    const profile = getProfile();
+    return profile && profile.code;
+  }
+
+  function logout() {
+    // Clear auth-related data
+    localStorage.removeItem(ENROLLMENT_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem('caet-onboarding-complete');
+    sessionStorage.clear();
+    // Redirect to login
+    var base = window.location.pathname.includes('/shared/') ? '../enrollment.html' : 'enrollment.html';
+    window.location.href = base;
+  }
+
+  // Auth guard: redirect to login if not authenticated (skip public pages)
+  if (!isPublicPage() && !isLoggedIn()) {
+    var base = window.location.pathname.includes('/shared/') ? '../enrollment.html' : 'enrollment.html';
+    window.location.href = base;
+  }
+
+  // Inject logout button into navigation if a topbar or nav exists
+  function injectLogoutButton() {
+    // Look for common nav containers
+    var topbar = document.querySelector('.topbar-end, .nav-right, .header-right, .topbar-right');
+    if (!topbar) {
+      // Try to find a topbar and add to the end
+      topbar = document.querySelector('.topbar, .top-bar, header nav, .site-header');
+    }
+    // Don't inject on public pages
+    if (isPublicPage()) return;
+    if (!isLoggedIn()) return;
+
+    // Create logout button (only if not already present)
+    if (document.getElementById('aceLogoutBtn')) return;
+
+    var btn = document.createElement('button');
+    btn.id = 'aceLogoutBtn';
+    btn.textContent = 'Sign Out';
+    btn.title = 'Sign out of ACE Training';
+    btn.style.cssText = 'background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,system-ui,sans-serif;transition:all 0.2s;margin-left:12px;';
+    btn.onmouseenter = function () { btn.style.background = 'rgba(239,68,68,0.2)'; };
+    btn.onmouseleave = function () { btn.style.background = 'rgba(239,68,68,0.1)'; };
+    btn.onclick = function () {
+      if (confirm('Sign out of ACE Avionics Training?')) {
+        logout();
+      }
+    };
+
+    if (topbar) {
+      topbar.appendChild(btn);
+    }
+  }
+
+  // Wait for DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectLogoutButton);
+  } else {
+    injectLogoutButton();
+  }
+
+  // Expose globally
+  window.aceLogout = logout;
+  window.aceGetProfile = getProfile;
+  window.aceIsLoggedIn = isLoggedIn;
+})();
