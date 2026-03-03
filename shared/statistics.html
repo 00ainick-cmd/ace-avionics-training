@@ -936,6 +936,36 @@
             </div>
         </div>
 
+        <!-- ROW 1.5: DIAGNOSTIC BASELINE (from onboarding pre-assessment) -->
+        <div id="diagnosticSection" style="display:none;">
+            <div class="section-label anim-3">Pre-Assessment Baseline</div>
+            <div class="deck-grid anim-3">
+                <div class="holo-card full-span" style="overflow:hidden;">
+                    <div class="card-bg-gfx"></div>
+                    <div class="card-content">
+                        <div class="card-hdr">
+                            <div class="card-icon-wrap"
+                                style="background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.3);"><svg
+                                    viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2"
+                                    style="filter:drop-shadow(0 0 8px rgba(168,85,247,0.4));">
+                                    <path d="M9 11l3 3L22 4" />
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                </svg></div>
+                            <div>
+                                <div class="card-hdr-title">Diagnostic Baseline</div>
+                                <div class="card-hdr-sub" id="diagnosticDate">Onboarding Assessment</div>
+                            </div>
+                            <div id="diagnosticOverall"
+                                style="margin-left:auto;padding:6px 14px;border-radius:20px;font-size:14px;font-weight:800;font-family:var(--font-mono);">
+                            </div>
+                        </div>
+                        <div id="diagnosticBars" style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ROW 2: TIMELINE -->
         <div class="section-label anim-3">Exam Readiness Timeline</div>
         <div class="deck-grid anim-3">
@@ -1193,6 +1223,50 @@
                 ];
                 let h = ''; ms.forEach((m, i) => { if (i > 0) h += `<div class="mile-conn${m.d && ms[i - 1].d ? ' done' : ''}"></div>`; h += `<div class="mile"><div class="mile-dot${m.d ? ' done' : ''}">${m.v}</div><div class="mile-lbl">${m.l}</div></div>`; });
                 el.innerHTML = h;
+            })();
+
+            // 4b. Diagnostic Baseline (from onboarding pre-assessment)
+            (function () {
+                try {
+                    const raw = localStorage.getItem('ace_diagnostic_baseline');
+                    if (!raw) return;
+                    const diag = JSON.parse(raw);
+                    if (!diag.categories || !diag.categories.length) return;
+
+                    document.getElementById('diagnosticSection').style.display = '';
+
+                    // Date
+                    if (diag.date) {
+                        const d = new Date(diag.date);
+                        document.getElementById('diagnosticDate').textContent = 'Taken ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    }
+
+                    // Overall badge
+                    const oel = document.getElementById('diagnosticOverall');
+                    const ov = diag.overall || 0;
+                    const oc = ov >= 80 ? '#10b981' : ov >= 60 ? '#f59e0b' : '#ef4444';
+                    oel.textContent = ov + '%';
+                    oel.style.background = oc.replace(')', ',0.12)').replace('rgb', 'rgba').replace('#', '');
+                    oel.style.background = `rgba(${parseInt(oc.slice(1, 3), 16)},${parseInt(oc.slice(3, 5), 16)},${parseInt(oc.slice(5, 7), 16)},0.12)`;
+                    oel.style.color = oc;
+                    oel.style.border = `1px solid ${oc}40`;
+
+                    // Category bars
+                    const barsEl = document.getElementById('diagnosticBars');
+                    let html = '';
+                    diag.categories.forEach(cat => {
+                        const pct = cat.pct || 0;
+                        const color = pct >= 80 ? '#10b981' : pct >= 60 ? '#f59e0b' : '#ef4444';
+                        html += `<div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:140px;font-size:13px;font-weight:600;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${cat.name}</div>
+                            <div style="flex:1;background:rgba(255,255,255,0.04);border-radius:6px;height:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">
+                                <div style="height:100%;width:${pct}%;background:${color};border-radius:6px;transition:width 0.8s;box-shadow:0 0 8px ${color}40;"></div>
+                            </div>
+                            <div style="width:50px;text-align:right;font-size:12px;font-weight:700;color:${color};font-family:var(--font-mono);">${cat.correct}/${cat.total}</div>
+                        </div>`;
+                    });
+                    barsEl.innerHTML = html;
+                } catch (e) { console.warn('Diagnostic baseline render error:', e); }
             })();
 
             // 5. Flashcard health
