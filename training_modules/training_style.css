@@ -44,14 +44,16 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     display: flex;
-    height: 100vh;
-    overflow: hidden;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto;
     margin: 0;
+    padding-top: 52px;
 }
 
 /* ── Sidebar Navigation ────────────────────────────── */
 .course-sidebar {
-    width: 320px;
+    width: 300px;
     background-color: var(--bg-header);
     border-right: 1px solid var(--border);
     overflow-y: auto;
@@ -59,6 +61,19 @@ body {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    /* Slide-out panel (hamburger on all screens) */
+    position: fixed;
+    top: 0;
+    left: -320px;
+    height: 100vh;
+    max-height: 100vh;
+    z-index: 999;
+    transition: left 0.3s ease;
+    padding-top: 60px;
+}
+
+.course-sidebar.open {
+    left: 0;
 }
 
 .course-sidebar::-webkit-scrollbar {
@@ -698,7 +713,7 @@ body {
 
 /* Top bar with hamburger + end session */
 .training-topbar {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -780,33 +795,13 @@ body {
 .sidebar-overlay.show { display: block; }
 
 @media (max-width: 768px) {
-    .training-topbar {
-        display: flex;
-    }
-
     body {
         flex-direction: column;
         overflow-y: auto;
         padding-top: 52px;
     }
 
-    .course-sidebar {
-        position: fixed;
-        top: 0;
-        left: -320px;
-        width: 300px;
-        height: 100vh;
-        max-height: 100vh;
-        z-index: 999;
-        transition: left 0.3s ease;
-        border-right: 1px solid var(--border);
-        border-bottom: none;
-        padding-top: 60px;
-    }
-
-    .course-sidebar.open {
-        left: 0;
-    }
+    /* Sidebar positioning moved to base styles */
 
     .main-content {
         overflow-y: visible;
