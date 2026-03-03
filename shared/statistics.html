@@ -882,7 +882,7 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
-                Back to Hub
+                Back to Dashboard
             </a>
         </div>
     </header>
@@ -910,10 +910,10 @@
             </div>
         </div>
 
-        <!-- ROW 1: RADAR + XP -->
+        <!-- ROW 1: RADAR -->
         <div class="section-label anim-2">Category Mastery</div>
         <div class="deck-grid anim-2">
-            <div class="holo-card card-radar" id="cardRadar">
+            <div class="holo-card card-radar" id="cardRadar" style="grid-column: 1 / -1;">
                 <div class="card-bg-gfx"></div>
                 <div class="card-content">
                     <div class="card-hdr">
@@ -927,22 +927,6 @@
                         </div>
                     </div>
                     <div class="radar-wrap" id="radarWrap"></div>
-                </div>
-            </div>
-            <div class="holo-card card-xp" id="cardXP">
-                <div class="card-bg-gfx"></div>
-                <div class="card-content">
-                    <div class="card-hdr">
-                        <div class="card-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M12 20V10M18 20V4M6 20v-4" />
-                            </svg></div>
-                        <div>
-                            <div class="card-hdr-title">XP by Category</div>
-                            <div class="card-hdr-sub">Effort distribution</div>
-                        </div>
-                    </div>
-                    <div id="xpContent"></div>
                 </div>
             </div>
         </div>
@@ -1154,20 +1138,16 @@
                 return 0;
             }
 
-            const xp = ls('ace_xp_total', 0), lv = xpLvl(xp), streak = ls('ace_streak_days', 0);
+            const streak = ls('ace_streak_days', 0);
             const masts = CATS.map(c => computeCatMastery(c.id));
-            const hasAnyData = masts.some(m => m > 0) || xp > 0;
+            const hasAnyData = masts.some(m => m > 0) || streak > 0;
             const avg = hasAnyData ? Math.round(masts.reduce((a, b) => a + b, 0) / CATS.length) : 0;
             const g = hasAnyData ? grade(avg) : '—';
             let md = 0; CATS.forEach(c => c.t.forEach(m => { if (modDone(c.id, m)) md++; }));
             const eb = ls('ace_final_exam_best', null);
 
             // 1. HERO STATS
-            let h = `<div class="stat-block"><div class="stat-val">LVL ${lv.l}</div><div class="stat-label">Level</div></div>
-            <div class="stat-divider"></div>
-            <div class="stat-block"><div class="stat-val">${xp.toLocaleString()}</div><div class="stat-label">Total XP</div></div>
-            <div class="stat-divider"></div>
-            <div class="stat-block"><div class="stat-val ${gCls(g)}">${g}</div><div class="stat-label">Readiness</div></div>
+            let h = `<div class="stat-block"><div class="stat-val ${gCls(g)}">${g}</div><div class="stat-label">Readiness</div></div>
             <div class="stat-divider"></div>
             <div class="stat-block"><div class="stat-val">${streak}</div><div class="stat-label">Day Streak</div></div>
             <div class="stat-divider"></div>
@@ -1192,8 +1172,7 @@
                 s += '</svg>'; el.innerHTML = s;
             })();
 
-            // 3. XP bars
-            (function () { const el = document.getElementById('xpContent'), mx = Math.max(...CATS.map(c => catXP(c.id)), 1); let h = ''; CATS.forEach(c => { const x = catXP(c.id), p = Math.round((x / mx) * 100); h += `<div class="cat-row"><span class="cat-label">${c.n}</span><div class="cat-bar"><div class="cat-fill" style="width:${p}%;background:${c.c};opacity:0.7;"></div></div><span class="cat-val">${x.toLocaleString()} XP</span></div>`; }); el.innerHTML = h || '<div class="empty">No XP earned yet.</div>'; })();
+
 
             // 4. Milestones
             (function () {

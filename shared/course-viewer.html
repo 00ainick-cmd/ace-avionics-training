@@ -1601,7 +1601,7 @@
             }
         }
 
-        function goBack() {
+        function goBack() { window.location.href = '../practice.html'; return;
             saveSessionData();
             if (studyTimerInterval) clearInterval(studyTimerInterval);
             if (pomodoroInterval) clearInterval(pomodoroInterval);
