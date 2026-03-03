@@ -400,6 +400,13 @@
       margin-bottom: 20px;
     }
 
+    
+    .stage-ace-avatar, .li-ace, .buzzer-ace-face {
+      object-fit: contain !important;
+      max-width: 100%;
+      height: auto;
+    }
+
     .stage-ace-avatar {
       width: 192px;
       height: 192px;
@@ -717,7 +724,14 @@
       }
 
       .intro-ace-avatar,
-      .stage-ace-avatar {
+      
+    .stage-ace-avatar, .li-ace, .buzzer-ace-face {
+      object-fit: contain !important;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .stage-ace-avatar {
         width: 128px;
         height: 128px;
       }
@@ -2488,6 +2502,7 @@
     <div class="ms-header" style="text-align:center;margin-bottom:32px;">
       <h1 style="font-size:2rem;font-weight:800;color:#D4A853;margin-bottom:8px;">⚡ Battle ACE</h1>
       <p style="color:#8891a8;font-size:14px;">Choose a module to challenge ACE in Jeopardy-style combat</p>
+      <p style="color:#6b7280;font-size:12px;margin-top:4px;">Each game picks 6 random categories across all modules — test your knowledge from every angle!</p>
     </div>
     <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
     <div style="text-align:center;margin-top:24px;">
@@ -3360,6 +3375,7 @@
         if (didWin) {
           stats.jeopardy.wins = (stats.jeopardy.wins || 0) + 1;
         }
+        stats.jeopardy.totalMoneyEarned = (stats.jeopardy.totalMoneyEarned || 0) + Math.max(0, playerScore);
         stats.moduleAccess.dc = true;
         saveSummaryStats(stats);
       } catch (e) { }
@@ -4461,28 +4477,22 @@
 
     // End Session button
     document.getElementById('endSessionBtn').addEventListener('click', () => {
-      if (confirm('End this session and view your final results?')) {
-        // Change game state immediately to prevent background timers from firing UI updates
+      if (confirm('End this session and return to Practice?')) {
         gameState = GameState.GAME_OVER;
-
-        // Stop any active UI elements
         stopTimer();
         if (aiBuzzTimeout) clearTimeout(aiBuzzTimeout);
 
-        // Hide any modal cards currently showing
-        qCard.classList.remove('show');
-        ddModal.classList.remove('show');
-        fjModal.classList.remove('show');
-        roundTransition.classList.remove('show');
-        hideAceDialogue();
+        // Log stats before leaving
+        try {
+          trackJeopardyGameEnd(playerScore > aiScore);
+          if (window.jeopardyTracker && typeof window.jeopardyTracker.recordGameEnd === 'function') {
+            window.jeopardyTracker.recordGameEnd({ questionsAnswered: 0, questionsCorrect: 0 }).catch(function(){});
+          }
+          reportJeopardyScore(playerScore, aiScore);
+        } catch(e) { console.log('Stats save error:', e); }
 
-        // Hide dramatic reveal if showing
-        if (typeof AceArena !== 'undefined' && typeof AceArena.hideDramaticReveal === 'function') {
-          AceArena.hideDramaticReveal();
-        }
-
-        // Jump straight to the end game summary
-        endGame();
+        // Go back to practice
+        window.location.href = _backUrl;
       }
     });
 
