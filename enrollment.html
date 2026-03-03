@@ -100,7 +100,7 @@
   <input type="text" id="name" placeholder="First Last" autocomplete="name">
 
   <label for="code">Access Code</label>
-  <input type="text" id="code" placeholder="ACE-XXXX-XXXX" maxlength="12" autocomplete="off">
+  <input type="text" id="code" placeholder="ACE-XXXX-XXXX" maxlength="14" autocomplete="off">
 
   <button class="btn" id="submitBtn" onclick="activate()">Activate Access</button>
 
@@ -115,7 +115,7 @@
 <script>
   // Auto-format code input: insert dashes as user types
   document.getElementById('code').addEventListener('input', function(e) {
-    let val = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase().slice(0, 10)
+    let val = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase().slice(0, 11)
     if (val.length > 7) val = 'ACE-' + val.slice(3, 7) + '-' + val.slice(7)
     else if (val.length > 3) val = 'ACE-' + val.slice(3)
     else val = val
@@ -131,7 +131,7 @@
     errorEl.classList.remove('visible')
 
     if (!name) return showError('Please enter your name.')
-    if (code.length < 12) return showError('Please enter a complete access code (ACE-XXXX-XXXX).')
+    if (code.length < 13) return showError('Please enter a complete access code (ACE-XXXX-XXXX).')
 
     btn.disabled = true
     btn.textContent = 'Activating\u2026'
