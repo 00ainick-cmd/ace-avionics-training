@@ -243,7 +243,7 @@
       return;
     }
 
-    // Already activated? Just log in.
+    // Already activated? Just log in (returning student skips onboarding).
     if (data.activated_at && data.student_name) {
       const session = {
         id: data.id,
@@ -253,6 +253,7 @@
         code: code
       };
       localStorage.setItem('ace_enrollment', JSON.stringify(session));
+      localStorage.setItem('caet-onboarding-complete', 'true');
       window.location.href = 'dashboard.html';
       return;
     }
