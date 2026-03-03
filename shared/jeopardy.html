@@ -764,6 +764,14 @@
         width: 200px;
       }
     }
+  
+    .ms-card { display:block; background:#12122a; border:1px solid #1e1e3a; border-radius:12px; padding:24px; text-decoration:none; color:#e0e0e0; transition:all 0.2s; }
+    .ms-card:hover { border-color:#D4A853; transform:translateY(-2px); }
+    .ms-card-number { font-size:12px; text-transform:uppercase; letter-spacing:2px; color:#D4A853; font-weight:700; margin-bottom:8px; }
+    .ms-card-title { font-size:16px; font-weight:600; margin-bottom:12px; }
+    .ms-cat-tag { display:inline-block; background:rgba(212,168,83,0.12); color:#D4A853; padding:3px 10px; border-radius:10px; font-size:11px; font-weight:600; margin-right:4px; }
+    .hidden { display:none !important; }
+
   </style>
   <style>
     /* ==================== JEOPARDY GAME SKIN — navy+gold ====================
@@ -2472,6 +2480,19 @@
     <button id="cinematicStartBtn" class="btn"
       style="opacity: 0; font-size: 1.2rem; padding: 16px 32px; letter-spacing: 2px; transform: translateY(20px); transition: all 0.5s;">START
       BATTLE</button>
+  </div>
+
+
+  <!-- MODULE SELECTOR -->
+  <div id="moduleSelector" class="hidden" style="min-height:100vh;padding:40px 20px;max-width:900px;margin:0 auto;">
+    <div class="ms-header" style="text-align:center;margin-bottom:32px;">
+      <h1 style="font-size:2rem;font-weight:800;color:#D4A853;margin-bottom:8px;">⚡ Battle ACE</h1>
+      <p style="color:#8891a8;font-size:14px;">Choose a module to challenge ACE in Jeopardy-style combat</p>
+    </div>
+    <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+    <div style="text-align:center;margin-top:24px;">
+      <a href="../practice.html" style="color:#8891a8;text-decoration:none;font-size:14px;">← Back to Practice</a>
+    </div>
   </div>
 
   <div class="wrap">
@@ -4432,12 +4453,8 @@
           return;
         }
       } catch (e) { }
-      // If no explicit back URL was provided, go to module selector (clean URL)
-      if (!_jParams.get('back')) {
-        window.location.href = window.location.pathname; // strips all params → shows module picker
-      } else {
-        window.location.href = _backUrl;
-      }
+      // Always go back to practice page
+      window.location.href = _backUrl;
     }
 
     // End Session button
