@@ -290,6 +290,17 @@
       activated_at: new Date().toISOString()
     }).eq('id', pendingEnrollment.id);
 
+    // Store full profile locally (background, experience, referral)
+    const profile = {
+      name: fullName,
+      email: email,
+      background: background,
+      experience: experience,
+      referral: referral,
+      enrolled_at: new Date().toISOString()
+    };
+    localStorage.setItem('ace_student_profile', JSON.stringify(profile));
+
     // Store session
     const session = {
       id: pendingEnrollment.id,
