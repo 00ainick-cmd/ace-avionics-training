@@ -4360,10 +4360,12 @@
       endAIScore.textContent = '$' + aiScore;
 
       // Complete cloud tracking
-      if (window.jeopardyTracker) {
-        window.jeopardyTracker.completeAttempt().then(results => {
-          console.log('☁️ Jeopardy cloud tracking complete:', results);
-        }).catch(e => console.log('Cloud tracking complete (offline):', e.message));
+      if (window.jeopardyTracker && typeof window.jeopardyTracker.recordGameEnd === 'function') {
+        try {
+          window.jeopardyTracker.recordGameEnd({ questionsAnswered: 0, questionsCorrect: 0 }).then(results => {
+            console.log('☁️ Jeopardy cloud tracking complete:', results);
+          }).catch(e => console.log('Cloud tracking skipped:', e.message));
+        } catch(e) { console.log('Cloud tracking skipped'); }
       }
 
       const pick = arr => arr[Math.floor(Math.random() * arr.length)];
