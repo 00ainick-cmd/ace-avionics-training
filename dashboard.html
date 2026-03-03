@@ -628,15 +628,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="shared/js/ace-auth.js"></script>
 <script>
+// Onboarding check — synchronous, runs before page renders
+if (!localStorage.getItem('caet-onboarding-complete') && localStorage.getItem('ace_enrollment')) {
+  window.location.replace('onboarding.html');
+}
 (async function() {
   const session = await AceAuth.getSession();
   if (!session) {
-    window.location.href = 'enrollment.html';
-    return;
-  }
-  // Check if student has completed onboarding
-  if (!localStorage.getItem('caet-onboarding-complete')) {
-    window.location.href = 'onboarding.html';
+    window.location.replace('enrollment.html');
     return;
   }
 })();
