@@ -846,26 +846,36 @@
 
         
             <!-- PROGRESS DASHBOARD -->
-            <div class="holo-card" id="progressDashboard" style="padding:28px;">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(212,168,83,0.12);display:flex;align-items:center;justify-content:center;">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4A853" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <div class="holo-card" id="progressDashboard" style="padding:0;overflow:hidden;">
+                <div class="card-bg-gfx"></div>
+                <div style="padding:28px 28px 8px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(212,168,83,0.2),rgba(212,168,83,0.05));border:1px solid rgba(212,168,83,0.2);display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4A853" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#D4A853;font-weight:700;">Your Progress</div>
+                            <div style="font-size:20px;font-weight:800;color:#e0e0e0;letter-spacing:-0.5px;">Journey Completion</div>
+                        </div>
+                        <div id="overallBadge" style="margin-left:auto;"></div>
                     </div>
-                    <div>
-                        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#6b7280;font-weight:600;">Your Progress</div>
-                        <div style="font-size:18px;font-weight:700;color:#e0e0e0;">Journey Completion</div>
-                    </div>
-                    <div id="overallBadge" style="margin-left:auto;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;"></div>
-                </div>
 
-                <!-- Overall progress bar -->
-                <div style="background:rgba(255,255,255,0.06);border-radius:8px;height:8px;margin-bottom:24px;overflow:hidden;">
-                    <div id="overallBar" style="height:100%;border-radius:8px;transition:width 0.6s ease;background:linear-gradient(90deg, #D4A853, #f59e0b);width:0%;"></div>
+                    <!-- Overall progress bar -->
+                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;height:10px;margin-bottom:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);">
+                        <div id="overallBar" style="height:100%;border-radius:10px;transition:width 0.8s cubic-bezier(0.16,1,0.3,1);background:linear-gradient(90deg, #D4A853, #f59e0b);width:0%;box-shadow:0 0 12px rgba(212,168,83,0.4);"></div>
+                    </div>
+                    <div id="overallLabel" style="text-align:center;font-size:12px;color:#6b7280;margin-bottom:20px;"></div>
                 </div>
-                <div id="overallLabel" style="text-align:center;font-size:13px;color:#8891a8;margin-bottom:24px;"></div>
 
                 <!-- Module circles grid -->
-                <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;"></div>
+                <div style="padding:0 20px 24px;">
+                    <div id="moduleGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;"></div>
+                </div>
+
+                <!-- 75% threshold note -->
+                <div style="padding:12px 28px;background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.04);text-align:center;">
+                    <span style="font-size:11px;color:#52525b;">Complete 75% of each module to achieve <span style="color:#D4A853;font-weight:600;">Journey Complete</span> status</span>
+                </div>
             </div>
 
         <div class="journey-layout">

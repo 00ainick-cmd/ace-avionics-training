@@ -691,18 +691,121 @@ body {
 }
 
 /* ── Responsive ──────────────────────── */
+/* Old mobile styles replaced by hamburger slide-out — see bottom of file */
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE HAMBURGER + SLIDE-OUT SIDEBAR
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Top bar with hamburger + end session */
+.training-topbar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: rgba(11, 17, 32, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    align-items: center;
+    padding: 0 12px;
+    gap: 12px;
+}
+
+.training-topbar .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.training-topbar .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #3b82f6;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.training-topbar .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.training-topbar .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+.training-topbar .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.training-topbar .topbar-title {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.training-topbar .end-session-btn {
+    padding: 6px 14px;
+    background: var(--error);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.training-topbar .end-session-btn:hover {
+    background: #dc2626;
+}
+
+/* Sidebar overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+.sidebar-overlay.show { display: block; }
+
 @media (max-width: 768px) {
+    .training-topbar {
+        display: flex;
+    }
+
     body {
         flex-direction: column;
         overflow-y: auto;
+        padding-top: 52px;
     }
 
     .course-sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 300px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 300px;
+        height: 100vh;
+        max-height: 100vh;
+        z-index: 999;
+        transition: left 0.3s ease;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+        padding-top: 60px;
+    }
+
+    .course-sidebar.open {
+        left: 0;
     }
 
     .main-content {
