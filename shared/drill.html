@@ -2630,6 +2630,7 @@
     // ACE AVIONICS — DRILL MODE (practice.html)
     // Immediate-feedback multiple-choice drill
     // ============================================================
+    try { // MASTER TRY-CATCH — prevents silent script death
 
     // ---- SYSTEM INTEGRATION ----
     function closeActivity() {
@@ -3983,6 +3984,18 @@
       const pct = Math.round((userScore / totalPossible) * 100);
       reportDrillCompletion(pct, { seen: totalPossible, correct: userScore, missed: totalPossible - userScore });
     };
+
+    } catch(masterError) {
+      console.error('[Drill] MASTER SCRIPT ERROR:', masterError);
+      // Force load categories as fallback
+      loadMasterBank().then(function(data) {
+        window._categories = data.categories;
+        window._allQuestions = data.questions;
+        renderCategories();
+        bindEvents();
+        startTimer();
+      }).catch(function(e) { console.error('[Drill] Total failure:', e); });
+    }
   </script>
 
   <!-- Hide own topbar when running inside parent iframe overlay -->
