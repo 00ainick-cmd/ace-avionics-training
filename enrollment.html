@@ -267,7 +267,7 @@
       <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
 
       <label for="background">Aviation Background</label>
-      <select id="background">
+      <select id="background" onchange="toggleConditionalFields()">
         <option value="">Select your background...</option>
         <option value="military">Military Avionics (Active/Veteran)</option>
         <option value="civilian_shop">Civilian Repair Station / Shop</option>
@@ -286,6 +286,16 @@
         <option value="9-15">9-15 years</option>
         <option value="15+">15+ years</option>
       </select>
+
+      <div id="afscRow" style="display:none">
+        <label for="afsc">AFSC / MOS</label>
+        <input type="text" id="afsc" placeholder="e.g. 2A0X1, 2A5X2" autocomplete="off">
+      </div>
+
+      <div id="workplaceRow">
+        <label for="workplace" id="workplaceLabel">Current Employer / Shop</label>
+        <input type="text" id="workplace" placeholder="Company or shop name" autocomplete="organization">
+      </div>
 
       <label for="referral">How did you hear about us?</label>
       <select id="referral">
@@ -322,6 +332,21 @@
     document.getElementById('code').addEventListener('keydown', function (e) {
       if (e.key === 'Enter') handleLogin();
     });
+
+    // Show/hide conditional enrollment fields based on background
+    function toggleConditionalFields() {
+      var bg = document.getElementById('background').value;
+      var afscRow = document.getElementById('afscRow');
+      var workplaceLabel = document.getElementById('workplaceLabel');
+      // Show AFSC for military
+      afscRow.style.display = bg === 'military' ? 'block' : 'none';
+      // Adjust workplace label
+      if (bg === 'part147') workplaceLabel.textContent = 'Part 147 School Name';
+      else if (bg === 'civilian_shop') workplaceLabel.textContent = 'Repair Station / Shop Name';
+      else if (bg === 'employer') workplaceLabel.textContent = 'Company Name';
+      else if (bg === 'military') workplaceLabel.textContent = 'Unit / Base';
+      else workplaceLabel.textContent = 'Current Employer / Shop';
+    }
 
     async function handleLogin() {
       const code = document.getElementById('code').value.trim().toUpperCase();
@@ -398,6 +423,8 @@
       const background = document.getElementById('background').value;
       const experience = document.getElementById('experience').value;
       const referral = document.getElementById('referral').value;
+      const afsc = document.getElementById('afsc').value.trim();
+      const workplace = document.getElementById('workplace').value.trim();
       const btn = document.getElementById('enrollBtn');
 
       if (!firstName || !lastName) return showError('enrollError', 'Please enter your full name.');
@@ -416,13 +443,15 @@
         activated_at: new Date().toISOString()
       }).eq('id', pendingEnrollment.id);
 
-      // Store full profile locally (background, experience, referral)
+      // Store full profile locally (background, experience, referral, afsc, workplace)
       const profile = {
         name: fullName,
         email: email,
         background: background,
         experience: experience,
         referral: referral,
+        afsc: afsc,
+        workplace: workplace,
         enrolled_at: new Date().toISOString()
       };
       localStorage.setItem('ace_student_profile', JSON.stringify(profile));

@@ -3260,7 +3260,7 @@
           Current URL: ${window.location.href}<br>
           Data source: ${new URLSearchParams(location.search).get('data') || 'data/jeopardy.json'}
         </p>
-        <button onclick="history.back()" style="margin-top:1rem;padding:0.75rem 1.5rem;background:#D4A853;color:#080C1A;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Go Back</button>
+        <button onclick="window.location.href='../practice.html'" style="margin-top:1rem;padding:0.75rem 1.5rem;background:#D4A853;color:#080C1A;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Back to Practice</button>
       </div>`;
         return;
       }

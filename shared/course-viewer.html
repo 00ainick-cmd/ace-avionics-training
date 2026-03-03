@@ -1605,7 +1605,9 @@
             saveSessionData();
             if (studyTimerInterval) clearInterval(studyTimerInterval);
             if (pomodoroInterval) clearInterval(pomodoroInterval);
-            window.history.back();
+            // Navigate to the referring page, or default to journey
+            var backTo = new URLSearchParams(location.search).get('back') || '../journey.html';
+            window.location.href = backTo;
         }
     </script>
 </body>
