@@ -56,20 +56,19 @@
     window.location.href = base;
   }
 
-  // Inject logout button into navigation if a topbar or nav exists
+  // Inject logout button into navigation
   function injectLogoutButton() {
-    // Look for common nav containers
-    var topbar = document.querySelector('.topbar-end, .nav-right, .header-right, .topbar-right');
-    if (!topbar) {
-      // Try to find a topbar and add to the end
-      topbar = document.querySelector('.topbar, .top-bar, header nav, .site-header');
-    }
     // Don't inject on public pages
     if (isPublicPage()) return;
-    if (!isLoggedIn()) return;
-
-    // Create logout button (only if not already present)
+    // Don't inject if already present
     if (document.getElementById('aceLogoutBtn')) return;
+
+    // Look for common nav containers — try multiple selectors
+    var topbar = document.querySelector('.topbar-right, .topbar-end, .nav-right, .header-right');
+    if (!topbar) {
+      topbar = document.querySelector('.topbar, .top-bar, header, .site-header');
+    }
+    if (!topbar) return false; // Signal not found yet
 
     var btn = document.createElement('button');
     btn.id = 'aceLogoutBtn';
@@ -84,17 +83,27 @@
       }
     };
 
-    if (topbar) {
-      topbar.appendChild(btn);
+    topbar.appendChild(btn);
+    return true; // Signal success
+  }
+
+  // Wait for DOM, then inject with retry
+  function tryInject() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { retryInject(0); });
+    } else {
+      retryInject(0);
     }
   }
 
-  // Wait for DOM
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectLogoutButton);
-  } else {
-    injectLogoutButton();
+  function retryInject(attempt) {
+    if (injectLogoutButton()) return; // Success
+    if (attempt < 6) {
+      setTimeout(function () { retryInject(attempt + 1); }, 500);
+    }
   }
+
+  tryInject();
 
   // Expose globally
   window.aceLogout = logout;
