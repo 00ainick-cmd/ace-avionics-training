@@ -590,7 +590,7 @@ body {
 }
 
 /* ── Gamification ────────────────────── */
-.xp-badge {
+.xp-badge { display:none !important; /* XP bar removed */ 
     position: fixed;
     top: 20px;
     right: 30px;
@@ -648,7 +648,7 @@ body {
     text-shadow: 0 0 5px rgba(254, 243, 199, 0.5);
 }
 
-.xp-floater {
+.xp-floater { display:none !important; 
     position: fixed;
     top: 50%;
     left: 50%;
