@@ -2,30 +2,29 @@
    CAET Training Module — NEETS Manual Style (Dark Mode)
    ═══════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;700;800&display=swap');
 
 :root {
-    --bg-base: #0d1117;
+    --bg-base: #020617;
     /* Very dark background for the edges */
-    --bg-doc: #12121a;
+    --bg-doc: #0f172a;
     /* Document background */
-    --bg-card: rgba(20, 24, 38, 0.8);
+    --bg-card: #1e293b;
     /* Slightly lighter for figures/cards */
-    --bg-header: rgba(20, 24, 38, 0.95);
+    --bg-header: #0b1120;
 
-    --text-main: #ffffff;
-    --text-body: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.4);
+    --text-main: #f1f5f9;
+    --text-body: #cbd5e1;
+    --text-muted: #94a3b8;
 
-    --accent: #00E5FF;
-    --accent-dark: rgba(0, 229, 255, 0.4);
-    --gold: #d4a853;
-    --success: #00ff41;
+    --accent: #3b82f6;
+    --accent-dark: #1e3a8a;
+    --success: #10b981;
     --warning: #f59e0b;
-    --error: #ff4757;
+    --error: #ef4444;
 
-    --border: rgba(255, 255, 255, 0.1);
-    --border-light: rgba(255, 255, 255, 0.05);
+    --border: #334155;
+    --border-light: #475569;
 }
 
 * {
@@ -78,14 +77,12 @@ body {
 }
 
 .sidebar-title {
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    font-weight: 800;
     margin-bottom: 5px;
     color: var(--text-main);
-    background: linear-gradient(90deg, #00E5FF, #00ff41);
+    background: linear-gradient(90deg, #60a5fa, #a78bfa);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -99,15 +96,13 @@ body {
 }
 
 .sidebar-world-name {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 0.8rem;
     color: var(--accent);
     text-transform: uppercase;
     padding: 8px 20px;
     font-weight: 700;
-    background-color: var(--border-light);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    background-color: rgba(59, 130, 246, 0.05);
 }
 
 .sidebar-node-link {
@@ -144,7 +139,7 @@ body {
     max-width: 960px;
     margin: 40px auto;
     background-color: var(--bg-doc);
-    border: 1px solid var(--border);
+    border: 1px solid #1e293b;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
     position: relative;
     border-top: 4px solid var(--accent);
@@ -156,7 +151,7 @@ body {
 .doc-header {
     padding: 40px 60px 30px 60px;
     border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, rgba(20, 24, 38, 0.95) 0%, rgba(13, 17, 23, 1) 100%);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 1) 0%, rgba(11, 17, 32, 1) 100%);
     position: relative;
 }
 
@@ -172,9 +167,9 @@ body {
 }
 
 .doc-meta {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.9rem;
-    color: var(--gold);
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 20px;
@@ -185,21 +180,18 @@ body {
 }
 
 .doc-header h1 {
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 700;
+    font-size: 2.4rem;
+    font-weight: 800;
     line-height: 1.2;
     margin-bottom: 15px;
     color: #ffffff;
-    text-shadow: 0 0 15px var(--accent-dark);
 }
 
 .doc-subtitle {
-    font-family: 'Inter', sans-serif;
     font-size: 1.15rem;
     color: var(--text-body);
     font-weight: 400;
-    border-left: 4px solid var(--gold);
+    border-left: 4px solid var(--border-light);
     padding-left: 16px;
 }
 
@@ -213,26 +205,24 @@ body {
 }
 
 .section-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.95rem;
-    color: var(--gold);
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     margin-bottom: 8px;
     display: block;
-    text-shadow: 0 0 8px rgba(212, 168, 83, 0.4);
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
 }
 
 .section-title {
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 700;
+    font-size: 1.9rem;
+    font-weight: 800;
     margin-bottom: 25px;
     color: var(--text-main);
     border-bottom: 1px solid var(--border);
     padding-bottom: 12px;
     letter-spacing: -0.02em;
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
 }
 
 .body-text {
@@ -251,12 +241,10 @@ body {
 
 /* Sub-headings */
 .content-h3 {
-    font-family: 'Chakra Petch', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--text-main);
     margin: 30px 0 15px 0;
-    letter-spacing: 0.5px;
 }
 
 .content-h4 {
@@ -282,11 +270,9 @@ body {
 .callout {
     background-color: var(--bg-card);
     border: 1px solid var(--border);
-    border-left: 4px solid var(--warning);
+    border-left: 6px solid var(--warning);
     padding: 20px 24px;
     margin: 30px 0;
-    border-radius: 8px;
-    backdrop-filter: blur(16px);
 }
 
 .callout.info {
@@ -457,7 +443,7 @@ body {
 }
 
 .kc-header {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Share Tech Mono', monospace;
     color: var(--warning);
     font-weight: 700;
     font-size: 1rem;
@@ -705,18 +691,121 @@ body {
 }
 
 /* ── Responsive ──────────────────────── */
+/* Old mobile styles replaced by hamburger slide-out — see bottom of file */
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE HAMBURGER + SLIDE-OUT SIDEBAR
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Top bar with hamburger + end session */
+.training-topbar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: rgba(11, 17, 32, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    align-items: center;
+    padding: 0 12px;
+    gap: 12px;
+}
+
+.training-topbar .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.training-topbar .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #3b82f6;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.training-topbar .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.training-topbar .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+.training-topbar .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.training-topbar .topbar-title {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.training-topbar .end-session-btn {
+    padding: 6px 14px;
+    background: var(--error);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.training-topbar .end-session-btn:hover {
+    background: #dc2626;
+}
+
+/* Sidebar overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+.sidebar-overlay.show { display: block; }
+
 @media (max-width: 768px) {
+    .training-topbar {
+        display: flex;
+    }
+
     body {
         flex-direction: column;
         overflow-y: auto;
+        padding-top: 52px;
     }
 
     .course-sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 300px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 300px;
+        height: 100vh;
+        max-height: 100vh;
+        z-index: 999;
+        transition: left 0.3s ease;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+        padding-top: 60px;
+    }
+
+    .course-sidebar.open {
+        left: 0;
     }
 
     .main-content {
