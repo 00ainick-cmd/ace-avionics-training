@@ -77,7 +77,7 @@ window.AceAuth = {
   // ── Sign out ───────────────────────────────────────────────────────────
   signOut() {
     localStorage.removeItem(LS_KEY)
-    window.location.href = 'enrollment.html'
+    window.location.href = '/enrollment.html'
   },
 
   // ── Get the Supabase client (for use by ace-sync.js) ──────────────────
