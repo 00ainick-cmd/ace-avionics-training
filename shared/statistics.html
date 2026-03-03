@@ -13,6 +13,11 @@
         rel="stylesheet">
     <link rel="stylesheet" href="ace-theme.css">
     <style>
+        
+        @media (max-width: 768px) {
+            .deck-grid[style*="repeat(3"] { grid-template-columns: 1fr !important; }
+        }
+
         /* BASE & BACKGROUND — matches journey.html / practice.html exactly */
         body {
             position: relative;
@@ -965,6 +970,45 @@
             </div>
         </div>
 
+        
+        <!-- ROW 2.5: ACTIVITY STATS — Jeopardy, Drill, Journey -->
+        <div class="section-label anim-3">Activity & Performance</div>
+        <div class="deck-grid anim-3" style="grid-template-columns: repeat(3, 1fr);">
+            <!-- Jeopardy -->
+            <div class="holo-card" style="overflow:hidden;">
+                <div class="card-bg-gfx"></div>
+                <div class="card-content">
+                    <div class="card-hdr">
+                        <div class="card-icon-wrap" style="background:rgba(239,68,68,0.12);"><span style="font-size:20px;">⚡</span></div>
+                        <div><div class="card-hdr-title">Battle ACE</div><div class="card-hdr-sub">Jeopardy stats</div></div>
+                    </div>
+                    <div id="jeopardyStats" style="padding-top:12px;"></div>
+                </div>
+            </div>
+            <!-- Drill -->
+            <div class="holo-card" style="overflow:hidden;">
+                <div class="card-bg-gfx"></div>
+                <div class="card-content">
+                    <div class="card-hdr">
+                        <div class="card-icon-wrap" style="background:rgba(59,130,246,0.12);"><span style="font-size:20px;">🎯</span></div>
+                        <div><div class="card-hdr-title">Drill Mode</div><div class="card-hdr-sub">Practice accuracy</div></div>
+                    </div>
+                    <div id="drillStats" style="padding-top:12px;"></div>
+                </div>
+            </div>
+            <!-- Journey Progress -->
+            <div class="holo-card" style="overflow:hidden;">
+                <div class="card-bg-gfx"></div>
+                <div class="card-content">
+                    <div class="card-hdr">
+                        <div class="card-icon-wrap" style="background:rgba(16,185,129,0.12);"><span style="font-size:20px;">🗺️</span></div>
+                        <div><div class="card-hdr-title">Journey</div><div class="card-hdr-sub">Lesson completion</div></div>
+                    </div>
+                    <div id="journeyStats" style="padding-top:12px;"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- ROW 3: FLASHCARDS + LO -->
         <div class="section-label anim-4">Memory & Knowledge</div>
         <div class="deck-grid anim-4">
@@ -1136,6 +1180,80 @@
                 en.slice(0, 8).forEach(([o, d]) => { const p = d.bestPercent || 0, c = bCls(p); h += `<div class="lo-item"><div class="lo-hdr"><span class="lo-name" title="${o}">${o}</span><span class="lo-pct pct-${c}">${p}%</span></div><div class="lo-bg"><div class="lo-fill fill-${c}" style="width:${p}%"></div></div></div>`; });
                 if (en.length > 8) h += `<div style="text-align:center;color:var(--text-muted);font-size:12px;margin-top:12px;">+ ${en.length - 8} more tracked</div>`;
                 el.innerHTML = h;
+            })();
+
+            
+            // ACTIVITY STATS
+            (function() {
+                // Jeopardy
+                var ss = {}; try { ss = JSON.parse(localStorage.getItem('caet_summary_stats')) || {}; } catch(e) {}
+                var jp = ss.jeopardy || {};
+                var jGames = jp.gamesPlayed || 0;
+                var jWins = jp.wins || 0;
+                var jMoney = jp.totalMoneyEarned || 0;
+                var jTiles = jp.tilesAnswered || 0;
+                var jCorrect = jp.correctTiles || 0;
+                var jAcc = jTiles > 0 ? Math.round((jCorrect / jTiles) * 100) : 0;
+                var jEl = document.getElementById('jeopardyStats');
+                if (jEl) {
+                    jEl.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' +
+                        '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:#10b981;">$' + jMoney.toLocaleString() + '</div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Earnings</div></div>' +
+                        '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:#D4A853;">' + jWins + '<span style="font-size:14px;color:#52525b;">/' + jGames + '</span></div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Wins</div></div>' +
+                        '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:#3b82f6;">' + jTiles + '</div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Tiles</div></div>' +
+                        '<div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;"><div style="font-size:22px;font-weight:800;color:' + (jAcc >= 70 ? '#10b981' : '#fbbf24') + ';">' + jAcc + '%</div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Accuracy</div></div>' +
+                    '</div>';
+                    if (jGames === 0) jEl.innerHTML = '<div style="color:#52525b;text-align:center;padding:16px;font-size:13px;">No games played yet.<br><a href="jeopardy.html" style="color:#D4A853;">Challenge Ace →</a></div>';
+                }
+
+                // Drill
+                var pr = ss.practice || {};
+                var dGot = pr.gotIt || 0;
+                var dMiss = pr.missedIt || 0;
+                var dTotal = dGot + dMiss;
+                var dAcc = dTotal > 0 ? Math.round((dGot / dTotal) * 100) : 0;
+                var dEl = document.getElementById('drillStats');
+                if (dEl) {
+                    if (dTotal > 0) {
+                        var r = 40, ci = 2 * Math.PI * r, off = ci - (dAcc / 100) * ci;
+                        var acColor = dAcc >= 80 ? '#10b981' : dAcc >= 60 ? '#fbbf24' : '#ef4444';
+                        dEl.innerHTML = '<div style="text-align:center;">' +
+                            '<svg viewBox="0 0 100 100" width="100" height="100" style="margin-bottom:8px;"><circle cx="50" cy="50" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/><circle cx="50" cy="50" r="' + r + '" fill="none" stroke="' + acColor + '" stroke-width="10" stroke-dasharray="' + ci.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" stroke-linecap="round" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="' + acColor + '" font-size="18" font-weight="800">' + dAcc + '%</text><text x="50" y="60" text-anchor="middle" fill="#6b7280" font-size="8" font-weight="600">ACCURACY</text></svg>' +
+                            '<div style="display:flex;justify-content:center;gap:16px;font-size:12px;">' +
+                            '<span style="color:#10b981;">✓ ' + dGot + ' correct</span>' +
+                            '<span style="color:#ef4444;">✗ ' + dMiss + ' missed</span>' +
+                            '</div></div>';
+                    } else {
+                        dEl.innerHTML = '<div style="color:#52525b;text-align:center;padding:16px;font-size:13px;">No drills completed yet.<br><a href="drill.html" style="color:#3b82f6;">Start drilling →</a></div>';
+                    }
+                }
+
+                // Journey Progress
+                var JOURNEY_WORLDS = [
+                    { short: 'Safety', nodes: ['W1-Z1-N1','W1-Z1-N2','W1-Z2-N1','W1-Z2-N2','W1-Z2-N3','W1-Z3-N1','W1-Z3-N2','W1-Z3-N3','W1-Z4-N1','W1-Z5-N1','W1-Z5-N2'] },
+                    { short: 'Regulations', nodes: ['W2-Z1-N1','W2-Z1-N2','W2-Z2-N1','W2-Z2-N2','W2-Z2-N3','W2-Z3-N1','W2-Z4-N1','W2-Z4-N2','W2-Z5-N1','W2-Z5-N2'] },
+                    { short: 'Electrical', nodes: ['W3-Z1-N1','W3-Z1-N2','W3-Z2-N1','W3-Z2-N2','W3-Z3-N1','W3-Z3-N2','W3-Z3-N3','W3-Z4-N1'] },
+                    { short: 'Tools', nodes: ['W4-Z1-N1','W4-Z2-N1','W4-Z3-N1','W4-Z3-N2','W4-Z4-N1','W4-Z5-N1'] },
+                    { short: 'Wiring', nodes: ['W5-Z1-N1','W5-Z1-N2','W5-Z2-N1','W5-Z2-N2','W5-Z3-N1','W5-Z3-N2','W5-Z3-N3','W5-Z4-N1','W5-Z4-N2','W5-Z4-N3','W5-Z5-N1','W5-Z5-N2'] },
+                    { short: 'Databus', nodes: ['W6-Z1-N1','W6-Z2-N1','W6-Z2-N2','W6-Z2-N3','W6-Z3-N1','W6-Z3-N2','W6-Z3-N3','W6-Z4-N1','W6-Z4-N2'] },
+                    { short: 'CNS', nodes: ['W7-Z1-N1','W7-Z2-N1','W7-Z2-N2','W7-Z3-N1','W7-Z3-N2','W7-Z3-N3','W7-Z4-N1','W7-Z5-N1','W7-Z5-N2'] },
+                    { short: 'Instruments', nodes: ['W8-Z1-N1','W8-Z2-N1','W8-Z3-N1','W8-Z4-N1','W8-Z5-N1'] }
+                ];
+                var totalNodes = 0, doneNodes = 0;
+                var jRows = '';
+                JOURNEY_WORLDS.forEach(function(w) {
+                    var done = w.nodes.filter(function(n) { return localStorage.getItem('completed_' + n) === 'true'; }).length;
+                    totalNodes += w.nodes.length;
+                    doneNodes += done;
+                    var pct = Math.round((done / w.nodes.length) * 100);
+                    var color = pct >= 75 ? '#10b981' : pct > 0 ? '#D4A853' : '#3f3f46';
+                    jRows += '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;"><span style="font-size:11px;color:#8891a8;width:70px;">' + w.short + '</span><div style="flex:1;height:6px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:3px;transition:width 0.5s;"></div></div><span style="font-size:11px;font-weight:600;color:' + color + ';width:30px;text-align:right;">' + pct + '%</span></div>';
+                });
+                var overallPct = totalNodes > 0 ? Math.round((doneNodes / totalNodes) * 100) : 0;
+                var jEl = document.getElementById('journeyStats');
+                if (jEl) {
+                    jEl.innerHTML = '<div style="text-align:center;margin-bottom:10px;"><span style="font-size:24px;font-weight:800;color:' + (overallPct >= 75 ? '#10b981' : '#D4A853') + ';">' + overallPct + '%</span><span style="font-size:11px;color:#6b7280;margin-left:6px;">overall</span></div>' + jRows;
+                    if (doneNodes === 0) jEl.innerHTML = '<div style="color:#52525b;text-align:center;padding:16px;font-size:13px;">No lessons completed yet.<br><a href="../journey.html" style="color:#10b981;">Start the Journey →</a></div>';
+                }
             })();
 
             // 7. Recommendations

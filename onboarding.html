@@ -1,899 +1,224 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAET Adaptive Onboarding | ACE</title>
-    <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="shared/ace-theme.css">
-
-    <style>
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* HD Cinematic Background */
-        .cyber-bg {
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(circle at 15% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(75, 139, 245, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 100%, rgba(52, 211, 153, 0.05) 0%, transparent 50%),
-                linear-gradient(180deg, rgba(8, 12, 26, 0) 0%, rgba(8, 12, 26, 0.9) 100%),
-                url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M0 40 L40 0" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .main-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 24px;
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* STEPPER */
-        .stepper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 40px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .step-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--surface-2);
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .step-dot.active {
-            background: var(--gold-soft);
-            border-color: var(--gold);
-            color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.3);
-        }
-
-        .step-dot.completed {
-            background: var(--gold);
-            border-color: var(--gold);
-            color: #000;
-        }
-
-        .step-line {
-            flex: 1;
-            height: 2px;
-            background: var(--border);
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .step-line.active {
-            background: var(--gold);
-            box-shadow: 0 0 8px rgba(212, 168, 83, 0.5);
-        }
-
-        /* VIEWS */
-        .view-section {
-            display: none;
-            width: 100%;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .view-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* MENTOR CARD */
-        .mentor-card {
-            display: flex;
-            gap: 20px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 32px;
-            box-shadow: var(--shadow-card);
-            align-items: flex-start;
-        }
-
-        .mentor-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            background: rgba(212, 168, 83, 0.1);
-            border: 1px solid rgba(212, 168, 83, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .mentor-avatar img {
-            width: 48px;
-            height: 48px;
-            image-rendering: pixelated;
-        }
-
-        .mentor-text {
-            flex: 1;
-        }
-
-        .mentor-name {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .mentor-speech {
-            font-size: 16px;
-            line-height: 1.5;
-            color: var(--text-primary);
-        }
-
-        /* FORM ELEMENTS */
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.2);
-            background: var(--surface-3);
-        }
-
-        .form-select {
-            width: 100%;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            font-size: 16px;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238891A8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-
-        .form-select:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .form-select option {
-            background: var(--surface);
-            color: var(--text-primary);
-        }
-
-        /* RADIO CARDS */
-        .radio-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 600px) {
-            .radio-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .radio-card {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .radio-card:hover {
-            border-color: rgba(212, 168, 83, 0.5);
-            background: var(--surface-3);
-        }
-
-        .radio-card.selected {
-            border-color: var(--gold);
-            background: var(--gold-soft);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
-        }
-
-        .radio-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .radio-card.selected .radio-card-icon {
-            background: var(--gold);
-            color: #000;
-        }
-
-        .radio-card-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text-primary);
-        }
-
-        /* MILITARY FIELDS (hidden by default) */
-        #military-fields {
-            display: none;
-            animation: slideDown 0.3s ease;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin-top: 16px;
-            margin-bottom: 24px;
-        }
-
-        #military-fields.show {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* BUTTONS ROW */
-        .actions-row {
-            display: flex;
-            justify-content: flex-end;
-            gap: 16px;
-            margin-top: 40px;
-        }
-
-        .actions-row.between {
-            justify-content: space-between;
-        }
-
-        .btn-large {
-            padding: 14px 32px;
-            font-size: 16px;
-        }
-
-        /* ──────────────────────────────
-           STEP 2: DIAGNOSTIC TEST
-           ────────────────────────────── */
-
-        .test-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .q-progress-text {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .q-progress-text span {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .q-category-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .main-progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--surface-2);
-            border-radius: 3px;
-            margin-bottom: 40px;
-            overflow: hidden;
-        }
-
-        .main-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--gold), #fbb024);
-            transition: width 0.3s ease;
-            width: 4.16%;
-            /* 1/24 */
-        }
-
-        .question-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            padding: 40px;
-            box-shadow: var(--shadow-card);
-            margin-bottom: 32px;
-        }
-
-        .question-text {
-            font-size: 22px;
-            font-weight: 600;
-            line-height: 1.4;
-            color: var(--text-primary);
-            margin-bottom: 32px;
-        }
-
-        .mc-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mc-option {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            font-size: 16px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .mc-option:hover {
-            border-color: var(--gold);
-            background: var(--surface-3);
-        }
-
-        .mc-option.selected {
-            background: var(--gold-soft);
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
-        }
-
-        .mc-letter {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-mono);
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .mc-option:hover .mc-letter {
-            color: var(--gold);
-            background: rgba(212, 168, 83, 0.1);
-        }
-
-        .mc-option.selected .mc-letter {
-            background: var(--gold);
-            color: #000;
-        }
-
-        .loading-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 0;
-            gap: 20px;
-        }
-
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--surface-3);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ──────────────────────────────
-           STEP 3: RESULTS (Placeholder logic)
-           ────────────────────────────── */
-
-        .results-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .results-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff, #a0aec0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .military-callout {
-            background: linear-gradient(135deg, rgba(212, 168, 83, 0.15) 0%, rgba(212, 168, 83, 0.05) 100%);
-            border: 1px solid var(--gold);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-            display: none;
-            /* Shown via JS if military */
-        }
-
-        .military-callout::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0 20 L20 0" stroke="rgba(212,168,83,0.1)" stroke-width="1"/></svg>');
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .military-callout-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .military-callout-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .military-callout-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-primary);
-        }
-
-        .chart-container {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow-card);
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: var(--text-primary);
-        }
-
-        .bar-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .bar-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .bar-label {
-            width: 180px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-align: right;
-            line-height: 1.2;
-            flex-shrink: 0;
-        }
-
-        .bar-track-wrap {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .bar-track {
-            flex: 1;
-            height: 12px;
-            background: var(--surface-3);
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 6px;
-            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 0%;
-        }
-
-        .bar-fill.red {
-            background: var(--danger);
-        }
-
-        .bar-fill.yellow {
-            background: var(--warning);
-        }
-
-        .bar-fill.green {
-            background: var(--success);
-        }
-
-        .bar-score {
-            width: 40px;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to ACE Avionics Training</title>
+  <link rel="icon" type="image/png" href="shared/ace-sprites/ace-48-happy.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/ace-theme.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; background: #080C1A; font-family: 'Inter', system-ui, sans-serif; color: #e0e0e0; overflow-x: hidden; }
+    
+    .tour-container { max-width: 600px; margin: 0 auto; padding: 40px 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+    
+    /* Progress bar */
+    .tour-progress { display: flex; gap: 6px; margin-bottom: 32px; }
+    .tour-pip { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,0.06); transition: background 0.4s; }
+    .tour-pip.done { background: #D4A853; }
+    .tour-pip.active { background: linear-gradient(90deg, #D4A853, #f59e0b); box-shadow: 0 0 8px rgba(212,168,83,0.4); }
+    
+    /* Step card */
+    .tour-step { display: none; animation: fadeUp 0.5s ease forwards; }
+    .tour-step.active { display: block; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .tour-icon { width: 80px; height: 80px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 24px; }
+    
+    .tour-title { font-size: 28px; font-weight: 800; color: #e0e0e0; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .tour-title span { color: #D4A853; }
+    .tour-desc { font-size: 15px; color: #8891a8; line-height: 1.7; margin-bottom: 32px; }
+    .tour-desc strong { color: #e0e0e0; }
+    
+    /* Feature highlights */
+    .tour-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .tour-feature { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; }
+    .tour-feature-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tour-feature-text { font-size: 13px; color: #a1a1aa; line-height: 1.5; }
+    .tour-feature-text strong { color: #e0e0e0; display: block; margin-bottom: 2px; font-size: 14px; }
+    
+    /* Ace mascot */
+    .tour-ace { display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: rgba(212,168,83,0.06); border: 1px solid rgba(212,168,83,0.12); border-radius: 14px; margin-bottom: 32px; }
+    .tour-ace img { width: 56px; height: 56px; image-rendering: pixelated; flex-shrink: 0; }
+    .tour-ace-text { font-size: 14px; color: #D4A853; font-style: italic; line-height: 1.6; }
+    
+    /* Buttons */
+    .tour-actions { display: flex; gap: 12px; }
+    .tour-btn { flex: 1; padding: 14px 24px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; text-align: center; }
+    .tour-btn-primary { background: linear-gradient(135deg, #D4A853, #b8912e); color: #0a0a0a; }
+    .tour-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(212,168,83,0.3); }
+    .tour-btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #8891a8; }
+    .tour-btn-ghost:hover { border-color: #D4A853; color: #D4A853; }
+    
+    /* Welcome step special */
+    .welcome-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .welcome-logo img { width: 48px; height: 48px; border-radius: 12px; }
+    .welcome-logo span { font-size: 18px; font-weight: 700; color: #D4A853; }
+    
+    @media (max-width: 480px) {
+      .tour-title { font-size: 22px; }
+      .tour-container { padding: 24px 16px; }
+    }
+  </style>
 </head>
-
 <body>
+<div class="tour-container">
+  <!-- Progress -->
+  <div class="tour-progress" id="tourProgress"></div>
+  
+  <!-- STEP 0: Welcome -->
+  <div class="tour-step active" data-step="0">
+    <div class="welcome-logo">
+      <img src="shared/logo.png" alt="ACE">
+      <span>ACE Avionics Training</span>
+    </div>
+    <div class="tour-title">Welcome to <span>CAET Prep</span></div>
+    <div class="tour-desc">
+      You're about to start the most comprehensive CAET certification prep program available. Let me give you a quick tour so you know exactly what you're working with.
+    </div>
+    <div class="tour-ace">
+      <img src="shared/ace-sprites/ace-192-idle.png" alt="Ace">
+      <div class="tour-ace-text">"Hey, I'm Ace — your AI training companion. I'll be with you through drills, flashcards, and Jeopardy battles. Let's get you certified."</div>
+    </div>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-primary" onclick="nextStep()">Let's Go →</button>
+    </div>
+  </div>
+  
+  <!-- STEP 1: Dashboard -->
+  <div class="tour-step" data-step="1">
+    <div class="tour-icon" style="background:rgba(212,168,83,0.12);">🏠</div>
+    <div class="tour-title">Your <span>Dashboard</span></div>
+    <div class="tour-desc">This is mission control. Everything starts here — your progress, your stats, and quick access to every training mode.</div>
+    <div class="tour-features">
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(16,185,129,0.12);">📊</div>
+        <div class="tour-feature-text"><strong>Readiness Score</strong>See your overall exam readiness at a glance — updated as you train.</div>
+      </div>
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(59,130,246,0.12);">⚡</div>
+        <div class="tour-feature-text"><strong>Quick Launch</strong>Jump straight into Drills, Flashcards, Jeopardy, or the Learner's Journey from the dashboard.</div>
+      </div>
+    </div>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-ghost" onclick="prevStep()">← Back</button>
+      <button class="tour-btn tour-btn-primary" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+  
+  <!-- STEP 2: Practice Area -->
+  <div class="tour-step" data-step="2">
+    <div class="tour-icon" style="background:rgba(59,130,246,0.12);">🎯</div>
+    <div class="tour-title"><span>Practice</span> Area</div>
+    <div class="tour-desc">Three training modes designed to lock knowledge into long-term memory. Mix them up for the best results.</div>
+    <div class="tour-features">
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(212,168,83,0.12);">📝</div>
+        <div class="tour-feature-text"><strong>Drill Mode</strong>Rapid-fire multiple choice — pick your categories, set the pace, and grind through questions with instant feedback.</div>
+      </div>
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(168,85,247,0.12);">🃏</div>
+        <div class="tour-feature-text"><strong>Flashcards</strong>Spaced repetition for key terms and concepts. Cards get harder or easier based on your performance.</div>
+      </div>
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(239,68,68,0.12);">⚡</div>
+        <div class="tour-feature-text"><strong>Battle ACE (Jeopardy)</strong>Challenge Ace in a Jeopardy-style game. 6 random categories, buzzer races, and bragging rights.</div>
+      </div>
+    </div>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-ghost" onclick="prevStep()">← Back</button>
+      <button class="tour-btn tour-btn-primary" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+  
+  <!-- STEP 3: Learner's Journey -->
+  <div class="tour-step" data-step="3">
+    <div class="tour-icon" style="background:rgba(16,185,129,0.12);">🗺️</div>
+    <div class="tour-title">The <span>Learner's Journey</span></div>
+    <div class="tour-desc">A guided, lesson-by-lesson walkthrough of every CAET topic. 8 modules, 70 lessons — read, learn, and pass knowledge checks to mark them complete.</div>
+    <div class="tour-features">
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(212,168,83,0.12);">📚</div>
+        <div class="tour-feature-text"><strong>8 Modules</strong>Safety, Regulations, Electrical, Tools, Wiring, Digital Databus, CNS Systems, and Flight Instruments.</div>
+      </div>
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(16,185,129,0.12);">✅</div>
+        <div class="tour-feature-text"><strong>75% to Complete</strong>Finish 75% of each module's lessons to mark it complete. Your progress is tracked with circle charts.</div>
+      </div>
+    </div>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-ghost" onclick="prevStep()">← Back</button>
+      <button class="tour-btn tour-btn-primary" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+  
+  <!-- STEP 4: Statistics -->
+  <div class="tour-step" data-step="4">
+    <div class="tour-icon" style="background:rgba(168,85,247,0.12);">📈</div>
+    <div class="tour-title">Your <span>Statistics</span></div>
+    <div class="tour-desc">Track every aspect of your preparation — category mastery, flashcard retention, Jeopardy earnings, drill accuracy, and personalized study recommendations.</div>
+    <div class="tour-features">
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(212,168,83,0.12);">🎯</div>
+        <div class="tour-feature-text"><strong>Category Radar</strong>Visual radar chart showing your mastery across all 8 CAET categories. Spot weak areas instantly.</div>
+      </div>
+      <div class="tour-feature">
+        <div class="tour-feature-icon" style="background:rgba(59,130,246,0.12);">💡</div>
+        <div class="tour-feature-text"><strong>Smart Recommendations</strong>AI-powered study tips based on your actual performance data. Focus where it matters most.</div>
+      </div>
+    </div>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-ghost" onclick="prevStep()">← Back</button>
+      <button class="tour-btn tour-btn-primary" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+  
+  <!-- STEP 5: Ready -->
+  <div class="tour-step" data-step="5">
+    <div class="tour-icon" style="background:rgba(16,185,129,0.12);">🚀</div>
+    <div class="tour-title">You're <span>Ready</span></div>
+    <div class="tour-desc">That's the full platform. Start with the <strong>Learner's Journey</strong> for structured learning, or jump into <strong>Practice</strong> if you want to test yourself right away. Your progress syncs everywhere.</div>
+    <div class="tour-ace">
+      <img src="shared/ace-sprites/ace-192-idle.png" alt="Ace">
+      <div class="tour-ace-text">"The CAET exam isn't going to study for itself. Let's get after it — I'll be tracking your progress and keeping you honest."</div>
+    </div>
+    <div class="tour-actions">
+      <a href="dashboard.html" class="tour-btn tour-btn-primary" onclick="completeTour()">Go to Dashboard →</a>
+    </div>
+  </div>
+</div>
 
-    <div class="cyber-bg"></div>
-
-    <header class="topbar">
-        <div class="topbar-logo">
-            <a href="dashboard.html" style="text-decoration:none;">
-                <img src="shared/logo.png" alt="ACE Avionics Training" class="logo-img">
-            </a>
-        </div>
-        <div class="topbar-right">
-            <span id="user-greeting"
-                style="color: var(--gold); font-family: var(--font-mono); font-size: 13px; font-weight: 700; margin-right: 16px; display: none;"></span>
-            <a href="index.html" class="topbar-btn">
-                Exit Evaluation
-            </a>
-        </div>
-    </header>
-
-    <main class="main-container">
-
-        <!-- STEPPER -->
-        <div class="stepper">
-            <div class="step-dot active" id="dot-1">1</div>
-            <div class="step-line" id="line-1"></div>
-            <div class="step-dot" id="dot-2">2</div>
-            <div class="step-line" id="line-2"></div>
-            <div class="step-dot" id="dot-3">3</div>
-        </div>
-
-        <!-- ==========================================
-             VIEW 1: PROFILE SETUP
-             ========================================== -->
-        <div class="view-section active" id="view-1">
-
-            <div class="mentor-card">
-                <div class="mentor-avatar">
-                    <img src="shared/ace-sprites/ace-48-happy.png" alt="ACE Mentor">
-                </div>
-                <div class="mentor-text">
-                    <div class="mentor-name">ACE MENTOR SYSTEM</div>
-                    <div class="mentor-speech">Welcome aboard. Before we begin your training flight, I need to calibrate
-                        your curriculum. Tell me about your background so I can build your personalized study plan.
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 32px;">
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" id="student-name" class="form-input" placeholder="e.g. Alex Johnson" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Aviation Background</label>
-                    <div class="radio-grid">
-                        <div class="radio-card" data-val="military">
-                            <div class="radio-card-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                </svg>
-                            </div>
-                            <div class="radio-card-title">Military Transitioning</div>
-                        </div>
-                        <div class="radio-card" data-val="part147">
-                            <div class="radio-card-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                                </svg>
-                            </div>
-                            <div class="radio-card-title">Part 147 Graduate</div>
-                        </div>
-                        <div class="radio-card" data-val="technician">
-                            <div class="radio-card-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                                </svg>
-                            </div>
-                            <div class="radio-card-title">Working Technician</div>
-                        </div>
-                        <div class="radio-card" data-val="other">
-                            <div class="radio-card-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="12" y1="16" x2="12" y2="12" />
-                                    <line x1="12" y1="8" x2="12.01" y2="8" />
-                                </svg>
-                            </div>
-                            <div class="radio-card-title">Career Changer / Other</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MILITARY SPECIFIC FIELDS -->
-                <div id="military-fields">
-                    <div class="form-group">
-                        <label class="form-label">Branch of Service</label>
-                        <select id="military-branch" class="form-select">
-                            <option value="" disabled selected>Select branch...</option>
-                            <option value="Air Force">Air Force</option>
-                            <option value="Army">Army</option>
-                            <option value="Navy">Navy</option>
-                            <option value="Marines">Marines</option>
-                            <option value="Coast Guard">Coast Guard</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label class="form-label">MOS / AFSC / Rating Code</label>
-                        <input type="text" id="military-mos" class="form-input" placeholder="e.g. 2A373, 94D, AT">
-                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-                            We use this to identify the avionics systems you already know, so you don't waste time
-                            re-learning them.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-top: 32px; margin-bottom: 0;">
-                    <label class="form-label">Target Exam Date (Optional)</label>
-                    <input type="date" id="target-date" class="form-input">
-                </div>
-            </div>
-
-            <div class="actions-row">
-                <button class="btn-primary btn-large" id="btn-next-1">
-                    Begin Diagnostic Test
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- ==========================================
-             VIEW 3: DIAGNOSTIC TEST
-             ========================================== -->
-        <div class="view-section" id="view-3">
-
-            <div id="test-loading" class="loading-state">
-                <div class="spinner"></div>
-                <div style="color: var(--text-secondary); font-family: var(--font-mono);">Compiling diagnostic
-                    syllabus...</div>
-            </div>
-
-            <div id="test-container" style="display: none; width: 100%;">
-
-                <div class="test-header">
-                    <div class="q-progress-text">Question <span id="q-current">1</span> of <span id="q-total">24</span>
-                    </div>
-                    <div class="q-category-badge" id="q-cat-badge">
-                        <span id="q-cat-icon">📡</span> <span id="q-cat-name">CNS Systems</span>
-                    </div>
-                </div>
-
-                <div class="main-progress-bar">
-                    <div class="main-progress-fill" id="test-progress-fill"></div>
-                </div>
-
-                <div class="question-card">
-                    <div class="question-text" id="q-text">Loading question...</div>
-                    <div class="mc-options" id="q-options">
-                        <!-- Options injected by JS -->
-                    </div>
-                </div>
-
-                <div class="actions-row between">
-                    <button class="btn-secondary" id="btn-prev-q" style="visibility: hidden;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                        Previous
-                    </button>
-                    <button class="btn-primary" id="btn-next-q" disabled>
-                        Next
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                    <button class="btn-primary" id="btn-finish-test" style="display: none;">
-                        Submit & Analyze
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                            <line x1="9" y1="9" x2="9.01" y2="9" />
-                            <line x1="15" y1="9" x2="15.01" y2="9" />
-                        </svg>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ==========================================
-             VIEW 4: RESULTS & STUDY PLAN
-             ========================================== -->
-        <div class="view-section" id="view-4">
-
-            <div class="results-header">
-                <h2 class="results-title">Diagnostic Complete</h2>
-                <p style="color: var(--text-secondary); font-size: 16px;">We've analyzed your performance to build your
-                    personalized curriculum.</p>
-            </div>
-
-            <div class="military-callout" id="military-callout-box">
-                <div class="military-callout-content">
-                    <div class="military-callout-title">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        Prior Experience Acknowledged
-                    </div>
-                    <div class="military-callout-text" id="military-callout-text">
-                        <!-- Injected by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-title">Proficiency per Category</div>
-                <div class="bar-chart" id="results-chart">
-                    <!-- Bars injected by JS -->
-                </div>
-            </div>
-
-            <div class="card" style="padding: 32px; margin-bottom: 40px;">
-                <h3 class="chart-title" style="margin-bottom: 16px;">Your Recommended Study Path</h3>
-                <p style="color: var(--text-muted); margin-bottom: 24px;">Based on your results, we recommend attacking
-                    your weakest areas first.</p>
-
-                <div id="study-plan-list">
-                    <!-- Study plan injected by JS. Just a simple visual list for the prototype. -->
-                </div>
-            </div>
-
-            <div class="actions-row" style="justify-content: center;">
-                <a href="dashboard.html" class="btn-primary btn-large">
-                    Start Training Module 1
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                </a>
-            </div>
-
-        </div>
-
-    </main>
-
-    <script src="shared/js/onboarding.js"></script>
+<script>
+  const TOTAL_STEPS = 6;
+  let currentStep = 0;
+  
+  function renderProgress() {
+    const bar = document.getElementById('tourProgress');
+    bar.innerHTML = '';
+    for (let i = 0; i < TOTAL_STEPS; i++) {
+      const pip = document.createElement('div');
+      pip.className = 'tour-pip' + (i < currentStep ? ' done' : '') + (i === currentStep ? ' active' : '');
+      bar.appendChild(pip);
+    }
+  }
+  
+  function showStep(n) {
+    document.querySelectorAll('.tour-step').forEach(s => s.classList.remove('active'));
+    const step = document.querySelector('[data-step="' + n + '"]');
+    if (step) { step.classList.add('active'); step.style.animation = 'none'; step.offsetHeight; step.style.animation = ''; }
+    currentStep = n;
+    renderProgress();
+  }
+  
+  function nextStep() { if (currentStep < TOTAL_STEPS - 1) showStep(currentStep + 1); }
+  function prevStep() { if (currentStep > 0) showStep(currentStep - 1); }
+  
+  function completeTour() {
+    localStorage.setItem('caet-onboarding-complete', 'true');
+  }
+  
+  renderProgress();
+</script>
 </body>
-
 </html>
