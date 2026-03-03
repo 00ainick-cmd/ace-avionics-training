@@ -3772,11 +3772,11 @@
     }
 
     // ---- SESSION STATS (localStorage — session recovery only, no score saved) ----
-    const SESSION_KEY = `ace_drill_session_${LESSON_ID}`;
+    const DRILL_SESSION_KEY = `ace_drill_session_${LESSON_ID}`;
 
     function saveSessionStats() {
       try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify({
+        localStorage.setItem(DRILL_SESSION_KEY, JSON.stringify({
           sessionStats: state.sessionStats,
           weakList: state.weakList,
           ts: Date.now()
@@ -3786,7 +3786,7 @@
 
     function loadSessionStats() {
       try {
-        const raw = localStorage.getItem(SESSION_KEY);
+        const raw = localStorage.getItem(DRILL_SESSION_KEY);
         if (!raw) return;
         const data = JSON.parse(raw);
         // Only restore if within 4 hours
@@ -3794,7 +3794,7 @@
           state.sessionStats = data.sessionStats || state.sessionStats;
           state.weakList = data.weakList || [];
         } else {
-          localStorage.removeItem(SESSION_KEY);
+          localStorage.removeItem(DRILL_SESSION_KEY);
         }
         updateStatsDisplay();
         updateWeakList();
@@ -3808,7 +3808,7 @@
       state.categoryStats = {};
       updateStatsDisplay();
       updateWeakList();
-      try { localStorage.removeItem(SESSION_KEY); } catch (e) { }
+      try { localStorage.removeItem(DRILL_SESSION_KEY); } catch (e) { }
       showAchievement('Stats reset. Fresh start!');
     }
 
