@@ -249,10 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let headerText = '';
         let mcData = null;
 
-        if (q.multipleChoice) mcData = q.multipleChoice;
+        if (q.preassessment) mcData = q.preassessment;
+        else if (q.multipleChoice) mcData = q.multipleChoice;
         else if (q.practice) mcData = q.practice;
-        else if (q.jeopardy) mcData = q.jeopardy; // Fallback
-        else if (q.preassessment) mcData = q.preassessment;
+        else if (q.jeopardy) mcData = q.jeopardy;
 
         if (mcData) {
             headerText = mcData.question;
@@ -349,10 +349,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Get correct answer index
             let correctIdx = 0;
-            if (q.multipleChoice) correctIdx = q.multipleChoice.correctIndex;
+            if (q.preassessment) correctIdx = q.preassessment.correctIndex;
+            else if (q.multipleChoice) correctIdx = q.multipleChoice.correctIndex;
             else if (q.practice) correctIdx = q.practice.correctIndex;
             else if (q.jeopardy) correctIdx = q.jeopardy.correctIndex;
-            else if (q.preassessment) correctIdx = q.preassessment.correctIndex;
 
             if (state.userAnswers[idx] === correctIdx) {
                 catStats[q.category].correct++;
@@ -447,7 +447,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 6. Sync Data to Python SQLite Server
+        // 6. Save diagnostic results to localStorage for Statistics page
+        const diagnosticData = {
+            date: new Date().toISOString(),
+            categories: resultsArray.map(r => ({ id: r.id, name: r.name, pct: r.pct, correct: r.correct, total: r.total })),
+            overall: Math.round(resultsArray.reduce((s, r) => s + r.pct, 0) / resultsArray.length)
+        };
+        localStorage.setItem('ace_diagnostic_baseline', JSON.stringify(diagnosticData));
+
+        // Also set initial mastery from diagnostic for categories that have no other data
+        resultsArray.forEach(r => {
+            const key = `ace_cat_${r.id}_mastery`;
+            if (!localStorage.getItem(key) || localStorage.getItem(key) === '0') {
+                localStorage.setItem(key, String(r.pct));
+            }
+        });
+
+        // 7. Sync Data to Python SQLite Server
         await syncToDatabase(resultsArray);
         localStorage.setItem('caet-onboarding-complete', 'true');
     }
