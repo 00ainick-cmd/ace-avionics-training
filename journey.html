@@ -569,6 +569,11 @@
                 </svg>
                 Back to Dashboard
             </a>
+            <button
+                onclick="if(confirm('Sign out of ACE Avionics Training?')){localStorage.removeItem('ace_enrollment');localStorage.removeItem('ace_session_id');localStorage.removeItem('caet-onboarding-complete');sessionStorage.clear();window.location.href='enrollment.html';}"
+                style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,system-ui,sans-serif;transition:all 0.2s;margin-left:8px;"
+                onmouseenter="this.style.background='rgba(239,68,68,0.2)'"
+                onmouseleave="this.style.background='rgba(239,68,68,0.1)'">Sign Out</button>
         </div>
     </header>
 
@@ -737,7 +742,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-            Return to Hub
+            Return to Dashboard
         </a>
 
     </main>
