@@ -500,6 +500,9 @@
         <button class="ctrl-btn stop-btn" id="btnStop" onclick="Circuit.setRunning(false)">Stop</button>
         <button class="ctrl-btn" onclick="Circuit.resetCircuit()">Clear</button>
         <div class="ctrl-sep"></div>
+        <button class="ctrl-btn" onclick="Circuit.saveCircuit()">Save</button>
+        <button class="ctrl-btn" onclick="Circuit.loadCircuit()">Load</button>
+        <div class="ctrl-sep"></div>
         <div class="examples-dropdown">
           <button class="ctrl-btn" id="btnExamples" onclick="toggleExamplesMenu(event)">Examples</button>
           <div class="examples-menu" id="examplesMenu">
@@ -555,7 +558,7 @@
       battery:    { label: 'Battery',    icon: 'BAT',  category: 'source',     defaultProps: { voltage: 28 },   color: '#ef4444' },
       breaker:    { label: 'CB',         icon: 'CB',   category: 'protection', defaultProps: { tripCurrent: 5, tripped: false }, color: '#f59e0b' },
       switch_tog: { label: 'Switch',     icon: 'SW',   category: 'control',    defaultProps: { closed: false }, color: '#a78bfa' },
-      relay:      { label: 'Relay',      icon: 'RLY',  category: 'control',    defaultProps: { coilResistance: 50, contactClosed: false }, color: '#8b5cf6' },
+      relay:      { label: 'Relay',      icon: 'RLY',  category: 'control',    defaultProps: { coilResistance: 50, pullInCurrent: 0.3, contactClosed: false }, color: '#8b5cf6' },
       lamp:       { label: 'Lamp',       icon: 'LP',   category: 'load',       defaultProps: { resistance: 6.67 }, color: '#fde047' },
       motor:      { label: 'Motor',      icon: 'MOT',  category: 'load',       defaultProps: { resistance: 14 },  color: '#38bdf8' },
       resistor:   { label: 'Resistor',   icon: 'RES',  category: 'load',       defaultProps: { resistance: 100 }, color: '#10b981' },
@@ -591,12 +594,16 @@
     let challengeResults = [];
     let probedNodeId = null;
     let probedCompId = null;
+    let lastMousePos = { x: 0, y: 0 };
 
     // Canvas
     let canvas, ctx;
     let canvasArea;
     let dpr = 1;
     let W = 0, H = 0;          // Canvas size in CSS px
+
+    // Solver
+    let solverDirty = true;
 
     // Animation
     let animFrame = 0;
@@ -710,6 +717,7 @@
       canvas.addEventListener('contextmenu', onCanvasRightClick);
 
       document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (e.key === 'Delete' || e.key === 'Backspace') {
           if (selectedCompId != null) {
             deleteComponent(selectedCompId);
@@ -797,7 +805,9 @@
           // Check if clicked on a wire
           const hitWire = findWireAt(pos.x, pos.y);
           if (hitWire) {
+            delete dotOffsets[hitWire.id];
             wires = wires.filter(w => w.id !== hitWire.id);
+            solverDirty = true;
           }
         }
         return;
@@ -808,14 +818,12 @@
         // Toggle switch on click
         if (hitComp.type === 'switch_tog') {
           hitComp.props.closed = !hitComp.props.closed;
-        }
-        // Toggle relay contact on click
-        if (hitComp.type === 'relay') {
-          hitComp.props.contactClosed = !hitComp.props.contactClosed;
+          solverDirty = true;
         }
         // Reset breaker on click
         if (hitComp.type === 'breaker' && hitComp.props.tripped) {
           hitComp.props.tripped = false;
+          solverDirty = true;
         }
         selectedCompId = hitComp.id;
         showPropertyEditor(hitComp, pos);
@@ -827,6 +835,7 @@
 
     function onCanvasMove(e) {
       const pos = getCanvasPos(e);
+      lastMousePos = pos;
       hoveredTerminal = findTerminalAt(pos.x, pos.y);
     }
 
@@ -839,7 +848,9 @@
       } else {
         const hitWire = findWireAt(pos.x, pos.y);
         if (hitWire) {
+          delete dotOffsets[hitWire.id];
           wires = wires.filter(w => w.id !== hitWire.id);
+          solverDirty = true;
         }
       }
     }
@@ -943,14 +954,22 @@
       }
 
       components.push(comp);
+      solverDirty = true;
       return comp;
     }
 
     function deleteComponent(compId) {
+      // Clean up dotOffsets for connected wires
+      wires.forEach(w => {
+        if (w.from.compId === compId || w.to.compId === compId) {
+          delete dotOffsets[w.id];
+        }
+      });
       components = components.filter(c => c.id !== compId);
       wires = wires.filter(w => w.from.compId !== compId && w.to.compId !== compId);
       if (selectedCompId === compId) selectedCompId = null;
       if (probedCompId === compId) { probedCompId = null; probedNodeId = null; }
+      solverDirty = true;
     }
 
     function addWire(from, to) {
@@ -965,6 +984,7 @@
 
       const id = nextId++;
       wires.push({ id, from: { ...from }, to: { ...to } });
+      solverDirty = true;
 
       // Merge node IDs: make both terminals share the same node
       const fromComp = components.find(c => c.id === from.compId);
@@ -1038,9 +1058,10 @@
         body.appendChild(stDiv);
       } else if (comp.type === 'relay') {
         body.appendChild(makePropRow('Coil R (\u03A9)', comp.props, 'coilResistance', 'number'));
+        body.appendChild(makePropRow('Pull-in (A)', comp.props, 'pullInCurrent', 'number'));
         const stDiv = document.createElement('div');
         stDiv.className = 'prop-row';
-        stDiv.innerHTML = `<label>Contact</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.contactClosed ? '#10b981' : '#ef4444'}">${comp.props.contactClosed ? 'CLOSED' : 'OPEN'}</span>`;
+        stDiv.innerHTML = `<label>State</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.contactClosed ? '#10b981' : '#ef4444'}">${comp.props.contactClosed ? 'ENERGIZED' : 'DE-ENERGIZED'}</span>`;
         body.appendChild(stDiv);
       }
 
@@ -1076,6 +1097,7 @@
       inp.step = type === 'number' ? '0.1' : '';
       inp.addEventListener('change', () => {
         props[key] = parseFloat(inp.value) || 0;
+        solverDirty = true;
       });
       row.appendChild(lbl);
       row.appendChild(inp);
@@ -1126,7 +1148,7 @@
           case 'switch_tog':
             return comp.props.closed ? 0.001 : 1e7;
           case 'relay':
-            return comp.props.contactClosed ? 0.001 : 1e7;
+            return comp.props.contactClosed ? Math.max(comp.props.coilResistance || 50, 0.001) : 1e7;
           case 'breaker':
             return comp.props.tripped ? 1e7 : 0.001;
           case 'ground':
@@ -1212,7 +1234,21 @@
           const I = Math.abs(branchCurrents[comp.id] || 0);
           if (I > (comp.props.tripCurrent || 5)) {
             comp.props.tripped = true;
+            solverDirty = true;
             showToast('CB #' + comp.id + ' TRIPPED at ' + I.toFixed(1) + 'A', 'incorrect');
+          }
+        }
+      }
+
+      // Relay coil energization check
+      for (const comp of components) {
+        if (comp.type === 'relay') {
+          const I = Math.abs(branchCurrents[comp.id] || 0);
+          const threshold = comp.props.pullInCurrent || 0.3;
+          const wasEnergized = comp.props.contactClosed;
+          comp.props.contactClosed = (I >= threshold);
+          if (comp.props.contactClosed !== wasEnergized) {
+            solverDirty = true;
           }
         }
       }
@@ -1267,8 +1303,9 @@
 
     // ─── Rendering ──────────────────────────────────────────────
     function tick() {
-      if (isRunning) {
+      if (isRunning && solverDirty) {
         solve();
+        solverDirty = false;
       }
       render();
       updateMeters();
@@ -1736,7 +1773,7 @@
       ctx.fillStyle = closed ? '#10b981' : '#ef4444';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'bottom';
-      ctx.fillText(closed ? 'CLOSED' : 'OPEN', cx, cy - hh);
+      ctx.fillText(closed ? 'ENERGIZED' : 'DE-ENERGIZED', cx, cy - hh);
     }
 
     function drawBreaker(ctx, cx, cy, hw, hh, def, comp) {
@@ -1869,6 +1906,8 @@
           const p2 = getTerminalPixelPos(toComp, hoveredTerminal.termIdx);
           ctx.lineTo(p2.x, p2.y);
         }
+      } else {
+        ctx.lineTo(lastMousePos.x, lastMousePos.y);
       }
       ctx.stroke();
       ctx.restore();
@@ -1914,6 +1953,7 @@
     // ─── Run/Stop/Reset ─────────────────────────────────────────
     function setRunning(run) {
       isRunning = run;
+      if (run) solverDirty = true;
       document.getElementById('btnRun').classList.toggle('active', run);
       document.getElementById('btnStop').classList.toggle('active', !run);
     }
@@ -1930,6 +1970,7 @@
       probedCompId = null;
       nextId = 1;
       nextNodeId = 1;
+      solverDirty = true;
       hidePropertyEditor();
     }
 
@@ -2278,11 +2319,6 @@
     }
 
     // ─── Examples Menu ──────────────────────────────────────────
-    function toggleExamplesMenu() {
-      const menu = document.getElementById('examplesMenu');
-      menu.classList.toggle('visible');
-    }
-
     function closeExamplesMenu() {
       document.getElementById('examplesMenu').classList.remove('visible');
     }
@@ -2294,6 +2330,57 @@
       }
     });
 
+    // ─── Save / Load ─────────────────────────────────────────────
+    function saveCircuit() {
+      const data = {
+        components: components.map(c => ({
+          id: c.id, type: c.type, gx: c.gx, gy: c.gy,
+          props: { ...c.props },
+          terminals: c.terminals.map(t => ({ nodeId: t.nodeId, nx: t.nx, ny: t.ny }))
+        })),
+        wires: wires.map(w => ({
+          id: w.id,
+          from: { compId: w.from.compId, termIdx: w.from.termIdx },
+          to: { compId: w.to.compId, termIdx: w.to.termIdx }
+        })),
+        nextId: nextId,
+        nextNodeId: nextNodeId
+      };
+      try {
+        localStorage.setItem('ace_circuit_sandbox', JSON.stringify(data));
+        showToast('Circuit saved', 'info');
+      } catch (err) {
+        showToast('Save failed: ' + err.message, 'incorrect');
+      }
+    }
+
+    function loadCircuit() {
+      try {
+        const raw = localStorage.getItem('ace_circuit_sandbox');
+        if (!raw) {
+          showToast('No saved circuit found', 'incorrect');
+          return;
+        }
+        const data = JSON.parse(raw);
+        components = data.components || [];
+        wires = data.wires || [];
+        nextId = data.nextId || 1;
+        nextNodeId = data.nextNodeId || 1;
+        nodeVoltages = {};
+        branchCurrents = {};
+        dotOffsets = {};
+        selectedCompId = null;
+        wireStart = null;
+        probedNodeId = null;
+        probedCompId = null;
+        solverDirty = true;
+        hidePropertyEditor();
+        showToast('Circuit loaded', 'info');
+      } catch (err) {
+        showToast('Load failed: ' + err.message, 'incorrect');
+      }
+    }
+
     // ─── Public API ─────────────────────────────────────────────
     return {
       init,
@@ -2304,6 +2391,8 @@
       checkChallenge,
       nextChallenge,
       prevChallenge,
+      saveCircuit,
+      loadCircuit,
     };
   })();
 
