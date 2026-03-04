@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circuit Sandbox - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       CIRCUIT SANDBOX — Simulation-specific CSS
+       ═══════════════════════════════════════════════════════════ */
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--sim-bg); }
+
+    .sandbox-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      gap: 0;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    .sandbox-header {
+      text-align: center;
+      padding: 12px 0;
+    }
+    .sandbox-header h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--sim-sky);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+      margin: 0 0 4px 0;
+    }
+    .sandbox-header p {
+      color: var(--sim-text-dim);
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* ── Main layout ───────────────────────────────── */
+    .sandbox-main {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      min-height: 480px;
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    /* ── Palette (left sidebar) ─────────────────────── */
+    .palette {
+      width: 110px;
+      min-width: 110px;
+      background: var(--sim-bg-panel);
+      border-right: 1px solid var(--sim-border);
+      display: flex;
+      flex-direction: column;
+      padding: 8px 6px;
+      gap: 4px;
+      overflow-y: auto;
+    }
+    .palette-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.6rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 2px 2px;
+      text-align: center;
+    }
+    .palette-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 4px;
+      border: 1px solid transparent;
+      border-radius: var(--sim-radius-xs);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .palette-item:hover {
+      background: var(--sim-bg-elevated);
+      border-color: var(--sim-border-active);
+    }
+    .palette-item.active {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: var(--sim-sky);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+    .palette-item .pi-icon {
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--sim-text);
+      width: 36px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--sim-border);
+      border-radius: 3px;
+      background: var(--sim-bg);
+    }
+    .palette-item .pi-label {
+      font-size: 0.6rem;
+      color: var(--sim-text-muted);
+      text-align: center;
+    }
+
+    /* Tool palette items */
+    .palette-item.tool-item .pi-icon {
+      border-color: var(--sim-amber);
+      color: var(--sim-amber);
+      font-size: 0.75rem;
+    }
+    .palette-item.tool-item.active .pi-icon {
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    .palette-divider {
+      height: 1px;
+      background: var(--sim-border);
+      margin: 4px 0;
+    }
+
+    /* ── Canvas area ──────────────────────────────────── */
+    .canvas-area {
+      flex: 1;
+      position: relative;
+      background: var(--sim-bg);
+      overflow: hidden;
+    }
+    .canvas-area canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Bottom bar ────────────────────────────────── */
+    .sandbox-bottom {
+      display: flex;
+      gap: 0;
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      border-radius: 0 0 var(--sim-radius-sm) var(--sim-radius-sm);
+      overflow: hidden;
+      background: var(--sim-bg-panel);
+    }
+
+    /* Meters panel */
+    .meters-panel {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 10px 16px;
+      border-right: 1px solid var(--sim-border);
+    }
+    .meter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .meter-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.55rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .meter-value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.15rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+    .meter-value.volt { color: var(--sim-red); }
+    .meter-value.amp  { color: var(--sim-blue); }
+    .meter-value.ohm  { color: var(--sim-amber); }
+    .meter-value.watt { color: var(--sim-green); }
+
+    /* Controls panel */
+    .controls-panel {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .ctrl-btn:hover {
+      background: var(--sim-bg-elevated);
+      color: var(--sim-text);
+      border-color: var(--sim-border-active);
+    }
+    .ctrl-btn.active {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--sim-sky);
+      border-color: var(--sim-sky);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+    .ctrl-btn.run-btn.active {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--sim-green);
+      border-color: var(--sim-green);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+    }
+    .ctrl-btn.stop-btn.active {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--sim-red);
+      border-color: var(--sim-red);
+    }
+    .ctrl-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--sim-border);
+      margin: 0 4px;
+    }
+
+    /* ── Challenge bar ─────────────────────────────── */
+    .challenge-bar {
+      display: none;
+      align-items: stretch;
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      border-radius: 0 0 var(--sim-radius-sm) var(--sim-radius-sm);
+      overflow: hidden;
+      background: var(--sim-bg-panel);
+      margin-top: -2px;
+    }
+    .challenge-bar.visible {
+      display: flex;
+    }
+    .challenge-info {
+      flex: 1;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .challenge-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-sky);
+      font-weight: 700;
+    }
+    .challenge-desc {
+      font-size: 0.8rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.4;
+    }
+    .challenge-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+    }
+    .challenge-score {
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      color: var(--sim-text-dim);
+      padding: 0 8px;
+    }
+
+    /* ── Feedback toast ─────────────────────────────── */
+    .feedback-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      padding: 12px 24px;
+      border-radius: var(--sim-radius-sm);
+      font-family: var(--sim-font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+    .feedback-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+    .feedback-toast.correct {
+      background: rgba(16, 185, 129, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-green);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+    .feedback-toast.incorrect {
+      background: rgba(239, 68, 68, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-red);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    }
+    .feedback-toast.info {
+      background: rgba(56, 189, 248, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-sky);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+    }
+
+    /* ── Property editor popup ─────────────────────── */
+    .prop-editor {
+      position: absolute;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-sky);
+      border-radius: var(--sim-radius-sm);
+      padding: 10px 14px;
+      z-index: 50;
+      display: none;
+      min-width: 160px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    .prop-editor.visible {
+      display: block;
+    }
+    .prop-editor-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-sky);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .prop-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .prop-row label {
+      font-size: 0.7rem;
+      color: var(--sim-text-muted);
+    }
+    .prop-row input {
+      width: 70px;
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text);
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      padding: 3px 6px;
+      border-radius: 3px;
+      text-align: right;
+    }
+    .prop-row input:focus {
+      outline: none;
+      border-color: var(--sim-sky);
+    }
+    .prop-delete-btn {
+      width: 100%;
+      margin-top: 6px;
+      padding: 4px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--sim-red);
+      color: var(--sim-red);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .prop-delete-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* ── Examples dropdown ──────────────────────────── */
+    .examples-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .examples-menu {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      min-width: 200px;
+      z-index: 60;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+      margin-bottom: 4px;
+    }
+    .examples-menu.visible {
+      display: block;
+    }
+    .examples-menu-item {
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--sim-text-secondary);
+      cursor: pointer;
+      transition: background 0.1s;
+      border-bottom: 1px solid var(--sim-border);
+    }
+    .examples-menu-item:last-child {
+      border-bottom: none;
+    }
+    .examples-menu-item:hover {
+      background: var(--sim-bg-elevated);
+      color: var(--sim-text);
+    }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      .sandbox-container { padding: 10px; }
+      .sandbox-main { min-height: 350px; flex-direction: column; }
+      .palette {
+        width: 100%;
+        min-width: unset;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 1px solid var(--sim-border);
+        padding: 6px;
+        max-height: 80px;
+        overflow-x: auto;
+      }
+      .palette-label { display: none; }
+      .palette-divider { display: none; }
+      .sandbox-bottom { flex-direction: column; }
+      .meters-panel { border-right: none; border-bottom: 1px solid var(--sim-border); }
+      .controls-panel { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sim-container sandbox-container">
+
+    <!-- Header -->
+    <div class="sandbox-header">
+      <h3>Circuit Sandbox</h3>
+      <p>Build, simulate, and troubleshoot aircraft DC electrical circuits</p>
+    </div>
+
+    <!-- Main area: palette + canvas -->
+    <div class="sandbox-main">
+      <!-- Component Palette -->
+      <div class="palette" id="palette">
+        <div class="palette-label">Components</div>
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Circuit Canvas -->
+      <div class="canvas-area" id="canvasArea">
+        <canvas id="circuitCanvas"></canvas>
+        <!-- Property editor popup -->
+        <div class="prop-editor" id="propEditor">
+          <div class="prop-editor-title" id="propEditorTitle">Component</div>
+          <div id="propEditorBody"></div>
+          <button class="prop-delete-btn" id="propDeleteBtn">Delete Component</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar: meters + controls -->
+    <div class="sandbox-bottom">
+      <div class="meters-panel" id="metersPanel">
+        <div class="meter-item">
+          <span class="meter-label">Voltage</span>
+          <span class="meter-value volt" id="meterV">--.- V</span>
+        </div>
+        <div class="meter-item">
+          <span class="meter-label">Current</span>
+          <span class="meter-value amp" id="meterI">--.- A</span>
+        </div>
+        <div class="meter-item">
+          <span class="meter-label">Resistance</span>
+          <span class="meter-value ohm" id="meterR">--.- &Omega;</span>
+        </div>
+        <div class="meter-item">
+          <span class="meter-label">Power</span>
+          <span class="meter-value watt" id="meterP">--.- W</span>
+        </div>
+      </div>
+      <div class="controls-panel">
+        <button class="ctrl-btn run-btn active" id="btnRun" onclick="Circuit.setRunning(true)">Run</button>
+        <button class="ctrl-btn stop-btn" id="btnStop" onclick="Circuit.setRunning(false)">Stop</button>
+        <button class="ctrl-btn" onclick="Circuit.resetCircuit()">Clear</button>
+        <div class="ctrl-sep"></div>
+        <div class="examples-dropdown">
+          <button class="ctrl-btn" id="btnExamples" onclick="toggleExamplesMenu(event)">Examples</button>
+          <div class="examples-menu" id="examplesMenu">
+            <div class="examples-menu-item" onclick="Circuit.loadExample('navLight')">Nav Light Circuit</div>
+            <div class="examples-menu-item" onclick="Circuit.loadExample('landingRelay')">Landing Light + Relay</div>
+            <div class="examples-menu-item" onclick="Circuit.loadExample('dualBus')">Dual Bus System</div>
+          </div>
+        </div>
+        <div class="ctrl-sep"></div>
+        <button class="ctrl-btn active" id="btnSandbox" onclick="Circuit.setMode('sandbox')">Sandbox</button>
+        <button class="ctrl-btn" id="btnChallenge" onclick="Circuit.setMode('challenge')">Challenge</button>
+      </div>
+    </div>
+
+    <!-- Challenge bar (hidden until challenge mode) -->
+    <div class="challenge-bar" id="challengeBar">
+      <div class="challenge-info">
+        <div class="challenge-title" id="challengeTitle">Challenge 1/5</div>
+        <div class="challenge-desc" id="challengeDesc">Build a basic navigation light circuit.</div>
+      </div>
+      <div class="challenge-controls">
+        <span class="challenge-score" id="challengeScore">Score: 0</span>
+        <button class="ctrl-btn" onclick="Circuit.checkChallenge()">Check</button>
+        <button class="ctrl-btn" onclick="Circuit.nextChallenge()">Next</button>
+        <button class="ctrl-btn" onclick="Circuit.prevChallenge()">Prev</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Feedback toast -->
+  <div class="feedback-toast" id="feedbackToast"></div>
+
+  <script src="sim-analytics.js"></script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════════════
+     CIRCUIT SANDBOX — Complete Interactive DC Circuit Simulator
+     ═══════════════════════════════════════════════════════════════════ */
+
+  const Circuit = (() => {
+    'use strict';
+
+    // ─── Constants ───────────────────────────────────────────────
+    const GRID = 20;              // Grid cell size in CSS pixels
+    const COMP_W = 3;             // Component width in grid cells
+    const COMP_H = 2;             // Component height in grid cells
+    const DOT_SIZE = 3;
+    const DOT_GLOW = 8;
+    const WIRE_WIDTH = 2.5;
+
+    // Component type definitions
+    const COMP_TYPES = {
+      battery:    { label: 'Battery',    icon: 'BAT',  category: 'source',     defaultProps: { voltage: 28 },   color: '#ef4444' },
+      breaker:    { label: 'CB',         icon: 'CB',   category: 'protection', defaultProps: { tripCurrent: 5, tripped: false }, color: '#f59e0b' },
+      switch_tog: { label: 'Switch',     icon: 'SW',   category: 'control',    defaultProps: { closed: false }, color: '#a78bfa' },
+      lamp:       { label: 'Lamp',       icon: 'LP',   category: 'load',       defaultProps: { resistance: 6.67 }, color: '#fde047' },
+      motor:      { label: 'Motor',      icon: 'MOT',  category: 'load',       defaultProps: { resistance: 14 },  color: '#38bdf8' },
+      resistor:   { label: 'Resistor',   icon: 'RES',  category: 'load',       defaultProps: { resistance: 100 }, color: '#10b981' },
+      ground:     { label: 'Ground',     icon: 'GND',  category: 'reference',  defaultProps: {},                  color: '#94a3b8' },
+    };
+
+    // Tool types
+    const TOOLS = {
+      wire:   { label: 'Wire',   icon: 'WIR' },
+      probe:  { label: 'Probe',  icon: 'PRB' },
+      delete: { label: 'Delete', icon: 'DEL' },
+    };
+
+    // ─── State ──────────────────────────────────────────────────
+    let components = [];   // Array of {id, type, gx, gy, props, terminals: [{nx,ny},...]}
+    let wires = [];        // Array of {id, from: {compId, termIdx}, to: {compId, termIdx}}
+    let nextId = 1;
+    let nextNodeId = 1;
+
+    // Solver results
+    let nodeVoltages = {};   // nodeId -> voltage
+    let branchCurrents = {}; // compId -> current (amps)
+
+    // UI state
+    let selectedTool = null;      // 'battery', 'wire', 'probe', 'delete', etc.
+    let selectedCompId = null;    // ID of currently selected placed component
+    let wireStart = null;         // {compId, termIdx} while drawing a wire
+    let hoveredTerminal = null;   // {compId, termIdx}
+    let isRunning = true;
+    let mode = 'sandbox';         // 'sandbox' or 'challenge'
+    let currentChallenge = 0;
+    let challengeScore = 0;
+    let challengeResults = [];
+    let probedNodeId = null;
+    let probedCompId = null;
+
+    // Canvas
+    let canvas, ctx;
+    let canvasArea;
+    let dpr = 1;
+    let W = 0, H = 0;          // Canvas size in CSS px
+
+    // Animation
+    let animFrame = 0;
+    let dotOffsets = {};  // compId -> offset for animated dots on wires
+
+    // Analytics
+    let tracker = null;
+
+    // ─── Initialization ─────────────────────────────────────────
+    function init() {
+      canvas = document.getElementById('circuitCanvas');
+      ctx = canvas.getContext('2d');
+      canvasArea = document.getElementById('canvasArea');
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      buildPalette();
+      setupCanvasEvents();
+
+      // Start animation
+      requestAnimationFrame(tick);
+
+      // Init tracker
+      try {
+        tracker = new SimTracker('circuit-sandbox', 'W3-Z1-N1');
+      } catch(e) { /* sim-analytics may not be loaded */ }
+    }
+
+    function resizeCanvas() {
+      dpr = window.devicePixelRatio || 1;
+      W = canvasArea.clientWidth;
+      H = canvasArea.clientHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // ─── Palette ────────────────────────────────────────────────
+    function buildPalette() {
+      const pal = document.getElementById('palette');
+      pal.innerHTML = '';
+
+      const lbl1 = document.createElement('div');
+      lbl1.className = 'palette-label';
+      lbl1.textContent = 'Components';
+      pal.appendChild(lbl1);
+
+      for (const [key, def] of Object.entries(COMP_TYPES)) {
+        const item = document.createElement('div');
+        item.className = 'palette-item';
+        item.dataset.type = key;
+        item.innerHTML = `<div class="pi-icon" style="border-color:${def.color};color:${def.color}">${def.icon}</div><div class="pi-label">${def.label}</div>`;
+        item.addEventListener('click', () => selectTool(key));
+        pal.appendChild(item);
+      }
+
+      pal.appendChild(createDivider());
+
+      const lbl2 = document.createElement('div');
+      lbl2.className = 'palette-label';
+      lbl2.textContent = 'Tools';
+      pal.appendChild(lbl2);
+
+      for (const [key, def] of Object.entries(TOOLS)) {
+        const item = document.createElement('div');
+        item.className = 'palette-item tool-item';
+        item.dataset.type = key;
+        item.innerHTML = `<div class="pi-icon">${def.icon}</div><div class="pi-label">${def.label}</div>`;
+        item.addEventListener('click', () => selectTool(key));
+        pal.appendChild(item);
+      }
+    }
+
+    function createDivider() {
+      const d = document.createElement('div');
+      d.className = 'palette-divider';
+      return d;
+    }
+
+    function selectTool(type) {
+      selectedTool = (selectedTool === type) ? null : type;
+      wireStart = null;
+      hidePropertyEditor();
+
+      // Update palette highlight
+      document.querySelectorAll('.palette-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.type === selectedTool);
+      });
+
+      // Update cursor
+      if (selectedTool === 'delete') {
+        canvas.style.cursor = 'crosshair';
+      } else if (selectedTool === 'probe') {
+        canvas.style.cursor = 'help';
+      } else if (selectedTool === 'wire') {
+        canvas.style.cursor = 'crosshair';
+      } else if (selectedTool && COMP_TYPES[selectedTool]) {
+        canvas.style.cursor = 'copy';
+      } else {
+        canvas.style.cursor = 'default';
+      }
+    }
+
+    // ─── Canvas Events ──────────────────────────────────────────
+    function setupCanvasEvents() {
+      canvas.addEventListener('click', onCanvasClick);
+      canvas.addEventListener('mousemove', onCanvasMove);
+      canvas.addEventListener('contextmenu', onCanvasRightClick);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Delete' || e.key === 'Backspace') {
+          if (selectedCompId != null) {
+            deleteComponent(selectedCompId);
+            selectedCompId = null;
+            hidePropertyEditor();
+          }
+        }
+        if (e.key === 'Escape') {
+          selectTool(null);
+          selectedCompId = null;
+          hidePropertyEditor();
+        }
+      });
+    }
+
+    function getCanvasPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function snapToGrid(v) {
+      return Math.round(v / GRID) * GRID;
+    }
+
+    function posToGrid(x, y) {
+      return { gx: Math.round(x / GRID), gy: Math.round(y / GRID) };
+    }
+
+    function onCanvasClick(e) {
+      const pos = getCanvasPos(e);
+      const gp = posToGrid(pos.x, pos.y);
+
+      // Check if clicked on a terminal
+      const hitTerm = findTerminalAt(pos.x, pos.y);
+
+      // Check if clicked on a component body
+      const hitComp = findComponentAt(pos.x, pos.y);
+
+      if (selectedTool && COMP_TYPES[selectedTool]) {
+        // PLACE COMPONENT
+        if (!hitComp) {
+          placeComponent(selectedTool, gp.gx, gp.gy);
+        }
+        return;
+      }
+
+      if (selectedTool === 'wire') {
+        if (hitTerm) {
+          if (!wireStart) {
+            wireStart = hitTerm;
+          } else {
+            // Complete wire
+            if (wireStart.compId !== hitTerm.compId || wireStart.termIdx !== hitTerm.termIdx) {
+              addWire(wireStart, hitTerm);
+            }
+            wireStart = null;
+          }
+        } else {
+          wireStart = null;
+        }
+        return;
+      }
+
+      if (selectedTool === 'probe') {
+        if (hitTerm) {
+          const comp = components.find(c => c.id === hitTerm.compId);
+          if (comp) {
+            probedNodeId = comp.terminals[hitTerm.termIdx].nodeId;
+            probedCompId = hitTerm.compId;
+          }
+        } else if (hitComp) {
+          probedCompId = hitComp.id;
+          probedNodeId = hitComp.terminals[0] ? hitComp.terminals[0].nodeId : null;
+        }
+        return;
+      }
+
+      if (selectedTool === 'delete') {
+        if (hitComp) {
+          deleteComponent(hitComp.id);
+        } else {
+          // Check if clicked on a wire
+          const hitWire = findWireAt(pos.x, pos.y);
+          if (hitWire) {
+            wires = wires.filter(w => w.id !== hitWire.id);
+          }
+        }
+        return;
+      }
+
+      // DEFAULT: select / toggle
+      if (hitComp) {
+        // Toggle switch on click
+        if (hitComp.type === 'switch_tog') {
+          hitComp.props.closed = !hitComp.props.closed;
+        }
+        // Reset breaker on click
+        if (hitComp.type === 'breaker' && hitComp.props.tripped) {
+          hitComp.props.tripped = false;
+        }
+        selectedCompId = hitComp.id;
+        showPropertyEditor(hitComp, pos);
+      } else {
+        selectedCompId = null;
+        hidePropertyEditor();
+      }
+    }
+
+    function onCanvasMove(e) {
+      const pos = getCanvasPos(e);
+      hoveredTerminal = findTerminalAt(pos.x, pos.y);
+    }
+
+    function onCanvasRightClick(e) {
+      e.preventDefault();
+      const pos = getCanvasPos(e);
+      const hitComp = findComponentAt(pos.x, pos.y);
+      if (hitComp) {
+        deleteComponent(hitComp.id);
+      } else {
+        const hitWire = findWireAt(pos.x, pos.y);
+        if (hitWire) {
+          wires = wires.filter(w => w.id !== hitWire.id);
+        }
+      }
+    }
+
+    // ─── Hit Testing ────────────────────────────────────────────
+    function getTerminalPixelPos(comp, termIdx) {
+      const cx = comp.gx * GRID;
+      const cy = comp.gy * GRID;
+      // Terminal 0 = left, Terminal 1 = right
+      if (termIdx === 0) {
+        return { x: cx - COMP_W * GRID / 2, y: cy };
+      } else {
+        return { x: cx + COMP_W * GRID / 2, y: cy };
+      }
+    }
+
+    function findTerminalAt(x, y, radius) {
+      radius = radius || 12;
+      for (const comp of components) {
+        for (let ti = 0; ti < comp.terminals.length; ti++) {
+          const tp = getTerminalPixelPos(comp, ti);
+          const dx = x - tp.x;
+          const dy = y - tp.y;
+          if (dx * dx + dy * dy < radius * radius) {
+            return { compId: comp.id, termIdx: ti };
+          }
+        }
+      }
+      return null;
+    }
+
+    function findComponentAt(x, y) {
+      for (const comp of components) {
+        const cx = comp.gx * GRID;
+        const cy = comp.gy * GRID;
+        const hw = COMP_W * GRID / 2;
+        const hh = COMP_H * GRID / 2;
+        if (x >= cx - hw && x <= cx + hw && y >= cy - hh && y <= cy + hh) {
+          return comp;
+        }
+      }
+      return null;
+    }
+
+    function findWireAt(x, y) {
+      for (const wire of wires) {
+        const fromComp = components.find(c => c.id === wire.from.compId);
+        const toComp = components.find(c => c.id === wire.to.compId);
+        if (!fromComp || !toComp) continue;
+        const p1 = getTerminalPixelPos(fromComp, wire.from.termIdx);
+        const p2 = getTerminalPixelPos(toComp, wire.to.termIdx);
+
+        // Check Manhattan-routed segments
+        const midX = (p1.x + p2.x) / 2;
+        if (Math.abs(p1.y - p2.y) > GRID / 2) {
+          // L-shaped: p1 -> (midX, p1.y) -> (midX, p2.y) -> p2
+          if (distToSegment(x, y, p1.x, p1.y, midX, p1.y) < 8) return wire;
+          if (distToSegment(x, y, midX, p1.y, midX, p2.y) < 8) return wire;
+          if (distToSegment(x, y, midX, p2.y, p2.x, p2.y) < 8) return wire;
+        } else {
+          if (distToSegment(x, y, p1.x, p1.y, p2.x, p2.y) < 8) return wire;
+        }
+      }
+      return null;
+    }
+
+    function distToSegment(px, py, x1, y1, x2, y2) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const lenSq = dx * dx + dy * dy;
+      if (lenSq === 0) return Math.hypot(px - x1, py - y1);
+      let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
+      t = Math.max(0, Math.min(1, t));
+      const projX = x1 + t * dx;
+      const projY = y1 + t * dy;
+      return Math.hypot(px - projX, py - projY);
+    }
+
+    // ─── Component Management ───────────────────────────────────
+    function placeComponent(type, gx, gy) {
+      const def = COMP_TYPES[type];
+      const id = nextId++;
+      const props = JSON.parse(JSON.stringify(def.defaultProps));
+
+      const comp = {
+        id,
+        type,
+        gx,
+        gy,
+        props,
+        terminals: [
+          { nodeId: nextNodeId++, nx: -1, ny: 0 },  // left terminal
+          { nodeId: nextNodeId++, nx: 1, ny: 0 }    // right terminal
+        ]
+      };
+
+      // Ground only has one meaningful terminal (terminal 0)
+      // but we keep two for uniform handling — terminal 1 is a "virtual" ground ref
+      if (type === 'ground') {
+        comp.terminals[0].nodeId = 0; // node 0 = ground reference
+      }
+
+      components.push(comp);
+      return comp;
+    }
+
+    function deleteComponent(compId) {
+      components = components.filter(c => c.id !== compId);
+      wires = wires.filter(w => w.from.compId !== compId && w.to.compId !== compId);
+      if (selectedCompId === compId) selectedCompId = null;
+      if (probedCompId === compId) { probedCompId = null; probedNodeId = null; }
+    }
+
+    function addWire(from, to) {
+      // Don't add duplicate wires
+      const exists = wires.some(w =>
+        (w.from.compId === from.compId && w.from.termIdx === from.termIdx &&
+         w.to.compId === to.compId && w.to.termIdx === to.termIdx) ||
+        (w.from.compId === to.compId && w.from.termIdx === to.termIdx &&
+         w.to.compId === from.compId && w.to.termIdx === from.termIdx)
+      );
+      if (exists) return;
+
+      const id = nextId++;
+      wires.push({ id, from: { ...from }, to: { ...to } });
+
+      // Merge node IDs: make both terminals share the same node
+      const fromComp = components.find(c => c.id === from.compId);
+      const toComp = components.find(c => c.id === to.compId);
+      if (fromComp && toComp) {
+        const fromNodeId = fromComp.terminals[from.termIdx].nodeId;
+        const toNodeId = toComp.terminals[to.termIdx].nodeId;
+        if (fromNodeId !== toNodeId) {
+          // Prefer nodeId 0 (ground) if either is ground
+          const keepId = (fromNodeId === 0 || toNodeId === 0) ? 0 : Math.min(fromNodeId, toNodeId);
+          const replaceId = (keepId === fromNodeId) ? toNodeId : fromNodeId;
+          // Replace all occurrences of replaceId with keepId
+          for (const c of components) {
+            for (const t of c.terminals) {
+              if (t.nodeId === replaceId) t.nodeId = keepId;
+            }
+          }
+        }
+      }
+    }
+
+    // ─── Property Editor ────────────────────────────────────────
+    function showPropertyEditor(comp, pos) {
+      const editor = document.getElementById('propEditor');
+      const title = document.getElementById('propEditorTitle');
+      const body = document.getElementById('propEditorBody');
+      const delBtn = document.getElementById('propDeleteBtn');
+
+      const def = COMP_TYPES[comp.type];
+      title.textContent = def.label + ' #' + comp.id;
+      body.innerHTML = '';
+
+      // Build property rows
+      if (comp.type === 'battery') {
+        body.appendChild(makePropRow('Voltage (V)', comp.props, 'voltage', 'number'));
+      } else if (comp.type === 'resistor' || comp.type === 'lamp') {
+        body.appendChild(makePropRow('Resistance (\u03A9)', comp.props, 'resistance', 'number'));
+      } else if (comp.type === 'motor') {
+        body.appendChild(makePropRow('Resistance (\u03A9)', comp.props, 'resistance', 'number'));
+      } else if (comp.type === 'breaker') {
+        body.appendChild(makePropRow('Trip (A)', comp.props, 'tripCurrent', 'number'));
+        const trippedDiv = document.createElement('div');
+        trippedDiv.className = 'prop-row';
+        trippedDiv.innerHTML = `<label>Status</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.tripped ? '#ef4444' : '#10b981'}">${comp.props.tripped ? 'TRIPPED' : 'SET'}</span>`;
+        body.appendChild(trippedDiv);
+      } else if (comp.type === 'switch_tog') {
+        const stDiv = document.createElement('div');
+        stDiv.className = 'prop-row';
+        stDiv.innerHTML = `<label>State</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.closed ? '#10b981' : '#ef4444'}">${comp.props.closed ? 'CLOSED' : 'OPEN'}</span>`;
+        body.appendChild(stDiv);
+      }
+
+      delBtn.onclick = () => {
+        deleteComponent(comp.id);
+        hidePropertyEditor();
+      };
+
+      // Position
+      const areaRect = canvasArea.getBoundingClientRect();
+      let ex = pos.x + 20;
+      let ey = pos.y - 30;
+      if (ex + 180 > W) ex = pos.x - 190;
+      if (ey < 0) ey = 10;
+      if (ey + 150 > H) ey = H - 160;
+      editor.style.left = ex + 'px';
+      editor.style.top = ey + 'px';
+      editor.classList.add('visible');
+    }
+
+    function hidePropertyEditor() {
+      document.getElementById('propEditor').classList.remove('visible');
+    }
+
+    function makePropRow(label, props, key, type) {
+      const row = document.createElement('div');
+      row.className = 'prop-row';
+      const lbl = document.createElement('label');
+      lbl.textContent = label;
+      const inp = document.createElement('input');
+      inp.type = type;
+      inp.value = props[key];
+      inp.step = type === 'number' ? '0.1' : '';
+      inp.addEventListener('change', () => {
+        props[key] = parseFloat(inp.value) || 0;
+      });
+      row.appendChild(lbl);
+      row.appendChild(inp);
+      return row;
+    }
+
+    // ─── Circuit Solver (Modified Nodal Analysis — DC) ──────────
+    function solve() {
+      // Reset breaker trip check flag
+      // 1. Collect all unique node IDs
+      const nodeSet = new Set();
+      for (const c of components) {
+        for (const t of c.terminals) {
+          nodeSet.add(t.nodeId);
+        }
+      }
+
+      // Node 0 = ground (fixed at 0V)
+      nodeSet.delete(0);
+      const nodes = Array.from(nodeSet);
+      const N = nodes.length;
+      if (N === 0) {
+        nodeVoltages = { 0: 0 };
+        branchCurrents = {};
+        return;
+      }
+
+      const nodeIdx = {};
+      nodes.forEach((nid, i) => { nodeIdx[nid] = i; });
+
+      // Count voltage sources (batteries)
+      const vSources = components.filter(c => c.type === 'battery');
+      const M = N + vSources.length;
+
+      // Build MNA matrices: A * x = b
+      // x = [v1, v2, ..., vN, iVS1, iVS2, ...]
+      // A is (N + #VS) x (N + #VS)
+      const A = Array.from({ length: M }, () => new Float64Array(M));
+      const b = new Float64Array(M);
+
+      // Helper: get effective resistance of a component
+      function getResistance(comp) {
+        switch (comp.type) {
+          case 'resistor':
+          case 'lamp':
+          case 'motor':
+            return Math.max(comp.props.resistance || 100, 0.001);
+          case 'switch_tog':
+            return comp.props.closed ? 0.001 : 1e7;
+          case 'breaker':
+            return comp.props.tripped ? 1e7 : 0.001;
+          case 'ground':
+            return 1e7; // Ground is handled by node assignment
+          default:
+            return 1e7;
+        }
+      }
+
+      // Stamp resistive elements (not batteries, not grounds)
+      for (const comp of components) {
+        if (comp.type === 'battery' || comp.type === 'ground') continue;
+        const n1 = comp.terminals[0].nodeId;
+        const n2 = comp.terminals[1].nodeId;
+        const G = 1.0 / getResistance(comp);
+
+        const i1 = (n1 === 0) ? -1 : nodeIdx[n1];
+        const i2 = (n2 === 0) ? -1 : nodeIdx[n2];
+
+        if (i1 >= 0) A[i1][i1] += G;
+        if (i2 >= 0) A[i2][i2] += G;
+        if (i1 >= 0 && i2 >= 0) {
+          A[i1][i2] -= G;
+          A[i2][i1] -= G;
+        }
+        // If one node is ground (index -1), the conductance stamp to ground
+        // is already handled by the diagonal entry alone
+      }
+
+      // Stamp voltage sources (batteries)
+      // Convention: terminal 0 = negative, terminal 1 = positive
+      // Constraint: V(term1) - V(term0) = voltage
+      vSources.forEach((vs, vsIdx) => {
+        const nNeg = vs.terminals[0].nodeId; // terminal 0 = negative (left)
+        const nPos = vs.terminals[1].nodeId; // terminal 1 = positive (right)
+        const V = vs.props.voltage || 28;
+        const col = N + vsIdx; // column for current variable
+
+        const iNeg = (nNeg === 0) ? -1 : nodeIdx[nNeg];
+        const iPos = (nPos === 0) ? -1 : nodeIdx[nPos];
+
+        // KCL stamps: current enters negative, exits positive
+        if (iPos >= 0) A[iPos][col] += 1;
+        if (iNeg >= 0) A[iNeg][col] -= 1;
+
+        // Voltage constraint: V(pos) - V(neg) = V
+        if (iPos >= 0) A[col][iPos] += 1;
+        if (iNeg >= 0) A[col][iNeg] -= 1;
+
+        b[col] = V;
+      });
+
+      // Solve using Gaussian elimination with partial pivoting
+      const x = gaussianSolve(A, b, M);
+
+      // Extract results
+      nodeVoltages = { 0: 0 };
+      for (let i = 0; i < N; i++) {
+        nodeVoltages[nodes[i]] = (isFinite(x[i])) ? x[i] : 0;
+      }
+
+      // Calculate branch currents for each component
+      branchCurrents = {};
+      for (const comp of components) {
+        if (comp.type === 'battery') continue;
+        if (comp.type === 'ground') continue;
+        const n1 = comp.terminals[0].nodeId;
+        const n2 = comp.terminals[1].nodeId;
+        const v1 = nodeVoltages[n1] || 0;
+        const v2 = nodeVoltages[n2] || 0;
+        const R = getResistance(comp);
+        branchCurrents[comp.id] = (v1 - v2) / R;
+      }
+
+      // Battery currents from MNA
+      vSources.forEach((vs, vsIdx) => {
+        branchCurrents[vs.id] = (isFinite(x[N + vsIdx])) ? x[N + vsIdx] : 0;
+      });
+
+      // Circuit breaker trip check
+      for (const comp of components) {
+        if (comp.type === 'breaker' && !comp.props.tripped) {
+          const I = Math.abs(branchCurrents[comp.id] || 0);
+          if (I > (comp.props.tripCurrent || 5)) {
+            comp.props.tripped = true;
+            showToast('CB #' + comp.id + ' TRIPPED at ' + I.toFixed(1) + 'A', 'incorrect');
+          }
+        }
+      }
+    }
+
+    function gaussianSolve(A, b, N) {
+      // Augmented matrix
+      const aug = Array.from({ length: N }, (_, i) => {
+        const row = new Float64Array(N + 1);
+        for (let j = 0; j < N; j++) row[j] = A[i][j];
+        row[N] = b[i];
+        return row;
+      });
+
+      for (let col = 0; col < N; col++) {
+        // Partial pivoting
+        let maxRow = col;
+        let maxVal = Math.abs(aug[col][col]);
+        for (let row = col + 1; row < N; row++) {
+          const val = Math.abs(aug[row][col]);
+          if (val > maxVal) { maxVal = val; maxRow = row; }
+        }
+        if (maxRow !== col) {
+          [aug[col], aug[maxRow]] = [aug[maxRow], aug[col]];
+        }
+
+        const pivot = aug[col][col];
+        if (Math.abs(pivot) < 1e-12) continue;
+
+        // Eliminate
+        for (let row = col + 1; row < N; row++) {
+          const factor = aug[row][col] / pivot;
+          for (let j = col; j <= N; j++) {
+            aug[row][j] -= factor * aug[col][j];
+          }
+        }
+      }
+
+      // Back substitution
+      const x = new Float64Array(N);
+      for (let i = N - 1; i >= 0; i--) {
+        if (Math.abs(aug[i][i]) < 1e-12) { x[i] = 0; continue; }
+        let sum = aug[i][N];
+        for (let j = i + 1; j < N; j++) {
+          sum -= aug[i][j] * x[j];
+        }
+        x[i] = sum / aug[i][i];
+      }
+
+      return x;
+    }
+
+    // ─── Rendering ──────────────────────────────────────────────
+    function tick() {
+      if (isRunning) {
+        solve();
+      }
+      render();
+      updateMeters();
+      animFrame++;
+      requestAnimationFrame(tick);
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+
+      drawGrid();
+      drawWires();
+      if (isRunning) drawCurrentDots();
+      drawComponents();
+      drawTerminals();
+      drawWireInProgress();
+    }
+
+    function drawGrid() {
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
+      ctx.lineWidth = 0.5;
+
+      for (let x = 0; x <= W; x += GRID) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= H; y += GRID) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+    }
+
+    function voltageToColor(v) {
+      const abs = Math.abs(v);
+      if (abs < 0.5) return '#475569';      // near ground: dim gray
+      if (abs < 5) return '#64748b';         // low: cool gray
+      if (abs < 20) return '#94a3b8';        // medium: neutral
+      return '#ef4444';                       // high (>20V): warm red
+    }
+
+    function drawWires() {
+      for (const wire of wires) {
+        const fromComp = components.find(c => c.id === wire.from.compId);
+        const toComp = components.find(c => c.id === wire.to.compId);
+        if (!fromComp || !toComp) continue;
+
+        const p1 = getTerminalPixelPos(fromComp, wire.from.termIdx);
+        const p2 = getTerminalPixelPos(toComp, wire.to.termIdx);
+
+        // Color by voltage at "from" node
+        const n1 = fromComp.terminals[wire.from.termIdx].nodeId;
+        const v = nodeVoltages[n1] || 0;
+
+        ctx.strokeStyle = voltageToColor(v);
+        ctx.lineWidth = WIRE_WIDTH;
+        ctx.shadowBlur = 0;
+
+        // Draw L-shaped wires (Manhattan routing)
+        const midX = (p1.x + p2.x) / 2;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        if (Math.abs(p1.y - p2.y) > GRID / 2) {
+          ctx.lineTo(midX, p1.y);
+          ctx.lineTo(midX, p2.y);
+          ctx.lineTo(p2.x, p2.y);
+        } else {
+          ctx.lineTo(p2.x, p2.y);
+        }
+        ctx.stroke();
+      }
+    }
+
+    function drawCurrentDots() {
+      if (!isRunning) return;
+
+      for (const wire of wires) {
+        const fromComp = components.find(c => c.id === wire.from.compId);
+        const toComp = components.find(c => c.id === wire.to.compId);
+        if (!fromComp || !toComp) continue;
+
+        const p1 = getTerminalPixelPos(fromComp, wire.from.termIdx);
+        const p2 = getTerminalPixelPos(toComp, wire.to.termIdx);
+
+        // Determine current through this connection
+        // Use the voltage difference to estimate current magnitude
+        const n1 = fromComp.terminals[wire.from.termIdx].nodeId;
+        const n2 = toComp.terminals[wire.to.termIdx].nodeId;
+        const v1 = nodeVoltages[n1] || 0;
+        const v2 = nodeVoltages[n2] || 0;
+
+        // Find a related branch current for magnitude
+        let I = 0;
+        // Use any connected component current as proxy
+        I = Math.abs(branchCurrents[fromComp.id] || branchCurrents[toComp.id] || 0);
+        if (I < 0.001) continue;
+
+        const speed = Math.min(Math.max(I * 3, 0.5), 12);
+
+        // Initialize dot offset for this wire
+        if (dotOffsets[wire.id] == null) dotOffsets[wire.id] = 0;
+        dotOffsets[wire.id] = (dotOffsets[wire.id] + speed * 0.016 * 60) % 1000000;
+
+        // Build path segments (Manhattan routing)
+        const segments = [];
+        const midX = (p1.x + p2.x) / 2;
+        if (Math.abs(p1.y - p2.y) > GRID / 2) {
+          segments.push({ x1: p1.x, y1: p1.y, x2: midX, y2: p1.y });
+          segments.push({ x1: midX, y1: p1.y, x2: midX, y2: p2.y });
+          segments.push({ x1: midX, y1: p2.y, x2: p2.x, y2: p2.y });
+        } else {
+          segments.push({ x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y });
+        }
+
+        // Total path length
+        let totalLen = 0;
+        for (const seg of segments) {
+          totalLen += Math.hypot(seg.x2 - seg.x1, seg.y2 - seg.y1);
+        }
+        if (totalLen < 1) continue;
+
+        // Direction: conventional current flows from higher voltage to lower
+        const reverse = (v1 < v2);
+
+        // Draw dots along path
+        const dotSpacing = Math.max(15, 40 - I * 3);
+        const numDots = Math.ceil(totalLen / dotSpacing);
+        const offset = dotOffsets[wire.id] % dotSpacing;
+
+        ctx.fillStyle = '#3b82f6';
+        ctx.shadowBlur = DOT_GLOW;
+        ctx.shadowColor = '#3b82f6';
+
+        for (let i = 0; i < numDots + 1; i++) {
+          let dist = (i * dotSpacing + offset) % totalLen;
+          if (reverse) dist = totalLen - dist;
+          if (dist < 0) dist += totalLen;
+
+          // Find position along segments
+          let remaining = dist;
+          let dx = p1.x, dy = p1.y;
+          for (const seg of segments) {
+            const segLen = Math.hypot(seg.x2 - seg.x1, seg.y2 - seg.y1);
+            if (remaining <= segLen) {
+              const t = remaining / segLen;
+              dx = seg.x1 + (seg.x2 - seg.x1) * t;
+              dy = seg.y1 + (seg.y2 - seg.y1) * t;
+              break;
+            }
+            remaining -= segLen;
+            dx = seg.x2;
+            dy = seg.y2;
+          }
+
+          ctx.beginPath();
+          ctx.arc(dx, dy, DOT_SIZE, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function drawComponents() {
+      for (const comp of components) {
+        const cx = comp.gx * GRID;
+        const cy = comp.gy * GRID;
+        const hw = COMP_W * GRID / 2;
+        const hh = COMP_H * GRID / 2;
+        const def = COMP_TYPES[comp.type];
+        const isSelected = (comp.id === selectedCompId);
+
+        // Selection glow
+        if (isSelected) {
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = def.color;
+        }
+
+        // Component body
+        ctx.strokeStyle = def.color;
+        ctx.lineWidth = 1.5;
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+
+        drawComponentShape(ctx, comp, cx, cy, hw, hh, def);
+
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function drawComponentShape(ctx, comp, cx, cy, hw, hh, def) {
+      const type = comp.type;
+
+      switch (type) {
+        case 'battery':
+          drawBattery(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'resistor':
+          drawResistor(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'lamp':
+          drawLamp(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'motor':
+          drawMotor(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'switch_tog':
+          drawSwitch(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'breaker':
+          drawBreaker(ctx, cx, cy, hw, hh, def, comp);
+          break;
+        case 'ground':
+          drawGround(ctx, cx, cy, hw, hh, def, comp);
+          break;
+      }
+
+      // Label
+      ctx.font = "bold 8px 'Share Tech Mono', monospace";
+      ctx.fillStyle = def.color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(def.icon, cx, cy + hh + 2);
+    }
+
+    function drawBattery(ctx, cx, cy, hw, hh, def, comp) {
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 2;
+
+      // Short negative plate (left = terminal 0 = negative)
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - 6, cy - hh + 10);
+      ctx.lineTo(cx - 6, cy + hh - 10);
+      ctx.stroke();
+
+      // Long positive plate (right = terminal 1 = positive)
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx + 6, cy - hh + 6);
+      ctx.lineTo(cx + 6, cy + hh - 6);
+      ctx.stroke();
+
+      // + and - labels (terminal 0 = left = negative, terminal 1 = right = positive)
+      ctx.font = "bold 10px 'Share Tech Mono'";
+      ctx.fillStyle = def.color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('-', cx - 18, cy);
+      ctx.fillText('+', cx + 18, cy);
+
+      // Connection lines from terminals to plates
+      ctx.lineWidth = WIRE_WIDTH;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - 6, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + 6, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+
+      // Voltage label
+      ctx.font = "7px 'Share Tech Mono'";
+      ctx.fillStyle = 'rgba(239,68,68,0.7)';
+      ctx.fillText((comp.props.voltage || 28) + 'V', cx, cy - hh - 2);
+    }
+
+    function drawResistor(ctx, cx, cy, hw, hh, def, comp) {
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 1.5;
+
+      // Zigzag symbol
+      const zigW = 12;
+      const zigH = hh - 4;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - zigW, cy);
+      ctx.lineTo(cx - zigW + 4, cy - zigH);
+      ctx.lineTo(cx - zigW + 10, cy + zigH);
+      ctx.lineTo(cx - zigW + 16, cy - zigH);
+      ctx.lineTo(cx + zigW - 2, cy + zigH);
+      ctx.lineTo(cx + zigW, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+
+      // Value label
+      ctx.font = "7px 'Share Tech Mono'";
+      ctx.fillStyle = 'rgba(16,185,129,0.7)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText((comp.props.resistance || 100) + '\u03A9', cx, cy - hh);
+    }
+
+    function drawLamp(ctx, cx, cy, hw, hh, def, comp) {
+      const I = Math.abs(branchCurrents[comp.id] || 0);
+      const brightness = Math.min(I / 4, 1);
+
+      // Glow when powered
+      if (isRunning && brightness > 0.05) {
+        ctx.fillStyle = `rgba(253, 224, 71, ${brightness * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(cx, cy, hh + 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 1.5;
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(cx, cy, hh - 4, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Cross inside
+      const r = hh - 4;
+      ctx.beginPath();
+      ctx.moveTo(cx - r * 0.6, cy - r * 0.6);
+      ctx.lineTo(cx + r * 0.6, cy + r * 0.6);
+      ctx.moveTo(cx + r * 0.6, cy - r * 0.6);
+      ctx.lineTo(cx - r * 0.6, cy + r * 0.6);
+      ctx.stroke();
+
+      // Connection lines
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - r, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + r, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+    }
+
+    function drawMotor(ctx, cx, cy, hw, hh, def, comp) {
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 1.5;
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(cx, cy, hh - 4, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // M label
+      ctx.font = "bold 12px 'Share Tech Mono'";
+      ctx.fillStyle = def.color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('M', cx, cy);
+
+      // Connection lines
+      const r = hh - 4;
+      ctx.lineWidth = WIRE_WIDTH;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - r, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + r, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+    }
+
+    function drawSwitch(ctx, cx, cy, hw, hh, def, comp) {
+      const closed = comp.props.closed;
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 2;
+
+      // Left terminal dot
+      ctx.beginPath();
+      ctx.arc(cx - 10, cy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = def.color;
+      ctx.fill();
+
+      // Right terminal dot
+      ctx.beginPath();
+      ctx.arc(cx + 10, cy, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Switch arm
+      ctx.beginPath();
+      ctx.moveTo(cx - 10, cy);
+      if (closed) {
+        ctx.lineTo(cx + 10, cy);
+      } else {
+        ctx.lineTo(cx + 6, cy - 12);
+      }
+      ctx.stroke();
+
+      // Connection lines
+      ctx.lineWidth = WIRE_WIDTH;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - 10, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + 10, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+
+      // State label
+      ctx.font = "7px 'Share Tech Mono'";
+      ctx.fillStyle = closed ? '#10b981' : '#ef4444';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(closed ? 'CLOSED' : 'OPEN', cx, cy - hh);
+    }
+
+    function drawBreaker(ctx, cx, cy, hw, hh, def, comp) {
+      const tripped = comp.props.tripped;
+      ctx.strokeStyle = tripped ? '#ef4444' : def.color;
+      ctx.lineWidth = 2;
+
+      // Box outline
+      const bw = 14, bh = 14;
+      ctx.strokeRect(cx - bw / 2, cy - bh / 2, bw, bh);
+
+      // Internal symbol: line through if set, broken if tripped
+      ctx.beginPath();
+      if (!tripped) {
+        ctx.moveTo(cx - bw / 2 + 2, cy);
+        ctx.lineTo(cx + bw / 2 - 2, cy);
+      } else {
+        ctx.moveTo(cx - bw / 2 + 2, cy);
+        ctx.lineTo(cx - 2, cy);
+        ctx.moveTo(cx + 2, cy - 4);
+        ctx.lineTo(cx + bw / 2 - 2, cy);
+      }
+      ctx.stroke();
+
+      // Connection lines
+      ctx.lineWidth = WIRE_WIDTH;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - bw / 2, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + bw / 2, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+
+      // Trip current label
+      ctx.font = "7px 'Share Tech Mono'";
+      ctx.fillStyle = tripped ? '#ef4444' : 'rgba(245,158,11,0.7)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(tripped ? 'TRIPPED' : (comp.props.tripCurrent || 5) + 'A', cx, cy - hh);
+    }
+
+    function drawGround(ctx, cx, cy, hw, hh, def, comp) {
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 1.5;
+
+      // Connection line from left terminal to center
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx, cy);
+      ctx.stroke();
+
+      // Three horizontal lines (ground symbol)
+      const gw = [14, 9, 4];
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(cx - gw[i] / 2, cy + i * 5);
+        ctx.lineTo(cx + gw[i] / 2, cy + i * 5);
+        ctx.stroke();
+      }
+    }
+
+    function drawTerminals() {
+      for (const comp of components) {
+        for (let ti = 0; ti < comp.terminals.length; ti++) {
+          // Don't draw terminal 1 (right) of ground — it's not meaningful
+          if (comp.type === 'ground' && ti === 1) continue;
+
+          const tp = getTerminalPixelPos(comp, ti);
+          const isHovered = hoveredTerminal &&
+            hoveredTerminal.compId === comp.id &&
+            hoveredTerminal.termIdx === ti;
+          const isWireStartTerm = wireStart &&
+            wireStart.compId === comp.id &&
+            wireStart.termIdx === ti;
+          const isProbed = probedNodeId != null &&
+            comp.terminals[ti].nodeId === probedNodeId;
+
+          let radius = 3;
+          let color = '#475569';
+
+          if (isWireStartTerm) {
+            color = '#3b82f6';
+            radius = 5;
+          } else if (isHovered && (selectedTool === 'wire' || selectedTool === 'probe')) {
+            color = '#38bdf8';
+            radius = 5;
+          } else if (isProbed) {
+            color = '#f59e0b';
+            radius = 5;
+          }
+
+          ctx.beginPath();
+          ctx.arc(tp.x, tp.y, radius, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+
+          // Show voltage at probed terminal
+          if (isProbed && isRunning) {
+            const v = nodeVoltages[comp.terminals[ti].nodeId] || 0;
+            ctx.font = "bold 9px 'Share Tech Mono'";
+            ctx.fillStyle = '#f59e0b';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(v.toFixed(1) + 'V', tp.x, tp.y - 8);
+          }
+        }
+      }
+    }
+
+    function drawWireInProgress() {
+      if (!wireStart || selectedTool !== 'wire') return;
+      const fromComp = components.find(c => c.id === wireStart.compId);
+      if (!fromComp) return;
+      const p1 = getTerminalPixelPos(fromComp, wireStart.termIdx);
+
+      // Draw a dashed line from start to mouse
+      ctx.save();
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+
+      // Use hovered terminal or last known mouse pos
+      if (hoveredTerminal) {
+        const toComp = components.find(c => c.id === hoveredTerminal.compId);
+        if (toComp) {
+          const p2 = getTerminalPixelPos(toComp, hoveredTerminal.termIdx);
+          ctx.lineTo(p2.x, p2.y);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ─── Meters ─────────────────────────────────────────────────
+    function updateMeters() {
+      const mV = document.getElementById('meterV');
+      const mI = document.getElementById('meterI');
+      const mR = document.getElementById('meterR');
+      const mP = document.getElementById('meterP');
+
+      if (!isRunning || probedCompId == null) {
+        mV.textContent = '--.- V';
+        mI.textContent = '--.- A';
+        mR.innerHTML = '--.- \u03A9';
+        mP.textContent = '--.- W';
+        return;
+      }
+
+      const comp = components.find(c => c.id === probedCompId);
+      if (!comp) {
+        mV.textContent = '--.- V';
+        mI.textContent = '--.- A';
+        mR.innerHTML = '--.- \u03A9';
+        mP.textContent = '--.- W';
+        return;
+      }
+
+      const v1 = nodeVoltages[comp.terminals[0].nodeId] || 0;
+      const v2 = nodeVoltages[comp.terminals[1].nodeId] || 0;
+      const vDrop = Math.abs(v1 - v2);
+      const I = Math.abs(branchCurrents[comp.id] || 0);
+      const R = I > 0.0001 ? vDrop / I : Infinity;
+      const P = vDrop * I;
+
+      mV.textContent = vDrop.toFixed(1) + ' V';
+      mI.textContent = I.toFixed(2) + ' A';
+      mR.textContent = (R < 1e6 ? R.toFixed(1) : '---') + ' \u03A9';
+      mP.textContent = P.toFixed(1) + ' W';
+    }
+
+    // ─── Run/Stop/Reset ─────────────────────────────────────────
+    function setRunning(run) {
+      isRunning = run;
+      document.getElementById('btnRun').classList.toggle('active', run);
+      document.getElementById('btnStop').classList.toggle('active', !run);
+    }
+
+    function resetCircuit() {
+      components = [];
+      wires = [];
+      nodeVoltages = {};
+      branchCurrents = {};
+      dotOffsets = {};
+      selectedCompId = null;
+      wireStart = null;
+      probedNodeId = null;
+      probedCompId = null;
+      nextId = 1;
+      nextNodeId = 1;
+      hidePropertyEditor();
+    }
+
+    // ─── Mode Switching ─────────────────────────────────────────
+    function setMode(m) {
+      mode = m;
+      document.getElementById('btnSandbox').classList.toggle('active', m === 'sandbox');
+      document.getElementById('btnChallenge').classList.toggle('active', m === 'challenge');
+      document.getElementById('challengeBar').classList.toggle('visible', m === 'challenge');
+
+      if (m === 'challenge') {
+        currentChallenge = 0;
+        challengeScore = 0;
+        challengeResults = [];
+        loadChallenge(currentChallenge);
+      }
+    }
+
+    // ─── Challenge System ───────────────────────────────────────
+    const challenges = [
+      {
+        title: 'Challenge 1: Basic Nav Light',
+        type: 'build',
+        desc: 'Build: Battery \u2192 Circuit Breaker \u2192 Switch (closed) \u2192 Lamp \u2192 Ground. Then run the circuit so the lamp has current flowing. Close the switch before checking!',
+        validate: () => {
+          // Must have battery, breaker, switch, lamp, ground
+          const hasBat = components.some(c => c.type === 'battery');
+          const hasCB = components.some(c => c.type === 'breaker');
+          const hasSW = components.some(c => c.type === 'switch_tog');
+          const hasLamp = components.some(c => c.type === 'lamp');
+          const hasGND = components.some(c => c.type === 'ground');
+          if (!hasBat || !hasCB || !hasSW || !hasLamp || !hasGND) {
+            return { pass: false, msg: 'Missing components. Need: Battery, CB, Switch, Lamp, Ground.' };
+          }
+          // Check lamp has current
+          const lamp = components.find(c => c.type === 'lamp');
+          const I = Math.abs(branchCurrents[lamp.id] || 0);
+          if (I < 0.1) {
+            return { pass: false, msg: 'Lamp has no current (' + I.toFixed(2) + 'A). Check connections and switch state.' };
+          }
+          return { pass: true, msg: 'Nav light circuit working! Lamp current: ' + I.toFixed(2) + 'A' };
+        }
+      },
+      {
+        title: 'Challenge 2: Series Resistors',
+        type: 'build',
+        desc: 'Build: Battery(28V) \u2192 R1(100\u03A9) \u2192 R2(100\u03A9) \u2192 Ground. Verify the voltage drops equally across each resistor (14V each).',
+        validate: () => {
+          const resistors = components.filter(c => c.type === 'resistor');
+          const hasBat = components.some(c => c.type === 'battery');
+          const hasGND = components.some(c => c.type === 'ground');
+          if (!hasBat || !hasGND || resistors.length < 2) {
+            return { pass: false, msg: 'Need: Battery, 2 Resistors, Ground.' };
+          }
+          // Check each resistor has voltage drop
+          let totalDrop = 0;
+          for (const r of resistors) {
+            const v1 = nodeVoltages[r.terminals[0].nodeId] || 0;
+            const v2 = nodeVoltages[r.terminals[1].nodeId] || 0;
+            const drop = Math.abs(v1 - v2);
+            totalDrop += drop;
+          }
+          if (totalDrop < 20) {
+            return { pass: false, msg: 'Total voltage drop across resistors is only ' + totalDrop.toFixed(1) + 'V. Check connections.' };
+          }
+          return { pass: true, msg: 'Series circuit correct! Total drop: ' + totalDrop.toFixed(1) + 'V' };
+        }
+      },
+      {
+        title: 'Challenge 3: Find the Fault',
+        type: 'diagnose',
+        desc: 'This nav light circuit has a hidden fault - the lamp is dark. Use the Probe tool to find where voltage is present and where it drops to 0V. Click Check when you can identify the fault location.',
+        setup: () => {
+          resetCircuit();
+          // Build: Battery -> CB -> Switch(closed) -> [OPEN] -> Lamp -> Ground
+          // The fault: a wire is missing between switch and lamp
+          const bat = placeComponent('battery', 5, 10);
+          bat.props.voltage = 28;
+          const cb = placeComponent('breaker', 10, 10);
+          cb.props.tripCurrent = 5;
+          const sw = placeComponent('switch_tog', 15, 10);
+          sw.props.closed = true;
+          const lamp = placeComponent('lamp', 25, 10);
+          const gnd = placeComponent('ground', 30, 10);
+
+          // Wire bat -> cb -> sw -> (gap) -> lamp -> gnd
+          addWire({ compId: bat.id, termIdx: 1 }, { compId: cb.id, termIdx: 0 });
+          addWire({ compId: cb.id, termIdx: 1 }, { compId: sw.id, termIdx: 0 });
+          // Intentionally skip wire from sw to lamp (the fault!)
+          addWire({ compId: lamp.id, termIdx: 1 }, { compId: gnd.id, termIdx: 0 });
+          // Ground return to battery
+          addWire({ compId: gnd.id, termIdx: 0 }, { compId: bat.id, termIdx: 0 });
+
+          setRunning(true);
+        },
+        validate: () => {
+          // Student should have probed and found the break
+          // For simplicity: check if they've connected the missing wire (fixed the fault)
+          const lamp = components.find(c => c.type === 'lamp');
+          if (!lamp) return { pass: false, msg: 'Lamp is missing from the circuit.' };
+          const I = Math.abs(branchCurrents[lamp.id] || 0);
+          if (I > 0.1) {
+            return { pass: true, msg: 'Fault found and fixed! The open wire between Switch and Lamp was the problem. Lamp current: ' + I.toFixed(2) + 'A.' };
+          }
+          return { pass: false, msg: 'The lamp still has no current. Use the Probe tool to trace voltage, then add the missing wire to fix the fault.' };
+        }
+      },
+      {
+        title: 'Challenge 4: Parallel Loads',
+        type: 'build',
+        desc: 'Build: Battery(28V) \u2192 CB(10A) \u2192 two Lamps in parallel (each 6.67\u03A9) \u2192 Ground. Verify the current splits between the two lamps.',
+        validate: () => {
+          const lamps = components.filter(c => c.type === 'lamp');
+          const hasBat = components.some(c => c.type === 'battery');
+          const hasCB = components.some(c => c.type === 'breaker');
+          const hasGND = components.some(c => c.type === 'ground');
+          if (!hasBat || !hasCB || !hasGND || lamps.length < 2) {
+            return { pass: false, msg: 'Need: Battery, CB, 2 Lamps, Ground.' };
+          }
+          let lampCurrents = lamps.map(l => Math.abs(branchCurrents[l.id] || 0));
+          const totalI = lampCurrents.reduce((s, v) => s + v, 0);
+          if (totalI < 1) {
+            return { pass: false, msg: 'Total lamp current is only ' + totalI.toFixed(2) + 'A. Check connections.' };
+          }
+          if (lampCurrents.every(c => c > 0.5)) {
+            return { pass: true, msg: 'Parallel circuit working! Lamp currents: ' + lampCurrents.map(c => c.toFixed(2) + 'A').join(', ') + '. Total: ' + totalI.toFixed(2) + 'A.' };
+          }
+          return { pass: false, msg: 'Not all lamps have current. Make sure both lamps are wired in parallel.' };
+        }
+      },
+      {
+        title: 'Challenge 5: Design a Switching Circuit',
+        type: 'design',
+        desc: 'Design from scratch: a lamp that can be turned on/off with a switch, protected by a circuit breaker, powered by a 28V battery, with proper ground return. The switch must be closed and the lamp must be lit.',
+        validate: () => {
+          const hasBat = components.some(c => c.type === 'battery');
+          const hasCB = components.some(c => c.type === 'breaker');
+          const hasSW = components.some(c => c.type === 'switch_tog' && c.props.closed);
+          const hasLamp = components.some(c => c.type === 'lamp');
+          const hasGND = components.some(c => c.type === 'ground');
+          if (!hasBat || !hasCB || !hasSW || !hasLamp || !hasGND) {
+            return { pass: false, msg: 'Need: Battery, CB, Switch (closed), Lamp, Ground.' };
+          }
+          const lamp = components.find(c => c.type === 'lamp');
+          const I = Math.abs(branchCurrents[lamp.id] || 0);
+          if (I < 0.1) {
+            return { pass: false, msg: 'Lamp has no current. Check circuit continuity and switch state.' };
+          }
+          // Verify CB is not tripped
+          const cb = components.find(c => c.type === 'breaker');
+          if (cb && cb.props.tripped) {
+            return { pass: false, msg: 'Circuit breaker is tripped. Reset it or check your circuit for short circuits.' };
+          }
+          return { pass: true, msg: 'Excellent design! Protected switching circuit is operational. Lamp current: ' + I.toFixed(2) + 'A.' };
+        }
+      }
+    ];
+
+    function loadChallenge(idx) {
+      if (idx < 0 || idx >= challenges.length) return;
+      currentChallenge = idx;
+      const ch = challenges[idx];
+
+      document.getElementById('challengeTitle').textContent = ch.title;
+      document.getElementById('challengeDesc').textContent = ch.desc;
+      document.getElementById('challengeScore').textContent = 'Score: ' + challengeScore;
+
+      if (ch.setup) {
+        ch.setup();
+      } else {
+        resetCircuit();
+      }
+      setRunning(true);
+    }
+
+    function checkChallenge() {
+      if (mode !== 'challenge') return;
+      const ch = challenges[currentChallenge];
+      const result = ch.validate();
+
+      if (result.pass) {
+        showToast(result.msg, 'correct');
+        if (!challengeResults[currentChallenge]) {
+          challengeResults[currentChallenge] = true;
+          challengeScore += 20;
+          document.getElementById('challengeScore').textContent = 'Score: ' + challengeScore;
+
+          // Record to tracker
+          if (tracker) {
+            tracker.recordStep({
+              stepId: 'challenge-' + (currentChallenge + 1),
+              correct: true,
+              points: 20,
+              category: 'DC Circuits'
+            });
+          }
+        }
+      } else {
+        showToast(result.msg, 'incorrect');
+        // Record attempt
+        if (tracker) {
+          tracker.recordStep({
+            stepId: 'challenge-' + (currentChallenge + 1) + '-attempt',
+            correct: false,
+            points: 0,
+            category: 'DC Circuits'
+          });
+        }
+      }
+
+      // Check if all challenges complete
+      if (challengeResults.filter(Boolean).length === challenges.length) {
+        if (tracker) tracker.complete();
+        showToast('All challenges complete! Score: ' + challengeScore, 'info');
+      }
+    }
+
+    function nextChallenge() {
+      if (currentChallenge < challenges.length - 1) {
+        loadChallenge(currentChallenge + 1);
+      }
+    }
+
+    function prevChallenge() {
+      if (currentChallenge > 0) {
+        loadChallenge(currentChallenge - 1);
+      }
+    }
+
+    // ─── Example Circuits ───────────────────────────────────────
+    function loadExample(name) {
+      resetCircuit();
+      closeExamplesMenu();
+
+      const baseY = Math.round(H / 2 / GRID);
+      const startX = 6;
+
+      switch (name) {
+        case 'navLight': {
+          const bat = placeComponent('battery', startX, baseY);
+          bat.props.voltage = 28;
+          const cb = placeComponent('breaker', startX + 5, baseY);
+          cb.props.tripCurrent = 5;
+          const sw = placeComponent('switch_tog', startX + 10, baseY);
+          sw.props.closed = true;
+          const lamp = placeComponent('lamp', startX + 15, baseY);
+          lamp.props.resistance = 6.67;
+          const gnd = placeComponent('ground', startX + 20, baseY);
+
+          addWire({ compId: bat.id, termIdx: 1 }, { compId: cb.id, termIdx: 0 });
+          addWire({ compId: cb.id, termIdx: 1 }, { compId: sw.id, termIdx: 0 });
+          addWire({ compId: sw.id, termIdx: 1 }, { compId: lamp.id, termIdx: 0 });
+          addWire({ compId: lamp.id, termIdx: 1 }, { compId: gnd.id, termIdx: 0 });
+          addWire({ compId: gnd.id, termIdx: 0 }, { compId: bat.id, termIdx: 0 });
+          break;
+        }
+
+        case 'landingRelay': {
+          // Landing light circuit with relay simulation
+          // Since we don't have a dedicated relay component, we model it with a switch
+          // representing the relay contact and a motor representing the coil
+
+          const bat = placeComponent('battery', startX, baseY - 4);
+          bat.props.voltage = 28;
+          const cb1 = placeComponent('breaker', startX + 5, baseY - 4);
+          cb1.props.tripCurrent = 5;
+          const sw = placeComponent('switch_tog', startX + 10, baseY - 4);
+          sw.props.closed = true;
+
+          // Relay coil path (modeled as a resistor = coil resistance)
+          const coil = placeComponent('resistor', startX + 15, baseY - 4);
+          coil.props.resistance = 50;
+          const gnd1 = placeComponent('ground', startX + 20, baseY - 4);
+
+          addWire({ compId: bat.id, termIdx: 1 }, { compId: cb1.id, termIdx: 0 });
+          addWire({ compId: cb1.id, termIdx: 1 }, { compId: sw.id, termIdx: 0 });
+          addWire({ compId: sw.id, termIdx: 1 }, { compId: coil.id, termIdx: 0 });
+          addWire({ compId: coil.id, termIdx: 1 }, { compId: gnd1.id, termIdx: 0 });
+          addWire({ compId: gnd1.id, termIdx: 0 }, { compId: bat.id, termIdx: 0 });
+
+          // Landing lamp path (relay contact = another switch)
+          const bat2 = placeComponent('battery', startX, baseY + 4);
+          bat2.props.voltage = 28;
+          const cb2 = placeComponent('breaker', startX + 5, baseY + 4);
+          cb2.props.tripCurrent = 20;
+          const contact = placeComponent('switch_tog', startX + 10, baseY + 4);
+          contact.props.closed = true;
+          const lamp = placeComponent('lamp', startX + 15, baseY + 4);
+          lamp.props.resistance = 2; // Landing light draws lots of current
+          const gnd2 = placeComponent('ground', startX + 20, baseY + 4);
+
+          addWire({ compId: bat2.id, termIdx: 1 }, { compId: cb2.id, termIdx: 0 });
+          addWire({ compId: cb2.id, termIdx: 1 }, { compId: contact.id, termIdx: 0 });
+          addWire({ compId: contact.id, termIdx: 1 }, { compId: lamp.id, termIdx: 0 });
+          addWire({ compId: lamp.id, termIdx: 1 }, { compId: gnd2.id, termIdx: 0 });
+          addWire({ compId: gnd2.id, termIdx: 0 }, { compId: bat2.id, termIdx: 0 });
+          break;
+        }
+
+        case 'dualBus': {
+          // Dual bus with bus tie
+          const bat1 = placeComponent('battery', startX, baseY - 4);
+          bat1.props.voltage = 28;
+          const cb1 = placeComponent('breaker', startX + 5, baseY - 4);
+          cb1.props.tripCurrent = 10;
+          const lamp1 = placeComponent('lamp', startX + 10, baseY - 4);
+          lamp1.props.resistance = 6.67;
+          const gnd1 = placeComponent('ground', startX + 15, baseY - 4);
+
+          addWire({ compId: bat1.id, termIdx: 1 }, { compId: cb1.id, termIdx: 0 });
+          addWire({ compId: cb1.id, termIdx: 1 }, { compId: lamp1.id, termIdx: 0 });
+          addWire({ compId: lamp1.id, termIdx: 1 }, { compId: gnd1.id, termIdx: 0 });
+          addWire({ compId: gnd1.id, termIdx: 0 }, { compId: bat1.id, termIdx: 0 });
+
+          // Bus 2
+          const bat2 = placeComponent('battery', startX, baseY + 4);
+          bat2.props.voltage = 28;
+          const cb2 = placeComponent('breaker', startX + 5, baseY + 4);
+          cb2.props.tripCurrent = 10;
+          const lamp2 = placeComponent('lamp', startX + 10, baseY + 4);
+          lamp2.props.resistance = 6.67;
+          const gnd2 = placeComponent('ground', startX + 15, baseY + 4);
+
+          addWire({ compId: bat2.id, termIdx: 1 }, { compId: cb2.id, termIdx: 0 });
+          addWire({ compId: cb2.id, termIdx: 1 }, { compId: lamp2.id, termIdx: 0 });
+          addWire({ compId: lamp2.id, termIdx: 1 }, { compId: gnd2.id, termIdx: 0 });
+          addWire({ compId: gnd2.id, termIdx: 0 }, { compId: bat2.id, termIdx: 0 });
+
+          // Bus tie switch between the two bus bars
+          const tie = placeComponent('switch_tog', startX + 18, baseY);
+          tie.props.closed = false;
+          addWire({ compId: cb1.id, termIdx: 1 }, { compId: tie.id, termIdx: 0 });
+          addWire({ compId: tie.id, termIdx: 1 }, { compId: cb2.id, termIdx: 1 });
+          break;
+        }
+      }
+
+      setRunning(true);
+      showToast('Example loaded: ' + name, 'info');
+    }
+
+    // ─── Toast Notifications ────────────────────────────────────
+    function showToast(msg, type) {
+      const toast = document.getElementById('feedbackToast');
+      toast.textContent = msg;
+      toast.className = 'feedback-toast ' + type + ' show';
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // ─── Examples Menu ──────────────────────────────────────────
+    function toggleExamplesMenu() {
+      const menu = document.getElementById('examplesMenu');
+      menu.classList.toggle('visible');
+    }
+
+    function closeExamplesMenu() {
+      document.getElementById('examplesMenu').classList.remove('visible');
+    }
+
+    // Close examples menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.examples-dropdown')) {
+        closeExamplesMenu();
+      }
+    });
+
+    // ─── Public API ─────────────────────────────────────────────
+    return {
+      init,
+      setRunning,
+      resetCircuit,
+      setMode,
+      loadExample,
+      checkChallenge,
+      nextChallenge,
+      prevChallenge,
+    };
+  })();
+
+  // Expose toggle for inline onclick handlers
+  function toggleExamplesMenu(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('examplesMenu').classList.toggle('visible');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    Circuit.init();
+  });
+  </script>
+</body>
+</html>
