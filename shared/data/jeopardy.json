@@ -465,6 +465,78 @@
         "category": "Maintenance Regulations",
         "source": "Explain why hearing protection is critical in a busy avionics shop",
         "id": "CAT1-MR-031"
+      },
+      {
+        "id": "CAT1-MR-032",
+        "clue": "After completing a 91.411 pitot-static test, the maintenance record must include the specific test equipment used — including this detail about each instrument, which proves the measurements were valid.",
+        "choices": [
+          "The equipment's original purchase date and vendor",
+          "The calibration due date, confirming the equipment was in calibration at the time of the test",
+          "The equipment's serial number and firmware version",
+          "The equipment manufacturer's ISO 9001 certification number"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT1-MR-033",
+        "clue": "A technician signs off an avionics installation in the aircraft logbook but omits this specific §43.9 element — which is the single most common regulatory deficiency found during FSDO surveillance of Part 145 shops.",
+        "choices": [
+          "The aircraft tail number",
+          "The work order reference number",
+          "The technician's certificate number",
+          "The shop's repair station number"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT1-MR-034",
+        "clue": "A technician discovers that a previous maintenance record entry references the wrong part number for an installed component. Under Part 43, the correct action is this — not simply crossing it out or adding a note.",
+        "choices": [
+          "Make a new corrective entry referencing the original entry, with the correct part number and a new signature",
+          "White out the incorrect number and write the correct one with initials and date",
+          "Contact the FAA FSDO to request a formal records amendment",
+          "Remove the page from the logbook and replace it with a corrected version"
+        ],
+        "correctIndex": 0,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT1-MR-035",
+        "clue": "Per 14 CFR 91.411, altimeter and pitot-static system inspections must be performed at this fixed interval — the same interval required for transponder checks under 91.413.",
+        "choices": [
+          "Every 12 calendar months",
+          "Every 100 flight hours",
+          "At each annual inspection",
+          "Every 24 calendar months"
+        ],
+        "correctIndex": 3,
+        "difficulty": "easy"
+      },
+      {
+        "id": "CAT1-MR-036",
+        "clue": "During a transponder test per Part 43 Appendix F, the test set verifies reply frequency, power output, suppression, and this parameter — which confirms the transponder correctly reports the aircraft's barometric altitude.",
+        "choices": [
+          "Mode C altitude encoding accuracy within ±125 feet",
+          "ATC radar interrogation response delay within 3 microseconds",
+          "Squawk code assignment timing within 10 milliseconds",
+          "Antenna VSWR below 1.5:1 at 1090 MHz"
+        ],
+        "correctIndex": 0,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT1-MR-037",
+        "clue": "An ELT inspection per 91.207 requires verifying battery expiration, proper mounting, antenna condition, and this — which must be performed only during the first five minutes of each hour to avoid triggering a false alert to search-and-rescue satellites.",
+        "choices": [
+          "A full-duration 60-second transmission test on 406 MHz",
+          "A brief operational test limited to three audible sweeps on 121.5 MHz",
+          "A 30-second transmission test monitored on the aircraft's comm radio",
+          "No transmission test — only a visual inspection of the cockpit-mounted status light"
+        ],
+        "correctIndex": 1,
+        "difficulty": "hard"
       }
     ],
     "Basic Electrical": [
@@ -1247,6 +1319,30 @@
         "category": "Basic Electrical",
         "source": "Explain bonding jumper purpose — current return and static discharge",
         "id": "CAT2-AE-012"
+      },
+      {
+        "id": "CAT2-PS-001",
+        "clue": "In a 28VDC aircraft electrical system, this protective device opens the circuit when current exceeds its rated value — protecting the wiring from overheating, not the connected equipment.",
+        "choices": [
+          "A voltage regulator",
+          "A current limiter relay",
+          "A circuit breaker",
+          "A zener diode clamp"
+        ],
+        "correctIndex": 2,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT2-PS-002",
+        "clue": "After pulling and resetting a tripped circuit breaker once, it trips again immediately. Per standard aircraft maintenance practice, the correct next action is this.",
+        "choices": [
+          "Replace the circuit breaker with a higher-rated unit to prevent nuisance trips",
+          "Reset it one more time — breakers are allowed two resets before grounding the circuit",
+          "Install a jumper wire to bypass the breaker and continue the maintenance run",
+          "Leave the breaker pulled and troubleshoot the protected circuit for a short or overload"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
       }
     ],
     "CNS Systems": [
@@ -1729,6 +1825,138 @@
         "category": "CNS Systems",
         "source": "Audio control panel enables crew to select and transmit on multiple radios",
         "id": "CAT3-AUD-003"
+      },
+      {
+        "id": "CAT3-NAV-012",
+        "clue": "WAAS corrects GPS errors caused by ionospheric delays, satellite clock drift, and orbital position inaccuracies — enabling this type of precision approach that replaces traditional ILS at many airports.",
+        "choices": [
+          "RNAV (GPS) LNAV-only approach",
+          "LPV approach with vertical guidance to 200-foot minimums",
+          "Standard VOR/DME overlay approach",
+          "CAT III autoland approach with zero-visibility minimums"
+        ],
+        "correctIndex": 1,
+        "difficulty": "easy"
+      },
+      {
+        "id": "CAT3-NAV-013",
+        "clue": "Before a GPS receiver can compute a navigation solution, it must determine each satellite's precise orbital position using this data, which is broadcast by each satellite and updated approximately every two hours.",
+        "choices": [
+          "NOTAM schedule data",
+          "WAAS ionospheric correction model",
+          "Ephemeris data",
+          "FMS waypoint database"
+        ],
+        "correctIndex": 2,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT3-NAV-014",
+        "clue": "A GPS-equipped aircraft is cleared for an LPV approach, but the WAAS annunciation shows \"LNAV only\" during the approach. This indicates the system has lost this critical capability.",
+        "choices": [
+          "DME distance measurement to the runway threshold",
+          "Radar altimeter input for decision height verification",
+          "ILS glideslope frequency auto-tuning",
+          "Vertical guidance from WAAS geostationary satellite corrections"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT3-NAV-015",
+        "clue": "This autonomous integrity monitoring function within the GPS receiver predicts whether satellite geometry will be adequate to support the planned approach — and must be checked during preflight for RNAV (GPS) approaches without WAAS.",
+        "choices": [
+          "RAIM (Receiver Autonomous Integrity Monitoring)",
+          "FDE (Fault Detection and Exclusion)",
+          "SBAS (Satellite Based Augmentation System)",
+          "ABAS (Aircraft Based Augmentation System)"
+        ],
+        "correctIndex": 0,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT3-NAV-016",
+        "clue": "Unlike VOR which provides bearing, DME measures this — calculated by timing the round-trip of paired radio pulses between the aircraft and a ground station.",
+        "choices": [
+          "Magnetic heading to the station",
+          "Slant-range distance in nautical miles",
+          "Groundspeed corrected for wind",
+          "Station frequency identification"
+        ],
+        "correctIndex": 1,
+        "difficulty": "easy"
+      },
+      {
+        "id": "CAT3-NAV-017",
+        "clue": "An ADF needle points directly at a ground station transmitting on this frequency band, but the system is susceptible to shoreline refraction, night effect, and electrical storm interference.",
+        "choices": [
+          "VHF band (108–117.95 MHz)",
+          "UHF band (960–1215 MHz)",
+          "Low/medium frequency band (190–535 kHz)",
+          "L-band (1575.42 MHz)"
+        ],
+        "correctIndex": 2,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT3-NAV-018",
+        "clue": "This airborne weather detection system transmits its own X-band radar energy forward of the aircraft and paints precipitation returns on a cockpit display — but cannot detect clear air turbulence.",
+        "choices": [
+          "Airborne weather radar (AWR)",
+          "Stormscope lightning detection system",
+          "NEXRAD datalink weather overlay",
+          "Satellite weather uplink (SXM/FIS-B)"
+        ],
+        "correctIndex": 0,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT3-NAV-019",
+        "clue": "A DME interrogator sends pulse pairs on one frequency and listens for replies on a different frequency — this frequency offset between transmit and receive prevents this self-interference problem.",
+        "choices": [
+          "Co-channel ATC radar interrogation conflicts",
+          "Adjacent-channel VOR bearing errors",
+          "GPS multipath reflection contamination",
+          "The receiver triggering on its own transmitted pulses"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT3-AUD-004",
+        "clue": "When a newly installed audio panel produces a loud 400 Hz hum in all headsets, the most likely cause is this wiring fault in the audio ground reference.",
+        "choices": [
+          "A ground loop between the audio panel chassis and the airframe ground bus",
+          "A reversed hot and neutral on the aircraft's AC essential bus",
+          "Excessive cable length exceeding the audio panel's rated output impedance",
+          "An incorrect squelch threshold setting on the installed comm radio"
+        ],
+        "correctIndex": 0,
+        "difficulty": "medium"
+      },
+      {
+        "id": "CAT3-AUD-005",
+        "clue": "During an audio panel installation, this measurement between the panel's audio output and the headset jack must match the specified value to prevent distortion or excessively low volume.",
+        "choices": [
+          "DC voltage bias on the microphone input",
+          "RF noise floor measured at the antenna port",
+          "Impedance match between audio output and the connected load",
+          "Current draw from the audio amplifier circuit breaker"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "CAT3-AUD-006",
+        "clue": "In a dual-comm installation, the pilot's headset receives audio from Comm 1 but not Comm 2, even though Comm 2 transmits normally. The audio panel is set to receive both. The most likely fault is here.",
+        "choices": [
+          "Comm 2's squelch circuit has failed open, blocking all received audio",
+          "The Comm 2 antenna has an open coaxial shield causing receive failure",
+          "The audio panel's Comm 2 volume potentiometer is set to minimum",
+          "The audio panel's Comm 2 receive wire or connection at the panel's input pin"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
       }
     ],
     "Flight Instruments": [
@@ -2558,6 +2786,114 @@
         "category": "Digital Databus",
         "source": "ARINC 429 is a commonly used digital databus standard",
         "id": "cat5-q032"
+      },
+      {
+        "id": "cat5-q033",
+        "clue": "Unlike Ethernet or MIL-STD-1553, an ARINC 429 data bus has only one transmitter per wire pair — meaning data flows in only one direction. This architecture is described as this.",
+        "choices": [
+          "Unidirectional (simplex) point-to-multipoint",
+          "Bidirectional (full-duplex) peer-to-peer",
+          "Half-duplex bus-mastered with token passing",
+          "Multi-master with collision detection (CSMA/CD)"
+        ],
+        "correctIndex": 0,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat5-q034",
+        "clue": "An ARINC 429 word is exactly 32 bits long. Bits 9 and 10 carry the Sign/Status Matrix (SSM), which tells the receiving system this critical information about the data in the word.",
+        "choices": [
+          "The transmitting LRU's part number and software version",
+          "Whether the data is valid, a test value, or a failure warning",
+          "The bus speed (high or low) at which the word was transmitted",
+          "The encryption key required to decode the BCD/BNR payload"
+        ],
+        "correctIndex": 1,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat5-q035",
+        "clue": "Unlike ARINC 429's single-transmitter architecture, MIL-STD-1553 allows up to 31 remote terminals on a shared bus — all controlled by this single device that initiates every data transfer.",
+        "choices": [
+          "The highest-priority remote terminal",
+          "The broadcast monitor terminal",
+          "The bus controller",
+          "The standby redundancy manager"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat5-q036",
+        "clue": "MIL-STD-1553 uses dual redundant buses (Bus A and Bus B) with transformer-coupled stubs. This redundancy design ensures continued operation when this occurs.",
+        "choices": [
+          "The bus controller software encounters a runtime exception",
+          "More than 31 remote terminals are connected simultaneously",
+          "Data words exceed the 20-bit payload maximum",
+          "One bus suffers a physical fault such as an open or short"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat5-q037",
+        "clue": "RS-232 serial communication between two avionics devices requires at minimum these three connections: transmit data (TXD), receive data (RXD), and this common reference.",
+        "choices": [
+          "Signal ground (GND)",
+          "Shield drain wire",
+          "+5V logic power supply",
+          "Clock synchronization line"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat5-q038",
+        "clue": "When connecting an RS-232 port from a GPS receiver to an MFD, TXD from one device must connect to RXD on the other. If both TXD pins are connected together, this is the result.",
+        "choices": [
+          "Data is received at half the configured baud rate",
+          "No data is received by either device",
+          "Both devices receive each other's data simultaneously",
+          "The higher-voltage device overrides the lower-voltage device"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat5-q039",
+        "clue": "RS-232 signal levels swing between positive and negative voltages (typically ±5V to ±12V), which makes them incompatible with this modern logic standard used inside digital avionics — requiring a level converter chip at the interface.",
+        "choices": [
+          "Differential signaling used by ARINC 429",
+          "Current-loop signaling used by older teletype equipment",
+          "TTL/CMOS logic levels (0V and +3.3V or +5V)",
+          "Fiber-optic signaling used by AFDX networks"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat5-q040",
+        "clue": "When troubleshooting an ARINC 429 bus with no data output, verifying this physical measurement at the transmitter's output pins with an oscilloscope confirms whether the transmitting LRU is actually driving the bus.",
+        "choices": [
+          "DC supply voltage at the LRU's power input connector",
+          "Ground continuity between the LRU chassis and airframe ground",
+          "The baud rate setting in the LRU configuration menu",
+          "A differential voltage swing (±5V high-speed or ±2.5V low-speed) on the twisted pair"
+        ],
+        "correctIndex": 3,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat5-q041",
+        "clue": "A bus analyzer shows Label 310 (heading) arriving at the correct rate from the AHRS, but the PFD displays a red HDG flag. The label data shows SSM bits set to \"No Computed Data.\" This tells the technician the fault is here.",
+        "choices": [
+          "Inside the AHRS — it is transmitting but reporting that it cannot compute a valid heading",
+          "In the wiring between the AHRS and PFD — causing data corruption",
+          "In the PFD software — it is failing to parse a correctly formatted label",
+          "In the bus termination resistor — causing signal reflections that corrupt the SSM bits"
+        ],
+        "correctIndex": 0,
+        "difficulty": "hard"
       }
     ],
     "Aircraft Wiring": [
@@ -3055,6 +3391,54 @@
         "category": "Aircraft Wiring",
         "source": "Damaged harness jacket: assess damage and repair per manual or replace if severe",
         "id": "cat6-q033"
+      },
+      {
+        "id": "cat6-q034",
+        "clue": "Per AC 43.13-1B, wire bundles routed through pressurized areas must have this minimum clearance from flight control cables, hydraulic lines, and high-temperature ducting to prevent chafing, heat damage, and interference.",
+        "choices": [
+          "No clearance required if a wrap of silicone tape is applied",
+          "A minimum separation distance specified in the aircraft's wiring diagram or IPC",
+          "One inch from all other aircraft systems regardless of installation",
+          "Contact is acceptable if anti-chafe conduit is installed over the bundle"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat6-q035",
+        "clue": "When routing a new wire bundle through an existing harness clamp, the clamp must not be overtightened to prevent this failure mode — which creates high-resistance connections and intermittent faults.",
+        "choices": [
+          "Insulation discoloration from UV exposure",
+          "Conductor fatigue from vibration resonance",
+          "Conductor crushing that deforms the wire and damages insulation",
+          "Electrolytic corrosion from moisture ingress at connector backshells"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat6-q036",
+        "clue": "The braided metal shield surrounding a sensitive signal wire in an avionics installation serves this primary purpose — and must be grounded per the installation drawing to be effective.",
+        "choices": [
+          "Preventing external electromagnetic interference from coupling into the signal path",
+          "Providing a redundant ground return path for the signal current",
+          "Increasing the wire's current-carrying capacity by adding conductor area",
+          "Protecting the wire from physical abrasion during maintenance"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat6-q037",
+        "clue": "After installing a new comm radio, the pilot reports alternator whine in the headset that varies with engine RPM. The most likely cause is EMI entering the audio system through this path.",
+        "choices": [
+          "The VHF antenna picking up alternator harmonics on the comm frequency",
+          "The headset jack's internal microphone preamp oscillating due to impedance mismatch",
+          "The comm radio's internal power supply filter capacitor failing open",
+          "The power supply wiring — inadequate filtering or a missing ground on the radio's power input"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
       }
     ],
     "Tools & Test Equipment": [
@@ -3509,6 +3893,234 @@
         "category": "Shop Safety",
         "source": "CAET Training",
         "id": "cat8-q019"
+      },
+      {
+        "id": "cat8-q020",
+        "clue": "Before entering an aircraft fuel tank or other confined space for avionics wiring inspection, FAA and OSHA regulations require completing this critical step to ensure the atmosphere is safe for entry.",
+        "choices": [
+          "Running the aircraft APU for ventilation for 30 minutes before entry",
+          "Testing the atmosphere with a calibrated gas detector for oxygen level, flammable vapors, and toxic gases",
+          "Spraying the space with a degreasing agent to neutralize residual fumes",
+          "Verifying the aircraft insurance covers confined-space maintenance"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat8-q021",
+        "clue": "A technician performing soldering work on avionics circuit boards should use this specific type of ventilation to prevent inhalation of flux fumes — which contain rosin decomposition products that can cause occupational asthma.",
+        "choices": [
+          "An open shop door providing general building ventilation",
+          "A standard dust mask rated for particulate filtration only",
+          "A fume extractor with activated carbon filter positioned at the soldering point",
+          "A full-face respirator with organic vapor cartridges rated for 8-hour use"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q022",
+        "clue": "During engine run-up while troubleshooting avionics near the flight line, this PPE item is required because sustained exposure to turbine engine noise levels (typically 130+ dB) causes this type of irreversible occupational injury.",
+        "choices": [
+          "Impact-rated safety glasses to prevent FOD eye injuries",
+          "Steel-toed boots to protect against dropped tooling",
+          "High-visibility vest for ramp traffic awareness",
+          "Hearing protection (earplugs or earmuffs) to prevent permanent noise-induced hearing loss"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q023",
+        "clue": "This class of fire involves energized electrical equipment — common in avionics shops — and must be extinguished with CO₂ or dry chemical agents, never water.",
+        "choices": [
+          "Class C",
+          "Class A",
+          "Class B",
+          "Class D"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat8-q024",
+        "clue": "The PASS technique — Pull the pin, Aim at the base of the fire, Squeeze the handle, Sweep side to side — is the correct operating procedure for this safety device.",
+        "choices": [
+          "An emergency eyewash station",
+          "A portable fire extinguisher",
+          "A smoke evacuation system",
+          "A halon suppression panel"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat8-q025",
+        "clue": "When evacuating a hangar during a fire alarm, technicians must do this with any aircraft power and test equipment before leaving — failure to do so significantly increases the risk of the fire spreading.",
+        "choices": [
+          "Move the test equipment to the nearest emergency exit for later retrieval",
+          "Cover sensitive avionics with anti-static bags to prevent smoke damage",
+          "Disconnect or de-energize all aircraft and bench power sources",
+          "Lock the tool cabinet to prevent unauthorized access during evacuation"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q026",
+        "clue": "A lithium battery in an avionics unit enters thermal runaway, producing white smoke, intense heat, and a chemical fire. Standard CO₂ and dry chemical extinguishers are ineffective because lithium fires require this response.",
+        "choices": [
+          "Flooding the area with halon gas to reduce oxygen concentration below 12%",
+          "Applying a standard ABC dry chemical extinguisher at maximum discharge rate",
+          "Smothering the fire with a standard fire blanket rated for Class B use",
+          "Applying copious water to cool the cells below the thermal runaway threshold"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q027",
+        "clue": "Before beginning bench work on any avionics LRU, a technician's first action — before opening, testing, or troubleshooting — should be to verify this is available and current.",
+        "choices": [
+          "The manufacturer's current Component Maintenance Manual (CMM)",
+          "The customer's purchase order and billing authorization",
+          "Last month's calibration log for all bench test equipment",
+          "The shop's current liability insurance certificate"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat8-q028",
+        "clue": "A repair station's \"Buy-Back\" or bench check procedure — where a returned unit tests serviceable with no fault found — must still generate this documentation before the unit can be released back to the customer.",
+        "choices": [
+          "A supplemental type certificate confirming the unit's configuration",
+          "A maintenance record entry with test results and a return-to-service statement",
+          "An FAA field approval letter authorizing the release",
+          "A manufacturer's service bulletin compliance record"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat8-q029",
+        "clue": "When receiving a unit for repair, the incoming inspection must document its physical condition — and specifically check these items to establish accountability and prevent later disputes about pre-existing damage.",
+        "choices": [
+          "The unit's retail replacement value and insurance coverage",
+          "The customer's maintenance training records and qualifications",
+          "External damage, missing hardware, and any non-standard modifications visible on the unit",
+          "The unit's electromagnetic emission profile measured at the shipping dock"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q030",
+        "clue": "A technician completes a repair and the unit passes all bench tests. Before the unit can be released with an 8130-3 tag, this person — whose authority is defined in the repair station manual — must review the work and approve the return to service.",
+        "choices": [
+          "The customer's designated engineering representative (DER)",
+          "The original equipment manufacturer's technical support engineer",
+          "The FAA's principal avionics inspector assigned to the repair station",
+          "The repair station's designated inspector or quality control representative"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q031",
+        "clue": "Static discharge as low as this voltage level can destroy a CMOS gate inside an avionics LRU — far below what a person can feel (approximately 3,000 volts).",
+        "choices": [
+          "100 volts or less",
+          "1,000 volts",
+          "2,500 volts",
+          "5,000 volts"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat8-q032",
+        "clue": "Before touching any circuit boards or static-sensitive components, a technician must verify that the resistance reading on their ESD wrist strap tester falls within this range — confirming the strap provides both static dissipation and personnel safety.",
+        "choices": [
+          "Less than 1 ohm (direct short to ground)",
+          "Between 750 kΩ and 10 MΩ (controlled dissipation with current limiting)",
+          "Greater than 100 MΩ (high-impedance isolation from ground)",
+          "Exactly 0 ohms (zero resistance to facility ground)"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat8-q033",
+        "clue": "When transporting an avionics LRU from the stockroom to the ESD-protected bench, the unit must remain inside this packaging material — which dissipates static charge rather than generating it.",
+        "choices": [
+          "Standard cardboard shipping box",
+          "Clear polyethylene bubble wrap",
+          "Static-dissipative or conductive ESD bag (pink or silver/black)",
+          "Foam peanuts in a sealed plastic bin"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q034",
+        "clue": "An ESD-damaged component may pass initial bench testing but fail prematurely in service. This type of ESD failure — where the damage weakens but does not immediately destroy the component — accounts for the majority of field ESD-related failures.",
+        "choices": [
+          "Catastrophic failure detected during acceptance testing",
+          "Manufacturing defect unrelated to handling",
+          "Electromagnetic interference from adjacent installed equipment",
+          "Latent defect — degraded but functional until stress causes later failure"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q035",
+        "clue": "Before and after every maintenance task inside an aircraft, technicians must perform this accountability procedure — which is the single most effective method of preventing foreign object damage.",
+        "choices": [
+          "A complete tool inventory count matching the tool control sheet",
+          "A visual sweep of the work area with a flashlight",
+          "A supervisor walkthrough signoff on the FOD prevention checklist",
+          "A borescope inspection of all accessible compartments"
+        ],
+        "correctIndex": 0,
+        "difficulty": "easy"
+      },
+      {
+        "id": "cat8-q036",
+        "clue": "A technician drops a small screw inside an avionics bay behind the instrument panel. The required response per Part 145 shop procedures is this — regardless of how difficult retrieval may be.",
+        "choices": [
+          "Note it in the maintenance record and release the aircraft with the known FOD",
+          "Stop work immediately and retrieve the item before continuing — do not close any panels until it is found",
+          "Continue working and retrieve it during the next scheduled inspection",
+          "Notify the customer and let them decide whether retrieval is necessary"
+        ],
+        "correctIndex": 1,
+        "difficulty": "medium"
+      },
+      {
+        "id": "cat8-q037",
+        "clue": "FOD pouches, magnetic trays, and parts containers placed within arm's reach during aircraft maintenance serve this specific purpose in the FOD prevention program.",
+        "choices": [
+          "Organizing parts by size for faster installation during reassembly",
+          "Protecting removed parts from ESD damage on the shop floor",
+          "Containing loose hardware and fasteners so they cannot fall into the aircraft structure",
+          "Labeling removed components for warranty tracking purposes"
+        ],
+        "correctIndex": 2,
+        "difficulty": "hard"
+      },
+      {
+        "id": "cat8-q038",
+        "clue": "Safety wire clippings, stripped wire insulation, cable tie tails, and solder splashes are all examples of this category of FOD that is uniquely hazardous because individual pieces are small enough to be overlooked but can cause electrical shorts or mechanical jams.",
+        "choices": [
+          "Consumable supply contamination",
+          "Tool accountability violations",
+          "Chemical contamination requiring hazmat cleanup",
+          "Process-generated debris — byproducts of the maintenance work itself"
+        ],
+        "correctIndex": 3,
+        "difficulty": "hard"
       }
     ]
   },
