@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pressure Failure - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <style>
+    /* ── Simulation-specific CSS ─────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--sim-bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .pf-container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    /* ── Instrument Panel ─────────────────────────────────────── */
+    .pf-instrument-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 24px;
+      background: var(--sim-bg-panel);
+      border-radius: var(--sim-radius-sm);
+      border: 1px solid var(--sim-border);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .pf-instrument {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+
+    .pf-instrument canvas {
+      border-radius: 50%;
+      cursor: default;
+    }
+
+    .pf-instrument-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Result badge overlay */
+    .pf-badge {
+      position: absolute;
+      top: -4px;
+      right: 10%;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      opacity: 0;
+      transform: scale(0.3);
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 5;
+    }
+    .pf-badge.show { opacity: 1; transform: scale(1); }
+    .pf-badge.correct {
+      background: var(--sim-green);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(16,185,129,0.6);
+    }
+    .pf-badge.wrong {
+      background: var(--sim-red);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(239,68,68,0.6);
+    }
+
+    /* Spotlight ring during reveal */
+    .pf-instrument.spotlight canvas {
+      box-shadow: 0 0 20px rgba(56,189,248,0.5), 0 0 40px rgba(56,189,248,0.2);
+    }
+
+    /* ── Scenario Info ────────────────────────────────────────── */
+    .pf-scenario-panel {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pf-scenario-title {
+      font-family: var(--sim-font-mono);
+      font-size: 1rem;
+      color: var(--sim-amber);
+      font-weight: 700;
+    }
+
+    .pf-scenario-setup {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── Pitot-Static Diagram ─────────────────────────────────── */
+    .pf-diagram-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    .pf-diagram-wrap canvas {
+      border-radius: var(--sim-radius-xs);
+    }
+
+    /* ── Prediction Panel ─────────────────────────────────────── */
+    .pf-predictions {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pf-pred-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pf-pred-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .pf-pred-counter {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-sky);
+    }
+
+    .pf-pred-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pf-pred-name {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-secondary);
+      width: 85px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .pf-pred-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pf-pred-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-muted);
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: var(--sim-radius-xs);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.15s;
+      letter-spacing: 0.5px;
+    }
+    .pf-pred-btn:hover:not(:disabled) {
+      border-color: var(--sim-sky);
+      color: var(--sim-sky);
+      background: rgba(56,189,248,0.08);
+    }
+    .pf-pred-btn.selected {
+      border-color: var(--sim-sky);
+      color: var(--sim-bg);
+      background: var(--sim-sky);
+      font-weight: 700;
+    }
+    .pf-pred-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    /* Result tag next to prediction row after reveal */
+    .pf-pred-result {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--sim-radius-xs);
+      white-space: nowrap;
+    }
+    .pf-pred-result.correct {
+      color: var(--sim-green);
+      background: rgba(16,185,129,0.12);
+    }
+    .pf-pred-result.wrong {
+      color: var(--sim-red);
+      background: rgba(239,68,68,0.12);
+    }
+
+    /* ── Reveal Button Area ───────────────────────────────────── */
+    .pf-reveal-area {
+      display: flex;
+      justify-content: center;
+      padding: 4px 0;
+    }
+
+    /* ── Explanation Panel ─────────────────────────────────────── */
+    .pf-explanations {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      padding: 16px 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pf-explanations.visible { display: flex; }
+
+    .pf-exp-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .pf-exp-item {
+      display: flex;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg-elevated);
+    }
+
+    .pf-exp-inst {
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      color: var(--sim-sky);
+      font-weight: 700;
+      width: 40px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .pf-exp-text {
+      font-size: 0.85rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── Score / Nav Bar ──────────────────────────────────────── */
+    .pf-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pf-score-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    /* ── Help Modal ───────────────────────────────────────────── */
+    .pf-help-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-dim);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-family: var(--sim-font-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pf-help-btn:hover {
+      border-color: var(--sim-sky);
+      color: var(--sim-sky);
+    }
+
+    .pf-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.85);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .pf-modal-overlay.show { display: flex; }
+
+    .pf-modal {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius);
+      padding: 24px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: var(--sim-text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .pf-modal h3 {
+      color: var(--sim-sky);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .pf-modal p { margin-bottom: 10px; }
+
+    .pf-modal .close-btn {
+      margin-top: 16px;
+      display: block;
+      width: 100%;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .pf-instrument-panel {
+        gap: 10px;
+        padding: 12px;
+      }
+      .pf-pred-name { width: 65px; font-size: 0.7rem; }
+      .pf-pred-btn { padding: 4px 8px; font-size: 0.65rem; }
+      .pf-score-group { gap: 12px; }
+      .pf-nav-bar { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sim-container pf-container">
+    <!-- ── HEADER ──────────────────────────────────────────── -->
+    <div class="sim-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div style="text-align:left;">
+        <h3>Pressure Failure</h3>
+        <p>Pitot-Static Failure Diagnosis Trainer</p>
+      </div>
+      <button class="pf-help-btn" id="helpBtn" title="How to play">?</button>
+    </div>
+
+    <!-- ── SCENARIO INFO ──────────────────────────────────── -->
+    <div class="pf-scenario-panel">
+      <div class="pf-scenario-title" id="scenarioTitle"></div>
+      <div class="pf-scenario-setup" id="scenarioSetup"></div>
+      <div class="pf-diagram-wrap">
+        <canvas id="diagramCanvas" width="440" height="160"></canvas>
+      </div>
+    </div>
+
+    <!-- ── INSTRUMENT PANEL ───────────────────────────────── -->
+    <div class="pf-instrument-panel" id="instrumentPanel">
+      <div class="pf-instrument" data-inst="asi">
+        <canvas id="cv-asi" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-asi"></div>
+        <div class="pf-instrument-label">ASI</div>
+      </div>
+      <div class="pf-instrument" data-inst="ai">
+        <canvas id="cv-ai" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-ai"></div>
+        <div class="pf-instrument-label">Attitude</div>
+      </div>
+      <div class="pf-instrument" data-inst="alt">
+        <canvas id="cv-alt" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-alt"></div>
+        <div class="pf-instrument-label">Altimeter</div>
+      </div>
+      <div class="pf-instrument" data-inst="tc">
+        <canvas id="cv-tc" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-tc"></div>
+        <div class="pf-instrument-label">Turn Coord</div>
+      </div>
+      <div class="pf-instrument" data-inst="hi">
+        <canvas id="cv-hi" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-hi"></div>
+        <div class="pf-instrument-label">Heading</div>
+      </div>
+      <div class="pf-instrument" data-inst="vsi">
+        <canvas id="cv-vsi" width="160" height="160"></canvas>
+        <div class="pf-badge" id="badge-vsi"></div>
+        <div class="pf-instrument-label">VSI</div>
+      </div>
+    </div>
+
+    <!-- ── PREDICTIONS ────────────────────────────────────── -->
+    <div class="pf-predictions" id="predictionsPanel">
+      <div class="pf-pred-header">
+        <div class="pf-pred-title">Your Predictions</div>
+        <div class="pf-pred-counter" id="predCounter">0 / 6</div>
+      </div>
+      <!-- Rows built by JS -->
+      <div id="predRows"></div>
+    </div>
+
+    <!-- ── REVEAL BUTTON ──────────────────────────────────── -->
+    <div class="pf-reveal-area">
+      <button class="sim-btn primary" id="revealBtn" disabled>Reveal Answers</button>
+    </div>
+
+    <!-- ── EXPLANATIONS ───────────────────────────────────── -->
+    <div class="pf-explanations" id="explanationsPanel">
+      <div class="pf-exp-title">Explanations</div>
+      <div id="expItems"></div>
+    </div>
+
+    <!-- ── SCORE / NAV BAR ────────────────────────────────── -->
+    <div class="sim-scorebar pf-nav-bar">
+      <div class="pf-score-group">
+        <div class="sim-score-item">
+          <span class="value" id="scoreThisRound">--</span>
+          This Round
+        </div>
+        <div class="sim-score-item">
+          <span class="value" id="scoreMastered">0/7</span>
+          Mastered
+        </div>
+        <div class="sim-score-item">
+          <span class="value" id="scoreOverall">0%</span>
+          Overall
+        </div>
+      </div>
+      <button class="sim-btn" id="nextBtn" disabled>Next Scenario</button>
+    </div>
+  </div>
+
+  <!-- ── HELP MODAL ─────────────────────────────────────── -->
+  <div class="pf-modal-overlay" id="helpModal">
+    <div class="pf-modal">
+      <h3>How This Works</h3>
+      <p>You will be presented with <strong>pitot-static system failure scenarios</strong>. For each scenario, you must predict how each of the six primary flight instruments will behave.</p>
+      <p><strong>The Big Six instruments:</strong></p>
+      <p><strong>ASI</strong> (Airspeed Indicator) -- uses pitot + static<br>
+         <strong>Attitude Indicator</strong> -- gyroscopic (never affected)<br>
+         <strong>Altimeter</strong> -- uses static only<br>
+         <strong>Turn Coordinator</strong> -- gyroscopic (never affected)<br>
+         <strong>Heading Indicator</strong> -- gyroscopic (never affected)<br>
+         <strong>VSI</strong> (Vertical Speed) -- uses static only</p>
+      <p>For each instrument, predict: <strong>HIGH</strong>, <strong>LOW</strong>, <strong>NORMAL</strong>, or <strong>FROZEN</strong>.</p>
+      <p>After locking in all 6 predictions, click <strong>Reveal Answers</strong> to see the actual behavior with animated instrument changes and explanations.</p>
+      <p>Score 5/6 or 6/6 to <strong>master</strong> a scenario.</p>
+      <button class="sim-btn close-btn" id="closeHelp">Got It</button>
+    </div>
+  </div>
+
+  <script src="sim-analytics.js"></script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════════
+     PRESSURE FAILURE SIMULATION
+     ═══════════════════════════════════════════════════════════════ */
+  (function() {
+    'use strict';
+
+    // ── SCENARIO DATA ──────────────────────────────────────────
+    const INSTRUMENTS = ['asi','ai','alt','tc','hi','vsi'];
+    const INST_LABELS = { asi:'ASI', ai:'AI', alt:'ALT', tc:'TC', hi:'HI', vsi:'VSI' };
+    const INST_FULL   = { asi:'Airspeed', ai:'Attitude', alt:'Altimeter', tc:'Turn Coord', hi:'Heading', vsi:'Vert Speed' };
+    const CHOICES     = ['HIGH','LOW','NORMAL','FROZEN'];
+
+    const SCENARIOS = [
+      {
+        id: 'pitot-climb',
+        title: 'Pitot Tube Blocked \u2014 Aircraft Climbing',
+        setup: 'Aircraft at 5,000 ft, 150 KIAS, climbing to 10,000 ft. Pitot tube ices over.',
+        failure: { pitot: true, static: false },
+        initialValues: { asi: 150, alt: 5000, vsi: 500, hi: 270 },
+        answers: { asi:'HIGH', alt:'NORMAL', vsi:'NORMAL', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With pitot blocked during a climb, trapped ram air pressure stays at the 5,000 ft value. As static pressure decreases with altitude, ASI reads (trapped Pt - decreasing Ps) = HIGHER than actual airspeed.',
+          alt: 'The altimeter uses only static pressure. Pitot blockage does not affect it.',
+          vsi: 'The VSI uses only static pressure. Pitot blockage does not affect it.',
+          ai:  'The attitude indicator is gyroscopic. It is completely independent of the pitot-static system.',
+          hi:  'The heading indicator is gyroscopic. It is completely independent of the pitot-static system.',
+          tc:  'The turn coordinator is gyroscopic. It is completely independent of the pitot-static system.'
+        }
+      },
+      {
+        id: 'pitot-descent',
+        title: 'Pitot Tube Blocked \u2014 Aircraft Descending',
+        setup: 'Aircraft at 10,000 ft, 180 KIAS, descending to 3,000 ft. Pitot tube blocked.',
+        failure: { pitot: true, static: false },
+        initialValues: { asi: 180, alt: 10000, vsi: -500, hi: 90 },
+        answers: { asi:'LOW', alt:'NORMAL', vsi:'NORMAL', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With pitot blocked during descent, trapped ram air pressure stays at the 10,000 ft value. As static pressure increases with lower altitude, ASI reads (trapped Pt - increasing Ps) = LOWER than actual airspeed.',
+          alt: 'Altimeter uses only static pressure \u2014 unaffected by pitot blockage.',
+          vsi: 'VSI uses only static pressure \u2014 unaffected by pitot blockage.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      },
+      {
+        id: 'static-climb',
+        title: 'Static Port Blocked \u2014 Aircraft Climbing',
+        setup: 'Aircraft at 5,000 ft, 150 KIAS, climbing to 10,000 ft. Static ports freeze over.',
+        failure: { pitot: false, static: true },
+        initialValues: { asi: 150, alt: 5000, vsi: 500, hi: 180 },
+        answers: { asi:'LOW', alt:'FROZEN', vsi:'FROZEN', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With static blocked during climb, trapped static pressure is higher than actual (captured at 5,000 ft). ASI reads (actual Pt - trapped Ps) = LOWER than actual airspeed because the trapped Ps is too high.',
+          alt: 'Altimeter is frozen at the altitude when blockage occurred (5,000 ft). No static pressure change reaches the instrument.',
+          vsi: 'VSI is frozen at zero. The differential pressure across its calibrated leak cannot change because static pressure is trapped.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      },
+      {
+        id: 'static-descent',
+        title: 'Static Port Blocked \u2014 Aircraft Descending',
+        setup: 'Aircraft at 10,000 ft, 180 KIAS, descending to 3,000 ft. Static ports blocked.',
+        failure: { pitot: false, static: true },
+        initialValues: { asi: 180, alt: 10000, vsi: -500, hi: 360 },
+        answers: { asi:'HIGH', alt:'FROZEN', vsi:'FROZEN', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With static blocked during descent, trapped static pressure is lower than actual (captured at 10,000 ft). ASI reads (actual Pt - trapped Ps) = HIGHER than actual because trapped Ps is too low.',
+          alt: 'Altimeter frozen at 10,000 ft \u2014 the altitude when blockage occurred.',
+          vsi: 'VSI frozen at zero \u2014 no static pressure change possible.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      },
+      {
+        id: 'both-blocked',
+        title: 'Both Pitot AND Static Blocked \u2014 Level Then Climb',
+        setup: 'Aircraft level at 8,000 ft, 160 KIAS. Both pitot and static ports ice over simultaneously. Pilot then climbs.',
+        failure: { pitot: true, static: true },
+        initialValues: { asi: 160, alt: 8000, vsi: 0, hi: 45 },
+        answers: { asi:'FROZEN', alt:'FROZEN', vsi:'FROZEN', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With both pitot and static trapped at the same altitude, the pressure differential stays constant. ASI is frozen at the airspeed when both blocked \u2014 even if the pilot changes speed.',
+          alt: 'Altimeter frozen at 8,000 ft.',
+          vsi: 'VSI frozen at zero.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      },
+      {
+        id: 'pitot-drain-open',
+        title: 'Pitot Drain Hole Open \u2014 Level Flight',
+        setup: 'Aircraft level at 6,000 ft, 140 KIAS. The pitot drain hole is open (failed check valve or debris cleared the drain).',
+        failure: { pitot: 'drain', static: false },
+        initialValues: { asi: 140, alt: 6000, vsi: 0, hi: 135 },
+        answers: { asi:'LOW', alt:'NORMAL', vsi:'NORMAL', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'With the drain hole open, some ram air pressure escapes. The pitot pressure is lower than it should be, so ASI under-reads (shows LOWER than actual airspeed).',
+          alt: 'Static system is unaffected.',
+          vsi: 'Static system is unaffected.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      },
+      {
+        id: 'alt-static',
+        title: 'Alternate Static Source \u2014 Pressurized Cabin',
+        setup: 'Aircraft at FL250 in pressurized cabin. Primary static ports failed. Pilot selects alternate static source (draws from inside cabin).',
+        failure: { pitot: false, static: 'alternate' },
+        initialValues: { asi: 220, alt: 25000, vsi: 0, hi: 300 },
+        answers: { asi:'HIGH', alt:'HIGH', vsi:'NORMAL', ai:'NORMAL', hi:'NORMAL', tc:'NORMAL' },
+        explanations: {
+          asi: 'Cabin pressure is maintained lower than ambient pressure at cruise altitude (cabin altitude ~8,000 ft vs actual FL250). Lower static input makes ASI read HIGHER than actual.',
+          alt: 'Lower cabin static pressure causes the altimeter to read HIGHER than actual altitude. This is a known characteristic of alternate static sources in pressurized aircraft.',
+          vsi: 'VSI shows a momentary indication when switching sources, then returns to normal as the new static pressure stabilizes.',
+          ai:  'Gyroscopic \u2014 independent of pitot-static system.',
+          hi:  'Gyroscopic \u2014 independent of pitot-static system.',
+          tc:  'Gyroscopic \u2014 independent of pitot-static system.'
+        }
+      }
+    ];
+
+    // ── STATE ──────────────────────────────────────────────────
+    let currentIdx = 0;
+    let predictions = {};
+    let phase = 'predict'; // 'predict' | 'reveal' | 'debrief'
+    let scenarioScores = {};   // scenarioId -> best score (out of 6)
+    let totalCorrect = 0;
+    let totalAnswered = 0;
+
+    // SimTracker
+    const tracker = (typeof SimTracker !== 'undefined')
+      ? new SimTracker('pressure-failure', 'W8-Z3-N1')
+      : null;
+
+    // ── DOM REFS ──────────────────────────────────────────────
+    const scenarioTitleEl = document.getElementById('scenarioTitle');
+    const scenarioSetupEl = document.getElementById('scenarioSetup');
+    const predRowsEl      = document.getElementById('predRows');
+    const predCounterEl   = document.getElementById('predCounter');
+    const revealBtn       = document.getElementById('revealBtn');
+    const explanationsEl  = document.getElementById('explanationsPanel');
+    const expItemsEl      = document.getElementById('expItems');
+    const nextBtn         = document.getElementById('nextBtn');
+    const scoreRoundEl    = document.getElementById('scoreThisRound');
+    const scoreMasteredEl = document.getElementById('scoreMastered');
+    const scoreOverallEl  = document.getElementById('scoreOverall');
+    const helpBtn         = document.getElementById('helpBtn');
+    const helpModal       = document.getElementById('helpModal');
+    const closeHelp       = document.getElementById('closeHelp');
+    const diagramCanvas   = document.getElementById('diagramCanvas');
+
+    // ── HELP MODAL ────────────────────────────────────────────
+    helpBtn.addEventListener('click', () => helpModal.classList.add('show'));
+    closeHelp.addEventListener('click', () => helpModal.classList.remove('show'));
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) helpModal.classList.remove('show');
+    });
+
+    // ══════════════════════════════════════════════════════════
+    //  INSTRUMENT DRAWING FUNCTIONS
+    // ══════════════════════════════════════════════════════════
+
+    const DPR = window.devicePixelRatio || 1;
+
+    function setupCanvas(id, size) {
+      const c = document.getElementById(id);
+      c.width = size * DPR;
+      c.height = size * DPR;
+      c.style.width = size + 'px';
+      c.style.height = size + 'px';
+      const ctx = c.getContext('2d');
+      ctx.scale(DPR, DPR);
+      return { c, ctx, size };
+    }
+
+    // Shared bezel drawing
+    function drawBezel(ctx, cx, cy, r) {
+      // Outer ring
+      const grad = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+      grad.addColorStop(0, '#475569');
+      grad.addColorStop(0.5, '#64748b');
+      grad.addColorStop(1, '#334155');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Inner face
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#0f172a';
+      ctx.fill();
+
+      // Subtle inner shadow
+      const ig = ctx.createRadialGradient(cx, cy, r * 0.3, cx, cy, r - 4);
+      ig.addColorStop(0, 'rgba(0,0,0,0)');
+      ig.addColorStop(1, 'rgba(0,0,0,0.4)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 4, 0, Math.PI * 2);
+      ctx.fillStyle = ig;
+      ctx.fill();
+    }
+
+    // Draw a needle
+    function drawNeedle(ctx, cx, cy, angle, length, width, color) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.beginPath();
+      ctx.moveTo(-width/2, 4);
+      ctx.lineTo(0, -length);
+      ctx.lineTo(width/2, 4);
+      ctx.closePath();
+      ctx.fillStyle = color || '#f8fafc';
+      ctx.fill();
+      ctx.restore();
+      // Center cap
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#94a3b8';
+      ctx.fill();
+    }
+
+    // ── ASI (Airspeed Indicator) ──────────────────────────────
+    function drawASI(speed) {
+      const { ctx, size } = setupCanvas('cv-asi', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 8; // inner radius for markings
+
+      // Speed arcs (drawn as thick arcs on the face)
+      function drawArc(startKt, endKt, color, width) {
+        // ktToAngle returns rotation angle (0=up, CW)
+        // Canvas arc uses standard angles (0=right, CW)
+        // Convert: arcAngle = rotAngle - PI/2
+        const sa = ktToAngle(startKt) - Math.PI / 2;
+        const ea = ktToAngle(endKt) - Math.PI / 2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, ir - 6, sa, ea);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      }
+
+      function ktToAngle(kt) {
+        // Returns rotation angle where 0 = 12 o'clock, positive = clockwise
+        // 0 kt at ~7 o'clock (210 deg CW from top)
+        // 300 kt at ~5 o'clock (510 deg CW from top, wraps)
+        const deg = 210 + (kt / 300) * 300;
+        return deg * Math.PI / 180;
+      }
+
+      // Color arcs
+      drawArc(40, 85, '#f8fafc', 3);    // White arc (flap range)
+      drawArc(60, 200, '#10b981', 3);    // Green arc (normal)
+      drawArc(200, 250, '#f59e0b', 3);   // Yellow arc (caution)
+
+      // Red line at Vne
+      const vneAngle = ktToAngle(250);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(vneAngle);
+      ctx.beginPath();
+      ctx.moveTo(0, -(ir - 14));
+      ctx.lineTo(0, -(ir + 2));
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+
+      // Tick marks and numbers
+      ctx.font = '9px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let kt = 0; kt <= 300; kt += 10) {
+        const angle = ktToAngle(kt);
+        const isMajor = kt % 50 === 0;
+        const tickLen = isMajor ? 10 : 5;
+        const outerR = ir - 2;
+        const innerR = outerR - tickLen;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, -innerR);
+        ctx.lineTo(0, -outerR);
+        ctx.strokeStyle = isMajor ? '#e2e8f0' : '#64748b';
+        ctx.lineWidth = isMajor ? 1.5 : 0.8;
+        ctx.stroke();
+        ctx.restore();
+
+        if (isMajor && kt > 0) {
+          const labelR = ir - 20;
+          // Convert rotation angle to x,y: x = sin(a)*R, y = -cos(a)*R
+          const lx = cx + Math.sin(angle) * labelR;
+          const ly = cy - Math.cos(angle) * labelR;
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillText(kt.toString(), lx, ly);
+        }
+      }
+
+      // Label
+      ctx.font = 'bold 8px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('AIRSPEED', cx, cy + 22);
+      ctx.font = '7px Inter, sans-serif';
+      ctx.fillText('KNOTS', cx, cy + 31);
+
+      // Needle
+      const clampedSpeed = Math.max(0, Math.min(300, speed));
+      const needleAngle = ktToAngle(clampedSpeed);
+      drawNeedle(ctx, cx, cy, needleAngle, ir - 20, 4, '#f8fafc');
+    }
+
+    // ── Attitude Indicator ────────────────────────────────────
+    function drawAI(pitch, bank) {
+      pitch = pitch || 0;
+      bank = bank || 0;
+      const { ctx, size } = setupCanvas('cv-ai', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 6;
+
+      // Clip to inner circle
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, ir, 0, Math.PI * 2);
+      ctx.clip();
+
+      // Rotate for bank
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(bank * Math.PI / 180);
+
+      // Sky and ground, shifted for pitch
+      const pitchPx = pitch * 2; // 2px per degree
+      ctx.fillStyle = '#1e40af';
+      ctx.fillRect(-ir - 10, -ir - 10 + pitchPx, (ir + 10) * 2, ir + 10);
+      ctx.fillStyle = '#78350f';
+      ctx.fillRect(-ir - 10, pitchPx, (ir + 10) * 2, ir + 10);
+
+      // Horizon line
+      ctx.beginPath();
+      ctx.moveTo(-ir, pitchPx);
+      ctx.lineTo(ir, pitchPx);
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Pitch lines
+      ctx.strokeStyle = 'rgba(248,250,252,0.5)';
+      ctx.lineWidth = 0.8;
+      ctx.font = '6px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(248,250,252,0.6)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let p = -20; p <= 20; p += 5) {
+        if (p === 0) continue;
+        const py = pitchPx - p * 2;
+        const hw = Math.abs(p) % 10 === 0 ? 20 : 10;
+        ctx.beginPath();
+        ctx.moveTo(-hw, py);
+        ctx.lineTo(hw, py);
+        ctx.stroke();
+        if (Math.abs(p) % 10 === 0) {
+          ctx.fillText(Math.abs(p).toString(), hw + 10, py);
+          ctx.fillText(Math.abs(p).toString(), -hw - 10, py);
+        }
+      }
+
+      ctx.restore(); // un-rotate bank
+
+      // Miniature aircraft wings (fixed)
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      // Left wing
+      ctx.beginPath();
+      ctx.moveTo(cx - 8, cy);
+      ctx.lineTo(cx - 30, cy);
+      ctx.stroke();
+      // Right wing
+      ctx.beginPath();
+      ctx.moveTo(cx + 8, cy);
+      ctx.lineTo(cx + 30, cy);
+      ctx.stroke();
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#f59e0b';
+      ctx.fill();
+
+      ctx.restore(); // un-clip
+
+      // Bank pointer at top
+      ctx.save();
+      ctx.translate(cx, cy);
+      const bankRad = bank * Math.PI / 180;
+      ctx.rotate(bankRad);
+      ctx.beginPath();
+      ctx.moveTo(0, -(ir - 2));
+      ctx.lineTo(-5, -(ir - 10));
+      ctx.lineTo(5, -(ir - 10));
+      ctx.closePath();
+      ctx.fillStyle = '#f8fafc';
+      ctx.fill();
+      ctx.restore();
+
+      // Fixed bank reference triangle at top
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - ir + 2);
+      ctx.lineTo(cx - 5, cy - ir + 10);
+      ctx.lineTo(cx + 5, cy - ir + 10);
+      ctx.closePath();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // ── Altimeter ─────────────────────────────────────────────
+    function drawALT(altitude) {
+      const { ctx, size } = setupCanvas('cv-alt', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 8;
+
+      // Tick marks: 0-10 (representing 0-10,000 ft per revolution of the 1000ft pointer)
+      ctx.font = '9px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let i = 0; i < 50; i++) {
+        const angle = (i / 50) * Math.PI * 2 - Math.PI / 2;
+        const isMajor = i % 5 === 0;
+        const tickLen = isMajor ? 10 : 5;
+        const outerR = ir - 2;
+        const innerR = outerR - tickLen;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle + Math.PI / 2);
+        ctx.beginPath();
+        ctx.moveTo(0, -innerR);
+        ctx.lineTo(0, -outerR);
+        ctx.strokeStyle = isMajor ? '#e2e8f0' : '#64748b';
+        ctx.lineWidth = isMajor ? 1.5 : 0.8;
+        ctx.stroke();
+        ctx.restore();
+
+        if (isMajor) {
+          const num = i / 5;
+          const labelR = ir - 20;
+          const lAngle = (i / 50) * Math.PI * 2 - Math.PI / 2;
+          const lx = cx + Math.cos(lAngle) * labelR;
+          const ly = cy + Math.sin(lAngle) * labelR;
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillText(num.toString(), lx, ly);
+        }
+      }
+
+      // Kollsman window
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(cx + 12, cy - 8, 28, 16);
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(cx + 12, cy - 8, 28, 16);
+      ctx.font = '8px Share Tech Mono, monospace';
+      ctx.fillStyle = '#f8fafc';
+      ctx.textAlign = 'center';
+      ctx.fillText('29.92', cx + 26, cy + 1);
+
+      // Labels
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('ALT', cx, cy + 26);
+      ctx.font = '6px Inter, sans-serif';
+      ctx.fillText('1000 FT', cx, cy + 34);
+
+      // 1000-foot pointer (short, thick)
+      const thousands = (altitude / 1000) % 10;
+      const thousAngle = (thousands / 10) * Math.PI * 2 - Math.PI / 2;
+      drawNeedle(ctx, cx, cy, thousAngle + Math.PI/2, ir - 28, 5, '#f8fafc');
+
+      // 100-foot pointer (long, thin)
+      const hundreds = (altitude % 1000) / 100;
+      const hundAngle = (hundreds / 10) * Math.PI * 2 - Math.PI / 2;
+      drawNeedle(ctx, cx, cy, hundAngle + Math.PI/2, ir - 14, 3, '#94a3b8');
+
+      // 10,000 pointer (triangle stub)
+      const tenThousands = Math.floor(altitude / 10000);
+      const ttAngle = (tenThousands / 10) * Math.PI * 2 - Math.PI/2;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(ttAngle + Math.PI/2);
+      ctx.beginPath();
+      ctx.moveTo(-3, 0);
+      ctx.lineTo(0, -(ir - 38));
+      ctx.lineTo(3, 0);
+      ctx.closePath();
+      ctx.fillStyle = '#64748b';
+      ctx.fill();
+      ctx.restore();
+
+      // Center cap
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#94a3b8';
+      ctx.fill();
+    }
+
+    // ── Turn Coordinator ──────────────────────────────────────
+    function drawTC(turnRate, slip) {
+      turnRate = turnRate || 0;
+      slip = slip || 0;
+      const { ctx, size } = setupCanvas('cv-tc', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 8;
+
+      // "2 MIN" text
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('2 MIN', cx, cy - 28);
+
+      // Turn rate marks (L and R standard rate)
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      // Left mark
+      ctx.beginPath();
+      ctx.moveTo(cx - 32, cy - 18);
+      ctx.lineTo(cx - 32, cy - 12);
+      ctx.stroke();
+      // Right mark
+      ctx.beginPath();
+      ctx.moveTo(cx + 32, cy - 18);
+      ctx.lineTo(cx + 32, cy - 12);
+      ctx.stroke();
+
+      // L and R labels
+      ctx.font = '8px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('L', cx - 45, cy - 10);
+      ctx.fillText('R', cx + 45, cy - 10);
+
+      // Miniature aircraft that banks with turn rate
+      const bankAngle = turnRate * 0.3; // simplified
+      ctx.save();
+      ctx.translate(cx, cy - 4);
+      ctx.rotate(bankAngle * Math.PI / 180);
+
+      // Wings
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-30, 0);
+      ctx.lineTo(30, 0);
+      ctx.stroke();
+      // Tail
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, 14);
+      ctx.lineTo(-6, 20);
+      ctx.moveTo(0, 14);
+      ctx.lineTo(6, 20);
+      ctx.stroke();
+      // Fuselage
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#f8fafc';
+      ctx.fill();
+
+      ctx.restore();
+
+      // Inclinometer (ball in tube) at bottom
+      const ballY = cy + 36;
+      // Tube
+      ctx.fillStyle = '#1e293b';
+      const tubeW = 50, tubeH = 12;
+      ctx.beginPath();
+      ctx.roundRect(cx - tubeW/2, ballY - tubeH/2, tubeW, tubeH, 6);
+      ctx.fill();
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(cx - tubeW/2, ballY - tubeH/2, tubeW, tubeH, 6);
+      ctx.stroke();
+
+      // Center marks
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - 5, ballY - tubeH/2);
+      ctx.lineTo(cx - 5, ballY + tubeH/2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + 5, ballY - tubeH/2);
+      ctx.lineTo(cx + 5, ballY + tubeH/2);
+      ctx.stroke();
+
+      // Ball
+      const ballOffset = slip * 1.5;
+      ctx.beginPath();
+      ctx.arc(cx + ballOffset, ballY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fill();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // Label
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('TURN COORDINATOR', cx, cy + 54);
+    }
+
+    // ── Heading Indicator ─────────────────────────────────────
+    function drawHI(heading) {
+      heading = heading || 0;
+      const { ctx, size } = setupCanvas('cv-hi', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 8;
+
+      // Rotating compass rose
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, ir, 0, Math.PI * 2);
+      ctx.clip();
+
+      ctx.translate(cx, cy);
+      ctx.rotate(-heading * Math.PI / 180);
+
+      ctx.font = '10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      const cardinals = { 0: 'N', 90: 'E', 180: 'S', 270: 'W' };
+
+      for (let deg = 0; deg < 360; deg += 5) {
+        const angle = (deg * Math.PI / 180) - Math.PI / 2;
+        const isMajor = deg % 30 === 0;
+        const isMid   = deg % 10 === 0;
+        const tickLen = isMajor ? 12 : (isMid ? 8 : 4);
+        const outerR = ir - 2;
+        const innerR = outerR - tickLen;
+
+        ctx.save();
+        ctx.rotate(angle + Math.PI/2);
+        ctx.beginPath();
+        ctx.moveTo(0, -innerR);
+        ctx.lineTo(0, -outerR);
+        ctx.strokeStyle = isMajor ? '#e2e8f0' : '#64748b';
+        ctx.lineWidth = isMajor ? 1.5 : 0.8;
+        ctx.stroke();
+        ctx.restore();
+
+        if (isMajor) {
+          const labelR = ir - 22;
+          const lx = Math.cos(angle) * labelR;
+          const ly = Math.sin(angle) * labelR;
+          const label = cardinals[deg] || (deg / 10).toString();
+          ctx.fillStyle = cardinals[deg] ? '#f8fafc' : '#e2e8f0';
+          ctx.font = cardinals[deg] ? 'bold 11px Inter, sans-serif' : '9px Inter, sans-serif';
+          ctx.fillText(label, lx, ly);
+        }
+      }
+      ctx.restore(); // un-clip, un-translate
+
+      // Lubber line (fixed at top)
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - ir + 1);
+      ctx.lineTo(cx, cy - ir + 15);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Fixed aircraft shape in center
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      // Wings
+      ctx.beginPath();
+      ctx.moveTo(cx - 18, cy + 4);
+      ctx.lineTo(cx + 18, cy + 4);
+      ctx.stroke();
+      // Body
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 14);
+      ctx.lineTo(cx, cy + 12);
+      ctx.stroke();
+      // Tail
+      ctx.beginPath();
+      ctx.moveTo(cx - 8, cy + 12);
+      ctx.lineTo(cx + 8, cy + 12);
+      ctx.stroke();
+
+      // Label
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('HDG', cx, cy + 30);
+    }
+
+    // ── Vertical Speed Indicator ──────────────────────────────
+    function drawVSI(vsi) {
+      const { ctx, size } = setupCanvas('cv-vsi', 160);
+      const cx = size/2, cy = size/2, r = size/2 - 4;
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 8;
+
+      // VSI goes from -2000 to +2000, with 0 at 9 o'clock (left)
+      // Layout: 0 at 9 o'clock, +2000 at 12 o'clock, -2000 at 6 o'clock
+      // (clockwise: 0 -> +500 -> +1000 -> +1500 -> +2000 at top, then continue to -2000 at bottom back to 0)
+      function vsiToAngle(fpm) {
+        // Returns rotation angle where 0 = 12 o'clock, positive = clockwise
+        // 0 fpm = 270 deg CW from top (9 o'clock / left)
+        // +2000 = 360/0 deg (12 o'clock / top)
+        // -2000 = 180 deg (6 o'clock / bottom)
+        const deg = 270 + (fpm / 2000) * 90;
+        return deg * Math.PI / 180;
+      }
+
+      // Tick marks and numbers
+      ctx.font = '9px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let i = -20; i <= 20; i++) {
+        const fpm = i * 100;
+        if (Math.abs(fpm) > 2000) continue;
+        const angle = vsiToAngle(fpm);
+        const isMajor = fpm % 500 === 0;
+        const tickLen = isMajor ? 10 : 5;
+        const outerR = ir - 2;
+        const innerR = outerR - tickLen;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, -innerR);
+        ctx.lineTo(0, -outerR);
+        ctx.strokeStyle = isMajor ? '#e2e8f0' : '#64748b';
+        ctx.lineWidth = isMajor ? 1.5 : 0.8;
+        ctx.stroke();
+        ctx.restore();
+
+        if (isMajor && fpm !== 0) {
+          const labelR = ir - 20;
+          const lx = cx + Math.sin(angle) * labelR;
+          const ly = cy - Math.cos(angle) * labelR;
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillText(Math.abs(fpm / 100).toString(), lx, ly);
+        }
+      }
+
+      // 0 label (larger, at 9 o'clock)
+      const zAngle = vsiToAngle(0);
+      const zR = ir - 20;
+      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText('0', cx + Math.sin(zAngle) * zR, cy - Math.cos(zAngle) * zR);
+
+      // UP / DN labels
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('UP', cx + 8, cy - 20);
+      ctx.fillText('DN', cx + 8, cy + 24);
+
+      // Label
+      ctx.font = 'bold 7px Inter, sans-serif';
+      ctx.fillText('VERT SPEED', cx, cy + 36);
+      ctx.font = '6px Inter, sans-serif';
+      ctx.fillText('100 FT/MIN', cx, cy + 44);
+
+      // Needle
+      const clampedVSI = Math.max(-2000, Math.min(2000, vsi));
+      const needleAngle = vsiToAngle(clampedVSI);
+      drawNeedle(ctx, cx, cy, needleAngle, ir - 16, 3, '#f8fafc');
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  PITOT-STATIC SYSTEM DIAGRAM
+    // ══════════════════════════════════════════════════════════
+    function drawDiagram(failure) {
+      const c = diagramCanvas;
+      const dpr = DPR;
+      c.width = 440 * dpr;
+      c.height = 160 * dpr;
+      c.style.width = '440px';
+      c.style.height = '160px';
+      const ctx = c.getContext('2d');
+      ctx.scale(dpr, dpr);
+
+      ctx.clearRect(0, 0, 440, 160);
+
+      // Background
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.roundRect(0, 0, 440, 160, 6);
+      ctx.fill();
+
+      const lineColor = '#475569';
+      const textColor = '#94a3b8';
+      const activeColor = '#38bdf8';
+      const blockedColor = '#ef4444';
+
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+
+      // -- Pitot tube (left side) --
+      const pitotX = 40, pitotY = 50;
+      ctx.strokeStyle = failure.pitot ? blockedColor : activeColor;
+      ctx.fillStyle = 'transparent';
+
+      // Tube shape
+      ctx.beginPath();
+      ctx.moveTo(pitotX, pitotY - 8);
+      ctx.lineTo(pitotX + 40, pitotY - 8);
+      ctx.lineTo(pitotX + 40, pitotY + 8);
+      ctx.lineTo(pitotX, pitotY + 8);
+      ctx.stroke();
+
+      // Arrow (ram air)
+      ctx.beginPath();
+      ctx.moveTo(pitotX - 20, pitotY);
+      ctx.lineTo(pitotX, pitotY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(pitotX - 6, pitotY - 4);
+      ctx.lineTo(pitotX, pitotY);
+      ctx.lineTo(pitotX - 6, pitotY + 4);
+      ctx.stroke();
+
+      // Labels
+      ctx.font = 'bold 9px Inter, sans-serif';
+      ctx.fillStyle = failure.pitot ? blockedColor : activeColor;
+      ctx.textAlign = 'center';
+      ctx.fillText('PITOT TUBE', pitotX + 20, pitotY - 16);
+
+      ctx.font = '8px Inter, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.fillText('Ram Air', pitotX - 10, pitotY + 22);
+
+      // Pitot plumbing line down then right to ASI
+      const pitotJuncX = pitotX + 55;
+      const pitotJuncY = pitotY;
+      ctx.strokeStyle = failure.pitot ? blockedColor : lineColor;
+      ctx.beginPath();
+      ctx.moveTo(pitotX + 40, pitotY);
+      ctx.lineTo(pitotJuncX, pitotJuncY);
+      ctx.lineTo(pitotJuncX, 110);
+      ctx.lineTo(175, 110);
+      ctx.stroke();
+
+      // Blockage X on pitot
+      if (failure.pitot === true) {
+        drawBlockX(ctx, pitotX + 40, pitotY);
+      } else if (failure.pitot === 'drain') {
+        // Draw drain hole
+        ctx.strokeStyle = blockedColor;
+        ctx.beginPath();
+        ctx.moveTo(pitotX + 30, pitotY + 8);
+        ctx.lineTo(pitotX + 30, pitotY + 20);
+        ctx.stroke();
+        ctx.font = '7px Inter, sans-serif';
+        ctx.fillStyle = blockedColor;
+        ctx.fillText('DRAIN OPEN', pitotX + 30, pitotY + 28);
+      }
+
+      // -- Static ports (right side) --
+      const staticX = 380, staticY = 50;
+      const isStaticBlocked = failure.static === true;
+      const isAltStatic = failure.static === 'alternate';
+      ctx.strokeStyle = (isStaticBlocked || isAltStatic) ? blockedColor : activeColor;
+
+      // Port shapes (two small rectangles on fuselage)
+      ctx.fillStyle = (isStaticBlocked || isAltStatic) ? 'rgba(239,68,68,0.15)' : 'rgba(56,189,248,0.15)';
+      ctx.fillRect(staticX - 4, staticY - 12, 8, 24);
+      ctx.strokeRect(staticX - 4, staticY - 12, 8, 24);
+
+      ctx.font = 'bold 9px Inter, sans-serif';
+      ctx.fillStyle = (isStaticBlocked || isAltStatic) ? blockedColor : activeColor;
+      ctx.textAlign = 'center';
+      ctx.fillText('STATIC PORT', staticX, staticY - 20);
+
+      if (isStaticBlocked) {
+        drawBlockX(ctx, staticX, staticY);
+      }
+      if (isAltStatic) {
+        ctx.font = '7px Inter, sans-serif';
+        ctx.fillStyle = blockedColor;
+        ctx.fillText('BLOCKED', staticX, staticY + 22);
+        // Alt static indicator
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillText('ALT STATIC', staticX, staticY + 32);
+        ctx.fillText('(CABIN)', staticX, staticY + 41);
+      }
+
+      // Static plumbing line down then branching to ASI, ALT, VSI
+      const staticJuncX = staticX - 55;
+      ctx.strokeStyle = isStaticBlocked ? blockedColor : lineColor;
+      ctx.beginPath();
+      ctx.moveTo(staticX, staticY + 12);
+      ctx.lineTo(staticX, 80);
+      ctx.lineTo(staticJuncX, 80);
+      ctx.stroke();
+
+      // Branch to ALT
+      ctx.beginPath();
+      ctx.moveTo(staticJuncX, 80);
+      ctx.lineTo(staticJuncX, 130);
+      ctx.lineTo(280, 130);
+      ctx.stroke();
+
+      // Branch to VSI
+      ctx.beginPath();
+      ctx.moveTo(staticJuncX - 30, 80);
+      ctx.lineTo(staticJuncX - 30, 140);
+      ctx.lineTo(370, 140);
+      ctx.stroke();
+      // Tee
+      ctx.beginPath();
+      ctx.moveTo(staticJuncX, 80);
+      ctx.lineTo(staticJuncX - 30, 80);
+      ctx.stroke();
+
+      // Branch to ASI (static side)
+      ctx.beginPath();
+      ctx.moveTo(staticJuncX - 60, 80);
+      ctx.lineTo(staticJuncX - 60, 110);
+      ctx.lineTo(225, 110);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(staticJuncX - 30, 80);
+      ctx.lineTo(staticJuncX - 60, 80);
+      ctx.stroke();
+
+      // -- Instrument boxes --
+      function drawInstBox(x, y, label, sources) {
+        ctx.fillStyle = '#1e293b';
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(x - 25, y - 10, 50, 20, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.font = 'bold 8px Inter, sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, x, y);
+        ctx.font = '6px Inter, sans-serif';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText(sources, x, y + 16);
+      }
+
+      drawInstBox(200, 110, 'ASI', 'Pt + Ps');
+      drawInstBox(280, 130, 'ALT', 'Ps only');
+      drawInstBox(370, 140, 'VSI', 'Ps only');
+    }
+
+    function drawBlockX(ctx, x, y) {
+      ctx.save();
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x - 8, y - 8);
+      ctx.lineTo(x + 8, y + 8);
+      ctx.moveTo(x + 8, y - 8);
+      ctx.lineTo(x - 8, y + 8);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  RENDER ALL INSTRUMENTS AT GIVEN VALUES
+    // ══════════════════════════════════════════════════════════
+    function renderAllInstruments(vals) {
+      drawASI(vals.asi || 0);
+      drawAI(vals.pitch || 0, vals.bank || 0);
+      drawALT(vals.alt || 0);
+      drawTC(vals.turnRate || 0, vals.slip || 0);
+      drawHI(vals.hi || 0);
+      drawVSI(vals.vsi || 0);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  CALCULATE FAILURE VALUES FOR ANIMATION TARGET
+    // ══════════════════════════════════════════════════════════
+    function getFailureTargets(scenario) {
+      const init = scenario.initialValues;
+      const targets = {
+        asi: init.asi,
+        alt: init.alt,
+        vsi: init.vsi,
+        hi: init.hi,
+        pitch: 0,
+        bank: 0,
+        turnRate: 0,
+        slip: 0
+      };
+
+      // Compute animated target values based on answers
+      const ans = scenario.answers;
+
+      // ASI
+      if (ans.asi === 'HIGH') targets.asi = init.asi + 50;
+      else if (ans.asi === 'LOW') targets.asi = Math.max(0, init.asi - 50);
+      // FROZEN and NORMAL keep current value
+
+      // ALT
+      if (ans.alt === 'HIGH') targets.alt = init.alt + 3000;
+      // FROZEN and NORMAL keep current value
+
+      // VSI
+      if (ans.vsi === 'FROZEN') targets.vsi = 0;
+      // NORMAL keeps current value
+
+      return targets;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  PREDICTION UI
+    // ══════════════════════════════════════════════════════════
+    function buildPredictionRows() {
+      predRowsEl.innerHTML = '';
+      INSTRUMENTS.forEach(inst => {
+        const row = document.createElement('div');
+        row.className = 'pf-pred-row';
+        row.dataset.inst = inst;
+
+        const name = document.createElement('div');
+        name.className = 'pf-pred-name';
+        name.textContent = INST_FULL[inst];
+
+        const btnsWrap = document.createElement('div');
+        btnsWrap.className = 'pf-pred-buttons';
+
+        CHOICES.forEach(choice => {
+          const btn = document.createElement('button');
+          btn.className = 'pf-pred-btn';
+          btn.textContent = choice;
+          btn.dataset.inst = inst;
+          btn.dataset.choice = choice;
+          btn.addEventListener('click', () => selectPrediction(inst, choice));
+          btnsWrap.appendChild(btn);
+        });
+
+        row.appendChild(name);
+        row.appendChild(btnsWrap);
+        predRowsEl.appendChild(row);
+      });
+    }
+
+    function selectPrediction(inst, choice) {
+      if (phase !== 'predict') return;
+      predictions[inst] = choice;
+
+      // Update button states
+      const row = predRowsEl.querySelector(`.pf-pred-row[data-inst="${inst}"]`);
+      row.querySelectorAll('.pf-pred-btn').forEach(b => {
+        b.classList.toggle('selected', b.dataset.choice === choice);
+      });
+
+      updatePredCounter();
+    }
+
+    function updatePredCounter() {
+      const count = Object.keys(predictions).length;
+      predCounterEl.textContent = count + ' / 6';
+      revealBtn.disabled = count < 6;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  REVEAL ANIMATION
+    // ══════════════════════════════════════════════════════════
+    async function doReveal() {
+      phase = 'reveal';
+      revealBtn.disabled = true;
+
+      // Disable prediction buttons
+      predRowsEl.querySelectorAll('.pf-pred-btn').forEach(b => b.disabled = true);
+
+      const scenario = SCENARIOS[currentIdx];
+      const initVals = {
+        asi: scenario.initialValues.asi,
+        alt: scenario.initialValues.alt,
+        vsi: scenario.initialValues.vsi,
+        hi: scenario.initialValues.hi,
+        pitch: 0, bank: 0, turnRate: 0, slip: 0
+      };
+      const targets = getFailureTargets(scenario);
+
+      // Animate instruments to failure state
+      await animateInstruments(initVals, targets, 800);
+
+      // Reveal each instrument one by one
+      let roundCorrect = 0;
+      const order = ['asi', 'ai', 'alt', 'tc', 'hi', 'vsi'];
+
+      for (let i = 0; i < order.length; i++) {
+        const inst = order[i];
+        await delay(500);
+
+        // Spotlight
+        const instEl = document.querySelector(`.pf-instrument[data-inst="${inst}"]`);
+        instEl.classList.add('spotlight');
+
+        // Check correctness
+        const correct = predictions[inst] === scenario.answers[inst];
+        if (correct) roundCorrect++;
+        totalCorrect += correct ? 1 : 0;
+        totalAnswered++;
+
+        // Show badge
+        const badge = document.getElementById('badge-' + inst);
+        badge.textContent = correct ? '\u2713' : '\u2717';
+        badge.className = 'pf-badge show ' + (correct ? 'correct' : 'wrong');
+
+        // Show result tag on prediction row
+        const row = predRowsEl.querySelector(`.pf-pred-row[data-inst="${inst}"]`);
+        const existing = row.querySelector('.pf-pred-result');
+        if (existing) existing.remove();
+
+        const tag = document.createElement('span');
+        tag.className = 'pf-pred-result ' + (correct ? 'correct' : 'wrong');
+        if (correct) {
+          tag.textContent = '\u2713 ' + scenario.answers[inst];
+        } else {
+          tag.textContent = '\u2717 Actual: ' + scenario.answers[inst];
+        }
+        row.appendChild(tag);
+
+        // Record to tracker
+        if (tracker) {
+          tracker.recordStep({
+            stepId: scenario.id + '-' + inst,
+            correct: correct,
+            points: correct ? 10 : 0,
+            loId: 'Pitot-static failure instrument behavior',
+            category: 'flight-instruments'
+          });
+        }
+
+        await delay(200);
+        instEl.classList.remove('spotlight');
+      }
+
+      // Show explanations
+      showExplanations(scenario);
+
+      // Update scores
+      scoreRoundEl.textContent = roundCorrect + '/6';
+      if (!scenarioScores[scenario.id] || roundCorrect > scenarioScores[scenario.id]) {
+        scenarioScores[scenario.id] = roundCorrect;
+      }
+      const mastered = Object.values(scenarioScores).filter(s => s >= 5).length;
+      scoreMasteredEl.textContent = mastered + '/7';
+      scoreOverallEl.textContent = totalAnswered > 0
+        ? Math.round((totalCorrect / totalAnswered) * 100) + '%'
+        : '0%';
+
+      phase = 'debrief';
+      nextBtn.disabled = false;
+
+      // Scroll to explanations
+      explanationsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function animateInstruments(from, to, duration) {
+      return new Promise(resolve => {
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const t = Math.min(elapsed / duration, 1);
+          // ease-in-out
+          const ease = t < 0.5
+            ? 2 * t * t
+            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+          const current = {};
+          for (const key of Object.keys(from)) {
+            current[key] = from[key] + (to[key] - from[key]) * ease;
+          }
+          renderAllInstruments(current);
+
+          if (t < 1) {
+            requestAnimationFrame(step);
+          } else {
+            resolve();
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function showExplanations(scenario) {
+      expItemsEl.innerHTML = '';
+      const order = ['asi', 'ai', 'alt', 'tc', 'hi', 'vsi'];
+      order.forEach(inst => {
+        const item = document.createElement('div');
+        item.className = 'pf-exp-item';
+
+        const instLabel = document.createElement('div');
+        instLabel.className = 'pf-exp-inst';
+        instLabel.textContent = INST_LABELS[inst];
+
+        const text = document.createElement('div');
+        text.className = 'pf-exp-text';
+        text.textContent = scenario.explanations[inst];
+
+        item.appendChild(instLabel);
+        item.appendChild(text);
+        expItemsEl.appendChild(item);
+      });
+      explanationsEl.classList.add('visible');
+    }
+
+    // ══════════════════════════════════════════════════════════
+    //  SCENARIO LIFECYCLE
+    // ══════════════════════════════════════════════════════════
+    function loadScenario(idx) {
+      currentIdx = idx;
+      phase = 'predict';
+      predictions = {};
+
+      const scenario = SCENARIOS[idx];
+
+      // Header
+      scenarioTitleEl.textContent = 'Scenario ' + (idx + 1) + '/' + SCENARIOS.length + ': ' + scenario.title;
+      scenarioSetupEl.textContent = scenario.setup;
+
+      // Diagram
+      drawDiagram(scenario.failure);
+
+      // Instruments at normal initial values
+      const initVals = {
+        asi: scenario.initialValues.asi,
+        alt: scenario.initialValues.alt,
+        vsi: scenario.initialValues.vsi,
+        hi: scenario.initialValues.hi,
+        pitch: 0, bank: 0, turnRate: 0, slip: 0
+      };
+      renderAllInstruments(initVals);
+
+      // Clear badges
+      INSTRUMENTS.forEach(inst => {
+        const badge = document.getElementById('badge-' + inst);
+        badge.className = 'pf-badge';
+        badge.textContent = '';
+      });
+
+      // Reset predictions UI
+      buildPredictionRows();
+      updatePredCounter();
+      revealBtn.disabled = true;
+      nextBtn.disabled = true;
+
+      // Hide explanations
+      explanationsEl.classList.remove('visible');
+      expItemsEl.innerHTML = '';
+
+      // Reset round score display
+      scoreRoundEl.textContent = '--';
+
+      // Scroll to top
+      document.querySelector('.pf-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function nextScenario() {
+      if (currentIdx < SCENARIOS.length - 1) {
+        loadScenario(currentIdx + 1);
+      } else {
+        // All done - show completion
+        if (tracker) tracker.complete();
+        showCompletion();
+      }
+    }
+
+    function showCompletion() {
+      const mastered = Object.values(scenarioScores).filter(s => s >= 5).length;
+      const pct = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+
+      scenarioTitleEl.textContent = 'All Scenarios Complete!';
+      scenarioSetupEl.textContent =
+        'You mastered ' + mastered + ' of 7 scenarios (scoring 5/6 or 6/6). ' +
+        'Overall accuracy: ' + pct + '%. ' +
+        (mastered >= 7 ? 'Outstanding work!' : mastered >= 5 ? 'Strong understanding of pitot-static failures.' : 'Consider reviewing the scenarios you missed.');
+
+      // Clear diagram
+      const ctx = diagramCanvas.getContext('2d');
+      ctx.clearRect(0, 0, diagramCanvas.width, diagramCanvas.height);
+
+      // Offer restart
+      nextBtn.textContent = 'Restart';
+      nextBtn.disabled = false;
+      nextBtn.removeEventListener('click', nextScenario);
+      function handleRestart() {
+        totalCorrect = 0;
+        totalAnswered = 0;
+        scenarioScores = {};
+        scoreMasteredEl.textContent = '0/7';
+        scoreOverallEl.textContent = '0%';
+        nextBtn.textContent = 'Next Scenario';
+        nextBtn.removeEventListener('click', handleRestart);
+        nextBtn.addEventListener('click', nextScenario);
+        loadScenario(0);
+      }
+      nextBtn.addEventListener('click', handleRestart);
+    }
+
+    // ── EVENT HANDLERS ────────────────────────────────────────
+    revealBtn.addEventListener('click', doReveal);
+    nextBtn.addEventListener('click', nextScenario);
+
+    // ── INITIALIZE ────────────────────────────────────────────
+    loadScenario(0);
+
+  })();
+  </script>
+</body>
+</html>
