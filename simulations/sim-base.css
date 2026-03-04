@@ -1,0 +1,354 @@
+/*  sim-base.css  —  ACE Avionics Simulation Design System
+ *  Shared tokens + reusable component classes for all 6 flagship sims.
+ *  Import this at the top of each simulation HTML file:
+ *    <link rel="stylesheet" href="sim-base.css">
+ * ─────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;700;800&display=swap');
+
+/* ═══════════════════════════════════════════════════════════
+   1. DESIGN TOKENS (CSS Custom Properties)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Backgrounds ───────────────────────────────────────── */
+  --sim-bg:            #020617;
+  --sim-bg-panel:      #0f172a;
+  --sim-bg-elevated:   #1e293b;
+
+  /* ── Borders ───────────────────────────────────────────── */
+  --sim-border:        #334155;
+  --sim-border-active: #475569;
+
+  /* ── Text ──────────────────────────────────────────────── */
+  --sim-text:          #f8fafc;
+  --sim-text-secondary:#e2e8f0;
+  --sim-text-muted:    #94a3b8;
+  --sim-text-dim:      #64748b;
+
+  /* ── Accent palette ────────────────────────────────────── */
+  --sim-red:           #ef4444;
+  --sim-sky:           #38bdf8;
+  --sim-green:         #10b981;
+  --sim-amber:         #f59e0b;
+  --sim-purple:        #a78bfa;
+  --sim-blue:          #3b82f6;
+  --sim-yellow:        #fde047;
+
+  /* ── Typography ────────────────────────────────────────── */
+  --sim-font-body:     'Inter', sans-serif;
+  --sim-font-mono:     'Share Tech Mono', monospace;
+
+  /* ── Effects ───────────────────────────────────────────── */
+  --sim-shadow-inset:  inset 0 0 40px rgba(0, 0, 0, 0.8);
+  --sim-shadow-drop:   0 10px 30px rgba(0, 0, 0, 0.5);
+  --sim-glow-readout:  0 0 5px rgba(255, 255, 255, 0.3);
+
+  /* ── Sizing / Radius ───────────────────────────────────── */
+  --sim-radius:        12px;
+  --sim-radius-sm:     8px;
+  --sim-radius-xs:     4px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   2. CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+.sim-container {
+  font-family: var(--sim-font-body);
+  color: var(--sim-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--sim-bg);
+  padding: 30px;
+  border-radius: var(--sim-radius);
+  border: 2px solid var(--sim-bg-elevated);
+  box-shadow: var(--sim-shadow-inset), var(--sim-shadow-drop);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   3. HEADER
+   ═══════════════════════════════════════════════════════════ */
+.sim-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sim-header h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sim-sky);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  margin: 0 0 5px 0;
+}
+
+.sim-header p {
+  color: var(--sim-text-dim);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   4. PANEL
+   ═══════════════════════════════════════════════════════════ */
+.sim-panel {
+  background: var(--sim-bg-panel);
+  padding: 20px;
+  border-radius: var(--sim-radius-sm);
+  border: 1px solid var(--sim-border);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   5. CANVAS WRAP
+   ═══════════════════════════════════════════════════════════ */
+.sim-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  background: var(--sim-bg-panel);
+  border: 2px solid var(--sim-border);
+  border-radius: var(--sim-radius-sm);
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.sim-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   6. BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+.sim-btn {
+  background: transparent;
+  color: var(--sim-sky);
+  border: 2px solid var(--sim-sky);
+  padding: 12px 24px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: var(--sim-font-mono);
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2),
+              inset 0 0 10px rgba(56, 189, 248, 0.1);
+  text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+}
+
+.sim-btn:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4),
+              inset 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+.sim-btn.primary {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--sim-sky);
+}
+
+.sim-btn:disabled {
+  border-color: var(--sim-border-active);
+  color: var(--sim-border-active);
+  box-shadow: none;
+  text-shadow: none;
+  cursor: not-allowed;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   7. READOUT (monospace instrumentation text)
+   ═══════════════════════════════════════════════════════════ */
+.sim-readout {
+  font-family: var(--sim-font-mono);
+  font-size: 1.1rem;
+  color: var(--sim-text);
+  text-shadow: var(--sim-glow-readout);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   8. TASKBAR  (step prompt + hint button)
+   ═══════════════════════════════════════════════════════════ */
+.sim-taskbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--sim-bg-panel);
+  padding: 14px 20px;
+  border-radius: var(--sim-radius-sm);
+  border: 1px solid var(--sim-border);
+}
+
+.sim-taskbar .task-text {
+  font-size: 0.95rem;
+  color: var(--sim-text-secondary);
+  flex: 1;
+}
+
+.sim-taskbar .hint-btn {
+  background: transparent;
+  border: 1px dashed var(--sim-text-dim);
+  color: var(--sim-text-dim);
+  padding: 6px 14px;
+  border-radius: var(--sim-radius-xs);
+  font-family: var(--sim-font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.sim-taskbar .hint-btn:hover {
+  color: var(--sim-text);
+  border-color: var(--sim-text-muted);
+  background: var(--sim-bg-elevated);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   9. FEEDBACK STRIP
+   ═══════════════════════════════════════════════════════════ */
+.sim-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: var(--sim-radius-sm);
+  border: 1px solid var(--sim-border);
+  background: var(--sim-bg-panel);
+}
+
+.sim-feedback .fb-label {
+  font-family: var(--sim-font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.sim-feedback .fb-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--sim-text-secondary);
+}
+
+/* Variants */
+.sim-feedback.correct {
+  border-color: var(--sim-green);
+  background: rgba(16, 185, 129, 0.06);
+}
+.sim-feedback.correct .fb-label { color: var(--sim-green); }
+
+.sim-feedback.incorrect {
+  border-color: var(--sim-red);
+  background: rgba(239, 68, 68, 0.06);
+}
+.sim-feedback.incorrect .fb-label { color: var(--sim-red); }
+
+.sim-feedback.info {
+  border-color: var(--sim-sky);
+  background: rgba(56, 189, 248, 0.06);
+}
+.sim-feedback.info .fb-label { color: var(--sim-sky); }
+
+
+/* ═══════════════════════════════════════════════════════════
+   10. SCORE BAR
+   ═══════════════════════════════════════════════════════════ */
+.sim-scorebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 20px;
+  background: var(--sim-bg-panel);
+  border-radius: var(--sim-radius-sm);
+  border: 1px solid var(--sim-border);
+}
+
+.sim-score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--sim-text-dim);
+}
+
+.sim-score-item .value {
+  font-family: var(--sim-font-mono);
+  font-size: 1.4rem;
+  color: var(--sim-text);
+  text-shadow: var(--sim-glow-readout);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   11. CRT SCANLINE OVERLAY
+   ═══════════════════════════════════════════════════════════ */
+.sim-scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(16, 185, 129, 0.08) 2px,
+    rgba(16, 185, 129, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.35;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   12. RESPONSIVE BREAKPOINT
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .sim-container {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .sim-header h3 {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+  }
+
+  .sim-canvas-wrap {
+    height: 250px;
+  }
+
+  .sim-taskbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .sim-scorebar {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .sim-feedback {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
