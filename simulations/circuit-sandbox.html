@@ -555,6 +555,7 @@
       battery:    { label: 'Battery',    icon: 'BAT',  category: 'source',     defaultProps: { voltage: 28 },   color: '#ef4444' },
       breaker:    { label: 'CB',         icon: 'CB',   category: 'protection', defaultProps: { tripCurrent: 5, tripped: false }, color: '#f59e0b' },
       switch_tog: { label: 'Switch',     icon: 'SW',   category: 'control',    defaultProps: { closed: false }, color: '#a78bfa' },
+      relay:      { label: 'Relay',      icon: 'RLY',  category: 'control',    defaultProps: { coilResistance: 50, contactClosed: false }, color: '#8b5cf6' },
       lamp:       { label: 'Lamp',       icon: 'LP',   category: 'load',       defaultProps: { resistance: 6.67 }, color: '#fde047' },
       motor:      { label: 'Motor',      icon: 'MOT',  category: 'load',       defaultProps: { resistance: 14 },  color: '#38bdf8' },
       resistor:   { label: 'Resistor',   icon: 'RES',  category: 'load',       defaultProps: { resistance: 100 }, color: '#10b981' },
@@ -808,6 +809,10 @@
         if (hitComp.type === 'switch_tog') {
           hitComp.props.closed = !hitComp.props.closed;
         }
+        // Toggle relay contact on click
+        if (hitComp.type === 'relay') {
+          hitComp.props.contactClosed = !hitComp.props.contactClosed;
+        }
         // Reset breaker on click
         if (hitComp.type === 'breaker' && hitComp.props.tripped) {
           hitComp.props.tripped = false;
@@ -994,6 +999,27 @@
 
       // Build property rows
       if (comp.type === 'battery') {
+        // Voltage preset buttons
+        const presetRow = document.createElement('div');
+        presetRow.className = 'prop-row';
+        presetRow.style.justifyContent = 'center';
+        presetRow.style.gap = '6px';
+        presetRow.style.marginBottom = '8px';
+        const mkPreset = (v) => {
+          const btn = document.createElement('button');
+          btn.textContent = v + 'V';
+          btn.style.cssText = 'font-family:var(--sim-font-mono);font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:10px;border:1px solid #ef4444;background:' + (comp.props.voltage === v ? 'rgba(239,68,68,0.2)' : 'transparent') + ';color:#ef4444;cursor:pointer;transition:background 0.15s;';
+          btn.addEventListener('click', () => {
+            comp.props.voltage = v;
+            showPropertyEditor(comp, pos);
+          });
+          btn.addEventListener('mouseenter', () => { btn.style.background = 'rgba(239,68,68,0.15)'; });
+          btn.addEventListener('mouseleave', () => { btn.style.background = comp.props.voltage === v ? 'rgba(239,68,68,0.2)' : 'transparent'; });
+          return btn;
+        };
+        presetRow.appendChild(mkPreset(12));
+        presetRow.appendChild(mkPreset(28));
+        body.appendChild(presetRow);
         body.appendChild(makePropRow('Voltage (V)', comp.props, 'voltage', 'number'));
       } else if (comp.type === 'resistor' || comp.type === 'lamp') {
         body.appendChild(makePropRow('Resistance (\u03A9)', comp.props, 'resistance', 'number'));
@@ -1009,6 +1035,12 @@
         const stDiv = document.createElement('div');
         stDiv.className = 'prop-row';
         stDiv.innerHTML = `<label>State</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.closed ? '#10b981' : '#ef4444'}">${comp.props.closed ? 'CLOSED' : 'OPEN'}</span>`;
+        body.appendChild(stDiv);
+      } else if (comp.type === 'relay') {
+        body.appendChild(makePropRow('Coil R (\u03A9)', comp.props, 'coilResistance', 'number'));
+        const stDiv = document.createElement('div');
+        stDiv.className = 'prop-row';
+        stDiv.innerHTML = `<label>Contact</label><span style="font-family:var(--sim-font-mono);font-size:0.8rem;color:${comp.props.contactClosed ? '#10b981' : '#ef4444'}">${comp.props.contactClosed ? 'CLOSED' : 'OPEN'}</span>`;
         body.appendChild(stDiv);
       }
 
@@ -1093,6 +1125,8 @@
             return Math.max(comp.props.resistance || 100, 0.001);
           case 'switch_tog':
             return comp.props.closed ? 0.001 : 1e7;
+          case 'relay':
+            return comp.props.contactClosed ? 0.001 : 1e7;
           case 'breaker':
             return comp.props.tripped ? 1e7 : 0.001;
           case 'ground':
@@ -1449,6 +1483,9 @@
         case 'breaker':
           drawBreaker(ctx, cx, cy, hw, hh, def, comp);
           break;
+        case 'relay':
+          drawRelay(ctx, cx, cy, hw, hh, def, comp);
+          break;
         case 'ground':
           drawGround(ctx, cx, cy, hw, hh, def, comp);
           break;
@@ -1634,6 +1671,63 @@
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(cx + 10, cy);
+      ctx.lineTo(cx + hw, cy);
+      ctx.stroke();
+
+      // State label
+      ctx.font = "7px 'Share Tech Mono'";
+      ctx.fillStyle = closed ? '#10b981' : '#ef4444';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(closed ? 'CLOSED' : 'OPEN', cx, cy - hh);
+    }
+
+    function drawRelay(ctx, cx, cy, hw, hh, def, comp) {
+      const closed = comp.props.contactClosed;
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 1.5;
+
+      // Coil rectangle (center of component)
+      const bw = 16, bh = 16;
+      ctx.strokeRect(cx - bw / 2, cy - bh / 2, bw, bh);
+
+      // Zigzag coil symbol inside the rectangle
+      ctx.beginPath();
+      ctx.moveTo(cx - 5, cy);
+      ctx.lineTo(cx - 3, cy - 4);
+      ctx.lineTo(cx + 1, cy + 4);
+      ctx.lineTo(cx + 3, cy - 4);
+      ctx.lineTo(cx + 5, cy);
+      ctx.stroke();
+
+      // Contact arm above the coil box
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx - 8, cy - bh / 2 - 4, 2, 0, Math.PI * 2);
+      ctx.fillStyle = def.color;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(cx + 8, cy - bh / 2 - 4, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(cx - 8, cy - bh / 2 - 4);
+      if (closed) {
+        ctx.lineTo(cx + 8, cy - bh / 2 - 4);
+      } else {
+        ctx.lineTo(cx + 5, cy - bh / 2 - 12);
+      }
+      ctx.stroke();
+
+      // Connection lines from terminals to coil box
+      ctx.lineWidth = WIRE_WIDTH;
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy);
+      ctx.lineTo(cx - bw / 2, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + bw / 2, cy);
       ctx.lineTo(cx + hw, cy);
       ctx.stroke();
 
@@ -2094,9 +2188,9 @@
         }
 
         case 'landingRelay': {
-          // Landing light circuit with relay simulation
-          // Since we don't have a dedicated relay component, we model it with a switch
-          // representing the relay contact and a motor representing the coil
+          // Landing light circuit with relay
+          // Control path: Battery -> CB -> Switch -> (controls relay)
+          // Power path: Battery -> CB -> Relay(contact) -> Landing Lamp -> Ground
 
           const bat = placeComponent('battery', startX, baseY - 4);
           bat.props.voltage = 28;
@@ -2104,32 +2198,28 @@
           cb1.props.tripCurrent = 5;
           const sw = placeComponent('switch_tog', startX + 10, baseY - 4);
           sw.props.closed = true;
-
-          // Relay coil path (modeled as a resistor = coil resistance)
-          const coil = placeComponent('resistor', startX + 15, baseY - 4);
-          coil.props.resistance = 50;
-          const gnd1 = placeComponent('ground', startX + 20, baseY - 4);
+          const gnd1 = placeComponent('ground', startX + 15, baseY - 4);
 
           addWire({ compId: bat.id, termIdx: 1 }, { compId: cb1.id, termIdx: 0 });
           addWire({ compId: cb1.id, termIdx: 1 }, { compId: sw.id, termIdx: 0 });
-          addWire({ compId: sw.id, termIdx: 1 }, { compId: coil.id, termIdx: 0 });
-          addWire({ compId: coil.id, termIdx: 1 }, { compId: gnd1.id, termIdx: 0 });
+          addWire({ compId: sw.id, termIdx: 1 }, { compId: gnd1.id, termIdx: 0 });
           addWire({ compId: gnd1.id, termIdx: 0 }, { compId: bat.id, termIdx: 0 });
 
-          // Landing lamp path (relay contact = another switch)
+          // Power path with relay contact
           const bat2 = placeComponent('battery', startX, baseY + 4);
           bat2.props.voltage = 28;
           const cb2 = placeComponent('breaker', startX + 5, baseY + 4);
           cb2.props.tripCurrent = 20;
-          const contact = placeComponent('switch_tog', startX + 10, baseY + 4);
-          contact.props.closed = true;
+          const relay = placeComponent('relay', startX + 10, baseY + 4);
+          relay.props.contactClosed = true;
+          relay.props.coilResistance = 50;
           const lamp = placeComponent('lamp', startX + 15, baseY + 4);
           lamp.props.resistance = 2; // Landing light draws lots of current
           const gnd2 = placeComponent('ground', startX + 20, baseY + 4);
 
           addWire({ compId: bat2.id, termIdx: 1 }, { compId: cb2.id, termIdx: 0 });
-          addWire({ compId: cb2.id, termIdx: 1 }, { compId: contact.id, termIdx: 0 });
-          addWire({ compId: contact.id, termIdx: 1 }, { compId: lamp.id, termIdx: 0 });
+          addWire({ compId: cb2.id, termIdx: 1 }, { compId: relay.id, termIdx: 0 });
+          addWire({ compId: relay.id, termIdx: 1 }, { compId: lamp.id, termIdx: 0 });
           addWire({ compId: lamp.id, termIdx: 1 }, { compId: gnd2.id, termIdx: 0 });
           addWire({ compId: gnd2.id, termIdx: 0 }, { compId: bat2.id, termIdx: 0 });
           break;
