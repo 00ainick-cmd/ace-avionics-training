@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOR Ramp Check - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <script src="sim-analytics.js"></script>
+  <style>
+    /* ── Simulation-specific CSS ─────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--sim-bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .vor-container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* ── Main Layout: VOR face + Procedure Panel ─────────────── */
+    .vor-layout {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      gap: 20px;
+    }
+
+    /* ── VOR Face Panel ──────────────────────────────────────── */
+    .vor-face-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .vor-canvas-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vor-canvas-wrap canvas {
+      display: block;
+    }
+
+    .vor-freq-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .vor-freq-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .vor-freq-input {
+      flex: 1;
+      background: var(--sim-bg-elevated);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 10px 14px;
+      font-family: var(--sim-font-mono);
+      font-size: 1.2rem;
+      color: var(--sim-green);
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .vor-freq-input:focus {
+      border-color: var(--sim-sky);
+    }
+
+    .vor-freq-input::placeholder {
+      color: var(--sim-text-dim);
+      font-size: 0.9rem;
+    }
+
+    .vor-freq-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .vor-obs-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .vor-obs-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .vor-obs-btn {
+      background: var(--sim-bg-elevated);
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-family: var(--sim-font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vor-obs-btn:hover:not(:disabled) {
+      border-color: var(--sim-sky);
+      color: var(--sim-sky);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .vor-obs-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .vor-obs-readout {
+      font-family: var(--sim-font-mono);
+      font-size: 1.3rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .vor-obs-drag-hint {
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      flex: 1;
+      text-align: right;
+    }
+
+    .vor-receiver-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.9rem;
+      color: var(--sim-sky);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+
+    /* ── Procedure Panel ─────────────────────────────────────── */
+    .vor-procedure-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .vor-step {
+      padding: 12px 16px;
+      border: 1px solid var(--sim-border);
+      border-bottom: none;
+      background: var(--sim-bg-panel);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+
+    .vor-step:first-child {
+      border-radius: var(--sim-radius-sm) var(--sim-radius-sm) 0 0;
+    }
+
+    .vor-step:last-child {
+      border-bottom: 1px solid var(--sim-border);
+      border-radius: 0 0 var(--sim-radius-sm) var(--sim-radius-sm);
+    }
+
+    .vor-step.active {
+      background: var(--sim-bg-elevated);
+      border-color: var(--sim-sky);
+      border-bottom: 1px solid var(--sim-sky);
+    }
+
+    .vor-step.active + .vor-step {
+      border-top: none;
+    }
+
+    .vor-step.completed {
+      opacity: 0.6;
+    }
+
+    .vor-step.locked {
+      opacity: 0.35;
+    }
+
+    .vor-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vor-step-num {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sim-border);
+      color: var(--sim-text-muted);
+      flex-shrink: 0;
+    }
+
+    .vor-step.active .vor-step-num {
+      background: var(--sim-sky);
+      color: var(--sim-bg);
+    }
+
+    .vor-step.completed .vor-step-num {
+      background: var(--sim-green);
+      color: var(--sim-bg);
+    }
+
+    .vor-step-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vor-step.active .vor-step-title {
+      color: var(--sim-text);
+    }
+
+    .vor-step-check {
+      margin-left: auto;
+      font-size: 0.85rem;
+    }
+
+    .vor-step-body {
+      display: none;
+      padding-left: 34px;
+    }
+
+    .vor-step.active .vor-step-body {
+      display: block;
+    }
+
+    .vor-step-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .vor-step-input {
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 7px 12px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.9rem;
+      color: var(--sim-text);
+      outline: none;
+      width: 120px;
+      transition: border-color 0.2s;
+    }
+
+    .vor-step-input:focus {
+      border-color: var(--sim-sky);
+    }
+
+    .vor-step-input:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .vor-step-submit {
+      background: transparent;
+      border: 1px solid var(--sim-sky);
+      color: var(--sim-sky);
+      padding: 7px 16px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .vor-step-submit:hover:not(:disabled) {
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .vor-step-submit:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .vor-step-hint {
+      font-size: 0.78rem;
+      color: var(--sim-text-dim);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    /* Pass/Fail buttons */
+    .vor-pf-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .vor-pf-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 2px solid;
+    }
+
+    .vor-pf-btn.pass {
+      border-color: var(--sim-green);
+      color: var(--sim-green);
+      background: transparent;
+    }
+
+    .vor-pf-btn.pass:hover {
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .vor-pf-btn.fail {
+      border-color: var(--sim-red);
+      color: var(--sim-red);
+      background: transparent;
+    }
+
+    .vor-pf-btn.fail:hover {
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .vor-pf-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* ── Log Panel ───────────────────────────────────────────── */
+    .vor-log-panel {
+      display: none;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      padding: 20px;
+    }
+
+    .vor-log-panel.visible {
+      display: block;
+    }
+
+    .vor-log-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      color: var(--sim-sky);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .vor-log-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .vor-log-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vor-log-field.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .vor-log-field label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vor-log-field input,
+    .vor-log-field select {
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 8px 12px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      color: var(--sim-text);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .vor-log-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%2394a3b8' stroke-width='2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+    }
+
+    .vor-log-field select option {
+      background: var(--sim-bg);
+      color: var(--sim-text);
+    }
+
+    .vor-log-field input:focus,
+    .vor-log-field select:focus {
+      border-color: var(--sim-sky);
+    }
+
+    .vor-log-field input:disabled,
+    .vor-log-field select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .vor-log-submit-row {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* ── Dual VOR / Cross-check panel ────────────────────────── */
+    .vor-crosscheck-panel {
+      display: none;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      padding: 20px;
+    }
+
+    .vor-crosscheck-panel.visible {
+      display: block;
+    }
+
+    .vor-crosscheck-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      color: var(--sim-amber);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .vor-crosscheck-text {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .vor-crosscheck-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .vor-crosscheck-card {
+      background: var(--sim-bg-elevated);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .vor-crosscheck-card .label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .vor-crosscheck-card .val {
+      font-family: var(--sim-font-mono);
+      font-size: 1.3rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+
+    /* ── Completion Panel ────────────────────────────────────── */
+    .vor-complete-panel {
+      display: none;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-green);
+      border-radius: var(--sim-radius-sm);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .vor-complete-panel.visible {
+      display: block;
+    }
+
+    .vor-complete-title {
+      font-family: var(--sim-font-mono);
+      font-size: 1.1rem;
+      color: var(--sim-green);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .vor-complete-subtitle {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .vor-complete-breakdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .vor-complete-stat {
+      background: var(--sim-bg-elevated);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 10px;
+    }
+
+    .vor-complete-stat .stat-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.6rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .vor-complete-stat .stat-value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.2rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .vor-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .vor-canvas-wrap {
+        max-width: 320px;
+      }
+
+      .vor-log-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vor-complete-breakdown {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .vor-crosscheck-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sim-container vor-container">
+    <!-- ── HEADER ──────────────────────────────────────────── -->
+    <div class="sim-header">
+      <h3>VOR Ramp Check</h3>
+      <p>VOR Receiver Operational Check per FAA Requirements</p>
+    </div>
+
+    <!-- ── SCORE BAR ───────────────────────────────────────── -->
+    <div class="sim-scorebar" id="scorebar">
+      <div class="sim-score-item">
+        <span class="value" id="scoreReceiver">VOR 1</span>
+        Receiver
+      </div>
+      <div class="sim-score-item">
+        <span class="value" id="scoreStep">1/6</span>
+        Step
+      </div>
+      <div class="sim-score-item">
+        <span class="value" id="scorePoints">0</span>
+        Points
+      </div>
+      <div class="sim-score-item">
+        <span class="value" id="scorePct">0%</span>
+        Score
+      </div>
+    </div>
+
+    <!-- ── MAIN LAYOUT ─────────────────────────────────────── -->
+    <div class="vor-layout">
+      <!-- LEFT: VOR Face -->
+      <div class="vor-face-panel">
+        <div class="vor-receiver-label" id="receiverLabel">VOR 1</div>
+        <div class="vor-canvas-wrap">
+          <canvas id="vorCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <!-- Frequency input -->
+        <div class="vor-freq-row">
+          <span class="vor-freq-label">NAV Freq:</span>
+          <input type="text" id="freqInput" class="vor-freq-input" placeholder="Enter MHz (e.g. 108.0)" maxlength="6" autocomplete="off">
+          <button class="vor-step-submit" id="freqSubmit">Tune</button>
+        </div>
+
+        <!-- OBS controls -->
+        <div class="vor-obs-controls">
+          <span class="vor-obs-label">OBS:</span>
+          <button class="vor-obs-btn" id="obsLeft" title="Rotate OBS left">&larr;</button>
+          <span class="vor-obs-readout" id="obsReadout">000&deg;</span>
+          <button class="vor-obs-btn" id="obsRight" title="Rotate OBS right">&rarr;</button>
+          <span class="vor-obs-drag-hint">Drag knob on instrument to rotate</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Procedure Steps -->
+      <div class="vor-procedure-panel" id="procedurePanel">
+        <!-- Step 1 -->
+        <div class="vor-step active" data-step="1" id="step1">
+          <div class="vor-step-header">
+            <span class="vor-step-num">1</span>
+            <span class="vor-step-title">Tune VOT Frequency</span>
+            <span class="vor-step-check" id="check1"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Tune the NAV receiver to the published VOT frequency (108.0 MHz). Use the frequency input below the VOR face.</div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="vor-step locked" data-step="2" id="step2">
+          <div class="vor-step-header">
+            <span class="vor-step-num">2</span>
+            <span class="vor-step-title">Center the CDI Needle</span>
+            <span class="vor-step-check" id="check2"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Rotate the OBS knob until the CDI needle is centered. The OBS should read 000/360 FROM or 180 TO.</div>
+            <div class="vor-step-input-row" style="margin-top:8px;">
+              <button class="vor-step-submit" id="cdiConfirm">Confirm CDI Centered</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="vor-step locked" data-step="3" id="step3">
+          <div class="vor-step-header">
+            <span class="vor-step-num">3</span>
+            <span class="vor-step-title">Record OBS Bearing</span>
+            <span class="vor-step-check" id="check3"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Read the OBS bearing where the CDI is centered and record it below.</div>
+            <div class="vor-step-input-row">
+              <input type="text" class="vor-step-input" id="bearingInput" placeholder="e.g. 002" maxlength="4" autocomplete="off">
+              <span style="color:var(--sim-text-dim);font-family:var(--sim-font-mono);font-size:0.8rem;">&deg;</span>
+              <button class="vor-step-submit" id="bearingSubmit">Record</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="vor-step locked" data-step="4" id="step4">
+          <div class="vor-step-header">
+            <span class="vor-step-num">4</span>
+            <span class="vor-step-title">Calculate Bearing Error</span>
+            <span class="vor-step-check" id="check4"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Calculate: How far off from 000 (if FROM) or 180 (if TO)? Enter the error in degrees with sign (+/-).</div>
+            <div class="vor-step-input-row">
+              <input type="text" class="vor-step-input" id="errorInput" placeholder="e.g. +3 or -2" maxlength="4" autocomplete="off">
+              <span style="color:var(--sim-text-dim);font-family:var(--sim-font-mono);font-size:0.8rem;">&deg;</span>
+              <button class="vor-step-submit" id="errorSubmit">Calculate</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="vor-step locked" data-step="5" id="step5">
+          <div class="vor-step-header">
+            <span class="vor-step-num">5</span>
+            <span class="vor-step-title">Determine Pass or Fail</span>
+            <span class="vor-step-check" id="check5"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Ground VOT tolerance: +/- 4 degrees. Does this VOR receiver pass the operational check?</div>
+            <div class="vor-pf-buttons">
+              <button class="vor-pf-btn pass" id="btnPass">PASS</button>
+              <button class="vor-pf-btn fail" id="btnFail">FAIL</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="vor-step locked" data-step="6" id="step6">
+          <div class="vor-step-header">
+            <span class="vor-step-num">6</span>
+            <span class="vor-step-title">Complete Maintenance Log</span>
+            <span class="vor-step-check" id="check6"></span>
+          </div>
+          <div class="vor-step-body">
+            <div class="vor-step-hint">Fill out all fields in the maintenance log entry below, then submit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LOG PANEL ───────────────────────────────────────── -->
+    <div class="vor-log-panel" id="logPanel">
+      <div class="vor-log-title">VOR Operational Check - Maintenance Log Entry</div>
+      <div class="vor-log-grid">
+        <div class="vor-log-field">
+          <label for="logDate">Date</label>
+          <input type="date" id="logDate">
+        </div>
+        <div class="vor-log-field">
+          <label for="logLocation">Location / Airport ID</label>
+          <input type="text" id="logLocation" placeholder="e.g. KJFK" maxlength="30" autocomplete="off">
+        </div>
+        <div class="vor-log-field">
+          <label for="logFreq">VOT Frequency Used</label>
+          <input type="text" id="logFreq" placeholder="e.g. 108.0" maxlength="6" autocomplete="off">
+        </div>
+        <div class="vor-log-field">
+          <label for="logBearing">Bearing Reading</label>
+          <input type="text" id="logBearing" placeholder="e.g. 002" maxlength="4" autocomplete="off">
+        </div>
+        <div class="vor-log-field">
+          <label for="logError">Error (+/- degrees)</label>
+          <input type="text" id="logError" placeholder="e.g. +2" maxlength="4" autocomplete="off">
+        </div>
+        <div class="vor-log-field">
+          <label for="logResult">Result</label>
+          <select id="logResult">
+            <option value="">-- Select --</option>
+            <option value="Pass">Pass</option>
+            <option value="Fail">Fail</option>
+          </select>
+        </div>
+        <div class="vor-log-field full-width">
+          <label for="logSignature">Technician Signature</label>
+          <input type="text" id="logSignature" placeholder="Enter your name" maxlength="50" autocomplete="off">
+        </div>
+      </div>
+      <div class="vor-log-submit-row">
+        <button class="sim-btn" id="logSubmit">Submit Log Entry</button>
+      </div>
+    </div>
+
+    <!-- ── CROSS-CHECK PANEL ───────────────────────────────── -->
+    <div class="vor-crosscheck-panel" id="crosscheckPanel">
+      <div class="vor-crosscheck-title">Dual VOR Cross-Check</div>
+      <div class="vor-crosscheck-text" id="crosscheckText"></div>
+      <div class="vor-crosscheck-summary" id="crosscheckSummary"></div>
+      <div class="vor-step-input-row" id="crosscheckQuestion" style="display:none;">
+        <span style="color:var(--sim-text-secondary);font-size:0.9rem;">Max allowable difference between VOR 1 and VOR 2 readings:</span>
+        <input type="text" class="vor-step-input" id="crosscheckInput" placeholder="degrees" maxlength="3" autocomplete="off">
+        <button class="vor-step-submit" id="crosscheckSubmit">Answer</button>
+      </div>
+    </div>
+
+    <!-- ── COMPLETION PANEL ────────────────────────────────── -->
+    <div class="vor-complete-panel" id="completePanel">
+      <div class="vor-complete-title">VOR Ramp Check Complete</div>
+      <div class="vor-complete-subtitle" id="completeSubtitle"></div>
+      <div class="vor-complete-breakdown" id="completeBreakdown"></div>
+      <button class="sim-btn primary" id="restartBtn">New Check (New Errors)</button>
+    </div>
+
+    <!-- ── TASKBAR ─────────────────────────────────────────── -->
+    <div class="sim-taskbar">
+      <span class="task-text" id="taskText">Step 1: Tune the NAV receiver to the VOT frequency (108.0 MHz).</span>
+      <button class="hint-btn" id="hintBtn">Hint</button>
+    </div>
+
+    <!-- ── FEEDBACK ────────────────────────────────────────── -->
+    <div class="sim-feedback info" id="feedbackBar" style="display:none;">
+      <span class="fb-label" id="fbLabel">Info</span>
+      <span class="fb-text" id="fbText"></span>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    /* ═══════════════════════════════════════════════════════════
+       CONSTANTS & STATE
+       ═══════════════════════════════════════════════════════════ */
+    const VOT_FREQ = '108.0';
+    const GROUND_TOLERANCE = 4;
+    const AIRBORNE_TOLERANCE = 6;
+    const MAX_DUAL_DIFF = 4;
+    const TOTAL_STEPS = 6;
+    // Scoring: Sequence 30%, Readings 30%, Tolerance 20%, Documentation 20% = 100 total
+    // Per VOR (2 VORs): Sequence 15, Readings 15, Tolerance 10, Documentation 10 = 50 per VOR
+    const TOTAL_POSSIBLE = 100;
+
+    const canvas = document.getElementById('vorCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Generate random bearing errors for VOR 1 and VOR 2
+    function randomError() {
+      // Random integer from -6 to +6, never exactly 0 to keep it interesting
+      let e;
+      do {
+        e = Math.floor(Math.random() * 13) - 6;
+      } while (e === 0);
+      return e;
+    }
+
+    // Polyfill for roundRect in case older browsers lack it
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radii) {
+        const r = typeof radii === 'number' ? radii : (radii && radii[0]) || 0;
+        this.moveTo(x + r, y);
+        this.arcTo(x + w, y, x + w, y + h, r);
+        this.arcTo(x + w, y + h, x, y + h, r);
+        this.arcTo(x, y + h, x, y, r);
+        this.arcTo(x, y, x + w, y, r);
+        this.closePath();
+      };
+    }
+
+    let state = {
+      currentVor: 1,        // 1 or 2
+      currentStep: 1,       // 1-6
+      obsAngle: 0,          // 0-359 degrees
+      frequency: '',
+      signalValid: false,
+      bearingError: [randomError(), randomError()], // [vor1Error, vor2Error]
+      vor1Result: null,      // { bearing, error, passed }
+      vor2Result: null,
+      animatedCdi: 0,        // animated CDI deflection for smooth movement
+      isDragging: false,
+      dragStartAngle: 0,
+      dragStartObs: 0,
+      points: 0,
+      maxPoints: TOTAL_POSSIBLE,
+      stepScores: {
+        sequence: 0,
+        readings: 0,
+        tolerance: 0,
+        documentation: 0
+      },
+      stepsCorrect: { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null },
+      completed: false,
+      crosscheckDone: false,
+      obsLocked: true // locked until step 2
+    };
+
+    // DOM refs
+    const freqInput = document.getElementById('freqInput');
+    const freqSubmit = document.getElementById('freqSubmit');
+    const obsLeft = document.getElementById('obsLeft');
+    const obsRight = document.getElementById('obsRight');
+    const obsReadout = document.getElementById('obsReadout');
+    const cdiConfirm = document.getElementById('cdiConfirm');
+    const bearingInput = document.getElementById('bearingInput');
+    const bearingSubmit = document.getElementById('bearingSubmit');
+    const errorInput = document.getElementById('errorInput');
+    const errorSubmit = document.getElementById('errorSubmit');
+    const btnPass = document.getElementById('btnPass');
+    const btnFail = document.getElementById('btnFail');
+    const logPanel = document.getElementById('logPanel');
+    const logSubmit = document.getElementById('logSubmit');
+    const taskText = document.getElementById('taskText');
+    const hintBtn = document.getElementById('hintBtn');
+    const feedbackBar = document.getElementById('feedbackBar');
+    const fbLabel = document.getElementById('fbLabel');
+    const fbText = document.getElementById('fbText');
+    const receiverLabel = document.getElementById('receiverLabel');
+    const scoreReceiver = document.getElementById('scoreReceiver');
+    const scoreStep = document.getElementById('scoreStep');
+    const scorePoints = document.getElementById('scorePoints');
+    const scorePct = document.getElementById('scorePct');
+    const crosscheckPanel = document.getElementById('crosscheckPanel');
+    const crosscheckText = document.getElementById('crosscheckText');
+    const crosscheckSummary = document.getElementById('crosscheckSummary');
+    const crosscheckQuestion = document.getElementById('crosscheckQuestion');
+    const crosscheckInput = document.getElementById('crosscheckInput');
+    const crosscheckSubmit = document.getElementById('crosscheckSubmit');
+    const completePanel = document.getElementById('completePanel');
+    const completeSubtitle = document.getElementById('completeSubtitle');
+    const completeBreakdown = document.getElementById('completeBreakdown');
+    const restartBtn = document.getElementById('restartBtn');
+
+    // SimTracker
+    const tracker = new SimTracker('vor-ramp-check', 'W7-Z3-N1');
+
+    /* ═══════════════════════════════════════════════════════════
+       VOR SIMULATOR MATH
+       ═══════════════════════════════════════════════════════════ */
+    class VORSimulator {
+      constructor(bearingError) {
+        this.bearingError = bearingError;
+        // VOT always broadcasts 360/0 FROM signal
+        // With error, the center shifts by bearingError degrees
+      }
+
+      /**
+       * Get CDI deflection for a given OBS setting.
+       * Returns { deflection: -5 to +5 (dots), toFrom: 'TO'|'FROM' }
+       * VOT signal: center FROM = 0 (+ error), center TO = 180 (+ error)
+       */
+      getIndication(obsDeg) {
+        // The VOT radial is 360/0. With error, the receiver reads
+        // center FROM at (0 + error) degrees, center TO at (180 + error) degrees.
+        const centerFrom = this.normalizeAngle(0 + this.bearingError);
+        const centerTo = this.normalizeAngle(180 + this.bearingError);
+
+        // Calculate angular difference from the FROM center
+        let diffFrom = this.angleDiff(obsDeg, centerFrom);
+        // Calculate angular difference from the TO center
+        let diffTo = this.angleDiff(obsDeg, centerTo);
+
+        // Determine which hemisphere: TO or FROM
+        // If closer to the FROM center, it's FROM; if closer to TO, it's TO
+        let toFrom, diff;
+        if (Math.abs(diffFrom) <= 90) {
+          toFrom = 'FROM';
+          diff = diffFrom;
+        } else {
+          toFrom = 'TO';
+          diff = diffTo;
+        }
+
+        // CDI deflection: 1 dot per 2 degrees, max 5 dots
+        // Positive diff = needle deflects right, negative = left
+        let deflection = diff / 2;
+        deflection = Math.max(-5, Math.min(5, deflection));
+
+        return { deflection, toFrom };
+      }
+
+      normalizeAngle(a) {
+        a = a % 360;
+        if (a < 0) a += 360;
+        return a;
+      }
+
+      angleDiff(a, b) {
+        // Returns signed difference: how far a is from b, in range -180 to +180
+        let d = ((a - b + 540) % 360) - 180;
+        return d;
+      }
+    }
+
+    function getCurrentSimulator() {
+      const errIdx = state.currentVor - 1;
+      return new VORSimulator(state.bearingError[errIdx]);
+    }
+
+    function getCurrentError() {
+      return state.bearingError[state.currentVor - 1];
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CANVAS RENDERING - VOR RECEIVER FACE
+       ═══════════════════════════════════════════════════════════ */
+    const DPR = window.devicePixelRatio || 1;
+    const CANVAS_SIZE = 400;
+
+    function initCanvas() {
+      canvas.width = CANVAS_SIZE * DPR;
+      canvas.height = CANVAS_SIZE * DPR;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      ctx.scale(DPR, DPR);
+    }
+
+    initCanvas();
+
+    function drawVOR() {
+      const size = CANVAS_SIZE;
+      const cx = size / 2;
+      const cy = size / 2;
+      const r = size / 2 - 8;
+
+      ctx.clearRect(0, 0, size, size);
+
+      // ── Metallic Bezel ──
+      drawBezel(ctx, cx, cy, r);
+
+      const ir = r - 10; // inner radius for compass rose
+
+      // ── OBS Compass Rose ──
+      drawCompassRose(ctx, cx, cy, ir, state.obsAngle);
+
+      // ── CDI Dots ──
+      drawCDIDots(ctx, cx, cy, ir);
+
+      // ── CDI Needle ──
+      const sim = getCurrentSimulator();
+      const indication = sim.getIndication(state.obsAngle);
+      const targetDeflection = state.signalValid ? indication.deflection : 0;
+
+      // Smooth animation toward target
+      state.animatedCdi += (targetDeflection - state.animatedCdi) * 0.15;
+      if (Math.abs(state.animatedCdi - targetDeflection) < 0.01) {
+        state.animatedCdi = targetDeflection;
+      }
+
+      drawCDINeedle(ctx, cx, cy, ir, state.animatedCdi);
+
+      // ── TO/FROM Flag ──
+      if (state.signalValid) {
+        drawToFromFlag(ctx, cx, cy, ir, indication.toFrom);
+      } else {
+        drawNavFlag(ctx, cx, cy, ir);
+      }
+
+      // ── Frequency Display ──
+      drawFreqDisplay(ctx, cx, cy, ir);
+
+      // ── OBS Knob ──
+      drawOBSKnob(ctx, cx, cy, r);
+    }
+
+    function drawBezel(ctx, cx, cy, r) {
+      // Outer ring
+      const grad = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+      grad.addColorStop(0, '#475569');
+      grad.addColorStop(0.3, '#78909c');
+      grad.addColorStop(0.5, '#90a4ae');
+      grad.addColorStop(0.7, '#78909c');
+      grad.addColorStop(1, '#334155');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Bezel highlight ring
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 1, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Inner face (dark)
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#0f172a';
+      ctx.fill();
+
+      // Subtle inner shadow
+      const ig = ctx.createRadialGradient(cx, cy, r * 0.3, cx, cy, r - 6);
+      ig.addColorStop(0, 'rgba(0,0,0,0)');
+      ig.addColorStop(1, 'rgba(0,0,0,0.5)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 6, 0, Math.PI * 2);
+      ctx.fillStyle = ig;
+      ctx.fill();
+    }
+
+    function drawCompassRose(ctx, cx, cy, r, obsAngle) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-obsAngle * Math.PI / 180);
+
+      const tickR = r - 4;
+      const labelR = r - 26;
+
+      // Draw tick marks and labels
+      for (let deg = 0; deg < 360; deg += 5) {
+        const rad = (deg - 90) * Math.PI / 180;
+        const cos = Math.cos(rad);
+        const sin = Math.sin(rad);
+
+        if (deg % 30 === 0) {
+          // Major tick
+          const inner = tickR - 16;
+          ctx.beginPath();
+          ctx.moveTo(cos * tickR, sin * tickR);
+          ctx.lineTo(cos * inner, sin * inner);
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Label
+          ctx.save();
+          ctx.translate(cos * labelR, sin * labelR);
+          ctx.rotate(deg * Math.PI / 180);
+          ctx.font = 'bold 14px "Share Tech Mono", monospace';
+          ctx.fillStyle = '#e2e8f0';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          let label;
+          if (deg === 0) label = 'N';
+          else if (deg === 90) label = 'E';
+          else if (deg === 180) label = 'S';
+          else if (deg === 270) label = 'W';
+          else label = String(deg / 10).padStart(2, '0');
+
+          ctx.fillText(label, 0, 0);
+          ctx.restore();
+        } else if (deg % 10 === 0) {
+          // Medium tick
+          const inner = tickR - 10;
+          ctx.beginPath();
+          ctx.moveTo(cos * tickR, sin * tickR);
+          ctx.lineTo(cos * inner, sin * inner);
+          ctx.strokeStyle = '#94a3b8';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        } else {
+          // Minor tick
+          const inner = tickR - 6;
+          ctx.beginPath();
+          ctx.moveTo(cos * tickR, sin * tickR);
+          ctx.lineTo(cos * inner, sin * inner);
+          ctx.strokeStyle = '#64748b';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      // Course arrow at top (always points to current OBS selection)
+      ctx.restore();
+
+      // Fixed course index triangle at top of instrument
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.beginPath();
+      ctx.moveTo(0, -(r - 4));
+      ctx.lineTo(-6, -(r - 14));
+      ctx.lineTo(6, -(r - 14));
+      ctx.closePath();
+      ctx.fillStyle = '#f59e0b';
+      ctx.fill();
+      ctx.restore();
+
+      // Fixed course index triangle at bottom
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.beginPath();
+      ctx.moveTo(0, (r - 4));
+      ctx.lineTo(-6, (r - 14));
+      ctx.lineTo(6, (r - 14));
+      ctx.closePath();
+      ctx.fillStyle = '#f59e0b';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawCDIDots(ctx, cx, cy, r) {
+      // 5 dots each side of center, spaced evenly
+      const dotSpacing = 18;
+      const dotR = 3;
+      const dotY = cy; // center of instrument
+
+      for (let i = -5; i <= 5; i++) {
+        if (i === 0) continue; // center is the needle position
+        const x = cx + i * dotSpacing;
+        ctx.beginPath();
+        ctx.arc(x, dotY, dotR, 0, Math.PI * 2);
+        ctx.fillStyle = '#f8fafc';
+        ctx.fill();
+      }
+    }
+
+    function drawCDINeedle(ctx, cx, cy, r, deflection) {
+      // deflection: -5 to +5 dots
+      const dotSpacing = 18;
+      const needleX = cx + deflection * dotSpacing;
+      const needleHalf = r * 0.45;
+
+      ctx.beginPath();
+      ctx.moveTo(needleX, cy - needleHalf);
+      ctx.lineTo(needleX, cy + needleHalf);
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Glow effect when nearly centered
+      if (Math.abs(deflection) < 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(needleX, cy - needleHalf);
+        ctx.lineTo(needleX, cy + needleHalf);
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.lineWidth = 6;
+        ctx.stroke();
+      }
+    }
+
+    function drawToFromFlag(ctx, cx, cy, r, toFrom) {
+      // Draw TO/FROM flag in lower-right quadrant
+      const flagX = cx + 55;
+      const flagY = cy + 50;
+      const flagW = 42;
+      const flagH = 18;
+
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(flagX - flagW / 2, flagY - flagH / 2, flagW, flagH, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = 'bold 11px "Share Tech Mono", monospace';
+      ctx.fillStyle = toFrom === 'TO' ? '#38bdf8' : '#10b981';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(toFrom, flagX, flagY);
+    }
+
+    function drawNavFlag(ctx, cx, cy, r) {
+      // Red NAV flag when no valid signal
+      const flagX = cx + 55;
+      const flagY = cy + 50;
+      const flagW = 42;
+      const flagH = 18;
+
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.roundRect(flagX - flagW / 2, flagY - flagH / 2, flagW, flagH, 3);
+      ctx.fill();
+
+      ctx.font = 'bold 11px "Share Tech Mono", monospace';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('NAV', flagX, flagY);
+    }
+
+    function drawFreqDisplay(ctx, cx, cy, r) {
+      // Frequency display at top of instrument
+      const freqStr = state.frequency || '---.-';
+      const dispX = cx;
+      const dispY = cy - 70;
+      const dispW = 80;
+      const dispH = 22;
+
+      ctx.fillStyle = '#020617';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(dispX - dispW / 2, dispY - dispH / 2, dispW, dispH, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = '14px "Share Tech Mono", monospace';
+      ctx.fillStyle = state.signalValid ? '#10b981' : '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(freqStr + ' MHz', dispX, dispY);
+    }
+
+    function drawOBSKnob(ctx, cx, cy, r) {
+      // OBS knob at bottom-left of instrument
+      const knobX = cx - 60;
+      const knobY = cy + r - 15;
+      const knobR = 16;
+
+      // Knob body
+      const kg = ctx.createRadialGradient(knobX - 3, knobY - 3, 1, knobX, knobY, knobR);
+      kg.addColorStop(0, '#90a4ae');
+      kg.addColorStop(0.5, '#607d8b');
+      kg.addColorStop(1, '#37474f');
+      ctx.beginPath();
+      ctx.arc(knobX, knobY, knobR, 0, Math.PI * 2);
+      ctx.fillStyle = kg;
+      ctx.fill();
+      ctx.strokeStyle = '#263238';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Knob marker line
+      const markerAngle = (state.obsAngle * Math.PI / 180) - Math.PI / 2;
+      ctx.beginPath();
+      ctx.moveTo(knobX, knobY);
+      ctx.lineTo(
+        knobX + Math.cos(markerAngle) * (knobR - 3),
+        knobY + Math.sin(markerAngle) * (knobR - 3)
+      );
+      ctx.strokeStyle = '#f8fafc';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Knob center dot
+      ctx.beginPath();
+      ctx.arc(knobX, knobY, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#cfd8dc';
+      ctx.fill();
+
+      // Label
+      ctx.font = '9px "Share Tech Mono", monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('OBS', knobX, knobY + knobR + 4);
+
+      // Store knob position for hit testing
+      state._knobX = knobX;
+      state._knobY = knobY;
+      state._knobR = knobR;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ANIMATION LOOP
+       ═══════════════════════════════════════════════════════════ */
+    let animFrame;
+    function animate() {
+      drawVOR();
+      animFrame = requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* ═══════════════════════════════════════════════════════════
+       OBS KNOB INTERACTION (Mouse + Touch)
+       ═══════════════════════════════════════════════════════════ */
+    function getCanvasCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_SIZE / rect.width;
+      const scaleY = CANVAS_SIZE / rect.height;
+      let clientX, clientY;
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else if (e.changedTouches && e.changedTouches.length > 0) {
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    function isOnKnob(x, y) {
+      if (!state._knobX) return false;
+      const dx = x - state._knobX;
+      const dy = y - state._knobY;
+      return Math.sqrt(dx * dx + dy * dy) <= state._knobR + 10;
+    }
+
+    function getAngleFromKnob(x, y) {
+      return Math.atan2(y - state._knobY, x - state._knobX);
+    }
+
+    function handleDragStart(e) {
+      if (state.obsLocked) return;
+      const coords = getCanvasCoords(e);
+      if (isOnKnob(coords.x, coords.y)) {
+        state.isDragging = true;
+        state.dragStartAngle = getAngleFromKnob(coords.x, coords.y);
+        state.dragStartObs = state.obsAngle;
+        e.preventDefault();
+        canvas.style.cursor = 'grabbing';
+      }
+    }
+
+    function handleDragMove(e) {
+      if (!state.isDragging) {
+        // Update cursor on hover
+        if (!state.obsLocked) {
+          const coords = getCanvasCoords(e);
+          canvas.style.cursor = isOnKnob(coords.x, coords.y) ? 'grab' : 'default';
+        }
+        return;
+      }
+      e.preventDefault();
+      const coords = getCanvasCoords(e);
+      const currentAngle = getAngleFromKnob(coords.x, coords.y);
+      let delta = (currentAngle - state.dragStartAngle) * 180 / Math.PI;
+      let newObs = state.dragStartObs + delta;
+      newObs = ((newObs % 360) + 360) % 360;
+      state.obsAngle = Math.round(newObs);
+      updateOBSReadout();
+    }
+
+    function handleDragEnd(e) {
+      if (state.isDragging) {
+        state.isDragging = false;
+        canvas.style.cursor = 'default';
+      }
+    }
+
+    // Mouse events
+    canvas.addEventListener('mousedown', handleDragStart);
+    canvas.addEventListener('mousemove', handleDragMove);
+    canvas.addEventListener('mouseup', handleDragEnd);
+    canvas.addEventListener('mouseleave', handleDragEnd);
+
+    // Touch events
+    canvas.addEventListener('touchstart', handleDragStart, { passive: false });
+    canvas.addEventListener('touchmove', handleDragMove, { passive: false });
+    canvas.addEventListener('touchend', handleDragEnd);
+
+    // OBS arrow buttons
+    obsLeft.addEventListener('click', () => {
+      if (state.obsLocked) return;
+      state.obsAngle = ((state.obsAngle - 1) + 360) % 360;
+      updateOBSReadout();
+    });
+
+    obsRight.addEventListener('click', () => {
+      if (state.obsLocked) return;
+      state.obsAngle = (state.obsAngle + 1) % 360;
+      updateOBSReadout();
+    });
+
+    // Hold-to-repeat for arrow buttons
+    let obsRepeatTimer = null;
+    let obsRepeatInterval = null;
+
+    function startOBSRepeat(direction) {
+      if (state.obsLocked) return;
+      obsRepeatTimer = setTimeout(() => {
+        obsRepeatInterval = setInterval(() => {
+          if (direction === 'left') {
+            state.obsAngle = ((state.obsAngle - 1) + 360) % 360;
+          } else {
+            state.obsAngle = (state.obsAngle + 1) % 360;
+          }
+          updateOBSReadout();
+        }, 50);
+      }, 400);
+    }
+
+    function stopOBSRepeat() {
+      clearTimeout(obsRepeatTimer);
+      clearInterval(obsRepeatInterval);
+      obsRepeatTimer = null;
+      obsRepeatInterval = null;
+    }
+
+    obsLeft.addEventListener('mousedown', () => startOBSRepeat('left'));
+    obsLeft.addEventListener('mouseup', stopOBSRepeat);
+    obsLeft.addEventListener('mouseleave', stopOBSRepeat);
+    obsRight.addEventListener('mousedown', () => startOBSRepeat('right'));
+    obsRight.addEventListener('mouseup', stopOBSRepeat);
+    obsRight.addEventListener('mouseleave', stopOBSRepeat);
+
+    function updateOBSReadout() {
+      obsReadout.textContent = String(state.obsAngle).padStart(3, '0') + '\u00B0';
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP MANAGEMENT
+       ═══════════════════════════════════════════════════════════ */
+    const STEP_TASKS = [
+      'Step 1: Tune the NAV receiver to the VOT frequency (108.0 MHz).',
+      'Step 2: Rotate the OBS knob to center the CDI needle.',
+      'Step 3: Read and record the OBS bearing where the CDI is centered.',
+      'Step 4: Calculate the bearing error from the expected value.',
+      'Step 5: Determine if this VOR receiver passes the operational check.',
+      'Step 6: Complete all fields in the maintenance log entry.'
+    ];
+
+    const STEP_HINTS = [
+      'The published VOT frequency is always 108.0 MHz. Enter it in the NAV Freq field and click Tune.',
+      'Drag the OBS knob or use the arrow buttons. Watch the CDI needle. Center it so it aligns with the center dot.',
+      'Look at the OBS readout. The bearing shown when CDI is centered is your reading. Enter exactly what you see.',
+      'If FROM flag: error = bearing - 000. If TO flag: error = bearing - 180. Use + for clockwise error, - for counter-clockwise.',
+      'Ground VOT tolerance is +/- 4 degrees, NOT the airborne +/- 6 degrees. Is the absolute error within 4 degrees?',
+      'Every field is required. Date, Location, VOT Frequency, Bearing, Error, Result, and your Signature.'
+    ];
+
+    function setActiveStep(stepNum) {
+      state.currentStep = stepNum;
+
+      // Update step elements
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const el = document.getElementById('step' + i);
+        el.classList.remove('active', 'completed', 'locked');
+        if (i < stepNum) {
+          el.classList.add('completed');
+        } else if (i === stepNum) {
+          el.classList.add('active');
+        } else {
+          el.classList.add('locked');
+        }
+      }
+
+      // Update task text
+      taskText.textContent = STEP_TASKS[stepNum - 1];
+
+      // Update score bar
+      scoreStep.textContent = stepNum + '/' + TOTAL_STEPS;
+
+      // Lock/unlock controls based on step
+      updateControlStates();
+
+      // Show/hide log panel
+      if (stepNum === 6) {
+        logPanel.classList.add('visible');
+      }
+    }
+
+    function updateControlStates() {
+      const s = state.currentStep;
+
+      // Frequency input: only active in step 1
+      freqInput.disabled = s !== 1;
+      freqSubmit.disabled = s !== 1;
+
+      // OBS controls: active in step 2
+      state.obsLocked = s !== 2;
+      obsLeft.disabled = s !== 2;
+      obsRight.disabled = s !== 2;
+    }
+
+    // Step click enforcement
+    document.querySelectorAll('.vor-step').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const stepNum = parseInt(el.dataset.step);
+        if (stepNum > state.currentStep) {
+          showFeedback('info', 'Complete step ' + state.currentStep + ' first.');
+        }
+      });
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       FEEDBACK
+       ═══════════════════════════════════════════════════════════ */
+    function showFeedback(type, text) {
+      feedbackBar.style.display = 'flex';
+      feedbackBar.className = 'sim-feedback ' + type;
+      fbLabel.textContent = type === 'correct' ? 'Correct' : type === 'incorrect' ? 'Error' : 'Info';
+      fbText.textContent = text;
+
+      // Auto-hide after a delay for info/correct
+      if (type !== 'incorrect') {
+        setTimeout(() => {
+          feedbackBar.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    function hideFeedback() {
+      feedbackBar.style.display = 'none';
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 1: TUNE VOT FREQUENCY
+       ═══════════════════════════════════════════════════════════ */
+    freqSubmit.addEventListener('click', () => {
+      if (state.currentStep !== 1) return;
+      const val = freqInput.value.trim();
+      state.frequency = val;
+
+      if (val === VOT_FREQ || val === '108.00' || val === '108.0') {
+        state.signalValid = true;
+        state.frequency = '108.0';
+        state.stepsCorrect[1] = true;
+        state.stepScores.sequence += 5;
+        state.points += 5;
+        document.getElementById('check1').textContent = '\u2713';
+        document.getElementById('check1').style.color = '#10b981';
+        showFeedback('correct', 'VOT signal received on 108.0 MHz. CDI and TO/FROM indicators are now active.');
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-1`, correct: true, points: 5, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+        setActiveStep(2);
+      } else {
+        state.signalValid = false;
+        state.stepsCorrect[1] = false;
+        showFeedback('incorrect', 'No VOT signal received. Check the published VOT frequency.');
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-1-attempt`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+
+      updateScoreDisplay();
+    });
+
+    // Allow Enter key for frequency input
+    freqInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') freqSubmit.click();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 2: CENTER CDI NEEDLE
+       ═══════════════════════════════════════════════════════════ */
+    cdiConfirm.addEventListener('click', () => {
+      if (state.currentStep !== 2) return;
+
+      const sim = getCurrentSimulator();
+      const indication = sim.getIndication(state.obsAngle);
+
+      // Check if CDI is centered (within 1 degree = 0.5 dots)
+      if (Math.abs(indication.deflection) <= 0.5) {
+        state.stepsCorrect[2] = true;
+        state.stepScores.sequence += 5;
+        state.stepScores.readings += 5;
+        state.points += 10;
+        document.getElementById('check2').textContent = '\u2713';
+        document.getElementById('check2').style.color = '#10b981';
+
+        const toFrom = indication.toFrom;
+        showFeedback('correct', `CDI centered. OBS reads ${String(state.obsAngle).padStart(3, '0')}\u00B0 ${toFrom}. Record this bearing.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-2`, correct: true, points: 10, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+        setActiveStep(3);
+      } else {
+        const dotsOff = Math.abs(indication.deflection).toFixed(1);
+        showFeedback('incorrect', `CDI is not centered. Needle is ${dotsOff} dots off center. Keep adjusting the OBS.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-2-attempt`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+
+      updateScoreDisplay();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 3: RECORD OBS BEARING
+       ═══════════════════════════════════════════════════════════ */
+    bearingSubmit.addEventListener('click', () => {
+      if (state.currentStep !== 3) return;
+      const val = bearingInput.value.trim();
+      const bearing = parseInt(val, 10);
+
+      if (isNaN(bearing) || bearing < 0 || bearing > 360) {
+        showFeedback('incorrect', 'Enter a valid bearing between 000 and 360.');
+        return;
+      }
+
+      // Check if the recorded bearing matches the actual OBS setting (within 1 degree tolerance)
+      const diff = Math.abs(((bearing - state.obsAngle + 540) % 360) - 180);
+      if (diff <= 1) {
+        state.stepsCorrect[3] = true;
+        state.stepScores.readings += 5;
+        state.points += 5;
+        document.getElementById('check3').textContent = '\u2713';
+        document.getElementById('check3').style.color = '#10b981';
+        showFeedback('correct', `Bearing of ${String(bearing).padStart(3, '0')}\u00B0 recorded. Now calculate the error.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-3`, correct: true, points: 5, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+        setActiveStep(4);
+      } else {
+        state.stepsCorrect[3] = false;
+        showFeedback('incorrect', `That doesn't match the OBS reading. Look at the OBS readout: ${String(state.obsAngle).padStart(3, '0')}\u00B0.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-3-attempt`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+
+      updateScoreDisplay();
+    });
+
+    bearingInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') bearingSubmit.click();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 4: CALCULATE BEARING ERROR
+       ═══════════════════════════════════════════════════════════ */
+    errorSubmit.addEventListener('click', () => {
+      if (state.currentStep !== 4) return;
+      let val = errorInput.value.trim();
+
+      // Parse the error value: accept formats like +3, -2, 3, etc.
+      let studentError = parseInt(val, 10);
+      if (isNaN(studentError)) {
+        showFeedback('incorrect', 'Enter the error as a number with + or - sign (e.g. +3 or -2).');
+        return;
+      }
+
+      const actualError = getCurrentError();
+
+      // The student should calculate error based on what they see:
+      // If FROM: error = OBS reading - 000 (or 360)
+      // If TO: error = OBS reading - 180
+      // The actual bearing error is what we set in the simulator
+      if (studentError === actualError || Math.abs(studentError - actualError) <= 1) {
+        state.stepsCorrect[4] = true;
+        state.stepScores.readings += 5;
+        state.points += 5;
+        document.getElementById('check4').textContent = '\u2713';
+        document.getElementById('check4').style.color = '#10b981';
+        const sign = actualError >= 0 ? '+' : '';
+        showFeedback('correct', `Bearing error: ${sign}${actualError}\u00B0. Now determine if the VOR passes.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-4`, correct: true, points: 5, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+        setActiveStep(5);
+      } else {
+        state.stepsCorrect[4] = false;
+        showFeedback('incorrect', `That's not correct. Remember: if FROM, error = bearing - 000/360. If TO, error = bearing - 180. The OBS reads ${String(state.obsAngle).padStart(3, '0')}\u00B0.`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-4-attempt`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+
+      updateScoreDisplay();
+    });
+
+    errorInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') errorSubmit.click();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 5: PASS OR FAIL DETERMINATION
+       ═══════════════════════════════════════════════════════════ */
+    function handlePassFail(studentSaysPassed) {
+      if (state.currentStep !== 5) return;
+
+      const actualError = getCurrentError();
+      const actualPasses = Math.abs(actualError) <= GROUND_TOLERANCE;
+
+      if (studentSaysPassed === actualPasses) {
+        state.stepsCorrect[5] = true;
+        state.stepScores.tolerance += 10;
+        state.points += 10;
+        document.getElementById('check5').textContent = '\u2713';
+        document.getElementById('check5').style.color = '#10b981';
+
+        const resultText = actualPasses ? 'PASSES' : 'FAILS';
+        showFeedback('correct', `Correct! With ${Math.abs(actualError)}\u00B0 error, the VOR ${resultText} the ground VOT check (+/- ${GROUND_TOLERANCE}\u00B0 tolerance).`);
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-5`, correct: true, points: 10, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+
+        // Store result for this VOR
+        const result = {
+          bearing: state.obsAngle,
+          error: actualError,
+          passed: actualPasses
+        };
+        if (state.currentVor === 1) {
+          state.vor1Result = result;
+        } else {
+          state.vor2Result = result;
+        }
+
+        setActiveStep(6);
+      } else {
+        state.stepsCorrect[5] = false;
+        // Check if they used the wrong tolerance
+        const wouldPassAirborne = Math.abs(actualError) <= AIRBORNE_TOLERANCE;
+        if (!actualPasses && wouldPassAirborne && studentSaysPassed) {
+          showFeedback('incorrect', `You used the airborne tolerance (+/- ${AIRBORNE_TOLERANCE}\u00B0). Ground VOT tolerance is +/- ${GROUND_TOLERANCE}\u00B0. With ${Math.abs(actualError)}\u00B0 error, this VOR FAILS.`);
+        } else {
+          const resultText = actualPasses ? 'PASSES' : 'FAILS';
+          showFeedback('incorrect', `Incorrect. With ${Math.abs(actualError)}\u00B0 error and a ground VOT tolerance of +/- ${GROUND_TOLERANCE}\u00B0, this VOR ${resultText}.`);
+        }
+        tracker.recordStep({ stepId: `vor${state.currentVor}-step-5-attempt`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+
+      updateScoreDisplay();
+    }
+
+    btnPass.addEventListener('click', () => handlePassFail(true));
+    btnFail.addEventListener('click', () => handlePassFail(false));
+
+    /* ═══════════════════════════════════════════════════════════
+       STEP 6: MAINTENANCE LOG ENTRY
+       ═══════════════════════════════════════════════════════════ */
+    logSubmit.addEventListener('click', () => {
+      if (state.currentStep !== 6) return;
+
+      const fields = {
+        date: document.getElementById('logDate').value,
+        location: document.getElementById('logLocation').value.trim(),
+        freq: document.getElementById('logFreq').value.trim(),
+        bearing: document.getElementById('logBearing').value.trim(),
+        error: document.getElementById('logError').value.trim(),
+        result: document.getElementById('logResult').value,
+        signature: document.getElementById('logSignature').value.trim()
+      };
+
+      // Check for missing fields
+      const fieldLabels = {
+        date: 'Date',
+        location: 'Location',
+        freq: 'VOT Frequency Used',
+        bearing: 'Bearing Reading',
+        error: 'Error',
+        result: 'Result',
+        signature: 'Technician Signature'
+      };
+
+      for (const [key, label] of Object.entries(fieldLabels)) {
+        if (!fields[key]) {
+          showFeedback('incorrect', `Log entry rejected: missing ${label} field.`);
+          tracker.recordStep({ stepId: `vor${state.currentVor}-step-6-incomplete`, correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+          return;
+        }
+      }
+
+      // All fields present
+      state.stepsCorrect[6] = true;
+      state.stepScores.documentation += 10;
+      state.stepScores.sequence += 5;
+      state.points += 15;
+      document.getElementById('check6').textContent = '\u2713';
+      document.getElementById('check6').style.color = '#10b981';
+
+      showFeedback('correct', 'Maintenance log entry accepted and recorded.');
+      tracker.recordStep({ stepId: `vor${state.currentVor}-step-6`, correct: true, points: 15, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+
+      updateScoreDisplay();
+
+      // After VOR 1 is complete, transition to VOR 2
+      if (state.currentVor === 1) {
+        setTimeout(() => {
+          startVOR2();
+        }, 1500);
+      } else {
+        // VOR 2 complete - show cross-check
+        setTimeout(() => {
+          showCrossCheck();
+        }, 1500);
+      }
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       DUAL VOR: TRANSITION TO VOR 2
+       ═══════════════════════════════════════════════════════════ */
+    function startVOR2() {
+      state.currentVor = 2;
+      state.currentStep = 1;
+      state.obsAngle = 0;
+      state.frequency = '';
+      state.signalValid = false;
+      state.animatedCdi = 0;
+      state.stepsCorrect = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
+
+      // Update UI
+      receiverLabel.textContent = 'VOR 2';
+      scoreReceiver.textContent = 'VOR 2';
+      updateOBSReadout();
+
+      // Reset frequency input
+      freqInput.value = '';
+      freqInput.disabled = false;
+      freqSubmit.disabled = false;
+
+      // Reset step inputs
+      bearingInput.value = '';
+      errorInput.value = '';
+
+      // Reset log fields
+      document.getElementById('logDate').value = '';
+      document.getElementById('logLocation').value = '';
+      document.getElementById('logFreq').value = '';
+      document.getElementById('logBearing').value = '';
+      document.getElementById('logError').value = '';
+      document.getElementById('logResult').value = '';
+      document.getElementById('logSignature').value = '';
+
+      // Reset step checks
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        document.getElementById('check' + i).textContent = '';
+      }
+
+      // Hide log panel
+      logPanel.classList.remove('visible');
+
+      // Reset steps
+      setActiveStep(1);
+
+      showFeedback('info', 'This aircraft has dual VOR receivers. Repeat the check on VOR 2.');
+
+      updateScoreDisplay();
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       DUAL VOR CROSS-CHECK
+       ═══════════════════════════════════════════════════════════ */
+    function showCrossCheck() {
+      crosscheckPanel.classList.add('visible');
+
+      const err1 = state.vor1Result.error;
+      const err2 = state.vor2Result.error;
+      const sign1 = err1 >= 0 ? '+' : '';
+      const sign2 = err2 >= 0 ? '+' : '';
+
+      crosscheckText.textContent = 'Both VOR receivers have been checked. Review the results below.';
+
+      crosscheckSummary.innerHTML = `
+        <div class="vor-crosscheck-card">
+          <div class="label">VOR 1 Error</div>
+          <div class="val" style="color:${state.vor1Result.passed ? '#10b981' : '#ef4444'}">${sign1}${err1}\u00B0</div>
+        </div>
+        <div class="vor-crosscheck-card">
+          <div class="label">VOR 2 Error</div>
+          <div class="val" style="color:${state.vor2Result.passed ? '#10b981' : '#ef4444'}">${sign2}${err2}\u00B0</div>
+        </div>
+      `;
+
+      crosscheckQuestion.style.display = 'flex';
+    }
+
+    crosscheckSubmit.addEventListener('click', () => {
+      const val = parseInt(crosscheckInput.value.trim(), 10);
+
+      if (isNaN(val)) {
+        showFeedback('incorrect', 'Enter the maximum allowable difference in degrees.');
+        return;
+      }
+
+      if (val === MAX_DUAL_DIFF) {
+        state.crosscheckDone = true;
+        showFeedback('correct', `Correct! The maximum allowable difference between dual VOR receivers is ${MAX_DUAL_DIFF}\u00B0.`);
+        tracker.recordStep({ stepId: 'crosscheck', correct: true, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+
+        // Check if the two VOR readings are within tolerance
+        const diff = Math.abs(state.vor1Result.error - state.vor2Result.error);
+        setTimeout(() => {
+          if (diff <= MAX_DUAL_DIFF) {
+            showFeedback('correct', `The difference between VOR 1 (${state.vor1Result.error >= 0 ? '+' : ''}${state.vor1Result.error}\u00B0) and VOR 2 (${state.vor2Result.error >= 0 ? '+' : ''}${state.vor2Result.error}\u00B0) is ${diff}\u00B0, which is within the ${MAX_DUAL_DIFF}\u00B0 tolerance.`);
+          } else {
+            showFeedback('info', `The difference between VOR 1 (${state.vor1Result.error >= 0 ? '+' : ''}${state.vor1Result.error}\u00B0) and VOR 2 (${state.vor2Result.error >= 0 ? '+' : ''}${state.vor2Result.error}\u00B0) is ${diff}\u00B0, which EXCEEDS the ${MAX_DUAL_DIFF}\u00B0 tolerance.`);
+          }
+          showCompletion();
+        }, 2500);
+      } else {
+        showFeedback('incorrect', 'That is not the correct tolerance. What is the maximum allowable difference between dual VOR receiver readings?');
+        tracker.recordStep({ stepId: 'crosscheck-attempt', correct: false, points: 0, loId: 'VOR operational check procedure', category: 'cns-navigation' });
+      }
+    });
+
+    crosscheckInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') crosscheckSubmit.click();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       COMPLETION
+       ═══════════════════════════════════════════════════════════ */
+    function showCompletion() {
+      state.completed = true;
+      completePanel.classList.add('visible');
+
+      const pct = Math.round((state.points / TOTAL_POSSIBLE) * 100);
+
+      completeSubtitle.textContent = `You scored ${state.points} out of ${TOTAL_POSSIBLE} points (${pct}%).`;
+
+      completeBreakdown.innerHTML = `
+        <div class="vor-complete-stat">
+          <div class="stat-label">Sequence</div>
+          <div class="stat-value">${state.stepScores.sequence}/30</div>
+        </div>
+        <div class="vor-complete-stat">
+          <div class="stat-label">Readings</div>
+          <div class="stat-value">${state.stepScores.readings}/30</div>
+        </div>
+        <div class="vor-complete-stat">
+          <div class="stat-label">Tolerance</div>
+          <div class="stat-value">${state.stepScores.tolerance}/20</div>
+        </div>
+        <div class="vor-complete-stat">
+          <div class="stat-label">Documentation</div>
+          <div class="stat-value">${state.stepScores.documentation}/20</div>
+        </div>
+      `;
+
+      scorePct.textContent = pct + '%';
+
+      tracker.complete();
+    }
+
+    function updateScoreDisplay() {
+      scorePoints.textContent = state.points;
+      const pct = Math.round((state.points / TOTAL_POSSIBLE) * 100);
+      scorePct.textContent = pct + '%';
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HINT BUTTON
+       ═══════════════════════════════════════════════════════════ */
+    hintBtn.addEventListener('click', () => {
+      const hint = STEP_HINTS[state.currentStep - 1];
+      showFeedback('info', hint);
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       RESTART
+       ═══════════════════════════════════════════════════════════ */
+    restartBtn.addEventListener('click', () => {
+      // Reset everything
+      state.currentVor = 1;
+      state.currentStep = 1;
+      state.obsAngle = 0;
+      state.frequency = '';
+      state.signalValid = false;
+      state.animatedCdi = 0;
+      state.bearingError = [randomError(), randomError()];
+      state.vor1Result = null;
+      state.vor2Result = null;
+      state.points = 0;
+      state.stepScores = { sequence: 0, readings: 0, tolerance: 0, documentation: 0 };
+      state.stepsCorrect = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
+      state.completed = false;
+      state.crosscheckDone = false;
+
+      // Reset UI
+      receiverLabel.textContent = 'VOR 1';
+      scoreReceiver.textContent = 'VOR 1';
+      freqInput.value = '';
+      bearingInput.value = '';
+      errorInput.value = '';
+      crosscheckInput.value = '';
+      updateOBSReadout();
+
+      // Reset log fields
+      document.getElementById('logDate').value = '';
+      document.getElementById('logLocation').value = '';
+      document.getElementById('logFreq').value = '';
+      document.getElementById('logBearing').value = '';
+      document.getElementById('logError').value = '';
+      document.getElementById('logResult').value = '';
+      document.getElementById('logSignature').value = '';
+
+      // Reset step checks
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        document.getElementById('check' + i).textContent = '';
+      }
+
+      // Hide panels
+      logPanel.classList.remove('visible');
+      crosscheckPanel.classList.remove('visible');
+      completePanel.classList.remove('visible');
+      crosscheckQuestion.style.display = 'none';
+      hideFeedback();
+
+      // Reset active step
+      setActiveStep(1);
+      updateScoreDisplay();
+    });
+
+    /* ═══════════════════════════════════════════════════════════
+       INITIAL STATE
+       ═══════════════════════════════════════════════════════════ */
+    setActiveStep(1);
+    updateOBSReadout();
+    updateScoreDisplay();
+
+  });
+  </script>
+</body>
+</html>

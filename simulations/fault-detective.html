@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fault Detective - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <style>
+    /* ===================================================================
+       FAULT DETECTIVE -- Simulation-specific CSS
+       =================================================================== */
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--sim-bg); }
+
+    .fd-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* -- Header ------------------------------------------------- */
+    .fd-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 8px;
+    }
+    .fd-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .fd-header h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--sim-sky);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+      margin: 0;
+      font-family: var(--sim-font-body);
+    }
+    .fd-phase-badge {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-amber);
+      border: 1px solid var(--sim-amber);
+      padding: 3px 10px;
+      border-radius: var(--sim-radius-xs);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .fd-header-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .fd-icon-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-muted);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--sim-radius-xs);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .fd-icon-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+
+    /* -- Squawk Banner ------------------------------------------ */
+    .fd-squawk {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid var(--sim-red);
+      border-radius: var(--sim-radius-sm);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .fd-squawk-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-red);
+      white-space: nowrap;
+    }
+    .fd-squawk-text {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+    }
+
+    /* -- Main Layout (60/40 grid) ------------------------------- */
+    .fd-layout {
+      display: grid;
+      grid-template-columns: 60% 40%;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    /* -- Schematic Canvas --------------------------------------- */
+    .fd-schematic-wrap {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+    .fd-schematic-wrap canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+    .fd-scanline {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(16, 185, 129, 0.08) 2px,
+        rgba(16, 185, 129, 0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.3;
+    }
+
+    /* -- Right Panels (stacked) --------------------------------- */
+    .fd-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    /* -- Meter Bar ---------------------------------------------- */
+    .fd-meter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+    }
+    .fd-meter-top-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .fd-meter-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+      white-space: nowrap;
+    }
+    .fd-meter-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .fd-meter-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-muted);
+      padding: 6px 14px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fd-meter-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+    .fd-meter-btn.active {
+      color: var(--sim-amber);
+      border-color: var(--sim-amber);
+      background: rgba(245, 158, 11, 0.1);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+    }
+    .fd-meter-reading-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .fd-meter-reading {
+      font-family: var(--sim-font-mono);
+      font-size: 1.4rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+      flex: 1;
+      text-align: center;
+      padding: 8px 12px;
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+    }
+    .fd-meter-reading.warning {
+      color: var(--sim-red);
+      text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+      border-color: var(--sim-red);
+    }
+    .fd-power-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .fd-power-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sim-green);
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+    }
+    .fd-power-dot.off {
+      background: var(--sim-red);
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    }
+    .fd-power-toggle {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-muted);
+      padding: 4px 10px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .fd-power-toggle:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+    }
+
+    /* -- Decision Panel ----------------------------------------- */
+    .fd-decision {
+      background: var(--sim-bg-panel);
+      padding: 14px 16px;
+      border-radius: var(--sim-radius-sm);
+      border: 1px solid var(--sim-border);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .fd-decision-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-sky);
+      margin: 0 0 8px;
+      flex-shrink: 0;
+    }
+    .fd-decision-prompt {
+      font-size: 0.88rem;
+      color: var(--sim-text-secondary);
+      margin: 0 0 10px;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .fd-decision-body {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    .fd-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .fd-option {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 9px 14px;
+      color: var(--sim-text-secondary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--sim-font-body);
+      line-height: 1.4;
+    }
+    .fd-option:hover {
+      border-color: var(--sim-sky);
+      background: rgba(56, 189, 248, 0.06);
+      color: var(--sim-text);
+    }
+    .fd-option.selected {
+      border-color: var(--sim-sky);
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--sim-text);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+    }
+    .fd-option.correct-reveal {
+      border-color: var(--sim-green);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .fd-option.incorrect-reveal {
+      border-color: var(--sim-red);
+      background: rgba(239, 68, 68, 0.06);
+      opacity: 0.6;
+    }
+    .fd-option:disabled {
+      cursor: default;
+    }
+    .fd-option:disabled:hover {
+      border-color: var(--sim-border);
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--sim-text-secondary);
+    }
+
+    /* -- Diagnosis form ----------------------------------------- */
+    .fd-diag-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .fd-diag-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .fd-diag-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+    }
+    .fd-diag-select {
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-secondary);
+      padding: 7px 10px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-body);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .fd-diag-select:focus {
+      outline: none;
+      border-color: var(--sim-sky);
+      box-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
+    }
+
+    /* -- Measurement log ---------------------------------------- */
+    .fd-log {
+      max-height: 120px;
+      overflow-y: auto;
+      margin-top: 6px;
+    }
+    .fd-log-entry {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+      display: flex;
+      gap: 6px;
+    }
+    .fd-log-num {
+      color: var(--sim-text-muted);
+      min-width: 18px;
+    }
+    .fd-log-point {
+      color: var(--sim-sky);
+      min-width: 100px;
+    }
+    .fd-log-func {
+      color: var(--sim-amber);
+      min-width: 50px;
+    }
+    .fd-log-val {
+      color: var(--sim-text);
+    }
+
+    /* -- Confirm button row ------------------------------------- */
+    .fd-btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .fd-btn-row .sim-btn {
+      font-size: 0.85rem;
+      padding: 9px 18px;
+    }
+
+    /* -- Feedback area ------------------------------------------ */
+    .fd-feedback-area {
+      min-height: 38px;
+      flex-shrink: 0;
+    }
+    .fd-feedback-area .sim-feedback {
+      padding: 10px 14px;
+    }
+    .fd-feedback-area .fb-text {
+      font-size: 0.85rem;
+    }
+
+    /* -- Score bar ----------------------------------------------- */
+    .fd-scorebar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 10px 20px;
+      background: var(--sim-bg-panel);
+      border-radius: var(--sim-radius-sm);
+      border: 1px solid var(--sim-border);
+      margin-top: 12px;
+    }
+    .fd-score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+    }
+    .fd-score-item .value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.2rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+
+    /* -- Fault progress tracker --------------------------------- */
+    .fd-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      margin-top: 12px;
+    }
+    .fd-progress-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+      white-space: nowrap;
+    }
+    .fd-progress-dots {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+    .fd-progress-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--sim-border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--sim-text-dim);
+      font-family: var(--sim-font-mono);
+      transition: all 0.3s;
+    }
+    .fd-progress-dot.solved {
+      border-color: var(--sim-green);
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--sim-green);
+    }
+    .fd-progress-dot.active {
+      border-color: var(--sim-amber);
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--sim-amber);
+    }
+
+    /* -- Help Modal --------------------------------------------- */
+    .fd-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .fd-modal-overlay.open {
+      display: flex;
+    }
+    .fd-modal {
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius);
+      padding: 24px;
+      max-width: 560px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+    .fd-modal h4 {
+      color: var(--sim-sky);
+      font-size: 1.1rem;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .fd-modal p, .fd-modal li {
+      color: var(--sim-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0 0 10px;
+    }
+    .fd-modal ul {
+      padding-left: 20px;
+      margin: 0 0 12px;
+    }
+    .fd-modal .close-modal {
+      display: block;
+      margin: 16px auto 0;
+      background: transparent;
+      border: 1px solid var(--sim-sky);
+      color: var(--sim-sky);
+      padding: 8px 24px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .fd-modal .close-modal:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+    .fd-modal kbd {
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.8rem;
+      color: var(--sim-amber);
+    }
+
+    /* -- Results overlay ---------------------------------------- */
+    .fd-results-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.9);
+      z-index: 90;
+      align-items: center;
+      justify-content: center;
+    }
+    .fd-results-overlay.open { display: flex; }
+    .fd-results-card {
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius);
+      padding: 30px;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+    .fd-results-card h4 {
+      color: var(--sim-sky);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 6px;
+    }
+    .fd-results-outcome {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.6;
+      margin: 10px 0 20px;
+      padding: 12px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      text-align: left;
+    }
+    .fd-results-outcome.success {
+      border-color: var(--sim-green);
+      background: rgba(16, 185, 129, 0.06);
+    }
+    .fd-results-outcome.partial {
+      border-color: var(--sim-amber);
+      background: rgba(245, 158, 11, 0.06);
+    }
+    .fd-results-outcome.fail {
+      border-color: var(--sim-red);
+      background: rgba(239, 68, 68, 0.06);
+    }
+    .fd-results-scores {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+    .fd-results-score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .fd-results-score-item .label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+    }
+    .fd-results-score-item .val {
+      font-family: var(--sim-font-mono);
+      font-size: 1.5rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+    .fd-results-xp {
+      font-family: var(--sim-font-mono);
+      font-size: 1rem;
+      color: var(--sim-green);
+      margin: 12px 0;
+    }
+    .fd-results-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    /* -- Responsive --------------------------------------------- */
+    @media (max-width: 900px) {
+      .fd-layout {
+        grid-template-columns: 1fr;
+      }
+      .fd-schematic-wrap {
+        height: 300px;
+      }
+    }
+    @media (max-width: 768px) {
+      .fd-container {
+        padding: 12px;
+      }
+      .fd-header h3 {
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+      .fd-schematic-wrap {
+        height: 240px;
+      }
+      .fd-scorebar {
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .fd-squawk {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .fd-results-scores {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="sim-container fd-container">
+
+  <!-- -- Header ------------------------------------------------- -->
+  <div class="fd-header">
+    <div class="fd-header-left">
+      <h3>Fault Detective</h3>
+      <span class="fd-phase-badge" id="phaseBadge">Phase 1: Assessment</span>
+    </div>
+    <div class="fd-header-btns">
+      <button class="fd-icon-btn" id="helpBtn" title="Help">?</button>
+      <button class="fd-icon-btn" id="resetBtn" title="New Scenario">&#8635;</button>
+    </div>
+  </div>
+
+  <!-- -- Squawk Banner ------------------------------------------ -->
+  <div class="fd-squawk">
+    <span class="fd-squawk-label">Squawk:</span>
+    <span class="fd-squawk-text" id="squawkText">Right wing navigation light is completely INOP. Left and tail are normal. NAV LIGHTS switch is ON.</span>
+  </div>
+
+  <!-- -- Main Layout (60/40 grid) ------------------------------- -->
+  <div class="fd-layout">
+
+    <!-- Schematic Canvas -->
+    <div class="fd-schematic-wrap">
+      <canvas id="schematicCanvas"></canvas>
+      <div class="fd-scanline"></div>
+    </div>
+
+    <!-- Right-side Panels -->
+    <div class="fd-panels">
+
+      <!-- Meter Bar -->
+      <div class="fd-meter-bar" id="meterBar" style="display:none;">
+        <div class="fd-meter-top-row">
+          <span class="fd-meter-label">Function:</span>
+          <div class="fd-meter-btns">
+            <button class="fd-meter-btn active" data-func="dcv">DC V</button>
+            <button class="fd-meter-btn" data-func="ohm">&Omega;</button>
+            <button class="fd-meter-btn" data-func="cont">Cont</button>
+          </div>
+          <div class="fd-power-indicator">
+            <div class="fd-power-dot" id="powerDot"></div>
+            <span id="powerLabel">Circuit Live</span>
+            <button class="fd-power-toggle" id="powerToggle">De-energize</button>
+          </div>
+        </div>
+        <div class="fd-meter-reading-wrap">
+          <span class="fd-meter-reading" id="meterReading">-- --</span>
+        </div>
+      </div>
+
+      <!-- Decision Panel -->
+      <div class="fd-decision" id="decisionPanel">
+        <div class="fd-decision-title" id="decisionTitle">Initial Assessment</div>
+        <p class="fd-decision-prompt" id="decisionPrompt">Loading scenario...</p>
+        <div class="fd-decision-body">
+          <div class="fd-options" id="optionsArea"></div>
+          <div class="fd-log" id="measurementLog" style="display:none;"></div>
+        </div>
+        <div class="fd-btn-row" id="btnRow" style="display:none;"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="fd-feedback-area" id="feedbackArea"></div>
+
+    </div>
+  </div>
+
+  <!-- -- Score Bar ---------------------------------------------- -->
+  <div class="fd-scorebar">
+    <div class="fd-score-item">
+      <span class="value" id="scoreSteps">0</span>
+      Steps
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreTime">0:00</span>
+      Time
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreAccuracy">--</span>
+      Accuracy
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreEfficiency">--</span>
+      Efficiency
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreSafety">--</span>
+      Safety
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreMethod">--</span>
+      Method
+    </div>
+    <div class="fd-score-item">
+      <span class="value" id="scoreTotal">--</span>
+      Total
+    </div>
+  </div>
+
+  <!-- -- Fault Progress Tracker --------------------------------- -->
+  <div class="fd-progress" id="progressBar">
+    <span class="fd-progress-label">Faults Solved:</span>
+    <div class="fd-progress-dots" id="progressDots"></div>
+  </div>
+
+</div>
+
+<!-- -- Help Modal ----------------------------------------------- -->
+<div class="fd-modal-overlay" id="helpModal">
+  <div class="fd-modal">
+    <h4>Fault Detective - Help</h4>
+    <p>You are an avionics technician on the flight line. An aircraft is AOG with a reported squawk. Your job is to systematically diagnose the electrical fault.</p>
+    <h4 style="font-size:0.95rem; margin-top:14px;">Circuit Under Test</h4>
+    <p>28V DC Bus &rarr; Circuit Breaker &rarr; Toggle Switch &rarr; Wire &rarr; Wing Root Plug &rarr; Right Nav Light &rarr; Ground Stud</p>
+    <h4 style="font-size:0.95rem; margin-top:14px;">Phase 1: Initial Assessment</h4>
+    <p>Choose the best starting point for your troubleshooting approach. Systematic methodology matters for your score.</p>
+    <h4 style="font-size:0.95rem; margin-top:14px;">Phase 2: Testing</h4>
+    <ul>
+      <li>Click highlighted <kbd>test points</kbd> on the circuit schematic</li>
+      <li>Select the correct meter function (<kbd>DC V</kbd>, <kbd>&Omega;</kbd>, or <kbd>Cont</kbd>)</li>
+      <li>Red and black probes are placed at the selected test point and circuit ground</li>
+      <li>Each measurement costs 1 step (affects Efficiency score)</li>
+      <li><strong>Safety:</strong> De-energize the circuit before measuring resistance or continuity!</li>
+    </ul>
+    <h4 style="font-size:0.95rem; margin-top:14px;">Phase 3: Diagnosis</h4>
+    <p>Identify the fault type, location, and recommended corrective action.</p>
+    <h4 style="font-size:0.95rem; margin-top:14px;">Scoring</h4>
+    <ul>
+      <li><strong>Accuracy (40%)</strong> - Did you correctly identify the fault?</li>
+      <li><strong>Efficiency (30%)</strong> - Fewer measurements = better score (optimal: 3-4)</li>
+      <li><strong>Safety (20%)</strong> - Did you follow safe measurement practices?</li>
+      <li><strong>Methodology (10%)</strong> - Did you use a systematic approach?</li>
+    </ul>
+    <p>Each replay presents a randomly selected fault from a pool of 6 scenarios. Successfully diagnosed faults are tracked.</p>
+    <button class="close-modal" id="closeHelp">Close</button>
+  </div>
+</div>
+
+<!-- -- Results Overlay ------------------------------------------ -->
+<div class="fd-results-overlay" id="resultsOverlay">
+  <div class="fd-results-card">
+    <h4>Mission Complete</h4>
+    <div class="fd-results-outcome" id="resultsOutcome"></div>
+    <div class="fd-results-scores" id="resultsScores"></div>
+    <div class="fd-results-xp" id="resultsXP"></div>
+    <div class="fd-results-btns">
+      <button class="sim-btn" id="replayBtn">New Scenario</button>
+    </div>
+  </div>
+</div>
+
+<!-- -- Scripts -------------------------------------------------- -->
+<script src="sim-analytics.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  /* =================================================================
+     DOM References
+     ================================================================= */
+  var canvas         = document.getElementById('schematicCanvas');
+  var ctx            = canvas.getContext('2d');
+  var phaseBadge     = document.getElementById('phaseBadge');
+  var decisionTitle  = document.getElementById('decisionTitle');
+  var decisionPrompt = document.getElementById('decisionPrompt');
+  var optionsArea    = document.getElementById('optionsArea');
+  var btnRow         = document.getElementById('btnRow');
+  var feedbackArea   = document.getElementById('feedbackArea');
+  var meterReading   = document.getElementById('meterReading');
+  var meterBar       = document.getElementById('meterBar');
+  var measurementLog = document.getElementById('measurementLog');
+  var powerDot       = document.getElementById('powerDot');
+  var powerLabel     = document.getElementById('powerLabel');
+  var powerToggle    = document.getElementById('powerToggle');
+  var helpModal      = document.getElementById('helpModal');
+  var resultsOverlay = document.getElementById('resultsOverlay');
+  var squawkText     = document.getElementById('squawkText');
+
+  var elSteps      = document.getElementById('scoreSteps');
+  var elTime       = document.getElementById('scoreTime');
+  var elAccuracy   = document.getElementById('scoreAccuracy');
+  var elEfficiency = document.getElementById('scoreEfficiency');
+  var elSafety     = document.getElementById('scoreSafety');
+  var elMethod     = document.getElementById('scoreMethod');
+  var elTotal      = document.getElementById('scoreTotal');
+
+  /* =================================================================
+     State
+     ================================================================= */
+  var phase            = 1;
+  var currentFault     = null;
+  var currentFaultIdx  = 0;
+  var meterFunc        = 'dcv';
+  var circuitLive      = true;
+  var measurements     = [];
+  var safetyViolations = 0;
+  var methodScore      = 0;
+  var startedAtBreaker = false;
+  var tracker          = null;
+  var hoveredTP        = null;
+  var selectedTP       = null;
+  var probeTP          = null;
+  var startTime        = Date.now();
+  var timerInterval    = null;
+  var animFrameId      = null;
+
+  // Replayability: track which fault IDs have been solved (persisted)
+  var solvedFaults = [];
+  try { solvedFaults = JSON.parse(localStorage.getItem('fd_solved') || '[]'); } catch(e) { solvedFaults = []; }
+
+  var OPTIMAL_MEASUREMENTS = 4;
+  var MAX_MEASUREMENTS     = 12;
+
+  /* =================================================================
+     Circuit Topology -- 10 Test Points
+     ================================================================= */
+  var TEST_POINTS = [
+    { id: 'tp_bus',        label: '28V Bus',              nx: 0.06,  ny: 0.30, segment: 'bus' },
+    { id: 'tp_cb_in',      label: 'CB Input',             nx: 0.16,  ny: 0.30, segment: 'cb_in' },
+    { id: 'tp_cb_out',     label: 'CB Output',            nx: 0.27,  ny: 0.30, segment: 'cb_out' },
+    { id: 'tp_sw_in',      label: 'Switch Input',         nx: 0.38,  ny: 0.30, segment: 'sw_in' },
+    { id: 'tp_sw_out',     label: 'Switch Output',        nx: 0.49,  ny: 0.30, segment: 'sw_out' },
+    { id: 'tp_wr_supply',  label: 'WR Plug (Supply)',     nx: 0.60,  ny: 0.30, segment: 'wr_supply' },
+    { id: 'tp_wr_load',    label: 'WR Plug (Load)',       nx: 0.70,  ny: 0.30, segment: 'wr_load' },
+    { id: 'tp_lamp_hot',   label: 'Lamp Socket Hot',      nx: 0.82,  ny: 0.30, segment: 'lamp_hot' },
+    { id: 'tp_lamp_gnd',   label: 'Lamp Socket Gnd',      nx: 0.82,  ny: 0.68, segment: 'lamp_gnd' },
+    { id: 'tp_gnd_stud',   label: 'Wing Ground Stud',     nx: 0.60,  ny: 0.68, segment: 'gnd_stud' }
+  ];
+
+  /* =================================================================
+     Fault Scenarios (6 faults)
+     ================================================================= */
+  function makeReadings(bus, cb_in, cb_out, sw_in, sw_out, wr_s, wr_l, lamp_h, lamp_g, gnd_s) {
+    return {
+      tp_bus: bus, tp_cb_in: cb_in, tp_cb_out: cb_out,
+      tp_sw_in: sw_in, tp_sw_out: sw_out,
+      tp_wr_supply: wr_s, tp_wr_load: wr_l,
+      tp_lamp_hot: lamp_h, tp_lamp_gnd: lamp_g, tp_gnd_stud: gnd_s
+    };
+  }
+
+  var FAULT_SCENARIOS = [
+    {
+      id: 'open_wire_chafed',
+      name: 'Open circuit: wire chafed through between switch and wing root',
+      type: 'open',
+      location: 'wr_supply',
+      locationLabel: 'Wire between switch output and wing root plug (supply side)',
+      corrective: 'repair_wire',
+      correctiveLabel: 'Repair or replace chafed wire between switch and wing root',
+      voltages:     makeReadings(28.1, 28.1, 28.0, 28.0, 27.9, 27.8, 0, 0, 0, 0),
+      resistances:  makeReadings('OL','OL','OL','OL','OL','OL', 3.2, 3.2, 0.1, 0.0),
+      continuity:   makeReadings(false,false,false,false,false,false, true, true, true, true),
+      faultSegments: ['wr_supply'],
+      description: 'A chafed wire has broken open between the switch output and the wing root plug. No current flows to the nav light. Voltage is present up to the break but absent downstream.'
+    },
+    {
+      id: 'short_ground_wingroot',
+      name: 'Short to ground: chafed wire at wing root contacting structure',
+      type: 'short',
+      location: 'wr_supply',
+      locationLabel: 'Chafed wire contacting airframe structure near wing root',
+      corrective: 'repair_wire',
+      correctiveLabel: 'Repair chafed wire and install chafe protection at wing root',
+      voltages:     makeReadings(28.1, 28.1, 0, 0, 0, 0, 0, 0, 0, 0),
+      resistances:  makeReadings(0.2, 0.2, 0.1, 0.1, 0.1, 0.0, 3.2, 3.2, 0.1, 0.0),
+      continuity:   makeReadings(true,true,true,true,true,true, true, true, true, true),
+      faultSegments: ['wr_supply'],
+      description: 'A chafed wire near the wing root is shorting to the aircraft structure (ground). The circuit breaker has tripped due to overcurrent. Low resistance to ground is measurable through the short.'
+    },
+    {
+      id: 'high_res_ground_terminal',
+      name: 'High resistance: corroded ground terminal at lamp fixture',
+      type: 'high_resistance',
+      location: 'lamp_gnd',
+      locationLabel: 'Corroded ground terminal at nav light fixture',
+      corrective: 'clean_terminal',
+      correctiveLabel: 'Clean and treat corroded ground terminal at nav light fixture',
+      voltages:     makeReadings(28.1, 28.1, 28.0, 28.0, 27.9, 27.8, 27.7, 27.5, 22.1, 18.6),
+      resistances:  makeReadings(52.0, 52.0, 51.8, 51.8, 51.6, 51.4, 51.2, 51.0, 47.8, 44.5),
+      continuity:   makeReadings(true,true,true,true,true,true, true, true, true, true),
+      faultSegments: ['lamp_gnd'],
+      description: 'Corrosion at the ground terminal of the nav light fixture creates high resistance in the return path. Voltage is present at the lamp but most drops across the corroded ground, starving the bulb of current.'
+    },
+    {
+      id: 'tripped_cb',
+      name: 'Open: circuit breaker tripped (overcurrent, now cleared)',
+      type: 'open',
+      location: 'cb_out',
+      locationLabel: 'Circuit breaker (tripped/open)',
+      corrective: 'reset_cb',
+      correctiveLabel: 'Investigate cause of overcurrent, then reset circuit breaker',
+      voltages:     makeReadings(28.1, 28.1, 0, 0, 0, 0, 0, 0, 0, 0),
+      resistances:  makeReadings('OL','OL','OL','OL','OL','OL', 3.2, 3.2, 0.1, 0.0),
+      continuity:   makeReadings(false,false,false,false,false,false, true, true, true, true),
+      faultSegments: ['cb_out'],
+      description: 'The circuit breaker has tripped due to a previous overcurrent event (now cleared). The CB is open, blocking all power downstream. 28V at the bus and CB input, 0V at CB output and beyond.'
+    },
+    {
+      id: 'corroded_connector_pins',
+      name: 'High resistance: corroded pins in wing root disconnect connector',
+      type: 'high_resistance',
+      location: 'wr_load',
+      locationLabel: 'Corroded pins in wing root disconnect connector',
+      corrective: 'clean_terminal',
+      correctiveLabel: 'Clean corroded pins in wing root connector and apply corrosion inhibitor',
+      voltages:     makeReadings(28.1, 28.1, 28.0, 28.0, 27.9, 27.8, 8.2, 7.9, 0.2, 0),
+      resistances:  makeReadings(62.0, 62.0, 61.8, 61.8, 61.6, 61.4, 58.1, 57.8, 0.2, 0.0),
+      continuity:   makeReadings(true,true,true,true,true,true, true, true, true, true),
+      faultSegments: ['wr_load'],
+      description: 'Corroded pins in the wing root disconnect connector create high resistance. Full voltage on the supply side, but a large voltage drop across the connector on the load side.'
+    },
+    {
+      id: 'multiple_faults',
+      name: 'Multiple faults: corroded connector AND marginal ground path',
+      type: 'multiple',
+      location: 'wr_load',
+      locationLabel: 'Corroded wing root connector AND marginal ground stud',
+      corrective: 'repair_multiple',
+      correctiveLabel: 'Clean connector pins and re-torque ground stud with corrosion inhibitor',
+      voltages:     makeReadings(28.1, 28.1, 28.0, 28.0, 27.9, 27.8, 14.2, 13.8, 8.5, 5.2),
+      resistances:  makeReadings(78.0, 78.0, 77.8, 77.8, 77.6, 77.4, 72.1, 71.5, 45.2, 38.6),
+      continuity:   makeReadings(true,true,true,true,true,true, true, true, true, true),
+      faultSegments: ['wr_load', 'gnd_stud'],
+      description: 'Two faults combine: corroded pins in the wing root connector plus a marginal ground stud. Cumulative voltage drops prevent the nav light from operating.'
+    }
+  ];
+
+  /* -- Diagnosis option lists ----------------------------------- */
+  var FAULT_TYPES = [
+    { value: 'open',            label: 'Open Circuit' },
+    { value: 'short',           label: 'Short to Ground' },
+    { value: 'high_resistance', label: 'High Resistance' },
+    { value: 'bad_ground',      label: 'Bad Ground' },
+    { value: 'multiple',        label: 'Multiple Faults' }
+  ];
+
+  var FAULT_LOCATIONS = [
+    { value: 'cb_out',     label: 'Circuit Breaker' },
+    { value: 'sw_in',      label: 'Wiring: CB to Switch' },
+    { value: 'sw_out',     label: 'Nav Light Switch' },
+    { value: 'wr_supply',  label: 'Wiring: Switch to Wing Root Plug' },
+    { value: 'wr_load',    label: 'Wing Root Connector (Load Side)' },
+    { value: 'lamp_hot',   label: 'Nav Light Lamp / Socket (Hot)' },
+    { value: 'lamp_gnd',   label: 'Nav Light Ground Terminal' },
+    { value: 'gnd_stud',   label: 'Wing Ground Stud' }
+  ];
+
+  var CORRECTIVE_ACTIONS = [
+    { value: 'replace_bulb',    label: 'Replace the nav light bulb' },
+    { value: 'repair_wire',     label: 'Repair / replace damaged wiring' },
+    { value: 'clean_terminal',  label: 'Clean corroded terminal / connector pins' },
+    { value: 'clean_ground',    label: 'Clean and re-torque ground stud' },
+    { value: 'reset_cb',        label: 'Investigate overcurrent cause, then reset CB' },
+    { value: 'replace_switch',  label: 'Replace the toggle switch' },
+    { value: 'repair_multiple', label: 'Repair connector AND ground stud (multiple)' }
+  ];
+
+  /* =================================================================
+     Initialization
+     ================================================================= */
+  function init() {
+    // Pick a random fault, preferring unsolved ones
+    var unsolved = FAULT_SCENARIOS.filter(function(f) { return solvedFaults.indexOf(f.id) === -1; });
+    var pool = unsolved.length > 0 ? unsolved : FAULT_SCENARIOS;
+    currentFault = pool[Math.floor(Math.random() * pool.length)];
+    currentFaultIdx = FAULT_SCENARIOS.indexOf(currentFault);
+
+    phase            = 1;
+    meterFunc        = 'dcv';
+    circuitLive      = true;
+    measurements     = [];
+    safetyViolations = 0;
+    methodScore      = 0;
+    startedAtBreaker = false;
+    hoveredTP        = null;
+    selectedTP       = null;
+    probeTP          = null;
+    startTime        = Date.now();
+
+    // Reset UI
+    phaseBadge.textContent   = 'Phase 1: Assessment';
+    meterReading.textContent = '-- --';
+    meterReading.classList.remove('warning');
+    meterBar.style.display   = 'none';
+    measurementLog.style.display = 'none';
+    measurementLog.innerHTML = '';
+    feedbackArea.innerHTML   = '';
+    btnRow.style.display     = 'none';
+    btnRow.innerHTML         = '';
+    resultsOverlay.classList.remove('open');
+    squawkText.textContent = 'Right wing navigation light is completely INOP. Left and tail are normal. NAV LIGHTS switch is ON.';
+
+    updatePowerUI();
+    updateMeterBtns();
+    resetScores();
+    renderProgressDots();
+
+    tracker = new SimTracker('fault-detective', 'W4-Z3-N2');
+
+    // Timer
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(updateTimer, 1000);
+
+    resizeCanvas();
+    drawSchematic();
+    showPhase1();
+  }
+
+  /* -- Canvas sizing -------------------------------------------- */
+  function resizeCanvas() {
+    var wrap = canvas.parentElement;
+    var dpr  = window.devicePixelRatio || 1;
+    canvas.width  = wrap.clientWidth * dpr;
+    canvas.height = wrap.clientHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  /* =================================================================
+     Schematic Drawing
+     ================================================================= */
+  function cW() { return canvas.width / (window.devicePixelRatio || 1); }
+  function cH() { return canvas.height / (window.devicePixelRatio || 1); }
+  function tpX(tp) { return tp.nx * cW(); }
+  function tpY(tp) { return tp.ny * cH(); }
+
+  function drawSchematic() {
+    var W = cW(), H = cH();
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid background
+    ctx.strokeStyle = 'rgba(51, 65, 85, 0.2)';
+    ctx.lineWidth = 0.5;
+    var gx, gy;
+    for (gx = 0; gx < W; gx += 30) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke(); }
+    for (gy = 0; gy < H; gy += 30) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
+
+    // Calculate positions
+    var tps = {};
+    TEST_POINTS.forEach(function(tp) { tps[tp.id] = { x: tpX(tp), y: tpY(tp) }; });
+
+    var mainY = tps.tp_bus.y;
+    var gndY  = tps.tp_gnd_stud.y;
+
+    // Fault segments for color-coding
+    var faultSegs = (phase >= 2 && currentFault) ? currentFault.faultSegments : [];
+
+    // Wire color based on segment energization
+    function wireColor(segId) {
+      if (faultSegs.indexOf(segId) >= 0 && phase === 3) return '#ef4444';
+      if (!circuitLive) return '#475569';
+      if (phase >= 2 && currentFault) {
+        var segToTP = {
+          'bus': 'tp_bus', 'cb_in': 'tp_cb_in', 'cb_out': 'tp_cb_out',
+          'sw_in': 'tp_sw_in', 'sw_out': 'tp_sw_out',
+          'wr_supply': 'tp_wr_supply', 'wr_load': 'tp_wr_load',
+          'lamp_hot': 'tp_lamp_hot', 'lamp_gnd': 'tp_lamp_gnd', 'gnd_stud': 'tp_gnd_stud'
+        };
+        var tpId = segToTP[segId];
+        if (tpId && currentFault.voltages[tpId] !== undefined) {
+          var v = currentFault.voltages[tpId];
+          if (typeof v === 'number') {
+            if (v > 20) return '#38bdf8';
+            if (v > 5) return '#f59e0b';
+            return '#475569';
+          }
+        }
+      }
+      return '#94a3b8';
+    }
+
+    function drawWire(x1, y1, x2, y2, segId, dashed) {
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      var isFault = faultSegs.indexOf(segId) >= 0 && phase === 3;
+      if (isFault) {
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5, 4]);
+      } else if (dashed) {
+        ctx.strokeStyle = wireColor(segId);
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 3]);
+      } else {
+        ctx.strokeStyle = wireColor(segId);
+        ctx.lineWidth = 2;
+        ctx.setLineDash([]);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // -- Battery symbol at bus --
+    drawBatterySymbol(tps.tp_bus.x, mainY);
+
+    // Bus to CB input
+    drawWire(tps.tp_bus.x + 14, mainY, tps.tp_cb_in.x, mainY, 'bus', false);
+    // CB symbol
+    drawCBSymbol(tps.tp_cb_in.x, mainY, tps.tp_cb_out.x, mainY, faultSegs.indexOf('cb_out') >= 0 && phase === 3);
+    // CB out to switch in
+    drawWire(tps.tp_cb_out.x, mainY, tps.tp_sw_in.x, mainY, 'sw_in', false);
+    // Switch symbol
+    drawSwitchSymbol(tps.tp_sw_in.x, mainY, tps.tp_sw_out.x, mainY);
+    // Switch out to WR supply
+    drawWire(tps.tp_sw_out.x, mainY, tps.tp_wr_supply.x, mainY, 'wr_supply', false);
+    // WR connector symbol
+    drawConnectorSymbol(tps.tp_wr_supply.x, mainY, tps.tp_wr_load.x, mainY, faultSegs.indexOf('wr_load') >= 0 && phase === 3);
+    // WR load to lamp hot
+    drawWire(tps.tp_wr_load.x, mainY, tps.tp_lamp_hot.x, mainY, 'lamp_hot', false);
+    // Lamp symbol (vertical)
+    drawLampSymbol(tps.tp_lamp_hot.x, mainY, tps.tp_lamp_gnd.x, gndY);
+    // Lamp gnd to ground stud
+    drawWire(tps.tp_lamp_gnd.x, gndY, tps.tp_gnd_stud.x, gndY, 'lamp_gnd', false);
+    // Ground stud to bus (return path)
+    drawWire(tps.tp_gnd_stud.x, gndY, tps.tp_bus.x, gndY, 'gnd_stud', true);
+    drawWire(tps.tp_bus.x, gndY, tps.tp_bus.x, mainY + 16, 'gnd_stud', true);
+    // Ground symbols
+    drawGroundSymbol(tps.tp_bus.x, gndY);
+    drawGroundSymbol(tps.tp_gnd_stud.x, gndY);
+
+    // -- Component Labels --
+    ctx.font = '600 10px Inter, sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'center';
+
+    ctx.fillText('28V DC', tps.tp_bus.x, mainY - 30);
+    ctx.fillText('BUS', tps.tp_bus.x, mainY - 20);
+
+    ctx.fillText('CB 5A', (tps.tp_cb_in.x + tps.tp_cb_out.x) / 2, mainY - 18);
+
+    ctx.fillText('NAV SW', (tps.tp_sw_in.x + tps.tp_sw_out.x) / 2, mainY - 18);
+
+    ctx.fillText('WING ROOT', (tps.tp_wr_supply.x + tps.tp_wr_load.x) / 2, mainY - 18);
+    ctx.fillText('PLUG', (tps.tp_wr_supply.x + tps.tp_wr_load.x) / 2, mainY - 8);
+
+    ctx.fillText('R NAV', tps.tp_lamp_hot.x, mainY - 18);
+    ctx.fillText('LIGHT', tps.tp_lamp_hot.x, mainY - 8);
+
+    ctx.fillText('GND STUD', tps.tp_gnd_stud.x, gndY + 28);
+
+    // -- Test Points (Phase 2) --
+    if (phase === 2) {
+      TEST_POINTS.forEach(function(tp) {
+        var x = tpX(tp), y = tpY(tp);
+        var isHovered  = hoveredTP && hoveredTP.id === tp.id;
+        var isProbed   = probeTP && probeTP.id === tp.id;
+        var isSelected = selectedTP && selectedTP.id === tp.id;
+        var radius     = (isHovered || isSelected) ? 9 : 7;
+
+        // Outer pulse ring
+        if (!isProbed && !isSelected) {
+          var pulse = 0.3 + 0.3 * Math.sin(Date.now() / 400 + tp.nx * 10);
+          ctx.beginPath();
+          ctx.arc(x, y, 13, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(56, 189, 248, ' + (pulse * 0.3).toFixed(2) + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+
+        if (isSelected || isProbed) {
+          ctx.fillStyle = 'rgba(245, 158, 11, 0.4)';
+          ctx.fill();
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 2.5;
+        } else if (isHovered) {
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
+          ctx.fill();
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+        } else {
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+          ctx.lineWidth = 1.5;
+        }
+        ctx.stroke();
+
+        // Label on hover/selected/probed
+        if (isHovered || isSelected || isProbed) {
+          ctx.font = '600 9px Inter, sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.textAlign = 'center';
+          var labelY = y < H / 2 ? y + 22 : y - 16;
+          ctx.fillText(tp.label, x, labelY);
+        }
+      });
+
+      // Draw probe indicators
+      if (probeTP) {
+        drawProbes(tpX(probeTP), tpY(probeTP));
+      }
+    }
+
+    // -- Fault indicator (Phase 3) --
+    if (phase >= 3 && currentFault) {
+      currentFault.faultSegments.forEach(function(segId) {
+        var faultTP = null;
+        for (var i = 0; i < TEST_POINTS.length; i++) {
+          if (TEST_POINTS[i].segment === segId) { faultTP = TEST_POINTS[i]; break; }
+        }
+        if (faultTP) {
+          var fx = tpX(faultTP), fy = tpY(faultTP);
+          var pulse2 = 0.5 + 0.5 * Math.sin(Date.now() / 300);
+          ctx.beginPath();
+          ctx.arc(fx, fy, 14 + pulse2 * 4, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(239, 68, 68, ' + (0.5 + pulse2 * 0.5).toFixed(2) + ')';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          ctx.font = 'bold 10px "Share Tech Mono", monospace';
+          ctx.fillStyle = '#ef4444';
+          ctx.textAlign = 'center';
+          ctx.fillText('FAULT', fx, fy - 22);
+        }
+      });
+    }
+  }
+
+  /* -- Component symbols ---------------------------------------- */
+  function drawBatterySymbol(x, y) {
+    ctx.save();
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x - 8, y - 10); ctx.lineTo(x - 8, y + 10); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x - 2, y - 6); ctx.lineTo(x - 2, y + 6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + 4, y - 10); ctx.lineTo(x + 4, y + 10); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + 10, y - 6); ctx.lineTo(x + 10, y + 6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x - 14, y); ctx.lineTo(x - 8, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + 10, y); ctx.lineTo(x + 14, y); ctx.stroke();
+    ctx.font = 'bold 9px "Share Tech Mono", monospace';
+    ctx.fillStyle = '#f59e0b';
+    ctx.textAlign = 'center';
+    ctx.fillText('+', x - 11, y - 14);
+    ctx.restore();
+  }
+
+  function drawCBSymbol(x1, y, x2) {
+    var cx = (x1 + x2) / 2;
+    var halfW = (x2 - x1) / 2 - 6;
+    var tripped = (currentFault && currentFault.location === 'cb_out' && currentFault.type === 'open');
+    ctx.save();
+    ctx.strokeStyle = tripped ? '#ef4444' : '#e2e8f0';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.rect(cx - halfW, y - 8, halfW * 2, 16);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - halfW + 4, y);
+    ctx.lineTo(cx + halfW - 4, y - (tripped ? 5 : 0));
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSwitchSymbol(x1, y, x2) {
+    var cx = (x1 + x2) / 2;
+    var halfW = (x2 - x1) / 2 - 6;
+    ctx.save();
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx - halfW, y, 3, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx + halfW, y, 3, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - halfW + 3, y); ctx.lineTo(cx + halfW - 3, y); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawConnectorSymbol(x1, y, x2, y2, isFault) {
+    var cx = (x1 + x2) / 2;
+    var gap = 4;
+    ctx.save();
+    ctx.strokeStyle = isFault ? '#ef4444' : '#e2e8f0';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx - gap, y, 6, -Math.PI / 2, Math.PI / 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx + gap, y, 6, Math.PI / 2, -Math.PI / 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(cx - gap - 6, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + gap + 6, y); ctx.lineTo(x2, y); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawLampSymbol(x, y1, x2, y2) {
+    var cy = (y1 + y2) / 2;
+    var r = 14;
+    ctx.save();
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, cy - r); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, cy + r); ctx.lineTo(x, y2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - r * 0.6, cy - r * 0.6); ctx.lineTo(x + r * 0.6, cy + r * 0.6);
+    ctx.moveTo(x + r * 0.6, cy - r * 0.6); ctx.lineTo(x - r * 0.6, cy + r * 0.6);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawGroundSymbol(x, y) {
+    ctx.save();
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 2;
+    var s = 8;
+    ctx.beginPath();
+    ctx.moveTo(x - s, y + 4); ctx.lineTo(x + s, y + 4);
+    ctx.moveTo(x - s * 0.65, y + 8); ctx.lineTo(x + s * 0.65, y + 8);
+    ctx.moveTo(x - s * 0.3, y + 12); ctx.lineTo(x + s * 0.3, y + 12);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* -- Red/Black probe indicators ------------------------------- */
+  function drawProbes(x, y) {
+    var gndTP = null;
+    for (var i = 0; i < TEST_POINTS.length; i++) {
+      if (TEST_POINTS[i].id === 'tp_gnd_stud') { gndTP = TEST_POINTS[i]; break; }
+    }
+    var gndX = tpX(gndTP);
+    var gndY = tpY(gndTP);
+
+    ctx.save();
+    // Red probe at test point
+    ctx.beginPath();
+    ctx.arc(x + 7, y - 13, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#ef4444';
+    ctx.fill();
+    ctx.strokeStyle = '#b91c1c';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.font = 'bold 7px "Share Tech Mono", monospace';
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.fillText('+', x + 7, y - 11);
+
+    // Black probe at ground reference
+    ctx.beginPath();
+    ctx.arc(gndX + 7, gndY - 13, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#1e293b';
+    ctx.fill();
+    ctx.strokeStyle = '#64748b';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.font = 'bold 7px "Share Tech Mono", monospace';
+    ctx.fillStyle = '#94a3b8';
+    ctx.textAlign = 'center';
+    ctx.fillText('-', gndX + 7, gndY - 11);
+
+    // Dashed lead wire
+    ctx.beginPath();
+    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.3)';
+    ctx.lineWidth = 1;
+    ctx.moveTo(x + 7, y - 8);
+    ctx.lineTo(x + 7, y + 18);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  /* =================================================================
+     Phase 1: Initial Assessment
+     ================================================================= */
+  function showPhase1() {
+    phase = 1;
+    phaseBadge.textContent = 'Phase 1: Assessment';
+    decisionTitle.textContent = 'Initial Assessment';
+    decisionPrompt.textContent = 'The aircraft has been reported AOG with the right nav light inoperative. Where do you start your troubleshooting?';
+    meterBar.style.display = 'none';
+
+    var options = [
+      {
+        id: 'cb', text: 'Check the circuit breaker panel first', correct: true,
+        feedback: 'Correct! Systematic troubleshooting starts at the power source. Checking the CB panel is the fastest way to determine if the circuit has power. This follows the "half-split" method, starting at the most accessible power distribution point.'
+      },
+      {
+        id: 'light', text: 'Go directly to the right nav light on the wingtip', correct: false,
+        feedback: 'Not the best approach. Going directly to the wingtip is time-consuming and you might miss a simple tripped breaker. Always start at the power source and work downstream.'
+      },
+      {
+        id: 'switch', text: 'Check the nav light switch in the cockpit', correct: false,
+        feedback: 'Reasonable thought, but checking the switch before the circuit breaker skips a step. If the CB is tripped, the switch position is irrelevant. Start at the power source.'
+      },
+      {
+        id: 'wiring', text: 'Review the aircraft wiring diagram first', correct: false,
+        feedback: 'Reviewing documentation is good practice, but you should already know this circuit. On the flight line with an AOG aircraft, time matters. Start your physical checks at the circuit breaker panel.'
+      }
+    ];
+
+    renderOptions(options, function(selected) {
+      var opt = options[selected];
+      if (opt.correct) {
+        startedAtBreaker = true;
+        methodScore = 100;
+      } else {
+        methodScore = 40;
+      }
+      tracker.recordStep({
+        stepId: 'phase1_start',
+        correct: opt.correct,
+        points: opt.correct ? 10 : 0,
+        loId: 'Systematic fault isolation',
+        category: 'electrical-troubleshooting'
+      });
+      showFeedback(opt.correct ? 'correct' : 'info', opt.correct ? 'Good Call!' : 'Consider This:', opt.feedback);
+      disableOptions(selected, options);
+
+      btnRow.style.display = 'flex';
+      btnRow.innerHTML = '<button class="sim-btn primary" id="toPhase2">Continue to Testing</button>';
+      document.getElementById('toPhase2').addEventListener('click', showPhase2);
+    });
+  }
+
+  /* =================================================================
+     Phase 2: Testing
+     ================================================================= */
+  function showPhase2() {
+    phase = 2;
+    phaseBadge.textContent = 'Phase 2: Testing';
+    decisionTitle.textContent = 'Circuit Testing';
+    decisionPrompt.textContent = 'Click a test point on the schematic to place your meter probes. Select the correct meter function first. De-energize the circuit before measuring resistance or continuity.';
+    meterBar.style.display = 'flex';
+    measurementLog.style.display = 'block';
+    measurementLog.innerHTML = '';
+    btnRow.style.display = 'flex';
+    btnRow.innerHTML = '<button class="sim-btn" id="toPhase3" disabled>Proceed to Diagnosis</button>';
+    optionsArea.innerHTML = '';
+    feedbackArea.innerHTML = '';
+
+    document.getElementById('toPhase3').addEventListener('click', function() {
+      if (measurements.length === 0) {
+        showFeedback('incorrect', 'No Data', 'You need to take at least one measurement before making a diagnosis.');
+        return;
+      }
+      showPhase3();
+    });
+
+    drawSchematic();
+    startAnimLoop();
+  }
+
+  function startAnimLoop() {
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    function loop() {
+      if (phase !== 2 && phase !== 3) {
+        animFrameId = null;
+        return;
+      }
+      drawSchematic();
+      animFrameId = requestAnimationFrame(loop);
+    }
+    animFrameId = requestAnimationFrame(loop);
+  }
+
+  /* -- Take a measurement --------------------------------------- */
+  function takeMeasurement(tp) {
+    var safe = true;
+    var reading = '';
+    var safetyNote = '';
+
+    if (meterFunc === 'dcv') {
+      if (!circuitLive) {
+        reading = '0.00 V';
+        showFeedback('info', 'Note', 'Circuit is de-energized. Voltage readings will be 0V. Energize the circuit to measure voltage.');
+      } else {
+        var v = currentFault.voltages[tp.id];
+        reading = v.toFixed(1) + ' V';
+      }
+    } else if (meterFunc === 'ohm') {
+      if (circuitLive) {
+        safe = false;
+        safetyViolations++;
+        reading = 'ERR!';
+        safetyNote = 'SAFETY VIOLATION: Measuring resistance on a live circuit! This can damage your meter and give false readings. De-energize the circuit first.';
+        showFeedback('incorrect', 'Safety Hazard!', safetyNote);
+        meterReading.classList.add('warning');
+      } else {
+        var r = currentFault.resistances[tp.id];
+        reading = r === 'OL' ? 'OL (Open)' : r.toFixed(1) + ' \u03A9';
+      }
+    } else if (meterFunc === 'cont') {
+      if (circuitLive) {
+        safe = false;
+        safetyViolations++;
+        reading = 'ERR!';
+        safetyNote = 'SAFETY VIOLATION: Do not test continuity on a live circuit! This can blow the meter fuse. De-energize first.';
+        showFeedback('incorrect', 'Safety Hazard!', safetyNote);
+        meterReading.classList.add('warning');
+      } else {
+        var c = currentFault.continuity[tp.id];
+        reading = c ? 'BEEP (Continuity)' : 'OL (No Cont.)';
+      }
+    }
+
+    if (safe) meterReading.classList.remove('warning');
+    meterReading.textContent = reading;
+
+    var meas = { testPoint: tp, func: meterFunc, reading: reading, safe: safe };
+    measurements.push(meas);
+
+    tracker.recordStep({
+      stepId: 'measure-' + measurements.length,
+      correct: safe,
+      points: 0,
+      loId: 'Systematic fault isolation',
+      category: 'electrical-troubleshooting'
+    });
+
+    // Log entry
+    var funcLabels = { dcv: 'DC V', ohm: '\u03A9', cont: 'Cont' };
+    var entry = document.createElement('div');
+    entry.className = 'fd-log-entry';
+    entry.innerHTML =
+      '<span class="fd-log-num">' + measurements.length + '.</span>' +
+      '<span class="fd-log-point">' + tp.label + '</span>' +
+      '<span class="fd-log-func">' + funcLabels[meterFunc] + '</span>' +
+      '<span class="fd-log-val">' + reading + '</span>';
+    measurementLog.appendChild(entry);
+    measurementLog.scrollTop = measurementLog.scrollHeight;
+
+    // Enable diagnosis button
+    var diagBtn = document.getElementById('toPhase3');
+    if (diagBtn) diagBtn.disabled = false;
+
+    // Contextual feedback for safe readings
+    if (safe && !safetyNote) {
+      if (meterFunc === 'dcv' && circuitLive) {
+        var vr = currentFault.voltages[tp.id];
+        if (vr > 25) {
+          showFeedback('info', 'Reading', tp.label + ': ' + vr.toFixed(1) + 'V -- Normal bus voltage. Fault is likely downstream.');
+        } else if (vr > 5) {
+          showFeedback('info', 'Reading', tp.label + ': ' + vr.toFixed(1) + 'V -- Reduced voltage. Possible high-resistance connection upstream.');
+        } else {
+          showFeedback('info', 'Reading', tp.label + ': ' + vr.toFixed(1) + 'V -- No voltage. Open circuit or short upstream.');
+        }
+      } else if (meterFunc === 'ohm' && !circuitLive) {
+        var rr = currentFault.resistances[tp.id];
+        if (rr === 'OL') {
+          showFeedback('info', 'Reading', tp.label + ': Open Line -- No continuity through load path. Circuit may be open upstream.');
+        } else if (rr > 40) {
+          showFeedback('info', 'Reading', tp.label + ': ' + rr.toFixed(1) + ' ohms -- Elevated resistance. Possible corroded connection.');
+        } else if (rr < 1) {
+          showFeedback('info', 'Reading', tp.label + ': ' + rr.toFixed(1) + ' ohms -- Very low resistance to ground. Possible short.');
+        } else {
+          showFeedback('info', 'Reading', tp.label + ': ' + rr.toFixed(1) + ' ohms -- Normal load resistance through circuit.');
+        }
+      } else if (meterFunc === 'cont' && !circuitLive) {
+        var cr = currentFault.continuity[tp.id];
+        showFeedback('info', 'Reading', tp.label + ': ' + (cr ? 'Continuity confirmed to ground.' : 'No continuity to ground -- open circuit in path.'));
+      }
+    }
+
+    updateLiveScores();
+  }
+
+  /* =================================================================
+     Phase 3: Diagnosis
+     ================================================================= */
+  function showPhase3() {
+    phase = 3;
+    phaseBadge.textContent = 'Phase 3: Diagnosis';
+    decisionTitle.textContent = 'Fault Diagnosis';
+    decisionPrompt.textContent = 'Based on your measurements, identify the fault type, location, and corrective action.';
+    feedbackArea.innerHTML = '';
+    probeTP = null;
+
+    drawSchematic();
+    startAnimLoop();
+
+    optionsArea.innerHTML = '';
+    var form = document.createElement('div');
+    form.className = 'fd-diag-form';
+
+    form.appendChild(makeDiagGroup('Fault Type', 'diagType', FAULT_TYPES));
+    form.appendChild(makeDiagGroup('Fault Location', 'diagLocation', FAULT_LOCATIONS));
+    form.appendChild(makeDiagGroup('Corrective Action', 'diagAction', CORRECTIVE_ACTIONS));
+
+    optionsArea.appendChild(form);
+
+    btnRow.style.display = 'flex';
+    btnRow.innerHTML = '<button class="sim-btn primary" id="submitDiag">Submit Diagnosis</button>';
+    document.getElementById('submitDiag').addEventListener('click', submitDiagnosis);
+  }
+
+  function makeDiagGroup(label, selectId, options) {
+    var grp = document.createElement('div');
+    grp.className = 'fd-diag-group';
+
+    var lbl = document.createElement('div');
+    lbl.className = 'fd-diag-label';
+    lbl.textContent = label;
+    grp.appendChild(lbl);
+
+    var sel = document.createElement('select');
+    sel.className = 'fd-diag-select';
+    sel.id = selectId;
+
+    var def = document.createElement('option');
+    def.value = '';
+    def.textContent = '-- Select --';
+    sel.appendChild(def);
+
+    options.forEach(function(opt) {
+      var o = document.createElement('option');
+      o.value = opt.value;
+      o.textContent = opt.label;
+      sel.appendChild(o);
+    });
+
+    grp.appendChild(sel);
+    return grp;
+  }
+
+  /* -- Submit diagnosis ----------------------------------------- */
+  function submitDiagnosis() {
+    var diagType     = document.getElementById('diagType').value;
+    var diagLocation = document.getElementById('diagLocation').value;
+    var diagAction   = document.getElementById('diagAction').value;
+
+    if (!diagType || !diagLocation || !diagAction) {
+      showFeedback('incorrect', 'Incomplete', 'Please select a fault type, location, and corrective action before submitting.');
+      return;
+    }
+
+    var typeCorrect     = diagType === currentFault.type;
+    var locationCorrect = diagLocation === currentFault.location;
+    var actionCorrect   = diagAction === currentFault.corrective;
+    var diagnosisCorrect = typeCorrect && locationCorrect && actionCorrect;
+
+    // -- Accuracy score (40% weight) --
+    var accuracyScore = (typeCorrect ? 50 : 0) + (locationCorrect ? 35 : 0) + (actionCorrect ? 15 : 0);
+
+    // -- Efficiency score (30% weight) --
+    var measCount = measurements.length;
+    var efficiencyScore;
+    if (measCount <= OPTIMAL_MEASUREMENTS) {
+      efficiencyScore = 100;
+    } else if (measCount >= MAX_MEASUREMENTS) {
+      efficiencyScore = 20;
+    } else {
+      efficiencyScore = Math.round(100 - ((measCount - OPTIMAL_MEASUREMENTS) / (MAX_MEASUREMENTS - OPTIMAL_MEASUREMENTS)) * 80);
+    }
+
+    // -- Safety score (20% weight) --
+    var safetyScore = Math.max(0, 100 - (safetyViolations * 25));
+
+    // -- Methodology score (10% weight) --
+    var methodScoreFinal = methodScore;
+
+    // -- Weighted total --
+    var total = Math.round(
+      accuracyScore * 0.4 +
+      efficiencyScore * 0.3 +
+      safetyScore * 0.2 +
+      methodScoreFinal * 0.1
+    );
+
+    // Record diagnosis step
+    tracker.recordStep({
+      stepId: 'diagnosis',
+      correct: diagnosisCorrect,
+      points: total,
+      loId: 'Fault identification and corrective action',
+      category: 'electrical-troubleshooting'
+    });
+
+    // Update scores display
+    elAccuracy.textContent   = accuracyScore;
+    elEfficiency.textContent = efficiencyScore;
+    elSafety.textContent     = safetyScore;
+    elMethod.textContent     = methodScoreFinal;
+    elTotal.textContent      = total;
+
+    // Determine outcome
+    var outcomeClass, outcomeText;
+    if (typeCorrect && locationCorrect && actionCorrect) {
+      outcomeClass = 'success';
+      outcomeText = 'Fault successfully isolated! ' + currentFault.description + ' Estimated repair time: 45 minutes. Aircraft returned to service.';
+      if (solvedFaults.indexOf(currentFault.id) === -1) {
+        solvedFaults.push(currentFault.id);
+        try { localStorage.setItem('fd_solved', JSON.stringify(solvedFaults)); } catch(e) {}
+      }
+    } else if (typeCorrect && locationCorrect) {
+      outcomeClass = 'partial';
+      outcomeText = 'You correctly identified the fault type and location, but recommended a suboptimal corrective action. The fault was: ' + currentFault.description + ' Recommended action: ' + currentFault.correctiveLabel + '.';
+    } else if (typeCorrect) {
+      outcomeClass = 'partial';
+      outcomeText = 'You identified the correct fault type but pinpointed the wrong location. You replaced a component but the fault persists. The actual fault was: ' + currentFault.description;
+    } else {
+      outcomeClass = 'fail';
+      if (currentFault.type === 'short' && diagAction === 'reset_cb') {
+        outcomeText = 'Dangerous! You reset the circuit breaker without finding the short to ground. Applying power with an unresolved short could cause a wire fire. The actual fault: ' + currentFault.description;
+      } else {
+        outcomeText = 'Incorrect diagnosis. Your repair did not address the actual problem. The fault was: ' + currentFault.description + ' Correct action: ' + currentFault.correctiveLabel + '.';
+      }
+    }
+
+    // Show results overlay
+    var resultsOutcome = document.getElementById('resultsOutcome');
+    resultsOutcome.className = 'fd-results-outcome ' + outcomeClass;
+    resultsOutcome.textContent = outcomeText;
+
+    var resultsScores = document.getElementById('resultsScores');
+    resultsScores.innerHTML =
+      '<div class="fd-results-score-item"><span class="label">Accuracy</span><span class="val">' + accuracyScore + '</span></div>' +
+      '<div class="fd-results-score-item"><span class="label">Efficiency</span><span class="val">' + efficiencyScore + '</span></div>' +
+      '<div class="fd-results-score-item"><span class="label">Safety</span><span class="val">' + safetyScore + '</span></div>' +
+      '<div class="fd-results-score-item"><span class="label">Method</span><span class="val">' + methodScoreFinal + '</span></div>' +
+      '<div class="fd-results-score-item"><span class="label">Total</span><span class="val">' + total + '</span></div>';
+
+    var xp = tracker.calculateXP();
+    document.getElementById('resultsXP').textContent = '+' + xp + ' XP Awarded';
+
+    resultsOverlay.classList.add('open');
+    renderProgressDots();
+
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+    tracker.complete();
+  }
+
+  /* =================================================================
+     UI Helpers
+     ================================================================= */
+  function renderOptions(options, onSelect) {
+    optionsArea.innerHTML = '';
+    options.forEach(function(opt, idx) {
+      var btn = document.createElement('button');
+      btn.className = 'fd-option';
+      btn.textContent = opt.text;
+      btn.addEventListener('click', function() { onSelect(idx); });
+      optionsArea.appendChild(btn);
+    });
+  }
+
+  function disableOptions(selectedIdx, options) {
+    var btns = optionsArea.querySelectorAll('.fd-option');
+    btns.forEach(function(btn, i) {
+      btn.disabled = true;
+      if (i === selectedIdx) {
+        btn.classList.add(options[i].correct ? 'correct-reveal' : 'incorrect-reveal');
+        btn.classList.add('selected');
+      } else if (options[i].correct) {
+        btn.classList.add('correct-reveal');
+      } else {
+        btn.classList.add('incorrect-reveal');
+      }
+    });
+  }
+
+  function showFeedback(type, label, text) {
+    feedbackArea.innerHTML =
+      '<div class="sim-feedback ' + type + '">' +
+        '<span class="fb-label">' + label + '</span>' +
+        '<span class="fb-text">' + text + '</span>' +
+      '</div>';
+  }
+
+  function updateMeterBtns() {
+    document.querySelectorAll('.fd-meter-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.func === meterFunc);
+    });
+  }
+
+  function updatePowerUI() {
+    if (circuitLive) {
+      powerDot.classList.remove('off');
+      powerLabel.textContent = 'Circuit Live';
+      powerToggle.textContent = 'De-energize';
+    } else {
+      powerDot.classList.add('off');
+      powerLabel.textContent = 'De-energized';
+      powerToggle.textContent = 'Energize';
+    }
+  }
+
+  function resetScores() {
+    elSteps.textContent      = '0';
+    elTime.textContent       = '0:00';
+    elAccuracy.textContent   = '--';
+    elEfficiency.textContent = '--';
+    elSafety.textContent     = '--';
+    elMethod.textContent     = '--';
+    elTotal.textContent      = '--';
+  }
+
+  function updateLiveScores() {
+    var measCount = measurements.length;
+    elSteps.textContent = measCount;
+
+    var eff;
+    if (measCount <= OPTIMAL_MEASUREMENTS) eff = 100;
+    else if (measCount >= MAX_MEASUREMENTS) eff = 20;
+    else eff = Math.round(100 - ((measCount - OPTIMAL_MEASUREMENTS) / (MAX_MEASUREMENTS - OPTIMAL_MEASUREMENTS)) * 80);
+    elEfficiency.textContent = eff;
+
+    var saf = Math.max(0, 100 - (safetyViolations * 25));
+    elSafety.textContent = saf;
+
+    elMethod.textContent = methodScore;
+  }
+
+  function updateTimer() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    var mins = Math.floor(elapsed / 60);
+    var secs = elapsed % 60;
+    elTime.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  }
+
+  function renderProgressDots() {
+    var container = document.getElementById('progressDots');
+    container.innerHTML = '';
+    FAULT_SCENARIOS.forEach(function(fault, i) {
+      var dot = document.createElement('div');
+      dot.className = 'fd-progress-dot';
+      dot.title = fault.name;
+      if (solvedFaults.indexOf(fault.id) >= 0) {
+        dot.classList.add('solved');
+        dot.textContent = '\u2713';
+      } else if (currentFault && currentFault.id === fault.id) {
+        dot.classList.add('active');
+        dot.textContent = (i + 1).toString();
+      } else {
+        dot.textContent = (i + 1).toString();
+      }
+      container.appendChild(dot);
+    });
+  }
+
+  /* =================================================================
+     Event Handlers
+     ================================================================= */
+
+  // Meter function buttons
+  document.querySelectorAll('.fd-meter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      meterFunc = btn.dataset.func;
+      updateMeterBtns();
+      meterReading.textContent = '-- --';
+      meterReading.classList.remove('warning');
+    });
+  });
+
+  // Power toggle
+  powerToggle.addEventListener('click', function() {
+    circuitLive = !circuitLive;
+    updatePowerUI();
+    meterReading.textContent = '-- --';
+    meterReading.classList.remove('warning');
+  });
+
+  // Canvas mouse events
+  function getCanvasCoords(e) {
+    var rect = canvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function findTP(mx, my) {
+    var W = canvas.getBoundingClientRect().width;
+    var H = canvas.getBoundingClientRect().height;
+    var closest = null;
+    var closestDist = Infinity;
+    TEST_POINTS.forEach(function(tp) {
+      var tx = tp.nx * W;
+      var ty = tp.ny * H;
+      var dist = Math.sqrt(Math.pow(mx - tx, 2) + Math.pow(my - ty, 2));
+      if (dist < 22 && dist < closestDist) {
+        closest = tp;
+        closestDist = dist;
+      }
+    });
+    return closest;
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    if (phase !== 2) return;
+    var coords = getCanvasCoords(e);
+    hoveredTP = findTP(coords.x, coords.y);
+    canvas.style.cursor = hoveredTP ? 'pointer' : 'crosshair';
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    hoveredTP = null;
+  });
+
+  canvas.addEventListener('click', function(e) {
+    if (phase !== 2) return;
+    var coords = getCanvasCoords(e);
+    var tp = findTP(coords.x, coords.y);
+    if (!tp) return;
+
+    selectedTP = tp;
+    probeTP = tp;
+    takeMeasurement(tp);
+
+    setTimeout(function() { selectedTP = null; }, 600);
+  });
+
+  // Touch support
+  canvas.addEventListener('touchstart', function(e) {
+    if (phase !== 2) return;
+    e.preventDefault();
+    var touch = e.touches[0];
+    var rect = canvas.getBoundingClientRect();
+    var mx = touch.clientX - rect.left;
+    var my = touch.clientY - rect.top;
+    var tp = findTP(mx, my);
+    if (!tp) return;
+    selectedTP = tp;
+    probeTP = tp;
+    takeMeasurement(tp);
+    setTimeout(function() { selectedTP = null; }, 600);
+  }, { passive: false });
+
+  // Help modal
+  document.getElementById('helpBtn').addEventListener('click', function() {
+    helpModal.classList.add('open');
+  });
+  document.getElementById('closeHelp').addEventListener('click', function() {
+    helpModal.classList.remove('open');
+  });
+  helpModal.addEventListener('click', function(e) {
+    if (e.target === helpModal) helpModal.classList.remove('open');
+  });
+
+  // Reset / replay
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    if (timerInterval) clearInterval(timerInterval);
+    init();
+  });
+  document.getElementById('replayBtn').addEventListener('click', function() {
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    if (timerInterval) clearInterval(timerInterval);
+    init();
+  });
+
+  // Window resize
+  window.addEventListener('resize', function() {
+    resizeCanvas();
+    drawSchematic();
+  });
+
+  /* =================================================================
+     Boot
+     ================================================================= */
+  init();
+});
+</script>
+</body>
+</html>

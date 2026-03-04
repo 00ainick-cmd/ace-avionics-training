@@ -1,0 +1,2535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crimp Lab - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <style>
+    /* =====================================================
+       CRIMP LAB  -  Virtual Workbench Simulation CSS
+       ===================================================== */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--sim-bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      font-family: var(--sim-font-body);
+    }
+
+    .cl-app {
+      max-width: 1280px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* -- Header ---------------------------------------- */
+    .cl-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm) var(--sim-radius-sm) 0 0;
+    }
+    .cl-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cl-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sim-amber);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+    }
+    .cl-level-badge {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      color: var(--sim-text-dim);
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      padding: 3px 10px;
+      border-radius: var(--sim-radius-xs);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cl-header-right {
+      display: flex;
+      gap: 6px;
+    }
+    .cl-icon-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-dim);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--sim-radius-xs);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .cl-icon-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+
+    /* -- Main workspace -------------------------------- */
+    .cl-workspace {
+      display: flex;
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      min-height: 460px;
+      overflow: hidden;
+      background: var(--sim-bg);
+    }
+
+    /* Canvas area (left 65%) */
+    .cl-canvas-area {
+      flex: 65;
+      position: relative;
+      overflow: hidden;
+      background: #080e1c;
+    }
+    .cl-canvas-area canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Right panel (35%) */
+    .cl-right-panel {
+      flex: 35;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--sim-border);
+      background: var(--sim-bg-panel);
+      overflow-y: auto;
+      max-height: 460px;
+    }
+
+    /* -- Tool Rack ------------------------------------- */
+    .cl-tool-rack {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--sim-border);
+    }
+    .cl-section-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.6rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .cl-tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .cl-tool-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 10px 6px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      white-space: nowrap;
+      position: relative;
+    }
+    .cl-tool-btn:hover {
+      background: var(--sim-bg-elevated);
+      color: var(--sim-text);
+      border-color: var(--sim-border-active);
+    }
+    .cl-tool-btn.active {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--sim-amber);
+      border-color: var(--sim-amber);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+    }
+    .cl-tool-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .cl-tool-btn .tool-icon {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    /* -- Terminal Tray --------------------------------- */
+    .cl-terminal-tray {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--sim-border);
+      display: none;
+    }
+    .cl-terminal-tray.visible { display: block; }
+    .cl-terminal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+    .cl-terminal-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 8px 6px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .cl-terminal-btn:hover {
+      background: var(--sim-bg-elevated);
+      color: var(--sim-text);
+      border-color: var(--sim-amber);
+    }
+    .cl-terminal-btn.selected {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--sim-amber);
+      border-color: var(--sim-amber);
+    }
+
+    /* -- Inspection Panel ----------------------------- */
+    .cl-inspect-panel {
+      padding: 14px 16px;
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cl-inspect-panel.visible {
+      display: flex;
+    }
+    .cl-inspect-tabs {
+      display: flex;
+      gap: 4px;
+    }
+    .cl-inspect-tab {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-transform: uppercase;
+      flex: 1;
+      text-align: center;
+    }
+    .cl-inspect-tab:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-border-active);
+    }
+    .cl-inspect-tab.active {
+      color: var(--sim-sky);
+      border-color: var(--sim-sky);
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .cl-inspect-canvas-wrap {
+      background: #0a1628;
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      overflow: hidden;
+      height: 140px;
+      position: relative;
+    }
+    .cl-inspect-canvas-wrap canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .cl-inspect-readout {
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+      text-align: center;
+      padding: 6px;
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+    }
+    .cl-verdict-row {
+      display: flex;
+      gap: 6px;
+    }
+    .cl-verdict-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-muted);
+      cursor: pointer;
+      flex: 1;
+      transition: all 0.15s;
+    }
+    .cl-verdict-btn.pass:hover { border-color: var(--sim-green); color: var(--sim-green); background: rgba(16,185,129,0.08); }
+    .cl-verdict-btn.reject:hover { border-color: var(--sim-red); color: var(--sim-red); background: rgba(239,68,68,0.08); }
+    .cl-verdict-btn.chosen-pass { border-color: var(--sim-green); color: var(--sim-green); background: rgba(16,185,129,0.15); }
+    .cl-verdict-btn.chosen-reject { border-color: var(--sim-red); color: var(--sim-red); background: rgba(239,68,68,0.15); }
+
+    .cl-reason-select {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      padding: 6px 10px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text);
+      cursor: pointer;
+      display: none;
+      width: 100%;
+    }
+    .cl-reason-select.visible { display: block; }
+
+    /* -- Wiring Diagram (Level 3) --------------------- */
+    .cl-wiring-diagram {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--sim-border);
+      display: none;
+    }
+    .cl-wiring-diagram.visible { display: block; }
+    .cl-diagram-canvas-wrap {
+      background: #0a1628;
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      overflow: hidden;
+      height: 120px;
+    }
+    .cl-diagram-canvas-wrap canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* -- Taskbar -------------------------------------- */
+    .cl-taskbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-top: none;
+    }
+    .cl-task-text {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      flex: 1;
+      line-height: 1.4;
+    }
+    .cl-task-text strong {
+      color: var(--sim-amber);
+    }
+    .cl-taskbar-btns {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .cl-hint-btn {
+      background: transparent;
+      border: 1px dashed var(--sim-text-dim);
+      color: var(--sim-text-dim);
+      padding: 6px 14px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cl-hint-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+
+    /* -- Feedback strip ------------------------------- */
+    .cl-feedback {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      min-height: 44px;
+      transition: all 0.2s;
+    }
+    .cl-feedback .fb-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      color: var(--sim-text-dim);
+    }
+    .cl-feedback .fb-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--sim-text-secondary);
+    }
+    .cl-feedback.correct { border-color: var(--sim-green); background: rgba(16,185,129,0.06); }
+    .cl-feedback.correct .fb-label { color: var(--sim-green); }
+    .cl-feedback.incorrect { border-color: var(--sim-red); background: rgba(239,68,68,0.06); }
+    .cl-feedback.incorrect .fb-label { color: var(--sim-red); }
+    .cl-feedback.info { border-color: var(--sim-sky); background: rgba(56,189,248,0.06); }
+    .cl-feedback.info .fb-label { color: var(--sim-sky); }
+    .cl-feedback.warn { border-color: var(--sim-amber); background: rgba(245,158,11,0.06); }
+    .cl-feedback.warn .fb-label { color: var(--sim-amber); }
+
+    /* -- Score bar ------------------------------------- */
+    .cl-scorebar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 10px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      border-radius: 0 0 var(--sim-radius-sm) var(--sim-radius-sm);
+    }
+    .cl-score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+    }
+    .cl-score-item .value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.3rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+
+    /* -- Toast ---------------------------------------- */
+    .cl-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      padding: 12px 28px;
+      border-radius: var(--sim-radius-sm);
+      font-family: var(--sim-font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+    .cl-toast.show { transform: translateX(-50%) translateY(0); }
+    .cl-toast.correct {
+      background: rgba(16,185,129,0.9); color: #fff;
+      border: 1px solid var(--sim-green);
+      box-shadow: 0 4px 20px rgba(16,185,129,0.4);
+    }
+    .cl-toast.incorrect {
+      background: rgba(239,68,68,0.9); color: #fff;
+      border: 1px solid var(--sim-red);
+      box-shadow: 0 4px 20px rgba(239,68,68,0.4);
+    }
+    .cl-toast.info {
+      background: rgba(56,189,248,0.9); color: #fff;
+      border: 1px solid var(--sim-sky);
+      box-shadow: 0 4px 20px rgba(56,189,248,0.4);
+    }
+    .cl-toast.levelup {
+      background: rgba(245,158,11,0.9); color: #fff;
+      border: 1px solid var(--sim-amber);
+      box-shadow: 0 4px 20px rgba(245,158,11,0.4);
+    }
+
+    /* -- Help Modal ----------------------------------- */
+    .cl-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 900;
+      justify-content: center;
+      align-items: center;
+    }
+    .cl-modal-overlay.visible { display: flex; }
+    .cl-modal {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+    }
+    .cl-modal h4 {
+      font-size: 1.1rem;
+      color: var(--sim-amber);
+      margin-bottom: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cl-modal p, .cl-modal li {
+      font-size: 0.85rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .cl-modal ul { padding-left: 18px; margin-bottom: 12px; }
+    .cl-modal .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--sim-text-dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .cl-modal .close-modal:hover { color: var(--sim-text); }
+
+    /* -- Responsive ----------------------------------- */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .cl-header h3 { font-size: 1rem; letter-spacing: 1px; }
+      .cl-workspace { flex-direction: column; min-height: 300px; }
+      .cl-right-panel {
+        max-height: none;
+        border-left: none;
+        border-top: 1px solid var(--sim-border);
+      }
+      .cl-tool-grid { grid-template-columns: repeat(3, 1fr); }
+      .cl-taskbar { flex-direction: column; align-items: stretch; gap: 8px; }
+      .cl-scorebar { flex-wrap: wrap; gap: 14px; }
+      .cl-feedback { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cl-app">
+
+    <!-- Header -->
+    <div class="cl-header">
+      <div class="cl-header-left">
+        <h3>Crimp Lab</h3>
+        <span class="cl-level-badge" id="levelBadge">Level 1 / 3</span>
+      </div>
+      <div class="cl-header-right">
+        <button class="cl-icon-btn" id="btnHelp" title="Help">?</button>
+        <button class="cl-icon-btn" id="btnReset" title="Reset level">&#x21bb;</button>
+      </div>
+    </div>
+
+    <!-- Main workspace -->
+    <div class="cl-workspace">
+      <div class="cl-canvas-area" id="canvasArea">
+        <canvas id="workCanvas"></canvas>
+      </div>
+
+      <!-- Right panel: tools + inspection -->
+      <div class="cl-right-panel">
+        <!-- Tool Rack -->
+        <div class="cl-tool-rack">
+          <div class="cl-section-label">Tool Rack</div>
+          <div class="cl-tool-grid" id="toolGrid">
+            <button class="cl-tool-btn" data-tool="stripper" title="Strips insulation from wire ends">
+              <span class="tool-icon">&#9986;</span>Stripper
+            </button>
+            <button class="cl-tool-btn" data-tool="ratchet" title="Ratcheting crimp tool - correct for aviation terminals">
+              <span class="tool-icon">&#9881;</span>Ratchet
+            </button>
+            <button class="cl-tool-btn" data-tool="pliers" title="Generic pliers - NOT suitable for aviation crimps">
+              <span class="tool-icon">&#128295;</span>Pliers
+            </button>
+            <button class="cl-tool-btn" data-tool="heatgun" title="Heat gun for heat-shrink tubing">
+              <span class="tool-icon">&#128293;</span>Heat Gun
+            </button>
+            <button class="cl-tool-btn" data-tool="mirror" title="Inspection mirror for visual checks">
+              <span class="tool-icon">&#128269;</span>Mirror
+            </button>
+            <button class="cl-tool-btn" data-tool="insert" title="Pin insertion/extraction tool">
+              <span class="tool-icon">&#9654;</span>Insert
+            </button>
+          </div>
+        </div>
+
+        <!-- Terminal Tray -->
+        <div class="cl-terminal-tray" id="terminalTray">
+          <div class="cl-section-label">Terminal Tray</div>
+          <div class="cl-terminal-grid" id="terminalGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Wiring Diagram (Level 3) -->
+        <div class="cl-wiring-diagram" id="wiringDiagram">
+          <div class="cl-section-label">Wiring Diagram</div>
+          <div class="cl-diagram-canvas-wrap">
+            <canvas id="diagramCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Inspection Panel -->
+        <div class="cl-inspect-panel" id="inspectPanel">
+          <div class="cl-section-label">Inspection Station</div>
+          <div class="cl-inspect-tabs" id="inspectTabs">
+            <button class="cl-inspect-tab active" data-view="zoom">Zoom</button>
+            <button class="cl-inspect-tab" data-view="pull">Pull Test</button>
+            <button class="cl-inspect-tab" data-view="xsection">X-Section</button>
+          </div>
+          <div class="cl-inspect-canvas-wrap">
+            <canvas id="inspectCanvas"></canvas>
+          </div>
+          <div class="cl-inspect-readout" id="inspectReadout">--</div>
+          <div class="cl-verdict-row">
+            <button class="cl-verdict-btn pass" id="btnPass">PASS</button>
+            <button class="cl-verdict-btn reject" id="btnReject">REJECT</button>
+          </div>
+          <select class="cl-reason-select" id="rejectReason">
+            <option value="">-- Select reject reason --</option>
+            <option value="under-crimp">Under-crimped barrel</option>
+            <option value="over-crimp">Over-crimped / cracked barrel</option>
+            <option value="insulation-in">Insulation inside barrel</option>
+            <option value="bird-cage">Bird-caging / exposed conductor</option>
+            <option value="wrong-terminal">Wrong terminal type or size</option>
+            <option value="wrong-tool">Wrong tool used</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="cl-taskbar">
+      <div class="cl-task-text" id="taskText">
+        <strong>Task:</strong> Loading...
+      </div>
+      <div class="cl-taskbar-btns">
+        <button class="cl-hint-btn" id="btnHint">Hint</button>
+      </div>
+    </div>
+
+    <!-- Feedback strip -->
+    <div class="cl-feedback" id="feedbackStrip">
+      <span class="fb-label">Ready</span>
+      <span class="fb-text">Select a terminal from the tray to begin.</span>
+    </div>
+
+    <!-- Score bar -->
+    <div class="cl-scorebar">
+      <div class="cl-score-item">
+        <span class="value" id="scoreTerminal">--</span>
+        Terminal
+      </div>
+      <div class="cl-score-item">
+        <span class="value" id="scoreTool">--</span>
+        Tool
+      </div>
+      <div class="cl-score-item">
+        <span class="value" id="scoreStrip">--</span>
+        Strip
+      </div>
+      <div class="cl-score-item">
+        <span class="value" id="scoreCrimp">--</span>
+        Crimp
+      </div>
+      <div class="cl-score-item">
+        <span class="value" id="scoreInspect">--</span>
+        Inspect
+      </div>
+      <div class="cl-score-item">
+        <span class="value" id="scoreTotal">0</span>
+        Total
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="cl-toast" id="toast"></div>
+
+  <!-- Help Modal -->
+  <div class="cl-modal-overlay" id="helpModal">
+    <div class="cl-modal">
+      <button class="close-modal" id="closeHelp">&times;</button>
+      <h4>Crimp Lab - Help</h4>
+      <p>Practice wire crimping procedures for aircraft avionics connectors.
+         Follow each step carefully - crimping quality is critical to flight safety.</p>
+      <h4>Procedure</h4>
+      <ul>
+        <li><strong>Select Terminal:</strong> Choose the correct terminal type and gauge from the tray.</li>
+        <li><strong>Strip Wire:</strong> Select the wire stripper and click the wire to strip it to the correct length.</li>
+        <li><strong>Insert Wire:</strong> Click to slide the stripped wire into the terminal barrel.</li>
+        <li><strong>Crimp:</strong> Select the ratcheting crimp tool (NOT pliers!) and click to crimp.</li>
+        <li><strong>Inspect:</strong> Use Zoom, Pull Test, and Cross-Section views to evaluate the crimp.</li>
+        <li><strong>Verdict:</strong> Click PASS or REJECT based on your inspection findings.</li>
+      </ul>
+      <h4>Tools</h4>
+      <ul>
+        <li><strong>Wire Stripper</strong> - Removes insulation from wire end</li>
+        <li><strong>Ratcheting Crimp Tool</strong> - Correct tool for aviation terminal crimps</li>
+        <li><strong>Generic Pliers</strong> - INCORRECT for aviation crimps (inconsistent deformation)</li>
+        <li><strong>Heat Gun</strong> - For heat-shrink tubing application</li>
+        <li><strong>Inspection Mirror</strong> - For visual inspection of hard-to-see areas</li>
+        <li><strong>Pin Insert Tool</strong> - For inserting/extracting pins in connectors</li>
+      </ul>
+      <h4>Levels</h4>
+      <ul>
+        <li><strong>Level 1:</strong> Single ring terminal crimp (guided, with prompts)</li>
+        <li><strong>Level 2:</strong> D-sub pin contact on shielded wire (guided practice)</li>
+        <li><strong>Level 3:</strong> Full 6-wire harness termination (independent)</li>
+      </ul>
+      <h4>Inspection Criteria</h4>
+      <ul>
+        <li><strong>Pull Test:</strong> Good crimp = 15-25 lbs PASS; Under-crimp = 3-8 lbs FAIL; Over-crimp = barrel cracks FAIL</li>
+        <li><strong>Cross-Section:</strong> Wire fill should be 70-90% of barrel area</li>
+        <li><strong>Visual:</strong> No cracks, no exposed conductor before barrel, no insulation in barrel</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Analytics -->
+  <script src="sim-analytics.js"></script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
+
+    /* ===================================================
+       DOM REFERENCES
+       =================================================== */
+    const workCanvas    = document.getElementById('workCanvas');
+    const ctx           = workCanvas.getContext('2d');
+    const canvasArea    = document.getElementById('canvasArea');
+    const inspectCanvas = document.getElementById('inspectCanvas');
+    const ictx          = inspectCanvas.getContext('2d');
+    const diagramCanvas = document.getElementById('diagramCanvas');
+    const dctx          = diagramCanvas.getContext('2d');
+
+    const levelBadge    = document.getElementById('levelBadge');
+    const taskText      = document.getElementById('taskText');
+    const feedbackStrip = document.getElementById('feedbackStrip');
+    const toolGrid      = document.getElementById('toolGrid');
+    const terminalTray  = document.getElementById('terminalTray');
+    const terminalGrid  = document.getElementById('terminalGrid');
+    const inspectPanel  = document.getElementById('inspectPanel');
+    const inspectTabs   = document.getElementById('inspectTabs');
+    const inspectReadout= document.getElementById('inspectReadout');
+    const wiringDiagram = document.getElementById('wiringDiagram');
+    const btnPass       = document.getElementById('btnPass');
+    const btnReject     = document.getElementById('btnReject');
+    const rejectReason  = document.getElementById('rejectReason');
+    const btnHint       = document.getElementById('btnHint');
+    const btnHelp       = document.getElementById('btnHelp');
+    const btnReset      = document.getElementById('btnReset');
+    const helpModal     = document.getElementById('helpModal');
+    const closeHelp     = document.getElementById('closeHelp');
+    const toast         = document.getElementById('toast');
+
+    const scoreEls = {
+      terminal: document.getElementById('scoreTerminal'),
+      tool:     document.getElementById('scoreTool'),
+      strip:    document.getElementById('scoreStrip'),
+      crimp:    document.getElementById('scoreCrimp'),
+      inspect:  document.getElementById('scoreInspect'),
+      total:    document.getElementById('scoreTotal')
+    };
+
+    /* ===================================================
+       TRACKER
+       =================================================== */
+    const tracker = new SimTracker('crimp-lab', 'W5-Z2-N1');
+
+    /* ===================================================
+       STATE
+       =================================================== */
+    let level = 1;
+    let stepIndex = 0;
+    let activeTool = null;
+    let selectedTerminal = null;
+    let inspectView = 'zoom';
+    let animProgress = 0;
+    let animating = false;
+    let animCallback = null;
+
+    // Crimp quality state per wire
+    let crimpState = {
+      terminalCorrect: false,
+      toolCorrect: false,
+      stripCorrect: false,     // true = correct strip length
+      stripLength: 0,          // actual strip length chosen
+      crimpDone: false,
+      crimpQuality: 'none',    // 'good', 'under', 'over', 'pliers'
+      wireInserted: false,
+      inspected: false,
+      pullForce: 0,
+      fillPct: 0,
+      defects: [],
+      verdict: null,           // 'pass' or 'reject'
+      verdictCorrect: false
+    };
+
+    // Level scores
+    let scores = { terminal: 0, tool: 0, strip: 0, crimp: 0, inspect: 0 };
+    let totalScore = 0;
+    let maxPossible = 0;
+
+    // Rendering states
+    const WIRE_STATES = {
+      UNSTRIPPED: 0,
+      STRIPPED: 1,
+      INSERTED: 2,
+      CRIMPED: 3,
+      INSPECTING: 4
+    };
+    let wireState = WIRE_STATES.UNSTRIPPED;
+
+    /* ===================================================
+       LEVEL DEFINITIONS
+       =================================================== */
+    const LEVELS = {
+      1: {
+        title: 'Single Terminal Crimp',
+        subtitle: 'Guided, with prompts',
+        wireGauge: 20,
+        wireColor: '#e8c930',     // yellow insulation
+        wireColorName: 'Yellow',
+        terminalType: 'ring',
+        destination: 'Ground Stud',
+        correctTerminal: 'ring-22-18',
+        correctStripLength: 0.375, // 3/8 inch
+        shielded: false,
+        guided: true,
+        steps: [
+          { id: 'select-terminal', task: 'Select the correct terminal from the tray for 20 AWG wire going to a ground stud.', hint: 'A ring terminal rated for 22-18 AWG matches a 20 AWG wire.' },
+          { id: 'select-stripper', task: 'Select the wire stripper tool.', hint: 'Choose the wire stripper from the tool rack on the right.' },
+          { id: 'strip-wire', task: 'Strip the wire to the correct length (~3/8 inch for a ring terminal).', hint: 'Click on the wire end to strip it. Aim for about 3/8 inch.' },
+          { id: 'insert-wire', task: 'Insert the stripped wire into the terminal barrel.', hint: 'Click the terminal barrel area to insert the wire.' },
+          { id: 'select-crimper', task: 'Select the correct crimp tool.', hint: 'Use the ratcheting crimp tool - NEVER generic pliers for aviation crimps.' },
+          { id: 'crimp', task: 'Crimp the terminal onto the wire.', hint: 'Click the terminal barrel to perform the crimp.' },
+          { id: 'inspect', task: 'Inspect the crimp using Zoom, Pull Test, and Cross-Section views.', hint: 'Use the inspection tabs to check each view, then give your verdict.' },
+          { id: 'verdict', task: 'Pass or Reject the crimp based on your inspection.', hint: 'Check all three inspection views before making your verdict.' }
+        ]
+      },
+      2: {
+        title: 'Connector Pin Termination',
+        subtitle: 'Guided practice with shielded wire',
+        wireGauge: 22,
+        wireColor: '#f0f0f0',     // white insulation
+        wireColorName: 'White',
+        terminalType: 'pin',
+        destination: 'D-Sub Connector',
+        correctTerminal: 'pin-22-20',
+        correctStripLength: 0.25,  // 1/4 inch for pin contacts
+        shielded: true,
+        guided: true,
+        steps: [
+          { id: 'select-terminal', task: 'Select the correct pin contact for 22 AWG shielded wire going to a D-sub connector.', hint: 'Pin contacts rated for 22-20 AWG match a 22 AWG wire.' },
+          { id: 'select-stripper', task: 'Select the wire stripper tool to prepare the shielded wire.', hint: 'The stripper will remove the outer jacket and expose the shield braid.' },
+          { id: 'strip-shield', task: 'Strip the outer jacket and fold back the shield braid.', hint: 'Click on the wire to strip the jacket and fold the braid back.' },
+          { id: 'strip-wire', task: 'Strip the inner conductor insulation (~1/4 inch for pin contact).', hint: 'Strip the inner wire to about 1/4 inch.' },
+          { id: 'insert-wire', task: 'Insert the stripped conductor into the pin contact barrel.', hint: 'Click the pin contact to insert the wire.' },
+          { id: 'select-crimper', task: 'Select the correct crimp tool for the pin contact.', hint: 'Use the ratcheting crimp tool.' },
+          { id: 'crimp', task: 'Crimp the pin contact onto the conductor.', hint: 'Click the contact to crimp it.' },
+          { id: 'insert-pin', task: 'Select the pin insertion tool and insert pin into the D-sub shell.', hint: 'Select the insert tool, then click the connector shell.' },
+          { id: 'tug-test', task: 'Perform a tug test to verify pin retention.', hint: 'Click the pin to perform a retention test.' },
+          { id: 'inspect', task: 'Inspect the crimp and pin installation.', hint: 'Use all three inspection views.' },
+          { id: 'verdict', task: 'Pass or Reject based on your inspection.', hint: 'Evaluate all criteria before your verdict.' }
+        ]
+      },
+      3: {
+        title: 'Full Harness Termination',
+        subtitle: 'Independent - reference the wiring diagram',
+        wireGauge: 0, // varies per wire
+        wireColor: '',
+        wireColorName: '',
+        terminalType: 'pin',
+        destination: 'Circular Connector',
+        correctTerminal: '',
+        correctStripLength: 0.25,
+        shielded: false,
+        guided: false,
+        wires: [
+          { gauge: 20, color: '#e8c930', colorName: 'Yellow', pin: 'A', contactSize: 'pin-22-18' },
+          { gauge: 22, color: '#f0f0f0', colorName: 'White',  pin: 'B', contactSize: 'pin-22-20' },
+          { gauge: 20, color: '#ef4444', colorName: 'Red',    pin: 'C', contactSize: 'pin-22-18' },
+          { gauge: 18, color: '#3b82f6', colorName: 'Blue',   pin: 'D', contactSize: 'pin-18-16' },
+          { gauge: 22, color: '#10b981', colorName: 'Green',  pin: 'E', contactSize: 'pin-22-20' },
+          { gauge: 20, color: '#a78bfa', colorName: 'Violet', pin: 'F', contactSize: 'pin-22-18' }
+        ],
+        currentWireIdx: 0,
+        steps: [
+          { id: 'select-terminal', task: 'Identify the wire and select the correct pin contact size.', hint: 'Refer to the wiring diagram for wire color, gauge, and pin position.' },
+          { id: 'select-stripper', task: 'Select the wire stripper.', hint: 'Choose the wire stripper from the tool rack.' },
+          { id: 'strip-wire', task: 'Strip the wire to the correct length for a pin contact (~1/4 inch).', hint: 'Strip approximately 1/4 inch of insulation.' },
+          { id: 'insert-wire', task: 'Insert the stripped wire into the pin contact.', hint: 'Click the contact barrel to insert.' },
+          { id: 'select-crimper', task: 'Select the ratcheting crimp tool.', hint: 'Always use the ratcheting crimp tool for aviation.' },
+          { id: 'crimp', task: 'Crimp the pin contact.', hint: 'Click to perform the crimp.' },
+          { id: 'insert-pin', task: 'Insert the pin into the correct position on the connector.', hint: 'Check the diagram for the correct pin position.' },
+          { id: 'inspect', task: 'Inspect the crimp.', hint: 'Check zoom, pull test, and cross-section.' },
+          { id: 'verdict', task: 'Pass or Reject the crimp.', hint: 'Make your verdict based on inspection data.' }
+        ]
+      }
+    };
+
+    /* ===================================================
+       TERMINAL CATALOG
+       =================================================== */
+    const TERMINALS = [
+      { id: 'ring-22-18',  label: 'Ring 22-18 AWG',  type: 'ring',  gaugeMin: 18, gaugeMax: 22, color: '#3b82f6' },
+      { id: 'ring-16-14',  label: 'Ring 16-14 AWG',  type: 'ring',  gaugeMin: 14, gaugeMax: 16, color: '#f59e0b' },
+      { id: 'spade-22-18', label: 'Spade 22-18 AWG', type: 'spade', gaugeMin: 18, gaugeMax: 22, color: '#3b82f6' },
+      { id: 'spade-16-14', label: 'Spade 16-14 AWG', type: 'spade', gaugeMin: 14, gaugeMax: 16, color: '#f59e0b' },
+      { id: 'pin-22-20',   label: 'Pin 22-20 AWG',   type: 'pin',   gaugeMin: 20, gaugeMax: 22, color: '#94a3b8' },
+      { id: 'pin-22-18',   label: 'Pin 22-18 AWG',   type: 'pin',   gaugeMin: 18, gaugeMax: 22, color: '#94a3b8' },
+      { id: 'pin-18-16',   label: 'Pin 18-16 AWG',   type: 'pin',   gaugeMin: 16, gaugeMax: 18, color: '#d4d4d4' },
+      { id: 'butt-22-18',  label: 'Butt 22-18 AWG',  type: 'butt',  gaugeMin: 18, gaugeMax: 22, color: '#3b82f6' }
+    ];
+
+    /* ===================================================
+       UTILITY FUNCTIONS
+       =================================================== */
+    function showToast(msg, type, duration) {
+      toast.textContent = msg;
+      toast.className = 'cl-toast ' + type;
+      requestAnimationFrame(() => { toast.classList.add('show'); });
+      setTimeout(() => { toast.classList.remove('show'); }, duration || 2200);
+    }
+
+    function setFeedback(label, text, type) {
+      feedbackStrip.className = 'cl-feedback' + (type ? ' ' + type : '');
+      feedbackStrip.innerHTML = '<span class="fb-label">' + label + '</span><span class="fb-text">' + text + '</span>';
+    }
+
+    function setTask(html) {
+      taskText.innerHTML = '<strong>Task:</strong> ' + html;
+    }
+
+    function updateScoreDisplay() {
+      scoreEls.terminal.textContent = scores.terminal > 0 ? scores.terminal : '--';
+      scoreEls.tool.textContent     = scores.tool > 0     ? scores.tool     : '--';
+      scoreEls.strip.textContent    = scores.strip > 0    ? scores.strip    : '--';
+      scoreEls.crimp.textContent    = scores.crimp > 0    ? scores.crimp    : '--';
+      scoreEls.inspect.textContent  = scores.inspect > 0  ? scores.inspect  : '--';
+      scoreEls.total.textContent    = totalScore;
+    }
+
+    function addScore(cat, pts) {
+      scores[cat] += pts;
+      totalScore += pts;
+      maxPossible += pts;
+      updateScoreDisplay();
+    }
+
+    function getLevelDef() { return LEVELS[level]; }
+
+    function getCurrentStep() {
+      const lv = getLevelDef();
+      if (stepIndex < lv.steps.length) return lv.steps[stepIndex];
+      return null;
+    }
+
+    function getCurrentWire() {
+      if (level === 3) {
+        const lv = getLevelDef();
+        return lv.wires[lv.currentWireIdx];
+      }
+      return {
+        gauge: getLevelDef().wireGauge,
+        color: getLevelDef().wireColor,
+        colorName: getLevelDef().wireColorName,
+        pin: null,
+        contactSize: getLevelDef().correctTerminal
+      };
+    }
+
+    /* ===================================================
+       CANVAS SIZING
+       =================================================== */
+    function resizeCanvas(canvas, area) {
+      const rect = area.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width  = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { w: rect.width, h: rect.height };
+    }
+
+    function resizeAll() {
+      resizeCanvas(workCanvas, canvasArea);
+      const inspWrap = inspectCanvas.parentElement;
+      if (inspWrap) resizeCanvas(inspectCanvas, inspWrap);
+      const diagWrap = diagramCanvas.parentElement;
+      if (diagWrap) resizeCanvas(diagramCanvas, diagWrap);
+      render();
+    }
+
+    window.addEventListener('resize', resizeAll);
+
+    /* ===================================================
+       MAIN CANVAS RENDERING
+       =================================================== */
+    function render() {
+      const rect = canvasArea.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Background workbench surface
+      drawWorkbench(W, H);
+
+      // Wire + terminal based on state
+      const wire = getCurrentWire();
+      drawWireAndTerminal(W, H, wire);
+
+      // Level 2: D-sub shell (show after strip to give context)
+      if (level === 2 && wireState >= WIRE_STATES.STRIPPED) {
+        drawDSubShell(W, H);
+      }
+      // Level 3: circular connector
+      if (level === 3) {
+        drawCircularConnector(W, H);
+      }
+
+      // Active tool cursor indicator
+      if (activeTool) {
+        drawToolIndicator(W, H);
+      }
+
+      // Render inspection if in that state
+      if (wireState === WIRE_STATES.INSPECTING || wireState === WIRE_STATES.CRIMPED) {
+        renderInspection();
+      }
+
+      // Level 3: wiring diagram
+      if (level === 3) {
+        renderWiringDiagram();
+      }
+    }
+
+    function drawWorkbench(W, H) {
+      // Dark workbench with subtle grid
+      ctx.fillStyle = '#0c1424';
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle grid lines
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
+      ctx.lineWidth = 0.5;
+      const gridSize = 30;
+      for (let x = 0; x < W; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y < H; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Workbench label
+      ctx.font = '10px "Share Tech Mono", monospace';
+      ctx.fillStyle = 'rgba(100, 116, 139, 0.5)';
+      ctx.textAlign = 'left';
+      ctx.fillText('CRIMP WORKBENCH', 12, 18);
+
+      // Wire info label
+      const wire = getCurrentWire();
+      ctx.font = '11px "Share Tech Mono", monospace';
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.7)';
+      const infoText = (level === 3)
+        ? 'Wire ' + (LEVELS[3].currentWireIdx + 1) + '/6: ' + wire.colorName + ' ' + wire.gauge + ' AWG -> Pin ' + wire.pin
+        : wire.colorName + ' ' + wire.gauge + ' AWG -> ' + getLevelDef().destination;
+      ctx.fillText(infoText, 12, H - 10);
+    }
+
+    function drawWireAndTerminal(W, H, wire) {
+      const cx = W * 0.45;
+      const cy = H * 0.5;
+      const wireLen = W * 0.55;
+      const wireStartX = cx - wireLen / 2;
+      const wireEndX = cx + wireLen / 2;
+      const wireY = cy;
+      const wireThick = Math.max(4, Math.min(8, W * 0.012));
+
+      // Shield braid for level 2
+      if (level === 2 && getLevelDef().shielded) {
+        drawShieldedWire(wireStartX, wireEndX, wireY, wireThick, wire);
+      } else {
+        drawSimpleWire(wireStartX, wireEndX, wireY, wireThick, wire);
+      }
+
+      // Terminal
+      if (selectedTerminal || wireState >= WIRE_STATES.INSERTED) {
+        drawTerminal(wireEndX, wireY, wireThick, wire);
+      }
+    }
+
+    function drawSimpleWire(x1, x2, y, thick, wire) {
+      const stripLen = thick * 8;
+      const stripX = x2 - stripLen;
+
+      // Main insulated portion
+      ctx.strokeStyle = wire.color;
+      ctx.lineWidth = thick;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+
+      if (wireState === WIRE_STATES.UNSTRIPPED) {
+        // Full insulation
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        ctx.stroke();
+        // Wire end cap
+        ctx.fillStyle = darken(wire.color, 0.3);
+        ctx.beginPath();
+        ctx.arc(x2, y, thick / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Insulated portion
+        ctx.moveTo(x1, y);
+        ctx.lineTo(stripX, y);
+        ctx.stroke();
+
+        // Stripped conductor (copper strands)
+        if (wireState === WIRE_STATES.STRIPPED || (wireState >= WIRE_STATES.INSERTED && !crimpState.wireInserted)) {
+          drawConductorStrands(stripX, x2, y, thick * 0.7, stripLen);
+        }
+
+        // Check for over-strip defect (exposed conductor before barrel)
+        if (crimpState.stripLength > 0.5 && wireState >= WIRE_STATES.STRIPPED) {
+          // Draw extra exposed conductor
+          ctx.strokeStyle = '#d97706';
+          ctx.lineWidth = thick * 0.5;
+          ctx.beginPath();
+          ctx.moveTo(stripX - thick * 2, y);
+          ctx.lineTo(stripX, y);
+          ctx.stroke();
+        }
+
+        // Insulation edge
+        ctx.fillStyle = wire.color;
+        ctx.beginPath();
+        ctx.arc(stripX, y, thick / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawShieldedWire(x1, x2, y, thick, wire) {
+      const step = getCurrentStep();
+      const shieldStripped = stepIndex > 2 || (stepIndex === 2 && wireState >= WIRE_STATES.STRIPPED);
+      const innerStripped = stepIndex > 3 || (stepIndex === 3 && wireState >= WIRE_STATES.STRIPPED);
+      const stripLen = thick * 8;
+      const stripX = x2 - stripLen;
+      const outerThick = thick * 1.5;
+
+      if (!shieldStripped) {
+        // Outer jacket (gray)
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = outerThick;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        ctx.stroke();
+        // Inner wire color visible at end
+        ctx.fillStyle = '#444';
+        ctx.beginPath();
+        ctx.arc(x2, y, outerThick / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Outer jacket (partial)
+        const jacketEnd = x2 - thick * 16;
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = outerThick;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x1, y);
+        ctx.lineTo(jacketEnd, y);
+        ctx.stroke();
+
+        // Folded-back shield braid (silver mesh)
+        ctx.strokeStyle = '#a0a0a0';
+        ctx.lineWidth = thick * 0.6;
+        ctx.setLineDash([3, 2]);
+        ctx.beginPath();
+        ctx.moveTo(jacketEnd, y - outerThick / 2 - 2);
+        ctx.lineTo(jacketEnd - thick * 4, y - outerThick / 2 - 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(jacketEnd, y + outerThick / 2 + 2);
+        ctx.lineTo(jacketEnd - thick * 4, y + outerThick / 2 + 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Inner insulated wire
+        if (!innerStripped) {
+          ctx.strokeStyle = wire.color;
+          ctx.lineWidth = thick;
+          ctx.beginPath();
+          ctx.moveTo(jacketEnd, y);
+          ctx.lineTo(x2, y);
+          ctx.stroke();
+        } else {
+          // Inner insulation up to strip point
+          ctx.strokeStyle = wire.color;
+          ctx.lineWidth = thick;
+          ctx.beginPath();
+          ctx.moveTo(jacketEnd, y);
+          ctx.lineTo(stripX, y);
+          ctx.stroke();
+
+          // Conductor strands
+          if (wireState >= WIRE_STATES.STRIPPED && !crimpState.wireInserted) {
+            drawConductorStrands(stripX, x2, y, thick * 0.6, stripLen);
+          }
+
+          ctx.fillStyle = wire.color;
+          ctx.beginPath();
+          ctx.arc(stripX, y, thick / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function drawConductorStrands(x1, x2, y, thick, len) {
+      // Individual copper strands
+      const strandCount = 5;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < strandCount; i++) {
+        const offset = (i - (strandCount - 1) / 2) * (thick / strandCount);
+        ctx.strokeStyle = i % 2 === 0 ? '#d97706' : '#b45309';
+        ctx.beginPath();
+        ctx.moveTo(x1, y + offset);
+        // Slight waviness
+        const midX = (x1 + x2) / 2;
+        ctx.bezierCurveTo(
+          midX - len * 0.1, y + offset + (i % 2 ? 1 : -1),
+          midX + len * 0.1, y + offset + (i % 2 ? -1 : 1),
+          x2, y + offset * 0.5
+        );
+        ctx.stroke();
+      }
+      // Main conductor fill
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = thick;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      ctx.lineTo(x2, y);
+      ctx.stroke();
+    }
+
+    function drawTerminal(endX, y, wireThick, wire) {
+      const term = TERMINALS.find(t => t.id === selectedTerminal) || TERMINALS[0];
+      const barrelLen = wireThick * 6;
+      const barrelH = wireThick * 2.5;
+      const barrelX = endX - barrelLen + wireThick;
+
+      // Barrel
+      const isDeformed = crimpState.crimpDone;
+      const barrelColor = isDeformed
+        ? (crimpState.crimpQuality === 'over' ? '#6b7280' : '#9ca3af')
+        : '#b8c0cc';
+
+      ctx.fillStyle = barrelColor;
+
+      if (isDeformed && crimpState.crimpQuality === 'over') {
+        // Over-crimped: flattened barrel with cracks
+        ctx.fillRect(barrelX, y - barrelH / 3, barrelLen, barrelH * 0.66);
+        // Crack lines
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(barrelX + barrelLen * 0.3, y - barrelH / 3);
+        ctx.lineTo(barrelX + barrelLen * 0.4, y + barrelH / 3);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(barrelX + barrelLen * 0.7, y - barrelH / 3);
+        ctx.lineTo(barrelX + barrelLen * 0.6, y + barrelH / 3);
+        ctx.stroke();
+      } else if (isDeformed && crimpState.crimpQuality === 'pliers') {
+        // Pliers crimp: irregular deformation
+        ctx.beginPath();
+        ctx.moveTo(barrelX, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.3, y - barrelH / 3);
+        ctx.lineTo(barrelX + barrelLen * 0.5, y - barrelH / 2.5);
+        ctx.lineTo(barrelX + barrelLen * 0.7, y - barrelH / 3.5);
+        ctx.lineTo(barrelX + barrelLen, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen, y + barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.7, y + barrelH / 3);
+        ctx.lineTo(barrelX + barrelLen * 0.5, y + barrelH / 2.5);
+        ctx.lineTo(barrelX + barrelLen * 0.3, y + barrelH / 3.5);
+        ctx.lineTo(barrelX, y + barrelH / 2);
+        ctx.closePath();
+        ctx.fill();
+      } else if (isDeformed) {
+        // Good or under-crimp: standard hexagonal deformation
+        const indent = crimpState.crimpQuality === 'under' ? barrelH * 0.1 : barrelH * 0.2;
+        ctx.beginPath();
+        ctx.moveTo(barrelX, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.2, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.3, y - barrelH / 2 + indent);
+        ctx.lineTo(barrelX + barrelLen * 0.7, y - barrelH / 2 + indent);
+        ctx.lineTo(barrelX + barrelLen * 0.8, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen, y - barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen, y + barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.8, y + barrelH / 2);
+        ctx.lineTo(barrelX + barrelLen * 0.7, y + barrelH / 2 - indent);
+        ctx.lineTo(barrelX + barrelLen * 0.3, y + barrelH / 2 - indent);
+        ctx.lineTo(barrelX + barrelLen * 0.2, y + barrelH / 2);
+        ctx.lineTo(barrelX, y + barrelH / 2);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        // Uncrimped barrel
+        roundRect(ctx, barrelX, y - barrelH / 2, barrelLen, barrelH, 3);
+        ctx.fill();
+      }
+
+      // Barrel highlight
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(barrelX + 2, y - barrelH / 2 + 2);
+      ctx.lineTo(barrelX + barrelLen - 2, y - barrelH / 2 + 2);
+      ctx.stroke();
+
+      // Wire inside barrel (if inserted)
+      if (crimpState.wireInserted || wireState >= WIRE_STATES.INSERTED) {
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = wireThick * 0.6;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(barrelX - wireThick, y);
+        ctx.lineTo(barrelX + barrelLen * 0.85, y);
+        ctx.stroke();
+
+        // Defect: insulation inside barrel
+        if (crimpState.defects.includes('insulation-in')) {
+          ctx.fillStyle = wire.color;
+          ctx.globalAlpha = 0.6;
+          ctx.fillRect(barrelX + 2, y - wireThick * 0.4, barrelLen * 0.25, wireThick * 0.8);
+          ctx.globalAlpha = 1;
+        }
+
+        // Defect: wire strands outside barrel (wrong terminal size)
+        if (crimpState.defects.includes('wrong-size')) {
+          ctx.strokeStyle = '#d97706';
+          ctx.lineWidth = 1;
+          for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(barrelX + barrelLen * 0.5, y + barrelH / 2);
+            ctx.lineTo(barrelX + barrelLen * (0.4 + i * 0.1), y + barrelH / 2 + 6 + i * 2);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Terminal tongue/shape
+      const tongueX = barrelX + barrelLen;
+      if (term.type === 'ring') {
+        // Ring terminal
+        const ringR = wireThick * 2;
+        ctx.fillStyle = barrelColor;
+        ctx.fillRect(tongueX, y - wireThick * 0.6, wireThick * 2.5, wireThick * 1.2);
+        ctx.beginPath();
+        ctx.arc(tongueX + wireThick * 2.5 + ringR, y, ringR, 0, Math.PI * 2);
+        ctx.fill();
+        // Hole
+        ctx.fillStyle = '#0c1424';
+        ctx.beginPath();
+        ctx.arc(tongueX + wireThick * 2.5 + ringR, y, ringR * 0.45, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (term.type === 'spade') {
+        // Spade terminal
+        ctx.fillStyle = barrelColor;
+        ctx.fillRect(tongueX, y - wireThick * 0.6, wireThick * 2, wireThick * 1.2);
+        ctx.beginPath();
+        ctx.moveTo(tongueX + wireThick * 2, y - wireThick * 1.5);
+        ctx.lineTo(tongueX + wireThick * 5, y - wireThick * 1.5);
+        ctx.lineTo(tongueX + wireThick * 5, y + wireThick * 1.5);
+        ctx.lineTo(tongueX + wireThick * 2, y + wireThick * 1.5);
+        ctx.closePath();
+        ctx.fill();
+        // Slot
+        ctx.fillStyle = '#0c1424';
+        ctx.fillRect(tongueX + wireThick * 3, y - wireThick, wireThick * 1.5, wireThick * 2);
+      } else if (term.type === 'pin') {
+        // Pin contact
+        ctx.fillStyle = barrelColor;
+        ctx.fillRect(tongueX, y - wireThick * 0.4, wireThick * 4, wireThick * 0.8);
+        // Tapered tip
+        ctx.beginPath();
+        ctx.moveTo(tongueX + wireThick * 4, y - wireThick * 0.4);
+        ctx.lineTo(tongueX + wireThick * 5.5, y);
+        ctx.lineTo(tongueX + wireThick * 4, y + wireThick * 0.4);
+        ctx.closePath();
+        ctx.fill();
+      } else if (term.type === 'butt') {
+        // Butt splice
+        ctx.fillStyle = barrelColor;
+        roundRect(ctx, tongueX, y - barrelH / 2, barrelLen * 0.8, barrelH, 3);
+        ctx.fill();
+      }
+
+      // Terminal label
+      ctx.font = '9px "Share Tech Mono", monospace';
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+      ctx.textAlign = 'center';
+      ctx.fillText(term.label, barrelX + barrelLen / 2, y + barrelH / 2 + 14);
+    }
+
+    function drawDSubShell(W, H) {
+      const cx = W * 0.82;
+      const cy = H * 0.5;
+      const shellW = W * 0.12;
+      const shellH = H * 0.35;
+
+      // D-sub shell
+      ctx.fillStyle = '#2a3a5c';
+      ctx.strokeStyle = '#4a5a7c';
+      ctx.lineWidth = 2;
+      roundRect(ctx, cx - shellW / 2, cy - shellH / 2, shellW, shellH, 6);
+      ctx.fill();
+      ctx.stroke();
+
+      // Shell label
+      ctx.font = '9px "Share Tech Mono", monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('D-SUB', cx, cy - shellH / 2 - 6);
+
+      // Pin holes
+      const pinCount = 9;
+      const pinSpacing = (shellH - 20) / (pinCount - 1);
+      for (let i = 0; i < pinCount; i++) {
+        const py = cy - shellH / 2 + 10 + i * pinSpacing;
+        ctx.fillStyle = i === 0 && wireState >= WIRE_STATES.CRIMPED && stepIndex >= 7
+          ? '#f59e0b'   // inserted pin
+          : '#1e293b';
+        ctx.beginPath();
+        ctx.arc(cx, py, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#4a5a7c';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+
+    function drawCircularConnector(W, H) {
+      const cx = W * 0.85;
+      const cy = H * 0.5;
+      const r = Math.min(W * 0.08, H * 0.25);
+
+      // Connector body
+      ctx.fillStyle = '#2a3a5c';
+      ctx.strokeStyle = '#4a5a7c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Outer ring
+      ctx.strokeStyle = '#5a6a8c';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 4, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.font = '9px "Share Tech Mono", monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('CIRCULAR', cx, cy - r - 10);
+
+      // Pin positions (A-F in a circle)
+      const lv = LEVELS[3];
+      const pinR = r * 0.6;
+      for (let i = 0; i < 6; i++) {
+        const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+        const px = cx + Math.cos(angle) * pinR;
+        const py = cy + Math.sin(angle) * pinR;
+
+        const isInserted = i < lv.currentWireIdx ||
+          (i === lv.currentWireIdx && stepIndex > 6);
+
+        ctx.fillStyle = isInserted ? lv.wires[i].color : '#1e293b';
+        ctx.beginPath();
+        ctx.arc(px, py, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#4a5a7c';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+
+        // Pin label
+        ctx.font = '8px "Share Tech Mono", monospace';
+        ctx.fillStyle = isInserted ? '#fff' : '#64748b';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(lv.wires[i].pin, px, py);
+      }
+      ctx.textBaseline = 'alphabetic';
+    }
+
+    function drawToolIndicator(W, H) {
+      const toolNames = {
+        stripper: 'Wire Stripper',
+        ratchet: 'Ratchet Crimp',
+        pliers: 'Generic Pliers',
+        heatgun: 'Heat Gun',
+        mirror: 'Inspect Mirror',
+        insert: 'Pin Insert Tool'
+      };
+      ctx.font = '10px "Share Tech Mono", monospace';
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.8)';
+      ctx.textAlign = 'right';
+      ctx.fillText('Active: ' + (toolNames[activeTool] || activeTool), W - 12, 18);
+    }
+
+    function roundRect(context, x, y, w, h, r) {
+      context.beginPath();
+      context.moveTo(x + r, y);
+      context.lineTo(x + w - r, y);
+      context.quadraticCurveTo(x + w, y, x + w, y + r);
+      context.lineTo(x + w, y + h - r);
+      context.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      context.lineTo(x + r, y + h);
+      context.quadraticCurveTo(x, y + h, x, y + h - r);
+      context.lineTo(x, y + r);
+      context.quadraticCurveTo(x, y, x + r, y);
+      context.closePath();
+    }
+
+    function darken(hex, amt) {
+      let c = hex.replace('#', '');
+      if (c.length === 3) c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
+      const r = Math.max(0, parseInt(c.substring(0,2),16) - Math.floor(amt*255));
+      const g = Math.max(0, parseInt(c.substring(2,4),16) - Math.floor(amt*255));
+      const b = Math.max(0, parseInt(c.substring(4,6),16) - Math.floor(amt*255));
+      return '#' + r.toString(16).padStart(2,'0') + g.toString(16).padStart(2,'0') + b.toString(16).padStart(2,'0');
+    }
+
+    /* ===================================================
+       INSPECTION RENDERING
+       =================================================== */
+    function renderInspection() {
+      const rect = inspectCanvas.parentElement.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+
+      ictx.clearRect(0, 0, W, H);
+
+      if (inspectView === 'zoom') {
+        renderZoomView(W, H);
+      } else if (inspectView === 'pull') {
+        renderPullTest(W, H);
+      } else if (inspectView === 'xsection') {
+        renderCrossSection(W, H);
+      }
+    }
+
+    function renderZoomView(W, H) {
+      // Zoomed-in view of crimped terminal
+      ictx.fillStyle = '#0a1628';
+      ictx.fillRect(0, 0, W, H);
+
+      const cx = W / 2;
+      const cy = H / 2;
+      const barrelW = W * 0.45;
+      const barrelH = H * 0.35;
+
+      // Barrel
+      ictx.fillStyle = '#9ca3af';
+      if (crimpState.crimpQuality === 'over') {
+        ictx.fillRect(cx - barrelW / 2, cy - barrelH / 3, barrelW, barrelH * 0.66);
+        // Cracks
+        ictx.strokeStyle = '#ef4444';
+        ictx.lineWidth = 2;
+        ictx.beginPath();
+        ictx.moveTo(cx - barrelW * 0.1, cy - barrelH / 3);
+        ictx.lineTo(cx + barrelW * 0.05, cy + barrelH / 3);
+        ictx.stroke();
+        // Label
+        ictx.font = '10px "Share Tech Mono", monospace';
+        ictx.fillStyle = '#ef4444';
+        ictx.textAlign = 'center';
+        ictx.fillText('CRACKED BARREL', cx, cy + barrelH / 2 + 16);
+      } else {
+        roundRect(ictx, cx - barrelW / 2, cy - barrelH / 2, barrelW, barrelH, 4);
+        ictx.fill();
+
+        // Crimp indent marks
+        if (crimpState.crimpDone) {
+          const indent = crimpState.crimpQuality === 'good' ? barrelH * 0.22 : barrelH * 0.08;
+          ictx.strokeStyle = '#64748b';
+          ictx.lineWidth = 2;
+          ictx.beginPath();
+          ictx.moveTo(cx - barrelW * 0.2, cy - barrelH / 2 + indent);
+          ictx.lineTo(cx + barrelW * 0.2, cy - barrelH / 2 + indent);
+          ictx.stroke();
+          ictx.beginPath();
+          ictx.moveTo(cx - barrelW * 0.2, cy + barrelH / 2 - indent);
+          ictx.lineTo(cx + barrelW * 0.2, cy + barrelH / 2 - indent);
+          ictx.stroke();
+        }
+      }
+
+      // Wire through barrel
+      ictx.strokeStyle = '#d97706';
+      ictx.lineWidth = 4;
+      ictx.beginPath();
+      ictx.moveTo(cx - barrelW / 2 - 20, cy);
+      ictx.lineTo(cx + barrelW / 2 - 8, cy);
+      ictx.stroke();
+
+      // Defect indicators
+      if (crimpState.defects.includes('insulation-in')) {
+        const wire = getCurrentWire();
+        ictx.fillStyle = wire.color;
+        ictx.globalAlpha = 0.7;
+        ictx.fillRect(cx - barrelW / 2 + 4, cy - 4, barrelW * 0.2, 8);
+        ictx.globalAlpha = 1;
+        ictx.font = '9px "Share Tech Mono", monospace';
+        ictx.fillStyle = '#f59e0b';
+        ictx.textAlign = 'left';
+        ictx.fillText('INSULATION IN BARREL', cx - barrelW / 2, cy + barrelH / 2 + 16);
+      }
+
+      if (crimpState.defects.includes('bird-cage')) {
+        ictx.strokeStyle = '#d97706';
+        ictx.lineWidth = 1;
+        for (let i = 0; i < 4; i++) {
+          ictx.beginPath();
+          ictx.moveTo(cx - barrelW / 2 - 10, cy + (i - 1.5) * 3);
+          ictx.lineTo(cx - barrelW / 2 - 25, cy + (i - 1.5) * 6);
+          ictx.stroke();
+        }
+        ictx.font = '9px "Share Tech Mono", monospace';
+        ictx.fillStyle = '#f59e0b';
+        ictx.textAlign = 'left';
+        ictx.fillText('BIRD-CAGING RISK', cx - barrelW / 2, cy + barrelH / 2 + 16);
+      }
+
+      // Zoom label
+      ictx.font = '9px "Share Tech Mono", monospace';
+      ictx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+      ictx.textAlign = 'left';
+      ictx.fillText('ZOOM VIEW (4x)', 6, 14);
+    }
+
+    function renderPullTest(W, H) {
+      ictx.fillStyle = '#0a1628';
+      ictx.fillRect(0, 0, W, H);
+
+      const force = crimpState.pullForce;
+      const gaugeX = W * 0.15;
+      const gaugeW = W * 0.7;
+      const gaugeY = H * 0.45;
+      const gaugeH = H * 0.18;
+
+      // Gauge background
+      ictx.fillStyle = '#1e293b';
+      roundRect(ictx, gaugeX, gaugeY, gaugeW, gaugeH, 4);
+      ictx.fill();
+      ictx.strokeStyle = '#334155';
+      ictx.lineWidth = 1;
+      roundRect(ictx, gaugeX, gaugeY, gaugeW, gaugeH, 4);
+      ictx.stroke();
+
+      // Scale marks
+      ictx.font = '8px "Share Tech Mono", monospace';
+      ictx.fillStyle = '#64748b';
+      ictx.textAlign = 'center';
+      for (let lb = 0; lb <= 30; lb += 5) {
+        const px = gaugeX + (lb / 30) * gaugeW;
+        ictx.fillText(lb + '', px, gaugeY - 4);
+        ictx.strokeStyle = '#334155';
+        ictx.beginPath();
+        ictx.moveTo(px, gaugeY);
+        ictx.lineTo(px, gaugeY + gaugeH);
+        ictx.stroke();
+      }
+
+      // PASS zone (15-25 lbs)
+      const passStart = gaugeX + (15 / 30) * gaugeW;
+      const passEnd = gaugeX + (25 / 30) * gaugeW;
+      ictx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+      ictx.fillRect(passStart, gaugeY, passEnd - passStart, gaugeH);
+      ictx.font = '7px "Share Tech Mono", monospace';
+      ictx.fillStyle = '#10b981';
+      ictx.textAlign = 'center';
+      ictx.fillText('PASS', (passStart + passEnd) / 2, gaugeY + gaugeH + 12);
+
+      // FAIL zone (0-8 lbs)
+      const failEnd = gaugeX + (8 / 30) * gaugeW;
+      ictx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+      ictx.fillRect(gaugeX, gaugeY, failEnd - gaugeX, gaugeH);
+      ictx.fillStyle = '#ef4444';
+      ictx.fillText('FAIL', (gaugeX + failEnd) / 2, gaugeY + gaugeH + 12);
+
+      // Needle
+      if (force > 0) {
+        const needleX = gaugeX + Math.min(force / 30, 1) * gaugeW;
+        ictx.strokeStyle = '#f59e0b';
+        ictx.lineWidth = 3;
+        ictx.beginPath();
+        ictx.moveTo(needleX, gaugeY - 2);
+        ictx.lineTo(needleX, gaugeY + gaugeH + 2);
+        ictx.stroke();
+
+        // Needle cap
+        ictx.fillStyle = '#f59e0b';
+        ictx.beginPath();
+        ictx.arc(needleX, gaugeY - 4, 4, 0, Math.PI * 2);
+        ictx.fill();
+      }
+
+      // Result text
+      ictx.font = '12px "Share Tech Mono", monospace';
+      ictx.textAlign = 'center';
+      if (force >= 15 && force <= 25) {
+        ictx.fillStyle = '#10b981';
+        ictx.fillText('PULL TEST: ' + force.toFixed(1) + ' lbs - PASS', W / 2, H * 0.85);
+      } else if (force > 0 && force < 15) {
+        ictx.fillStyle = '#ef4444';
+        ictx.fillText('PULL TEST: ' + force.toFixed(1) + ' lbs - FAIL (under-crimp)', W / 2, H * 0.85);
+      } else if (force > 25) {
+        ictx.fillStyle = '#ef4444';
+        ictx.fillText('PULL TEST: BARREL CRACKED - FAIL', W / 2, H * 0.85);
+      } else {
+        ictx.fillStyle = '#64748b';
+        ictx.fillText('Awaiting test...', W / 2, H * 0.85);
+      }
+
+      // Label
+      ictx.font = '9px "Share Tech Mono", monospace';
+      ictx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+      ictx.textAlign = 'left';
+      ictx.fillText('PULL TEST (lbs force)', 6, 14);
+    }
+
+    function renderCrossSection(W, H) {
+      ictx.fillStyle = '#0a1628';
+      ictx.fillRect(0, 0, W, H);
+
+      const cx = W / 2;
+      const cy = H / 2;
+      const outerR = Math.min(W, H) * 0.3;
+      const fillPct = crimpState.fillPct;
+
+      // Barrel outline (outer circle)
+      ictx.strokeStyle = '#9ca3af';
+      ictx.lineWidth = 3;
+      ictx.beginPath();
+      ictx.arc(cx, cy, outerR, 0, Math.PI * 2);
+      ictx.stroke();
+
+      // Wire fill (inner colored area)
+      if (fillPct > 0) {
+        const innerR = outerR * Math.sqrt(fillPct / 100);
+        ictx.fillStyle = '#d97706';
+        ictx.beginPath();
+        ictx.arc(cx, cy, innerR, 0, Math.PI * 2);
+        ictx.fill();
+
+        // Individual strand circles
+        const strandR = innerR * 0.18;
+        const strandCount = 7;
+        ictx.fillStyle = '#b45309';
+        for (let i = 0; i < strandCount; i++) {
+          const angle = (i / strandCount) * Math.PI * 2;
+          const sr = innerR * 0.55;
+          ictx.beginPath();
+          ictx.arc(cx + Math.cos(angle) * sr, cy + Math.sin(angle) * sr, strandR, 0, Math.PI * 2);
+          ictx.fill();
+        }
+        // Center strand
+        ictx.beginPath();
+        ictx.arc(cx, cy, strandR, 0, Math.PI * 2);
+        ictx.fill();
+      }
+
+      // Fill percentage readout
+      ictx.font = '14px "Share Tech Mono", monospace';
+      ictx.textAlign = 'center';
+      const pctColor = (fillPct >= 70 && fillPct <= 90) ? '#10b981' : (fillPct > 0 ? '#ef4444' : '#64748b');
+      ictx.fillStyle = pctColor;
+      ictx.fillText(fillPct > 0 ? fillPct + '% Fill' : '--', cx, cy + outerR + 20);
+
+      // Ideal range indicator
+      ictx.font = '8px "Share Tech Mono", monospace';
+      ictx.fillStyle = '#64748b';
+      ictx.fillText('Ideal: 70-90%', cx, cy + outerR + 34);
+
+      // Label
+      ictx.font = '9px "Share Tech Mono", monospace';
+      ictx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+      ictx.textAlign = 'left';
+      ictx.fillText('CROSS-SECTION VIEW', 6, 14);
+    }
+
+    /* ===================================================
+       WIRING DIAGRAM (Level 3)
+       =================================================== */
+    function renderWiringDiagram() {
+      const rect = diagramCanvas.parentElement.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+
+      dctx.clearRect(0, 0, W, H);
+      dctx.fillStyle = '#080e1c';
+      dctx.fillRect(0, 0, W, H);
+
+      const lv = LEVELS[3];
+      const colW = W / 7;
+      const y0 = 18;
+      const rowH = (H - 30) / 6;
+
+      // Title
+      dctx.font = '9px "Share Tech Mono", monospace';
+      dctx.fillStyle = '#64748b';
+      dctx.textAlign = 'center';
+      dctx.fillText('WIRING DIAGRAM', W / 2, 12);
+
+      // Column headers
+      const headers = ['Wire', 'Color', 'AWG', 'Pin', 'Contact'];
+      headers.forEach((h, i) => {
+        dctx.fillStyle = '#475569';
+        dctx.font = '7px "Share Tech Mono", monospace';
+        dctx.textAlign = 'center';
+        dctx.fillText(h, colW * (i + 1), y0);
+      });
+
+      // Wire entries
+      lv.wires.forEach((w, i) => {
+        const y = y0 + 6 + (i + 0.5) * rowH;
+        const isCurrent = i === lv.currentWireIdx;
+
+        if (isCurrent) {
+          dctx.fillStyle = 'rgba(245, 158, 11, 0.08)';
+          dctx.fillRect(0, y - rowH / 2, W, rowH);
+        }
+
+        dctx.font = '8px "Share Tech Mono", monospace';
+        dctx.textAlign = 'center';
+
+        // Wire number
+        dctx.fillStyle = isCurrent ? '#f59e0b' : '#94a3b8';
+        dctx.fillText((i + 1) + '', colW * 1, y);
+
+        // Color swatch + name
+        dctx.fillStyle = w.color;
+        dctx.fillRect(colW * 2 - 16, y - 5, 10, 10);
+        dctx.fillStyle = isCurrent ? '#f8fafc' : '#94a3b8';
+        dctx.textAlign = 'left';
+        dctx.fillText(w.colorName, colW * 2, y);
+
+        // Gauge
+        dctx.textAlign = 'center';
+        dctx.fillText(w.gauge + '', colW * 3, y);
+
+        // Pin
+        dctx.fillText(w.pin, colW * 4, y);
+
+        // Contact size
+        const contactLabel = TERMINALS.find(t => t.id === w.contactSize);
+        dctx.font = '7px "Share Tech Mono", monospace';
+        dctx.fillText(contactLabel ? contactLabel.label : w.contactSize, colW * 5.2, y);
+
+        // Completion marker
+        if (i < lv.currentWireIdx) {
+          dctx.fillStyle = '#10b981';
+          dctx.font = '10px sans-serif';
+          dctx.fillText('\u2713', colW * 6.2, y);
+        }
+      });
+    }
+
+    /* ===================================================
+       TERMINAL TRAY MANAGEMENT
+       =================================================== */
+    function populateTerminalTray() {
+      terminalGrid.innerHTML = '';
+      const lv = getLevelDef();
+
+      // Show terminals relevant to current level
+      let termList;
+      if (level === 1) {
+        termList = TERMINALS.filter(t => t.type === 'ring' || t.type === 'spade' || t.type === 'butt' || t.type === 'pin');
+      } else {
+        termList = TERMINALS.filter(t => t.type === 'pin' || t.type === 'ring');
+      }
+
+      termList.forEach(term => {
+        const btn = document.createElement('button');
+        btn.className = 'cl-terminal-btn';
+        btn.textContent = term.label;
+        btn.dataset.termId = term.id;
+        btn.addEventListener('click', () => selectTerminal(term.id));
+        terminalGrid.appendChild(btn);
+      });
+    }
+
+    function selectTerminal(termId) {
+      const step = getCurrentStep();
+      if (!step || step.id !== 'select-terminal') return;
+
+      selectedTerminal = termId;
+
+      // Highlight selection
+      terminalGrid.querySelectorAll('.cl-terminal-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.termId === termId);
+      });
+
+      // Check correctness
+      const wire = getCurrentWire();
+      const term = TERMINALS.find(t => t.id === termId);
+      const correctId = (level === 3) ? wire.contactSize : getLevelDef().correctTerminal;
+      const isCorrect = termId === correctId;
+
+      crimpState.terminalCorrect = isCorrect;
+
+      if (!isCorrect) {
+        // Give specific feedback
+        if (term && (wire.gauge < term.gaugeMin || wire.gauge > term.gaugeMax)) {
+          setFeedback('Wrong Size', 'That terminal is rated for ' + term.gaugeMin + '-' + term.gaugeMax + ' AWG. Your wire is ' + wire.gauge + ' AWG.', 'incorrect');
+          showToast('Wrong terminal gauge range!', 'incorrect');
+          crimpState.defects.push('wrong-size');
+        } else if (term && term.type !== getLevelDef().terminalType) {
+          const needed = level === 1 ? 'ring' : 'pin';
+          setFeedback('Wrong Type', 'You need a ' + needed + ' terminal for ' + getLevelDef().destination + ', not a ' + term.type + '.', 'incorrect');
+          showToast('Wrong terminal type!', 'incorrect');
+        }
+        addScore('terminal', 0);
+        tracker.recordStep({ stepId: 'level-' + level + '-terminal', correct: false, points: 0, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      } else {
+        setFeedback('Correct', 'Good terminal selection! ' + term.label + ' matches ' + wire.gauge + ' AWG wire.', 'correct');
+        showToast('Correct terminal!', 'correct');
+        addScore('terminal', 20);
+        tracker.recordStep({ stepId: 'level-' + level + '-terminal', correct: true, points: 20, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      }
+
+      advanceStep();
+      render();
+    }
+
+    /* ===================================================
+       TOOL SELECTION
+       =================================================== */
+    toolGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.cl-tool-btn');
+      if (!btn || btn.disabled) return;
+
+      const tool = btn.dataset.tool;
+      activeTool = tool;
+
+      // Highlight active
+      toolGrid.querySelectorAll('.cl-tool-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const step = getCurrentStep();
+      if (!step) return;
+
+      // Tool selection steps
+      if (step.id === 'select-stripper' && tool === 'stripper') {
+        setFeedback('Tool Selected', 'Wire stripper selected. Click on the wire to strip it.', 'info');
+        advanceStep();
+      } else if (step.id === 'select-stripper' && tool !== 'stripper') {
+        setFeedback('Wrong Tool', 'You need the wire stripper for this step, not the ' + tool + '.', 'incorrect');
+      } else if (step.id === 'select-crimper') {
+        if (tool === 'ratchet') {
+          crimpState.toolCorrect = true;
+          setFeedback('Correct Tool', 'Ratcheting crimp tool selected - the correct choice for aviation crimps.', 'correct');
+          showToast('Correct tool!', 'correct');
+          addScore('tool', 20);
+          tracker.recordStep({ stepId: 'level-' + level + '-tool', correct: true, points: 20, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+          advanceStep();
+        } else if (tool === 'pliers') {
+          crimpState.toolCorrect = false;
+          crimpState.defects.push('wrong-tool');
+          setFeedback('Wrong Tool', 'Generic pliers produce inconsistent deformation and are NOT approved for aviation crimps. Always use a ratcheting crimp tool.', 'incorrect');
+          showToast('Wrong tool - generic pliers!', 'incorrect');
+          addScore('tool', 0);
+          tracker.recordStep({ stepId: 'level-' + level + '-tool', correct: false, points: 0, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+          advanceStep();
+        } else {
+          setFeedback('Wrong Tool', 'You need a crimping tool for this step.', 'warn');
+        }
+      } else if (step.id === 'insert-pin' && tool === 'insert') {
+        setFeedback('Tool Selected', 'Pin insertion tool selected. Click the connector to insert the pin.', 'info');
+        advanceStep();
+      } else if (step.id === 'insert-pin' && tool !== 'insert') {
+        setFeedback('Wrong Tool', 'Select the pin insertion tool to insert the pin into the connector.', 'warn');
+      }
+
+      render();
+    });
+
+    /* ===================================================
+       CANVAS CLICK INTERACTIONS
+       =================================================== */
+    workCanvas.addEventListener('click', (e) => {
+      const step = getCurrentStep();
+      if (!step || animating) return;
+
+      const rect = workCanvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      const W = rect.width;
+      const H = rect.height;
+
+      // Wire area is roughly center-left of canvas
+      const wireZone = { x1: W * 0.15, y1: H * 0.3, x2: W * 0.75, y2: H * 0.7 };
+      const inWireZone = clickX >= wireZone.x1 && clickX <= wireZone.x2 && clickY >= wireZone.y1 && clickY <= wireZone.y2;
+
+      // Connector zone (right side)
+      const connZone = { x1: W * 0.75, y1: H * 0.2, x2: W * 0.95, y2: H * 0.8 };
+      const inConnZone = clickX >= connZone.x1 && clickX <= connZone.x2 && clickY >= connZone.y1 && clickY <= connZone.y2;
+
+      switch (step.id) {
+        case 'strip-wire':
+        case 'strip-shield':
+          if (inWireZone && activeTool === 'stripper') {
+            performStrip();
+          } else if (inWireZone && activeTool !== 'stripper') {
+            setFeedback('Wrong Tool', 'Select the wire stripper first.', 'warn');
+          } else {
+            setFeedback('Miss', 'Click on the wire end to strip it.', 'info');
+          }
+          break;
+
+        case 'insert-wire':
+          if (inWireZone) {
+            performInsert();
+          } else {
+            setFeedback('Miss', 'Click on the terminal barrel area to insert the wire.', 'info');
+          }
+          break;
+
+        case 'crimp':
+          if (inWireZone && (activeTool === 'ratchet' || activeTool === 'pliers')) {
+            performCrimp();
+          } else if (inWireZone) {
+            setFeedback('No Tool', 'Select a crimp tool first.', 'warn');
+          } else {
+            setFeedback('Miss', 'Click on the terminal barrel to crimp.', 'info');
+          }
+          break;
+
+        case 'insert-pin':
+          if (inConnZone && activeTool === 'insert') {
+            performPinInsert();
+          } else if (inConnZone) {
+            setFeedback('Wrong Tool', 'Select the pin insertion tool first.', 'warn');
+          }
+          break;
+
+        case 'tug-test':
+          if (inConnZone || inWireZone) {
+            performTugTest();
+          }
+          break;
+      }
+    });
+
+    /* ===================================================
+       ACTIONS
+       =================================================== */
+    function performStrip() {
+      const step = getCurrentStep();
+
+      // Level 2 shield strip step is separate from conductor strip
+      if (step && step.id === 'strip-shield') {
+        wireState = WIRE_STATES.STRIPPED;
+        setFeedback('Shield Stripped', 'Outer jacket removed and shield braid folded back. Now strip the inner conductor.', 'correct');
+        showToast('Shield prepared!', 'correct');
+        advanceStep();
+        animateTransition();
+        return;
+      }
+
+      // Determine strip quality
+      const randomVariance = (Math.random() - 0.5) * 0.15;
+      const targetLen = getLevelDef().correctStripLength || 0.375;
+      const actualLen = targetLen + randomVariance;
+      crimpState.stripLength = actualLen;
+
+      // Check strip length correctness
+      const tolerance = 0.1;
+      const isGoodStrip = Math.abs(actualLen - targetLen) <= tolerance;
+      crimpState.stripCorrect = isGoodStrip;
+
+      // Generate defects based on strip quality
+      if (actualLen < targetLen - tolerance) {
+        crimpState.defects.push('insulation-in');
+        setFeedback('Short Strip', 'Strip length is too short - insulation may be inside the barrel.', 'warn');
+      } else if (actualLen > targetLen + tolerance) {
+        crimpState.defects.push('bird-cage');
+        setFeedback('Over-Strip', 'Strip length is too long - risk of bird-caging (exposed conductor before barrel).', 'warn');
+      } else {
+        setFeedback('Good Strip', 'Strip length is approximately ' + (actualLen * 16).toFixed(0) + '/16 inch - within tolerance.', 'correct');
+      }
+
+      wireState = WIRE_STATES.STRIPPED;
+
+      if (isGoodStrip) {
+        showToast('Good strip length!', 'correct');
+        addScore('strip', 15);
+        tracker.recordStep({ stepId: 'level-' + level + '-strip', correct: true, points: 15, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      } else {
+        showToast('Strip length off-target', 'incorrect');
+        addScore('strip', 5);
+        tracker.recordStep({ stepId: 'level-' + level + '-strip', correct: false, points: 5, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      }
+
+      advanceStep();
+      animateTransition();
+    }
+
+    function performInsert() {
+      crimpState.wireInserted = true;
+      wireState = WIRE_STATES.INSERTED;
+      setFeedback('Inserted', 'Wire inserted into terminal barrel.', 'info');
+      showToast('Wire inserted', 'info');
+      advanceStep();
+      animateTransition();
+    }
+
+    function performCrimp() {
+      crimpState.crimpDone = true;
+      wireState = WIRE_STATES.CRIMPED;
+
+      // Determine crimp quality based on tool + previous defects
+      if (activeTool === 'pliers' || crimpState.defects.includes('wrong-tool')) {
+        crimpState.crimpQuality = 'pliers';
+        crimpState.pullForce = 3 + Math.random() * 5;     // 3-8 lbs (FAIL)
+        crimpState.fillPct = Math.floor(40 + Math.random() * 15); // 40-55% (poor)
+        setFeedback('Crimped', 'Terminal crimped with generic pliers - deformation appears irregular.', 'warn');
+      } else if (!crimpState.terminalCorrect) {
+        crimpState.crimpQuality = 'under';
+        crimpState.pullForce = 5 + Math.random() * 6;     // 5-11 lbs (FAIL)
+        crimpState.fillPct = Math.floor(35 + Math.random() * 20); // 35-55%
+        setFeedback('Crimped', 'Terminal crimped, but the terminal size may not match the wire gauge.', 'warn');
+      } else if (crimpState.stripCorrect && crimpState.toolCorrect) {
+        // Good crimp
+        crimpState.crimpQuality = 'good';
+        crimpState.pullForce = 15 + Math.random() * 10;   // 15-25 lbs (PASS)
+        crimpState.fillPct = Math.floor(72 + Math.random() * 16); // 72-88%
+        setFeedback('Crimped', 'Crimp completed with ratcheting tool. Clean hex deformation visible.', 'correct');
+      } else {
+        // Marginal crimp
+        crimpState.crimpQuality = Math.random() > 0.5 ? 'under' : 'good';
+        if (crimpState.crimpQuality === 'under') {
+          crimpState.pullForce = 8 + Math.random() * 6;   // 8-14 lbs (borderline)
+          crimpState.fillPct = Math.floor(50 + Math.random() * 18);
+        } else {
+          crimpState.pullForce = 16 + Math.random() * 8;
+          crimpState.fillPct = Math.floor(68 + Math.random() * 18);
+        }
+        setFeedback('Crimped', 'Crimp completed. Inspect the results carefully.', 'info');
+      }
+
+      // Score crimp quality
+      if (crimpState.crimpQuality === 'good') {
+        addScore('crimp', 25);
+        tracker.recordStep({ stepId: 'level-' + level + '-crimp', correct: true, points: 25, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      } else {
+        addScore('crimp', 5);
+        tracker.recordStep({ stepId: 'level-' + level + '-crimp', correct: false, points: 5, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      }
+
+      // Show inspection panel
+      inspectPanel.classList.add('visible');
+
+      advanceStep();
+      animateTransition();
+    }
+
+    function performPinInsert() {
+      setFeedback('Pin Inserted', 'Pin contact inserted into connector shell. Check retention.', 'info');
+      showToast('Pin inserted into connector', 'info');
+      advanceStep();
+      render();
+    }
+
+    function performTugTest() {
+      // Simulate tug test for pin retention
+      const retained = crimpState.crimpQuality === 'good';
+      if (retained) {
+        setFeedback('Tug Test', 'Pin retention is firm - pin did not pull out of connector.', 'correct');
+        showToast('Pin retention OK', 'correct');
+      } else {
+        setFeedback('Tug Test', 'Pin retention is weak - pin pulled out easily. Check crimp and pin seating.', 'incorrect');
+        showToast('Pin retention FAILED', 'incorrect');
+      }
+      advanceStep();
+      render();
+    }
+
+    function animateTransition() {
+      animating = true;
+      animProgress = 0;
+      const startTime = performance.now();
+      const duration = 400;
+
+      function tick(now) {
+        animProgress = Math.min(1, (now - startTime) / duration);
+        render();
+        if (animProgress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          animating = false;
+          render();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ===================================================
+       INSPECTION CONTROLS
+       =================================================== */
+    inspectTabs.addEventListener('click', (e) => {
+      const tab = e.target.closest('.cl-inspect-tab');
+      if (!tab) return;
+
+      inspectView = tab.dataset.view;
+      inspectTabs.querySelectorAll('.cl-inspect-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Update readout
+      if (inspectView === 'zoom') {
+        inspectReadout.textContent = crimpState.defects.length > 0
+          ? 'Defects: ' + crimpState.defects.join(', ')
+          : 'No visible defects';
+      } else if (inspectView === 'pull') {
+        if (crimpState.pullForce > 0) {
+          const status = (crimpState.pullForce >= 15 && crimpState.pullForce <= 25) ? 'PASS' : 'FAIL';
+          inspectReadout.textContent = 'Pull Force: ' + crimpState.pullForce.toFixed(1) + ' lbs - ' + status;
+        } else {
+          inspectReadout.textContent = 'Awaiting pull test...';
+        }
+      } else if (inspectView === 'xsection') {
+        inspectReadout.textContent = crimpState.fillPct > 0
+          ? 'Wire Fill: ' + crimpState.fillPct + '% (target: 70-90%)'
+          : 'Awaiting cross-section analysis...';
+      }
+
+      renderInspection();
+    });
+
+    /* ===================================================
+       VERDICT (PASS / REJECT)
+       =================================================== */
+    btnPass.addEventListener('click', () => {
+      const step = getCurrentStep();
+      if (!step || (step.id !== 'verdict' && step.id !== 'inspect')) return;
+
+      crimpState.verdict = 'pass';
+      btnPass.classList.add('chosen-pass');
+      btnReject.classList.remove('chosen-reject');
+      rejectReason.classList.remove('visible');
+
+      evaluateVerdict();
+    });
+
+    btnReject.addEventListener('click', () => {
+      const step = getCurrentStep();
+      if (!step || (step.id !== 'verdict' && step.id !== 'inspect')) return;
+
+      crimpState.verdict = 'reject';
+      btnReject.classList.add('chosen-reject');
+      btnPass.classList.remove('chosen-pass');
+      rejectReason.classList.add('visible');
+    });
+
+    rejectReason.addEventListener('change', () => {
+      if (crimpState.verdict === 'reject' && rejectReason.value) {
+        evaluateVerdict();
+      }
+    });
+
+    function evaluateVerdict() {
+      const isGoodCrimp = crimpState.crimpQuality === 'good' &&
+                          crimpState.defects.length === 0 &&
+                          crimpState.pullForce >= 15 && crimpState.pullForce <= 25 &&
+                          crimpState.fillPct >= 70 && crimpState.fillPct <= 90;
+
+      let verdictCorrect = false;
+
+      if (isGoodCrimp && crimpState.verdict === 'pass') {
+        verdictCorrect = true;
+        setFeedback('Correct', 'Good call - this crimp meets all specifications. PASS is correct.', 'correct');
+        showToast('Correct verdict!', 'correct');
+      } else if (!isGoodCrimp && crimpState.verdict === 'reject') {
+        // Check if they identified the right reason
+        const actualDefect = identifyPrimaryDefect();
+        if (rejectReason.value === actualDefect) {
+          verdictCorrect = true;
+          setFeedback('Correct', 'Good catch! You correctly identified the defect and rejected the crimp.', 'correct');
+          showToast('Correct - defect identified!', 'correct');
+        } else if (rejectReason.value) {
+          verdictCorrect = false;
+          setFeedback('Partial', 'Correct to reject, but the primary defect was: ' + defectLabel(actualDefect) + '. You selected: ' + defectLabel(rejectReason.value) + '.', 'warn');
+          showToast('Right verdict, wrong reason', 'info');
+        }
+      } else if (isGoodCrimp && crimpState.verdict === 'reject') {
+        verdictCorrect = false;
+        setFeedback('Incorrect', 'This crimp actually meets all specifications. It should have been PASSED.', 'incorrect');
+        showToast('Incorrect - crimp was good!', 'incorrect');
+      } else if (!isGoodCrimp && crimpState.verdict === 'pass') {
+        verdictCorrect = false;
+        const actualDefect = identifyPrimaryDefect();
+        setFeedback('Incorrect', 'This crimp has a defect: ' + defectLabel(actualDefect) + '. It should have been REJECTED.', 'incorrect');
+        showToast('Missed defect!', 'incorrect');
+      }
+
+      crimpState.verdictCorrect = verdictCorrect;
+
+      if (verdictCorrect) {
+        addScore('inspect', 20);
+        tracker.recordStep({ stepId: 'level-' + level + '-inspect', correct: true, points: 20, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      } else {
+        addScore('inspect', 0);
+        tracker.recordStep({ stepId: 'level-' + level + '-inspect', correct: false, points: 0, loId: 'Correct crimping procedure', category: 'wiring-connectors' });
+      }
+
+      // Advance to next wire (level 3) or next level
+      const curStep = getCurrentStep();
+      if (curStep && curStep.id === 'inspect') {
+        // Skip to end
+        stepIndex = getLevelDef().steps.length;
+      }
+      setTimeout(() => completeCurrentTask(), 1500);
+    }
+
+    function identifyPrimaryDefect() {
+      if (crimpState.crimpQuality === 'over') return 'over-crimp';
+      if (crimpState.crimpQuality === 'pliers') return 'wrong-tool';
+      if (crimpState.defects.includes('insulation-in')) return 'insulation-in';
+      if (crimpState.defects.includes('bird-cage')) return 'bird-cage';
+      if (crimpState.defects.includes('wrong-size')) return 'wrong-terminal';
+      if (crimpState.crimpQuality === 'under') return 'under-crimp';
+      return 'under-crimp';
+    }
+
+    function defectLabel(code) {
+      const labels = {
+        'under-crimp': 'Under-crimped barrel',
+        'over-crimp': 'Over-crimped / cracked barrel',
+        'insulation-in': 'Insulation inside barrel',
+        'bird-cage': 'Bird-caging / exposed conductor',
+        'wrong-terminal': 'Wrong terminal type or size',
+        'wrong-tool': 'Wrong tool used (generic pliers)'
+      };
+      return labels[code] || code;
+    }
+
+    /* ===================================================
+       STEP PROGRESSION
+       =================================================== */
+    function advanceStep() {
+      stepIndex++;
+      const step = getCurrentStep();
+      if (step) {
+        if (getLevelDef().guided || level === 3) {
+          setTask(step.task);
+        }
+        updateUI();
+      }
+    }
+
+    function updateUI() {
+      const step = getCurrentStep();
+      const lv = getLevelDef();
+
+      levelBadge.textContent = 'Level ' + level + ' / 3';
+
+      if (step) {
+        if (lv.guided || level === 3) {
+          setTask(step.task);
+        }
+
+        // Show/hide terminal tray
+        terminalTray.classList.toggle('visible', step.id === 'select-terminal');
+        if (step.id === 'select-terminal') populateTerminalTray();
+
+        // Show/hide inspection panel
+        const showInspect = step.id === 'inspect' || step.id === 'verdict';
+        inspectPanel.classList.toggle('visible', showInspect || wireState >= WIRE_STATES.CRIMPED);
+
+        // Show/hide wiring diagram (level 3)
+        wiringDiagram.classList.toggle('visible', level === 3);
+
+        // Reset verdict buttons
+        if (step.id === 'inspect' || step.id === 'verdict') {
+          btnPass.classList.remove('chosen-pass');
+          btnReject.classList.remove('chosen-reject');
+          rejectReason.classList.remove('visible');
+          rejectReason.value = '';
+        }
+      }
+
+      render();
+    }
+
+    function completeCurrentTask() {
+      if (level === 3) {
+        const lv = LEVELS[3];
+        if (lv.currentWireIdx < lv.wires.length - 1) {
+          // Next wire
+          lv.currentWireIdx++;
+          resetCrimpState();
+          stepIndex = 0;
+          showToast('Wire ' + (lv.currentWireIdx + 1) + ' of 6', 'info');
+          setFeedback('Next Wire', 'Moving to wire ' + (lv.currentWireIdx + 1) + ': ' + lv.wires[lv.currentWireIdx].colorName + ' ' + lv.wires[lv.currentWireIdx].gauge + ' AWG -> Pin ' + lv.wires[lv.currentWireIdx].pin, 'info');
+          updateUI();
+          return;
+        }
+      }
+
+      // Level complete
+      if (level < 3) {
+        showToast('Level ' + level + ' Complete! Advancing...', 'levelup');
+        setTimeout(() => {
+          level++;
+          resetForLevel();
+          updateUI();
+        }, 2000);
+      } else {
+        // Simulation complete
+        tracker.complete();
+        showToast('Crimp Lab Complete!', 'levelup');
+        setFeedback('Complete', 'All levels complete! Final Score: ' + totalScore + ' points. ' + (totalScore >= 80 ? 'Excellent work!' : 'Review your mistakes and try again.'), 'correct');
+        setTask('Simulation complete! Click Reset to practice again.');
+      }
+    }
+
+    function resetCrimpState() {
+      crimpState = {
+        terminalCorrect: false,
+        toolCorrect: false,
+        stripCorrect: false,
+        stripLength: 0,
+        crimpDone: false,
+        crimpQuality: 'none',
+        wireInserted: false,
+        inspected: false,
+        pullForce: 0,
+        fillPct: 0,
+        defects: [],
+        verdict: null,
+        verdictCorrect: false
+      };
+      wireState = WIRE_STATES.UNSTRIPPED;
+      selectedTerminal = null;
+      activeTool = null;
+      toolGrid.querySelectorAll('.cl-tool-btn').forEach(b => b.classList.remove('active'));
+      inspectPanel.classList.remove('visible');
+      btnPass.classList.remove('chosen-pass');
+      btnReject.classList.remove('chosen-reject');
+      rejectReason.classList.remove('visible');
+      rejectReason.value = '';
+      inspectReadout.textContent = '--';
+      inspectView = 'zoom';
+      inspectTabs.querySelectorAll('.cl-inspect-tab').forEach(t => t.classList.remove('active'));
+      inspectTabs.querySelector('[data-view="zoom"]').classList.add('active');
+    }
+
+    function resetForLevel() {
+      resetCrimpState();
+      stepIndex = 0;
+      if (level === 3) {
+        LEVELS[3].currentWireIdx = 0;
+      }
+    }
+
+    /* ===================================================
+       HINT SYSTEM
+       =================================================== */
+    btnHint.addEventListener('click', () => {
+      const step = getCurrentStep();
+      if (step && step.hint) {
+        setFeedback('Hint', step.hint, 'info');
+        showToast('Hint revealed', 'info');
+      } else {
+        setFeedback('Hint', 'No hint available for this step.', 'info');
+      }
+    });
+
+    /* ===================================================
+       HELP / RESET
+       =================================================== */
+    btnHelp.addEventListener('click', () => { helpModal.classList.add('visible'); });
+    closeHelp.addEventListener('click', () => { helpModal.classList.remove('visible'); });
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) helpModal.classList.remove('visible');
+    });
+
+    btnReset.addEventListener('click', () => {
+      level = 1;
+      scores = { terminal: 0, tool: 0, strip: 0, crimp: 0, inspect: 0 };
+      totalScore = 0;
+      maxPossible = 0;
+      resetForLevel();
+      updateScoreDisplay();
+      setFeedback('Reset', 'Simulation reset. Starting Level 1.', 'info');
+      updateUI();
+    });
+
+    /* ===================================================
+       INITIALIZE
+       =================================================== */
+    function init() {
+      resetForLevel();
+      updateScoreDisplay();
+      resizeAll();
+      updateUI();
+      setFeedback('Ready', 'Welcome to Crimp Lab! Follow the task instructions to learn proper wire crimping procedures.', 'info');
+    }
+
+    // Small delay to ensure CSS layout is settled before sizing canvases
+    setTimeout(init, 50);
+  });
+  </script>
+</body>
+</html>
