@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual DMM - ACE Avionics</title>
+  <link rel="stylesheet" href="sim-base.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       VIRTUAL DMM — Simulation-specific CSS
+       ═══════════════════════════════════════════════════════════ */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--sim-bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      font-family: var(--sim-font-body);
+    }
+
+    .dmm-app {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    .dmm-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm) var(--sim-radius-sm) 0 0;
+    }
+    .dmm-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dmm-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sim-sky);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+    .dmm-level-badge {
+      font-family: var(--sim-font-mono);
+      font-size: 0.65rem;
+      color: var(--sim-text-dim);
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      padding: 3px 10px;
+      border-radius: var(--sim-radius-xs);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .dmm-header-right {
+      display: flex;
+      gap: 6px;
+    }
+    .dmm-icon-btn {
+      background: transparent;
+      border: 1px solid var(--sim-border);
+      color: var(--sim-text-dim);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--sim-radius-xs);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .dmm-icon-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+
+    /* ── Main workspace ────────────────────────────── */
+    .dmm-workspace {
+      display: flex;
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      min-height: 460px;
+      overflow: hidden;
+      background: var(--sim-bg);
+    }
+
+    /* Canvas area */
+    .dmm-canvas-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .dmm-canvas-area canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Bottom panels ─────────────────────────────── */
+    .dmm-bottom {
+      display: flex;
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      overflow: hidden;
+      background: var(--sim-bg-panel);
+    }
+
+    /* DMM Controls panel */
+    .dmm-controls-panel {
+      width: 260px;
+      min-width: 220px;
+      padding: 14px 16px;
+      border-right: 1px solid var(--sim-border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dmm-ctrl-label {
+      font-family: var(--sim-font-mono);
+      font-size: 0.6rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Function selector buttons */
+    .dmm-func-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+    .dmm-func-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 8px 4px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-border);
+      background: var(--sim-bg);
+      color: var(--sim-text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .dmm-func-btn:hover {
+      background: var(--sim-bg-elevated);
+      color: var(--sim-text);
+      border-color: var(--sim-border-active);
+    }
+    .dmm-func-btn.active {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--sim-sky);
+      border-color: var(--sim-sky);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Range display */
+    .dmm-range-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dmm-range-display {
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+      flex: 1;
+    }
+
+    /* DMM reading display */
+    .dmm-reading-box {
+      background: #0a1628;
+      border: 2px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 10px 14px;
+      text-align: center;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .dmm-reading-value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.8rem;
+      color: var(--sim-green);
+      text-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+      letter-spacing: 2px;
+      min-height: 40px;
+      line-height: 40px;
+    }
+    .dmm-reading-unit {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* Probe status indicators */
+    .dmm-probe-status {
+      display: flex;
+      gap: 10px;
+    }
+    .dmm-probe-ind {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-muted);
+    }
+    .dmm-probe-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .dmm-probe-dot.red { background: var(--sim-red); box-shadow: 0 0 6px rgba(239,68,68,0.5); }
+    .dmm-probe-dot.black { background: #333; border-color: #555; }
+    .dmm-probe-dot.connected { box-shadow: 0 0 8px rgba(16,185,129,0.6); border-color: var(--sim-green); }
+
+    /* Reference panel */
+    .dmm-reference-panel {
+      flex: 1;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      max-height: 260px;
+    }
+    .dmm-ref-title {
+      font-family: var(--sim-font-mono);
+      font-size: 0.7rem;
+      color: var(--sim-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .dmm-ref-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      font-size: 0.8rem;
+    }
+    .dmm-ref-item .ref-label {
+      color: var(--sim-text-muted);
+    }
+    .dmm-ref-item .ref-value {
+      font-family: var(--sim-font-mono);
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+    .dmm-ref-schematic {
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-xs);
+      padding: 8px;
+      min-height: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .dmm-ref-schematic canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ── Taskbar ────────────────────────────────────── */
+    .dmm-taskbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px;
+      background: var(--sim-bg-panel);
+      border: 2px solid var(--sim-border);
+      border-top: none;
+      border-radius: 0 0 var(--sim-radius-sm) var(--sim-radius-sm);
+    }
+    .dmm-task-text {
+      font-size: 0.9rem;
+      color: var(--sim-text-secondary);
+      flex: 1;
+      line-height: 1.4;
+    }
+    .dmm-task-text strong {
+      color: var(--sim-sky);
+    }
+    .dmm-taskbar-btns {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .dmm-hint-btn {
+      background: transparent;
+      border: 1px dashed var(--sim-text-dim);
+      color: var(--sim-text-dim);
+      padding: 6px 14px;
+      border-radius: var(--sim-radius-xs);
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .dmm-hint-btn:hover {
+      color: var(--sim-text);
+      border-color: var(--sim-text-muted);
+      background: var(--sim-bg-elevated);
+    }
+    .dmm-submit-btn {
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: var(--sim-radius-xs);
+      border: 1px solid var(--sim-green);
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--sim-green);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .dmm-submit-btn:hover {
+      background: rgba(16, 185, 129, 0.25);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+    }
+    .dmm-submit-btn:disabled {
+      border-color: var(--sim-border);
+      color: var(--sim-text-dim);
+      background: transparent;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ── Score bar ──────────────────────────────────── */
+    .dmm-scorebar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 20px;
+      margin-top: 8px;
+    }
+    .dmm-score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sim-text-dim);
+    }
+    .dmm-score-item .value {
+      font-family: var(--sim-font-mono);
+      font-size: 1.3rem;
+      color: var(--sim-text);
+      text-shadow: var(--sim-glow-readout);
+    }
+
+    /* ── Feedback toast ────────────────────────────── */
+    .dmm-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      padding: 12px 28px;
+      border-radius: var(--sim-radius-sm);
+      font-family: var(--sim-font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+    .dmm-toast.show { transform: translateX(-50%) translateY(0); }
+    .dmm-toast.correct {
+      background: rgba(16, 185, 129, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-green);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+    .dmm-toast.incorrect {
+      background: rgba(239, 68, 68, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-red);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    }
+    .dmm-toast.info {
+      background: rgba(56, 189, 248, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-sky);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+    }
+    .dmm-toast.warning {
+      background: rgba(245, 158, 11, 0.9);
+      color: #fff;
+      border: 1px solid var(--sim-amber);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    /* ── Help modal ────────────────────────────────── */
+    .dmm-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 900;
+      justify-content: center;
+      align-items: center;
+    }
+    .dmm-modal-overlay.visible { display: flex; }
+    .dmm-modal {
+      background: var(--sim-bg-panel);
+      border: 1px solid var(--sim-border);
+      border-radius: var(--sim-radius-sm);
+      max-width: 560px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+    }
+    .dmm-modal h4 {
+      font-size: 1.1rem;
+      color: var(--sim-sky);
+      margin-bottom: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .dmm-modal p, .dmm-modal li {
+      font-size: 0.85rem;
+      color: var(--sim-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .dmm-modal ul {
+      padding-left: 18px;
+      margin-bottom: 12px;
+    }
+    .dmm-modal .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--sim-text-dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .dmm-modal .close-modal:hover { color: var(--sim-text); }
+    .dmm-modal kbd {
+      font-family: var(--sim-font-mono);
+      font-size: 0.75rem;
+      background: var(--sim-bg);
+      border: 1px solid var(--sim-border);
+      padding: 1px 6px;
+      border-radius: 3px;
+      color: var(--sim-text);
+    }
+
+    /* ── Safety warning overlay ──────────────────── */
+    .dmm-safety-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(239, 68, 68, 0.15);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .dmm-safety-overlay.visible {
+      display: flex;
+    }
+    .dmm-safety-msg {
+      background: rgba(239, 68, 68, 0.9);
+      color: #fff;
+      font-family: var(--sim-font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: var(--sim-radius-sm);
+      border: 2px solid var(--sim-red);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .dmm-header h3 { font-size: 1rem; letter-spacing: 1px; }
+      .dmm-workspace { flex-direction: column; min-height: 320px; }
+      .dmm-bottom { flex-direction: column; }
+      .dmm-controls-panel {
+        width: 100%;
+        min-width: unset;
+        border-right: none;
+        border-bottom: 1px solid var(--sim-border);
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .dmm-func-grid { grid-template-columns: repeat(6, 1fr); }
+      .dmm-reading-box { flex: 1; min-width: 150px; }
+      .dmm-reference-panel { max-height: 200px; }
+      .dmm-taskbar { flex-direction: column; align-items: stretch; gap: 8px; }
+      .dmm-scorebar { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dmm-app">
+
+    <!-- Header -->
+    <div class="dmm-header">
+      <div class="dmm-header-left">
+        <h3>Virtual DMM</h3>
+        <span class="dmm-level-badge" id="levelBadge">Level 1 / 3</span>
+      </div>
+      <div class="dmm-header-right">
+        <button class="dmm-icon-btn" id="btnHelp" title="Help">?</button>
+        <button class="dmm-icon-btn" id="btnReset" title="Reset level">&#x21bb;</button>
+      </div>
+    </div>
+
+    <!-- Main workspace canvas -->
+    <div class="dmm-workspace">
+      <div class="dmm-canvas-area" id="canvasArea">
+        <canvas id="workCanvas"></canvas>
+        <div class="dmm-safety-overlay" id="safetyOverlay">
+          <div class="dmm-safety-msg">WARNING: Circuit is energized! De-energize before measuring resistance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: DMM controls + reference -->
+    <div class="dmm-bottom">
+      <!-- DMM Controls -->
+      <div class="dmm-controls-panel">
+        <div class="dmm-ctrl-label">Function Select</div>
+        <div class="dmm-func-grid" id="funcGrid">
+          <button class="dmm-func-btn active" data-func="dcv">DC V</button>
+          <button class="dmm-func-btn" data-func="acv">AC V</button>
+          <button class="dmm-func-btn" data-func="ohm">&Omega;</button>
+          <button class="dmm-func-btn" data-func="cont">CONT</button>
+          <button class="dmm-func-btn" data-func="dca">DC A</button>
+          <button class="dmm-func-btn" data-func="diode">DIODE</button>
+        </div>
+
+        <div class="dmm-reading-box">
+          <div class="dmm-reading-value" id="dmmReading">----</div>
+          <div class="dmm-reading-unit" id="dmmUnit">DC Volts</div>
+        </div>
+
+        <div class="dmm-ctrl-label">Range</div>
+        <div class="dmm-range-row">
+          <span class="dmm-range-display" id="rangeDisplay">AUTO</span>
+        </div>
+
+        <div class="dmm-ctrl-label">Probe Status</div>
+        <div class="dmm-probe-status">
+          <div class="dmm-probe-ind">
+            <span class="dmm-probe-dot red" id="redProbeDot"></span>
+            <span id="redProbeLabel">Red: --</span>
+          </div>
+          <div class="dmm-probe-ind">
+            <span class="dmm-probe-dot black" id="blackProbeDot"></span>
+            <span id="blackProbeLabel">Blk: --</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reference Panel -->
+      <div class="dmm-reference-panel" id="refPanel">
+        <div class="dmm-ref-title">Reference Values</div>
+        <div id="refItems">
+          <!-- Populated by JS -->
+        </div>
+        <div class="dmm-ref-title" style="margin-top:6px;">Circuit View</div>
+        <div class="dmm-ref-schematic">
+          <canvas id="schematicCanvas" width="360" height="80"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="dmm-taskbar">
+      <div class="dmm-task-text" id="taskText">
+        <strong>Task:</strong> Loading...
+      </div>
+      <div class="dmm-taskbar-btns">
+        <button class="dmm-hint-btn" id="btnHint">Hint</button>
+        <button class="dmm-submit-btn" id="btnSubmit">Submit Reading</button>
+      </div>
+    </div>
+
+    <!-- Score bar -->
+    <div class="dmm-scorebar">
+      <div class="dmm-score-item">
+        <span class="value" id="scoreFunc">--</span>
+        Function
+      </div>
+      <div class="dmm-score-item">
+        <span class="value" id="scoreProbe">--</span>
+        Probes
+      </div>
+      <div class="dmm-score-item">
+        <span class="value" id="scoreRead">--</span>
+        Reading
+      </div>
+      <div class="dmm-score-item">
+        <span class="value" id="scoreSafety">--</span>
+        Safety
+      </div>
+      <div class="dmm-score-item">
+        <span class="value" id="scoreTotal">0</span>
+        Total
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback toast -->
+  <div class="dmm-toast" id="toast"></div>
+
+  <!-- Help modal -->
+  <div class="dmm-modal-overlay" id="helpModal">
+    <div class="dmm-modal">
+      <button class="close-modal" id="closeHelp">&times;</button>
+      <h4>Virtual DMM - Help</h4>
+      <p>Practice using a Digital Multimeter (DMM) on aircraft electrical components.
+         Select the correct function, place probes on test points, and interpret readings.</p>
+      <ul>
+        <li><strong>Drag probes:</strong> Click and drag the red or black probe tip from the DMM to a test point on the component. The probe will snap to the nearest test point.</li>
+        <li><strong>Function select:</strong> Click the function buttons (DC V, AC V, etc.) to change what the meter measures.</li>
+        <li><strong>Submit:</strong> Once you have your reading, click "Submit Reading" to check your answer.</li>
+        <li><strong>Reset probe:</strong> Double-click a probe on the canvas to return it to the DMM.</li>
+      </ul>
+      <h4>DMM Functions</h4>
+      <ul>
+        <li><kbd>DC V</kbd> - Measure DC voltage (batteries, bus bars)</li>
+        <li><kbd>AC V</kbd> - Measure AC voltage (alternators, inverters)</li>
+        <li><kbd>&Omega;</kbd> - Measure resistance (wires, components)</li>
+        <li><kbd>CONT</kbd> - Continuity test (beeps if &lt;50&Omega;)</li>
+        <li><kbd>DC A</kbd> - Measure DC current (in-series only)</li>
+        <li><kbd>DIODE</kbd> - Test diodes (forward voltage drop)</li>
+      </ul>
+      <h4>Safety</h4>
+      <p>Always de-energize circuits before measuring resistance or continuity.
+         Selecting ohms or continuity on a live circuit will trigger a safety warning.</p>
+      <h4>Scoring</h4>
+      <p>Each challenge scores on four criteria: correct function (25%), correct probe placement (25%),
+         correct reading interpretation (25%), and safety compliance (25%).</p>
+    </div>
+  </div>
+
+  <!-- Analytics -->
+  <script src="sim-analytics.js"></script>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════════
+     VIRTUAL DMM — Main Simulation Script
+     ═══════════════════════════════════════════════════════════════ */
+  (() => {
+    'use strict';
+
+    // ── DOM refs ──────────────────────────────────────────────
+    const workCanvas   = document.getElementById('workCanvas');
+    const ctx          = workCanvas.getContext('2d');
+    const canvasArea   = document.getElementById('canvasArea');
+    const schCanvas    = document.getElementById('schematicCanvas');
+    const schCtx       = schCanvas.getContext('2d');
+    const funcGrid     = document.getElementById('funcGrid');
+    const dmmReading   = document.getElementById('dmmReading');
+    const dmmUnit      = document.getElementById('dmmUnit');
+    const rangeDisplay = document.getElementById('rangeDisplay');
+    const taskText     = document.getElementById('taskText');
+    const levelBadge   = document.getElementById('levelBadge');
+    const refItems     = document.getElementById('refItems');
+    const toast        = document.getElementById('toast');
+    const safetyOverlay = document.getElementById('safetyOverlay');
+    const redProbeDot  = document.getElementById('redProbeDot');
+    const blackProbeDot = document.getElementById('blackProbeDot');
+    const redProbeLabel = document.getElementById('redProbeLabel');
+    const blackProbeLabel = document.getElementById('blackProbeLabel');
+    const scoreFunc    = document.getElementById('scoreFunc');
+    const scoreProbe   = document.getElementById('scoreProbe');
+    const scoreRead    = document.getElementById('scoreRead');
+    const scoreSafety  = document.getElementById('scoreSafety');
+    const scoreTotal   = document.getElementById('scoreTotal');
+
+    // ── SimTracker ──────────────────────────────────────────
+    const tracker = new SimTracker('virtual-dmm', 'W3-Z3-N1');
+
+    // ── State ───────────────────────────────────────────────
+    let currentLevel = 0;
+    let currentFunc = 'dcv';
+    let totalScore = 0;
+    let safetyViolation = false;
+    let levelCompleted = false;
+    let continuityBeepInterval = null;
+
+    // Probe state
+    const probes = {
+      red:   { x: 0, y: 0, attached: null, homeX: 0, homeY: 0, dragging: false, color: '#ef4444' },
+      black: { x: 0, y: 0, attached: null, homeX: 0, homeY: 0, dragging: false, color: '#333333' }
+    };
+    let activeProbe = null;
+
+    // Canvas dimensions (logical)
+    let W = 900, H = 460;
+
+    // ── Function unit labels ────────────────────────────────
+    const funcUnits = {
+      dcv: 'DC Volts',
+      acv: 'AC Volts',
+      ohm: 'Ohms',
+      cont: 'Continuity',
+      dca: 'DC Amps',
+      diode: 'Diode Test'
+    };
+
+    // ── Challenge data ──────────────────────────────────────
+    const challenges = [
+      // Level 1: Basic Voltage Measurement
+      {
+        title: 'Level 1: Basic Voltage',
+        description: 'Measure DC voltage at the bus bar',
+        task: 'Measure DC voltage at the main bus bar. The aircraft uses a 28V DC system.',
+        hint: 'Select DC V function, place the red probe on the positive bus terminal and the black probe on the ground terminal.',
+        correctFunc: 'dcv',
+        circuitEnergized: true,
+        safetyRequired: false,
+        component: 'busbar',
+        testPoints: [
+          { id: 'bus_pos', label: '+BUS', x: 0.35, y: 0.35, voltage: 28.2, resistance: 0.01, current: 0 },
+          { id: 'bus_neg', label: 'GND',  x: 0.35, y: 0.65, voltage: 0,    resistance: 0.01, current: 0 },
+          { id: 'cb_out',  label: 'CB1',  x: 0.55, y: 0.35, voltage: 28.1, resistance: 0.05, current: 2.1 },
+          { id: 'load_a',  label: 'LOAD', x: 0.70, y: 0.50, voltage: 27.8, resistance: 13.2, current: 2.1 }
+        ],
+        correctRed: 'bus_pos',
+        correctBlack: 'bus_neg',
+        expectedReading: 28.2,
+        readingTolerance: 1.0,
+        references: [
+          { label: '28V Bus nominal', value: '27.5 - 28.5V' },
+          { label: 'Ground reference', value: '0V' },
+          { label: 'CB1 rated', value: '5A' }
+        ]
+      },
+      // Level 2: Resistance / Continuity
+      {
+        title: 'Level 2: Wire Continuity',
+        description: 'Check continuity of a wire in a wire bundle',
+        task: 'Check continuity of wire W14 between connector pins. The circuit MUST be de-energized first!',
+        hint: 'First, make sure the circuit is de-energized (it starts energized). Select Ohms or Continuity mode. Place red on Pin A3 and black on Pin B3.',
+        correctFunc: 'cont',
+        altCorrectFunc: 'ohm',
+        circuitEnergized: true,
+        safetyRequired: true,
+        component: 'wirebundle',
+        testPoints: [
+          { id: 'pin_a1', label: 'A1', x: 0.25, y: 0.30, voltage: 28.0, resistance: 999999, current: 0 },
+          { id: 'pin_a2', label: 'A2', x: 0.25, y: 0.45, voltage: 14.0, resistance: 999999, current: 0 },
+          { id: 'pin_a3', label: 'A3', x: 0.25, y: 0.60, voltage: 0,    resistance: 0.15,   current: 0 },
+          { id: 'pin_a4', label: 'A4', x: 0.25, y: 0.75, voltage: 5.0,  resistance: 999999, current: 0 },
+          { id: 'pin_b1', label: 'B1', x: 0.75, y: 0.30, voltage: 27.9, resistance: 999999, current: 0 },
+          { id: 'pin_b2', label: 'B2', x: 0.75, y: 0.45, voltage: 13.8, resistance: 999999, current: 0 },
+          { id: 'pin_b3', label: 'B3', x: 0.75, y: 0.60, voltage: 0,    resistance: 0.15,   current: 0 },
+          { id: 'pin_b4', label: 'B4', x: 0.75, y: 0.75, voltage: 4.9,  resistance: 999999, current: 0 }
+        ],
+        correctRed: 'pin_a3',
+        correctBlack: 'pin_b3',
+        expectedReading: 0.3,
+        readingTolerance: 1.0,
+        references: [
+          { label: 'Good wire', value: '< 2 Ohm' },
+          { label: 'Open wire', value: 'OL' },
+          { label: 'Wire W14', value: 'A3 to B3' },
+          { label: 'Continuity beep', value: '< 50 Ohm' }
+        ]
+      },
+      // Level 3: Troubleshooting
+      {
+        title: 'Level 3: Troubleshooting',
+        description: 'Diagnose why the landing light is not working',
+        task: 'The landing light is reported inoperative. Systematically measure to find the fault. Check voltage at each point to isolate the problem.',
+        hint: 'Start by checking voltage at the bus, then at the CB output, then at the switch output, then at the light connector. The fault is where voltage drops to 0V.',
+        correctFunc: 'dcv',
+        circuitEnergized: true,
+        safetyRequired: false,
+        component: 'landinglight',
+        faultType: 'open_wire',
+        faultLocation: 'between switch and light',
+        testPoints: [
+          { id: 'll_bus',    label: 'BUS',   x: 0.15, y: 0.40, voltage: 28.1, resistance: 0.01, current: 0 },
+          { id: 'll_cb',     label: 'CB',    x: 0.30, y: 0.40, voltage: 28.0, resistance: 0.02, current: 0 },
+          { id: 'll_sw_in',  label: 'SW-IN', x: 0.45, y: 0.40, voltage: 28.0, resistance: 0.03, current: 0 },
+          { id: 'll_sw_out', label: 'SW-OUT',x: 0.58, y: 0.40, voltage: 27.9, resistance: 0.5,  current: 0 },
+          { id: 'll_light',  label: 'LIGHT', x: 0.75, y: 0.40, voltage: 0.0,  resistance: 999999, current: 0 },
+          { id: 'll_gnd',    label: 'GND',   x: 0.50, y: 0.70, voltage: 0,    resistance: 0.01, current: 0 }
+        ],
+        correctRed: 'll_light',
+        correctBlack: 'll_gnd',
+        expectedReading: 0.0,
+        readingTolerance: 0.5,
+        faultAnswer: 'open_wire_to_light',
+        references: [
+          { label: 'Bus voltage', value: '~28V' },
+          { label: 'CB status', value: 'IN (good)' },
+          { label: 'Switch position', value: 'ON' },
+          { label: 'Symptom', value: 'Light inop' },
+          { label: 'Expected at light', value: '~28V if good' }
+        ]
+      }
+    ];
+
+    // ── Audio context for continuity beep ────────────────────
+    let audioCtx = null;
+    function playBeep(duration = 150) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 2400;
+        gain.gain.value = 0.15;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration / 1000);
+      } catch(e) { /* audio not available */ }
+    }
+
+    // ── Toast helper ────────────────────────────────────────
+    function showToast(msg, type = 'info', duration = 2500) {
+      toast.textContent = msg;
+      toast.className = 'dmm-toast ' + type;
+      requestAnimationFrame(() => toast.classList.add('show'));
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ── Canvas resize ───────────────────────────────────────
+    function resizeCanvas() {
+      const rect = canvasArea.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      W = rect.width;
+      H = rect.height;
+      workCanvas.width = W * dpr;
+      workCanvas.height = H * dpr;
+      workCanvas.style.width = W + 'px';
+      workCanvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Reset probe homes
+      probes.red.homeX = W * 0.88;
+      probes.red.homeY = H * 0.25;
+      probes.black.homeX = W * 0.88;
+      probes.black.homeY = H * 0.75;
+
+      // If probes not attached, reset to home
+      if (!probes.red.attached) {
+        probes.red.x = probes.red.homeX;
+        probes.red.y = probes.red.homeY;
+      }
+      if (!probes.black.attached) {
+        probes.black.x = probes.black.homeX;
+        probes.black.y = probes.black.homeY;
+      }
+
+      render();
+    }
+
+    // ── Get current level data ──────────────────────────────
+    function getLevel() { return challenges[currentLevel]; }
+
+    // ── Get test point pixel coords ─────────────────────────
+    function tpPos(tp) {
+      return { x: tp.x * W, y: tp.y * H };
+    }
+
+    // ── Initialize level ────────────────────────────────────
+    function initLevel() {
+      const lvl = getLevel();
+      levelCompleted = false;
+      safetyViolation = false;
+
+      // Reset probes
+      probes.red.attached = null;
+      probes.black.attached = null;
+      probes.red.x = probes.red.homeX;
+      probes.red.y = probes.red.homeY;
+      probes.black.x = probes.black.homeX;
+      probes.black.y = probes.black.homeY;
+
+      // Reset function to DCV
+      setFunction('dcv');
+
+      // Reset safety overlay
+      safetyOverlay.classList.remove('visible');
+
+      // Stop any continuity beep
+      if (continuityBeepInterval) {
+        clearInterval(continuityBeepInterval);
+        continuityBeepInterval = null;
+      }
+
+      // Update UI
+      levelBadge.textContent = 'Level ' + (currentLevel + 1) + ' / ' + challenges.length;
+      taskText.innerHTML = '<strong>Task:</strong> ' + lvl.task;
+      document.getElementById('btnSubmit').disabled = false;
+
+      // Update reference panel
+      updateRefPanel();
+
+      // Score display reset
+      scoreFunc.textContent = '--';
+      scoreProbe.textContent = '--';
+      scoreRead.textContent = '--';
+      scoreSafety.textContent = '--';
+
+      // Render
+      resizeCanvas();
+      drawSchematic();
+    }
+
+    // ── Update reference panel ──────────────────────────────
+    function updateRefPanel() {
+      const lvl = getLevel();
+      let html = '';
+      lvl.references.forEach(r => {
+        html += '<div class="dmm-ref-item"><span class="ref-label">' + r.label + '</span><span class="ref-value">' + r.value + '</span></div>';
+      });
+      refItems.innerHTML = html;
+    }
+
+    // ── Set DMM function ────────────────────────────────────
+    function setFunction(func) {
+      currentFunc = func;
+      funcGrid.querySelectorAll('.dmm-func-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.func === func);
+      });
+      dmmUnit.textContent = funcUnits[func];
+      rangeDisplay.textContent = 'AUTO';
+
+      // Check safety
+      checkSafety();
+      updateReading();
+    }
+
+    // ── Safety check ────────────────────────────────────────
+    function checkSafety() {
+      const lvl = getLevel();
+      const needsDead = (currentFunc === 'ohm' || currentFunc === 'cont');
+      const isLive = lvl.circuitEnergized && !lvl._deenergized;
+
+      if (needsDead && isLive && lvl.safetyRequired) {
+        safetyOverlay.classList.add('visible');
+        if (!safetyViolation) {
+          safetyViolation = true;
+          showToast('SAFETY: De-energize circuit first!', 'warning', 3000);
+        }
+      } else {
+        safetyOverlay.classList.remove('visible');
+      }
+    }
+
+    // ── Calculate DMM reading ───────────────────────────────
+    function getReading() {
+      const lvl = getLevel();
+      const redTP = probes.red.attached ? lvl.testPoints.find(t => t.id === probes.red.attached) : null;
+      const blkTP = probes.black.attached ? lvl.testPoints.find(t => t.id === probes.black.attached) : null;
+
+      if (!redTP || !blkTP) return { value: null, display: '----', ol: false };
+
+      const isLive = lvl.circuitEnergized && !lvl._deenergized;
+
+      switch (currentFunc) {
+        case 'dcv': {
+          const v = redTP.voltage - blkTP.voltage;
+          const noise = (Math.random() - 0.5) * 0.2;
+          const reading = v + noise;
+          return { value: reading, display: reading.toFixed(1), ol: false, unit: 'V DC' };
+        }
+        case 'acv': {
+          // DC circuit measured in AC mode shows near-zero with noise
+          if (isLive) {
+            const noise = Math.random() * 0.3;
+            return { value: noise, display: noise.toFixed(2), ol: false, unit: 'V AC' };
+          }
+          return { value: 0, display: '0.00', ol: false, unit: 'V AC' };
+        }
+        case 'ohm': {
+          if (isLive) {
+            // Measuring resistance on live circuit: unstable/OL
+            return { value: null, display: 'OL', ol: true, unit: 'Ohm' };
+          }
+          // Same test point on both probes
+          if (redTP.id === blkTP.id) {
+            return { value: 0, display: '0.0', ol: false, unit: 'Ohm' };
+          }
+          // Check if these two points are connected (low resistance)
+          const r = redTP.resistance + blkTP.resistance;
+          if (r > 999998) {
+            return { value: null, display: 'OL', ol: true, unit: 'Ohm' };
+          }
+          const noise = (Math.random() - 0.5) * 0.1;
+          const reading = Math.max(0, r + noise);
+          if (reading > 99999) return { value: null, display: 'OL', ol: true, unit: 'Ohm' };
+          return { value: reading, display: reading < 100 ? reading.toFixed(1) : reading.toFixed(0), ol: false, unit: 'Ohm' };
+        }
+        case 'cont': {
+          if (isLive) {
+            return { value: null, display: 'OL', ol: true, unit: 'Ohm' };
+          }
+          if (redTP.id === blkTP.id) {
+            return { value: 0, display: '0.0', ol: false, beep: true, unit: 'Ohm' };
+          }
+          const r = redTP.resistance + blkTP.resistance;
+          if (r > 999998) {
+            return { value: null, display: 'OL', ol: true, unit: 'Ohm' };
+          }
+          const noise = (Math.random() - 0.5) * 0.1;
+          const reading = Math.max(0, r + noise);
+          const beep = reading < 50;
+          return { value: reading, display: reading.toFixed(1), ol: false, beep, unit: 'Ohm' };
+        }
+        case 'dca': {
+          if (isLive) {
+            const i = Math.abs(redTP.current || 0) + (Math.random() - 0.5) * 0.05;
+            return { value: i, display: i.toFixed(2), ol: false, unit: 'A DC' };
+          }
+          return { value: 0, display: '0.00', ol: false, unit: 'A DC' };
+        }
+        case 'diode': {
+          if (isLive) {
+            // Live circuit in diode mode shows voltage
+            const v = Math.abs(redTP.voltage - blkTP.voltage);
+            if (v > 2) return { value: null, display: 'OL', ol: true, unit: 'V' };
+            return { value: v, display: v.toFixed(3), ol: false, unit: 'V' };
+          }
+          return { value: null, display: 'OL', ol: true, unit: 'V' };
+        }
+        default:
+          return { value: null, display: '----', ol: false };
+      }
+    }
+
+    // ── Update reading display ──────────────────────────────
+    function updateReading() {
+      const reading = getReading();
+
+      if (reading.ol) {
+        dmmReading.textContent = 'OL';
+        dmmReading.style.color = 'var(--sim-amber)';
+      } else if (reading.display === '----') {
+        dmmReading.textContent = '----';
+        dmmReading.style.color = 'var(--sim-green)';
+      } else {
+        dmmReading.textContent = reading.display;
+        dmmReading.style.color = 'var(--sim-green)';
+      }
+
+      // Continuity beep
+      if (continuityBeepInterval) {
+        clearInterval(continuityBeepInterval);
+        continuityBeepInterval = null;
+      }
+      if (reading.beep && currentFunc === 'cont') {
+        playBeep();
+        continuityBeepInterval = setInterval(() => playBeep(80), 800);
+      }
+
+      // Update probe status indicators
+      updateProbeStatus();
+    }
+
+    // ── Update probe status UI ──────────────────────────────
+    function updateProbeStatus() {
+      const lvl = getLevel();
+
+      if (probes.red.attached) {
+        const tp = lvl.testPoints.find(t => t.id === probes.red.attached);
+        redProbeLabel.textContent = 'Red: ' + (tp ? tp.label : '--');
+        redProbeDot.classList.add('connected');
+      } else {
+        redProbeLabel.textContent = 'Red: --';
+        redProbeDot.classList.remove('connected');
+      }
+
+      if (probes.black.attached) {
+        const tp = lvl.testPoints.find(t => t.id === probes.black.attached);
+        blackProbeLabel.textContent = 'Blk: ' + (tp ? tp.label : '--');
+        blackProbeDot.classList.add('connected');
+      } else {
+        blackProbeLabel.textContent = 'Blk: --';
+        blackProbeDot.classList.remove('connected');
+      }
+    }
+
+    // ════════════════════════════════════════════════════════
+    //  CANVAS RENDERING
+    // ════════════════════════════════════════════════════════
+
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Background grid
+      drawGrid();
+
+      // Component
+      const lvl = getLevel();
+      switch (lvl.component) {
+        case 'busbar': drawBusBar(); break;
+        case 'wirebundle': drawWireBundle(); break;
+        case 'landinglight': drawLandingLight(); break;
+      }
+
+      // Test points
+      drawTestPoints();
+
+      // DMM body on right side
+      drawDMM();
+
+      // Probe leads (wires from DMM to test points)
+      drawProbeLeads();
+
+      // Probe tips
+      drawProbeTips();
+    }
+
+    function drawGrid() {
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
+      ctx.lineWidth = 0.5;
+      const step = 40;
+      for (let x = 0; x < W; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y < H; y += step) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+    }
+
+    // ── Draw Bus Bar component ──────────────────────────────
+    function drawBusBar() {
+      const cx = W * 0.42;
+      const cy = H * 0.50;
+
+      // Main bus bar (copper-colored bar)
+      ctx.fillStyle = '#b87333';
+      ctx.strokeStyle = '#8b5a2b';
+      ctx.lineWidth = 2;
+      roundRect(cx - 120, cy - 80, 240, 30, 4);
+      ctx.fill();
+      ctx.stroke();
+
+      // Bus label
+      ctx.fillStyle = '#fff';
+      ctx.font = '700 12px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('28V DC MAIN BUS', cx, cy - 60);
+
+      // Ground bar
+      ctx.fillStyle = '#555';
+      ctx.strokeStyle = '#333';
+      roundRect(cx - 120, cy + 50, 240, 20, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#aaa';
+      ctx.font = '700 10px "Share Tech Mono", monospace';
+      ctx.fillText('GROUND BUS', cx, cy + 64);
+
+      // CB box
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1;
+      roundRect(W * 0.52, cy - 90, 50, 40, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '700 9px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('CB1', W * 0.55, cy - 72);
+      ctx.fillText('5A', W * 0.55, cy - 60);
+
+      // Wires
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx + 60, cy - 65);
+      ctx.lineTo(W * 0.55, cy - 65);
+      ctx.lineTo(W * 0.55, cy - 50);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.moveTo(W * 0.55, cy - 50);
+      ctx.lineTo(W * 0.55, cy - 20);
+      ctx.lineTo(W * 0.70, cy - 20);
+      ctx.lineTo(W * 0.70, cy);
+      ctx.stroke();
+
+      // Load symbol
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      const lx = W * 0.70;
+      const ly = cy;
+      ctx.moveTo(lx, ly);
+      for (let i = 0; i < 4; i++) {
+        ctx.lineTo(lx + (i % 2 === 0 ? -8 : 8), ly + i * 10);
+      }
+      ctx.lineTo(lx, ly + 40);
+      ctx.stroke();
+      ctx.font = '700 9px "Share Tech Mono", monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText('LOAD', lx, ly + 55);
+
+      // Component label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 11px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Aircraft DC Bus System', 20, 25);
+    }
+
+    // ── Draw Wire Bundle component ──────────────────────────
+    function drawWireBundle() {
+      const leftX = W * 0.18;
+      const rightX = W * 0.68;
+      const topY = H * 0.18;
+
+      // Connector blocks
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
+
+      // Left connector
+      roundRect(leftX - 25, topY, 50, H * 0.65, 6);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '700 10px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('CONN-A', leftX, topY - 8);
+
+      // Right connector
+      ctx.fillStyle = '#1e293b';
+      roundRect(rightX - 25, topY, 50, H * 0.65, 6);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('CONN-B', rightX, topY - 8);
+
+      // Wire bundle
+      const wireColors = ['#ef4444', '#3b82f6', '#f59e0b', '#10b981'];
+      const wireLabels = ['W12', 'W13', 'W14', 'W15'];
+      const lvl = getLevel();
+
+      for (let i = 0; i < 4; i++) {
+        const tp = lvl.testPoints[i];
+        const tpR = lvl.testPoints[i + 4];
+        const py = tp.y * H;
+
+        ctx.strokeStyle = wireColors[i];
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash(i === 2 ? [] : []);  // W14 solid, others too
+        ctx.beginPath();
+        ctx.moveTo(leftX + 25, py);
+        ctx.bezierCurveTo(leftX + 80, py, rightX - 80, py, rightX - 25, py);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Wire label
+        ctx.fillStyle = wireColors[i];
+        ctx.font = '700 9px "Share Tech Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(wireLabels[i], (leftX + rightX) / 2, py - 8);
+      }
+
+      // De-energize switch visual
+      const swX = W * 0.50;
+      const swY = H * 0.90;
+      ctx.fillStyle = lvl._deenergized ? '#10b981' : '#ef4444';
+      ctx.strokeStyle = lvl._deenergized ? '#10b981' : '#ef4444';
+      ctx.lineWidth = 1;
+      roundRect(swX - 60, swY - 14, 120, 28, 4);
+      ctx.fill();
+      ctx.globalAlpha = 0.15;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = '700 10px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(lvl._deenergized ? 'CIRCUIT OFF' : 'DE-ENERGIZE', swX, swY + 4);
+
+      // Component label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 11px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Wire Bundle - Connector to Connector', 20, 25);
+    }
+
+    // ── Draw Landing Light component ────────────────────────
+    function drawLandingLight() {
+      const y = H * 0.40;
+      const lvl = getLevel();
+
+      // Draw circuit path left to right
+      const nodes = lvl.testPoints.filter(t => t.id !== 'll_gnd');
+      const gnd = lvl.testPoints.find(t => t.id === 'll_gnd');
+
+      // Power source
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.5;
+      roundRect(W * 0.08, y - 25, 50, 50, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#ef4444';
+      ctx.font = '700 9px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('28V', W * 0.08 + 25, y - 5);
+      ctx.fillText('BAT', W * 0.08 + 25, y + 8);
+
+      // Circuit breaker
+      roundRect(W * 0.26, y - 20, 36, 40, 4);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillText('CB', W * 0.30 - 2, y + 4);
+
+      // Switch
+      roundRect(W * 0.41, y - 20, 36, 40, 4);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('SW', W * 0.45 - 2, y + 4);
+
+      // Wire from switch to light (with break to show fault)
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2;
+
+      // Good wire segments
+      ctx.beginPath();
+      ctx.moveTo(W * 0.08 + 50, y);
+      ctx.lineTo(W * 0.26, y);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(W * 0.26 + 36, y);
+      ctx.lineTo(W * 0.41, y);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(W * 0.41 + 36, y);
+      ctx.lineTo(W * 0.58, y);
+      ctx.stroke();
+
+      // Broken wire segment (dashed)
+      ctx.strokeStyle = '#ef4444';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(W * 0.58, y);
+      ctx.lineTo(W * 0.75, y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // X mark to indicate fault (only shown after completion)
+      if (levelCompleted) {
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 3;
+        const fx = W * 0.665;
+        ctx.beginPath(); ctx.moveTo(fx - 8, y - 8); ctx.lineTo(fx + 8, y + 8); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(fx + 8, y - 8); ctx.lineTo(fx - 8, y + 8); ctx.stroke();
+        ctx.font = '700 10px "Share Tech Mono", monospace';
+        ctx.fillStyle = '#ef4444';
+        ctx.textAlign = 'center';
+        ctx.fillText('OPEN', fx, y - 16);
+      }
+
+      // Landing light
+      roundRect(W * 0.71, y - 25, 50, 50, 4);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('LAND', W * 0.71 + 25, y - 5);
+      ctx.fillText('LIGHT', W * 0.71 + 25, y + 8);
+
+      // Ground line
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(W * 0.71 + 25, y + 25);
+      ctx.lineTo(W * 0.71 + 25, H * 0.70);
+      ctx.lineTo(W * 0.50, H * 0.70);
+      ctx.stroke();
+
+      // Ground symbol
+      const gx = W * 0.50;
+      const gy = H * 0.70;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(gx - 12, gy + 6); ctx.lineTo(gx + 12, gy + 6); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(gx - 8, gy + 11); ctx.lineTo(gx + 8, gy + 11); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(gx - 4, gy + 16); ctx.lineTo(gx + 4, gy + 16); ctx.stroke();
+
+      // Component label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 11px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Landing Light Circuit - Fault Diagnosis', 20, 25);
+
+      // Status indicator
+      ctx.fillStyle = '#ef4444';
+      ctx.font = '700 10px "Share Tech Mono", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('STATUS: INOPERATIVE', W - 100, 25);
+    }
+
+    // ── Draw test points ────────────────────────────────────
+    function drawTestPoints() {
+      const lvl = getLevel();
+      lvl.testPoints.forEach(tp => {
+        const pos = tpPos(tp);
+        const isRedTarget = probes.red.attached === tp.id;
+        const isBlkTarget = probes.black.attached === tp.id;
+
+        // Test point circle
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 12, 0, Math.PI * 2);
+
+        if (isRedTarget) {
+          ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+          ctx.strokeStyle = '#ef4444';
+          ctx.lineWidth = 2.5;
+        } else if (isBlkTarget) {
+          ctx.fillStyle = 'rgba(100, 100, 100, 0.3)';
+          ctx.strokeStyle = '#888';
+          ctx.lineWidth = 2.5;
+        } else {
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 1.5;
+        }
+        ctx.fill();
+        ctx.stroke();
+
+        // Inner dot
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = isRedTarget ? '#ef4444' : isBlkTarget ? '#888' : '#38bdf8';
+        ctx.fill();
+
+        // Label
+        ctx.fillStyle = '#e2e8f0';
+        ctx.font = '700 10px "Share Tech Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(tp.label, pos.x, pos.y - 18);
+      });
+    }
+
+    // ── Draw DMM body ───────────────────────────────────────
+    function drawDMM() {
+      const dx = W * 0.85;
+      const dy = H * 0.10;
+      const dw = W * 0.13;
+      const dh = H * 0.80;
+
+      // DMM casing
+      ctx.fillStyle = '#1a1a2e';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      roundRect(dx, dy, dw, dh, 8);
+      ctx.fill();
+      ctx.stroke();
+
+      // DMM label
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = '700 10px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('DMM', dx + dw / 2, dy + 18);
+
+      // Display area
+      ctx.fillStyle = '#0a1628';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1;
+      roundRect(dx + 8, dy + 26, dw - 16, 40, 4);
+      ctx.fill();
+      ctx.stroke();
+
+      // Display text (mirrors the UI reading)
+      const reading = getReading();
+      ctx.fillStyle = reading.ol ? '#f59e0b' : '#10b981';
+      ctx.font = '700 16px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(reading.display, dx + dw / 2, dy + 52);
+
+      // Function indicator
+      ctx.fillStyle = '#64748b';
+      ctx.font = '600 8px "Share Tech Mono", monospace';
+      ctx.fillText(funcUnits[currentFunc], dx + dw / 2, dy + 75);
+
+      // Rotary dial visual
+      const dialCx = dx + dw / 2;
+      const dialCy = dy + dh * 0.45;
+      const dialR = Math.min(dw * 0.28, 22);
+
+      ctx.beginPath();
+      ctx.arc(dialCx, dialCy, dialR, 0, Math.PI * 2);
+      ctx.fillStyle = '#2a2a3e';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+
+      // Dial pointer
+      const funcAngles = { dcv: -90, acv: -45, ohm: 0, cont: 45, dca: 90, diode: 135 };
+      const angle = (funcAngles[currentFunc] || 0) * Math.PI / 180;
+      ctx.beginPath();
+      ctx.moveTo(dialCx, dialCy);
+      ctx.lineTo(dialCx + Math.cos(angle) * (dialR - 4), dialCy + Math.sin(angle) * (dialR - 4));
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(dialCx, dialCy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fill();
+
+      // Probe connection points on DMM
+      // Red probe jack
+      ctx.beginPath();
+      ctx.arc(dx + dw * 0.35, dy + dh - 30, 6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.5)';
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#ef4444';
+      ctx.font = '600 7px "Share Tech Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('V/Ohm', dx + dw * 0.35, dy + dh - 16);
+
+      // Black probe jack (COM)
+      ctx.beginPath();
+      ctx.arc(dx + dw * 0.65, dy + dh - 30, 6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(100, 100, 100, 0.5)';
+      ctx.strokeStyle = '#888';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#888';
+      ctx.font = '600 7px "Share Tech Mono", monospace';
+      ctx.fillText('COM', dx + dw * 0.65, dy + dh - 16);
+    }
+
+    // ── Draw probe leads (wires) ────────────────────────────
+    function drawProbeLeads() {
+      const dx = W * 0.85;
+      const dy = H * 0.10;
+      const dw = W * 0.13;
+      const dh = H * 0.80;
+
+      // Red lead
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 3]);
+      ctx.beginPath();
+      ctx.moveTo(dx + dw * 0.35, dy + dh - 30);
+      ctx.bezierCurveTo(
+        dx + dw * 0.35 - 40, probes.red.y,
+        probes.red.x + 30, probes.red.y - 20,
+        probes.red.x, probes.red.y
+      );
+      ctx.stroke();
+
+      // Black lead
+      ctx.strokeStyle = 'rgba(120, 120, 120, 0.6)';
+      ctx.beginPath();
+      ctx.moveTo(dx + dw * 0.65, dy + dh - 30);
+      ctx.bezierCurveTo(
+        dx + dw * 0.65 - 40, probes.black.y,
+        probes.black.x + 30, probes.black.y + 20,
+        probes.black.x, probes.black.y
+      );
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // ── Draw probe tips ─────────────────────────────────────
+    function drawProbeTips() {
+      ['red', 'black'].forEach(color => {
+        const p = probes[color];
+        const tipColor = color === 'red' ? '#ef4444' : '#555';
+        const highlight = p.dragging ? 1.3 : 1;
+
+        // Probe tip body
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.scale(highlight, highlight);
+
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath();
+        ctx.moveTo(0, -14);
+        ctx.lineTo(-5, 8);
+        ctx.lineTo(5, 8);
+        ctx.closePath();
+        ctx.fill();
+
+        // Probe body
+        ctx.fillStyle = color === 'red' ? '#cc3333' : '#444';
+        ctx.beginPath();
+        ctx.moveTo(0, -16);
+        ctx.lineTo(-6, 6);
+        ctx.lineTo(6, 6);
+        ctx.closePath();
+        ctx.fill();
+
+        // Metallic tip
+        ctx.fillStyle = '#c0c0c0';
+        ctx.beginPath();
+        ctx.moveTo(0, -20);
+        ctx.lineTo(-2, -14);
+        ctx.lineTo(2, -14);
+        ctx.closePath();
+        ctx.fill();
+
+        // Glow when dragging
+        if (p.dragging) {
+          ctx.beginPath();
+          ctx.arc(0, -4, 16, 0, Math.PI * 2);
+          ctx.fillStyle = color === 'red' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(200, 200, 200, 0.15)';
+          ctx.fill();
+        }
+
+        // Label
+        ctx.fillStyle = '#fff';
+        ctx.font = '700 8px "Share Tech Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(color === 'red' ? '+' : '-', 0, 18);
+
+        ctx.restore();
+      });
+    }
+
+    // ── Draw schematic in reference panel ────────────────────
+    function drawSchematic() {
+      const sw = schCanvas.width;
+      const sh = schCanvas.height;
+      schCtx.clearRect(0, 0, sw, sh);
+
+      const lvl = getLevel();
+      schCtx.strokeStyle = '#38bdf8';
+      schCtx.fillStyle = '#38bdf8';
+      schCtx.lineWidth = 1.5;
+      schCtx.font = '700 9px "Share Tech Mono", monospace';
+      schCtx.textAlign = 'center';
+
+      switch (lvl.component) {
+        case 'busbar': {
+          // Simple bus bar schematic
+          // Battery
+          schCtx.beginPath();
+          schCtx.moveTo(30, 40); schCtx.lineTo(30, 25);
+          schCtx.moveTo(22, 25); schCtx.lineTo(38, 25);
+          schCtx.moveTo(26, 20); schCtx.lineTo(34, 20);
+          schCtx.stroke();
+          schCtx.fillText('+28V', 30, 55);
+
+          // Wire to bus
+          schCtx.beginPath();
+          schCtx.moveTo(30, 20); schCtx.lineTo(30, 12);
+          schCtx.lineTo(330, 12);
+          schCtx.stroke();
+          schCtx.fillText('BUS', 180, 10);
+
+          // CB
+          schCtx.beginPath();
+          schCtx.moveTo(150, 12); schCtx.lineTo(150, 28);
+          schCtx.moveTo(145, 28); schCtx.lineTo(155, 28);
+          schCtx.moveTo(148, 28); schCtx.lineTo(155, 40);
+          schCtx.stroke();
+          schCtx.fillText('CB', 165, 35);
+
+          // Load
+          schCtx.beginPath();
+          schCtx.moveTo(150, 40); schCtx.lineTo(150, 50);
+          const loadY = 50;
+          for (let i = 0; i < 3; i++) {
+            schCtx.lineTo(145 + (i % 2 === 0 ? 10 : 0), loadY + 5 + i * 5);
+          }
+          schCtx.lineTo(150, 70);
+          schCtx.stroke();
+          schCtx.fillText('LOAD', 170, 62);
+
+          // Ground
+          schCtx.beginPath();
+          schCtx.moveTo(150, 70); schCtx.lineTo(30, 70); schCtx.lineTo(30, 40);
+          schCtx.stroke();
+          schCtx.fillText('GND', 90, 68);
+          break;
+        }
+        case 'wirebundle': {
+          // Wire from A to B
+          schCtx.fillText('CONN-A', 40, 15);
+          schCtx.fillText('CONN-B', 320, 15);
+          schCtx.strokeStyle = '#f59e0b';
+          schCtx.beginPath();
+          schCtx.moveTo(60, 45); schCtx.lineTo(300, 45);
+          schCtx.stroke();
+          schCtx.fillStyle = '#f59e0b';
+          schCtx.fillText('W14 (A3 to B3)', 180, 40);
+
+          schCtx.strokeStyle = '#64748b';
+          schCtx.beginPath();
+          schCtx.moveTo(60, 25); schCtx.lineTo(300, 25);
+          schCtx.moveTo(60, 60); schCtx.lineTo(300, 60);
+          schCtx.moveTo(60, 72); schCtx.lineTo(300, 72);
+          schCtx.stroke();
+          break;
+        }
+        case 'landinglight': {
+          // BAT -> CB -> SW -> LIGHT -> GND
+          const y = 40;
+          schCtx.fillText('BAT', 25, y - 12);
+          schCtx.fillText('CB', 100, y - 12);
+          schCtx.fillText('SW', 175, y - 12);
+          schCtx.fillStyle = '#ef4444';
+          schCtx.fillText('LIGHT', 280, y - 12);
+          schCtx.fillStyle = '#38bdf8';
+          schCtx.fillText('GND', 330, y + 20);
+
+          schCtx.beginPath();
+          schCtx.moveTo(25, y); schCtx.lineTo(80, y);
+          schCtx.stroke();
+
+          // CB symbol
+          schCtx.beginPath();
+          schCtx.moveTo(80, y); schCtx.lineTo(85, y - 8); schCtx.moveTo(85, y - 8); schCtx.lineTo(120, y);
+          schCtx.stroke();
+
+          schCtx.beginPath();
+          schCtx.moveTo(120, y); schCtx.lineTo(160, y);
+          schCtx.stroke();
+
+          // SW symbol
+          schCtx.beginPath();
+          schCtx.moveTo(160, y); schCtx.lineTo(165, y - 5); schCtx.lineTo(190, y);
+          schCtx.stroke();
+
+          // Wire to light (show X for open)
+          schCtx.setLineDash([4, 3]);
+          schCtx.strokeStyle = '#ef4444';
+          schCtx.beginPath();
+          schCtx.moveTo(190, y); schCtx.lineTo(260, y);
+          schCtx.stroke();
+          schCtx.setLineDash([]);
+
+          // X mark
+          schCtx.lineWidth = 2;
+          schCtx.beginPath();
+          schCtx.moveTo(220, y - 6); schCtx.lineTo(230, y + 6);
+          schCtx.moveTo(230, y - 6); schCtx.lineTo(220, y + 6);
+          schCtx.stroke();
+          schCtx.lineWidth = 1.5;
+
+          // Light symbol
+          schCtx.strokeStyle = '#38bdf8';
+          schCtx.beginPath();
+          schCtx.arc(280, y, 8, 0, Math.PI * 2);
+          schCtx.stroke();
+
+          // GND
+          schCtx.beginPath();
+          schCtx.moveTo(280, y + 8); schCtx.lineTo(280, y + 22); schCtx.lineTo(330, y + 22);
+          schCtx.stroke();
+          break;
+        }
+      }
+    }
+
+    // ── Rounded rectangle helper ────────────────────────────
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+
+    // ════════════════════════════════════════════════════════
+    //  INTERACTION: Probe dragging
+    // ════════════════════════════════════════════════════════
+
+    function getCanvasCoords(e) {
+      const rect = workCanvas.getBoundingClientRect();
+      const scaleX = W / rect.width;
+      const scaleY = H / rect.height;
+
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: (e.touches[0].clientX - rect.left) * scaleX,
+          y: (e.touches[0].clientY - rect.top) * scaleY
+        };
+      }
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        return {
+          x: (e.changedTouches[0].clientX - rect.left) * scaleX,
+          y: (e.changedTouches[0].clientY - rect.top) * scaleY
+        };
+      }
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    function hitProbe(mx, my) {
+      for (const key of ['red', 'black']) {
+        const p = probes[key];
+        const dist = Math.hypot(mx - p.x, my - p.y);
+        if (dist < 22) return key;
+      }
+      return null;
+    }
+
+    function findNearestTP(mx, my) {
+      const lvl = getLevel();
+      let nearest = null;
+      let minDist = 30; // snap radius
+      lvl.testPoints.forEach(tp => {
+        const pos = tpPos(tp);
+        const dist = Math.hypot(mx - pos.x, my - pos.y);
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = tp;
+        }
+      });
+      return nearest;
+    }
+
+    function onPointerDown(e) {
+      e.preventDefault();
+      const { x, y } = getCanvasCoords(e);
+      const hit = hitProbe(x, y);
+      if (hit) {
+        activeProbe = hit;
+        probes[hit].dragging = true;
+        probes[hit].attached = null;
+        render();
+      }
+
+      // Check de-energize button click (Level 2)
+      const lvl = getLevel();
+      if (lvl.safetyRequired && !lvl._deenergized) {
+        const swX = W * 0.50;
+        const swY = H * 0.90;
+        if (x > swX - 60 && x < swX + 60 && y > swY - 14 && y < swY + 14) {
+          lvl._deenergized = true;
+          showToast('Circuit de-energized. Safe to measure.', 'correct', 2000);
+          checkSafety();
+          updateReading();
+          render();
+        }
+      }
+    }
+
+    function onPointerMove(e) {
+      e.preventDefault();
+      if (!activeProbe) return;
+      const { x, y } = getCanvasCoords(e);
+      probes[activeProbe].x = x;
+      probes[activeProbe].y = y;
+      render();
+    }
+
+    function onPointerUp(e) {
+      if (!activeProbe) return;
+      const { x, y } = getCanvasCoords(e);
+      const tp = findNearestTP(x, y);
+      const p = probes[activeProbe];
+
+      if (tp) {
+        // Check if the other probe is already on this test point
+        const other = activeProbe === 'red' ? 'black' : 'red';
+        if (probes[other].attached === tp.id) {
+          // Can't place both probes on same point
+          showToast('Both probes cannot be on the same test point', 'warning', 1500);
+          p.x = p.homeX;
+          p.y = p.homeY;
+          p.attached = null;
+        } else {
+          const pos = tpPos(tp);
+          p.x = pos.x + (activeProbe === 'red' ? -8 : 8);
+          p.y = pos.y + 14;
+          p.attached = tp.id;
+        }
+      } else {
+        // Return to home
+        p.x = p.homeX;
+        p.y = p.homeY;
+        p.attached = null;
+      }
+
+      p.dragging = false;
+      activeProbe = null;
+      checkSafety();
+      updateReading();
+      render();
+    }
+
+    // Double-click to reset a probe
+    function onDblClick(e) {
+      const { x, y } = getCanvasCoords(e);
+      const hit = hitProbe(x, y);
+      if (hit) {
+        const p = probes[hit];
+        p.x = p.homeX;
+        p.y = p.homeY;
+        p.attached = null;
+        p.dragging = false;
+        updateReading();
+        render();
+      }
+    }
+
+    // ── Bind events ─────────────────────────────────────────
+    workCanvas.addEventListener('mousedown', onPointerDown);
+    workCanvas.addEventListener('mousemove', onPointerMove);
+    workCanvas.addEventListener('mouseup', onPointerUp);
+    workCanvas.addEventListener('mouseleave', onPointerUp);
+    workCanvas.addEventListener('dblclick', onDblClick);
+
+    workCanvas.addEventListener('touchstart', onPointerDown, { passive: false });
+    workCanvas.addEventListener('touchmove', onPointerMove, { passive: false });
+    workCanvas.addEventListener('touchend', onPointerUp);
+
+
+    // ════════════════════════════════════════════════════════
+    //  SCORING & SUBMISSION
+    // ════════════════════════════════════════════════════════
+
+    document.getElementById('btnSubmit').addEventListener('click', () => {
+      if (levelCompleted) {
+        // Advance to next level
+        if (currentLevel < challenges.length - 1) {
+          currentLevel++;
+          initLevel();
+        } else {
+          // All done
+          tracker.complete();
+          showToast('All challenges complete! Final score: ' + totalScore, 'correct', 4000);
+        }
+        return;
+      }
+
+      const lvl = getLevel();
+      let funcScore = 0, probeScore = 0, readScore = 0, safetyScore = 0;
+
+      // 1) Function selection (25 pts)
+      const funcCorrect = currentFunc === lvl.correctFunc || currentFunc === lvl.altCorrectFunc;
+      if (funcCorrect) {
+        funcScore = 25;
+      }
+
+      // 2) Probe placement (25 pts)
+      const redCorrect = probes.red.attached === lvl.correctRed;
+      const blkCorrect = probes.black.attached === lvl.correctBlack;
+      // Also accept reversed probes for voltage (polarity just shows negative)
+      const reversedOk = (lvl.correctFunc === 'dcv' || lvl.correctFunc === 'acv') &&
+                         probes.red.attached === lvl.correctBlack &&
+                         probes.black.attached === lvl.correctRed;
+
+      if (redCorrect && blkCorrect) {
+        probeScore = 25;
+      } else if (reversedOk) {
+        probeScore = 20; // Partial credit for reversed polarity
+      } else if (redCorrect || blkCorrect) {
+        probeScore = 10; // One correct
+      }
+
+      // For Level 3 troubleshooting, any combination that reveals the fault gets credit
+      if (lvl.component === 'landinglight') {
+        // Credit if they measured voltage at the fault location
+        const atLight = probes.red.attached === 'll_light' || probes.black.attached === 'll_light';
+        const atGnd = probes.red.attached === 'll_gnd' || probes.black.attached === 'll_gnd';
+        if (atLight && atGnd) {
+          probeScore = 25;
+        } else if (atLight) {
+          probeScore = 15;
+        }
+      }
+
+      // 3) Reading interpretation (25 pts)
+      const reading = getReading();
+      if (reading.value !== null) {
+        const diff = Math.abs(reading.value - lvl.expectedReading);
+        if (diff <= lvl.readingTolerance) {
+          readScore = 25;
+        } else if (diff <= lvl.readingTolerance * 3) {
+          readScore = 15;
+        }
+      } else if (reading.ol && lvl.expectedReading > 999998) {
+        readScore = 25; // OL is correct for open circuits
+      }
+      // For troubleshooting, also check if they found the right answer
+      if (lvl.component === 'landinglight' && funcCorrect) {
+        if (reading.value !== null && Math.abs(reading.value - 0) < 1.0 && probeScore >= 15) {
+          readScore = 25; // Found 0V at light = correct diagnosis
+        }
+      }
+
+      // 4) Safety compliance (25 pts)
+      if (lvl.safetyRequired) {
+        if (lvl._deenergized && !safetyViolation) {
+          safetyScore = 25;
+        } else if (lvl._deenergized) {
+          safetyScore = 10; // De-energized but had a violation first
+        }
+      } else {
+        // No safety requirement = full marks
+        safetyScore = 25;
+      }
+
+      // Calculate totals
+      const levelScore = funcScore + probeScore + readScore + safetyScore;
+      totalScore += levelScore;
+
+      // Update displays
+      scoreFunc.textContent = funcScore;
+      scoreFunc.style.color = funcScore >= 25 ? 'var(--sim-green)' : funcScore > 0 ? 'var(--sim-amber)' : 'var(--sim-red)';
+      scoreProbe.textContent = probeScore;
+      scoreProbe.style.color = probeScore >= 25 ? 'var(--sim-green)' : probeScore > 0 ? 'var(--sim-amber)' : 'var(--sim-red)';
+      scoreRead.textContent = readScore;
+      scoreRead.style.color = readScore >= 25 ? 'var(--sim-green)' : readScore > 0 ? 'var(--sim-amber)' : 'var(--sim-red)';
+      scoreSafety.textContent = safetyScore;
+      scoreSafety.style.color = safetyScore >= 25 ? 'var(--sim-green)' : safetyScore > 0 ? 'var(--sim-amber)' : 'var(--sim-red)';
+      scoreTotal.textContent = totalScore;
+
+      // Track analytics
+      tracker.recordStep({
+        stepId: 'level-' + (currentLevel + 1),
+        correct: levelScore >= 75,
+        points: levelScore,
+        loId: 'LO-3.3',
+        category: 'Electrical Measurement'
+      });
+
+      // Feedback
+      levelCompleted = true;
+      if (levelScore >= 90) {
+        showToast('Excellent! ' + levelScore + '/100', 'correct', 3000);
+      } else if (levelScore >= 60) {
+        showToast('Good effort! ' + levelScore + '/100', 'info', 3000);
+      } else {
+        showToast('Needs work. ' + levelScore + '/100', 'incorrect', 3000);
+      }
+
+      // Update button
+      const btn = document.getElementById('btnSubmit');
+      if (currentLevel < challenges.length - 1) {
+        btn.textContent = 'Next Level';
+      } else {
+        btn.textContent = 'Finish';
+      }
+
+      // Show fault for level 3
+      if (lvl.component === 'landinglight') {
+        render(); // Re-render to show fault marker
+      }
+
+      // Show detailed feedback in task bar
+      let feedback = '<strong>Score: ' + levelScore + '/100</strong> - ';
+      if (funcScore < 25) feedback += 'Wrong function selected. ';
+      if (probeScore < 25) feedback += 'Probe placement needs adjustment. ';
+      if (readScore < 25) feedback += 'Reading not matching expected value. ';
+      if (safetyScore < 25 && lvl.safetyRequired) feedback += 'Safety procedure not followed correctly. ';
+      if (levelScore >= 90) feedback += 'Outstanding work!';
+      taskText.innerHTML = feedback;
+    });
+
+    // ── Hint button ─────────────────────────────────────────
+    document.getElementById('btnHint').addEventListener('click', () => {
+      const lvl = getLevel();
+      showToast(lvl.hint, 'info', 5000);
+    });
+
+    // ── Reset button ────────────────────────────────────────
+    document.getElementById('btnReset').addEventListener('click', () => {
+      const lvl = getLevel();
+      lvl._deenergized = false;
+      safetyViolation = false;
+      initLevel();
+      showToast('Level reset', 'info', 1500);
+    });
+
+    // ── Help modal ──────────────────────────────────────────
+    document.getElementById('btnHelp').addEventListener('click', () => {
+      document.getElementById('helpModal').classList.add('visible');
+    });
+    document.getElementById('closeHelp').addEventListener('click', () => {
+      document.getElementById('helpModal').classList.remove('visible');
+    });
+    document.getElementById('helpModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('helpModal')) {
+        document.getElementById('helpModal').classList.remove('visible');
+      }
+    });
+
+    // ── Function selector clicks ────────────────────────────
+    funcGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.dmm-func-btn');
+      if (!btn) return;
+      setFunction(btn.dataset.func);
+      render();
+    });
+
+    // ── Window resize ───────────────────────────────────────
+    window.addEventListener('resize', resizeCanvas);
+
+    // ── Animation loop for reading flicker ──────────────────
+    let frameCount = 0;
+    function animLoop() {
+      frameCount++;
+      // Update reading display every 15 frames for realistic flicker
+      if (frameCount % 15 === 0 && (probes.red.attached || probes.black.attached)) {
+        updateReading();
+      }
+      requestAnimationFrame(animLoop);
+    }
+
+    // ── Start ───────────────────────────────────────────────
+    initLevel();
+    animLoop();
+
+  })();
+  </script>
+</body>
+</html>
