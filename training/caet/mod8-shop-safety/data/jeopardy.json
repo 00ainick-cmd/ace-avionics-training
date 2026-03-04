@@ -19,14 +19,14 @@
           "OSHA 300 injury logs"
         ],
         "correctIndex": 0,
-        "explanation": "SDS must be readily accessible to ALL personnel who may be exposed \u2014 not restricted to supervisors or specific roles.",
+        "explanation": "SDS must be readily accessible to ALL personnel who may be exposed — not restricted to supervisors or specific roles.",
         "difficulty": 100,
         "learningObjective": "State that Safety Data Sheets (SDS) for shop chemicals must be kept in an accessible location readily available to all personnel who work with or near hazardous materials.",
         "source": "CAET Training"
       },
       {
         "id": "cat8-q005",
-        "clue": "These three steps \u2014 checking vent caps, confirming charge state, and using a non-conductive sealed container \u2014 must be completed before moving this type of aircraft battery.",
+        "clue": "These three steps — checking vent caps, confirming charge state, and using a non-conductive sealed container — must be completed before moving this type of aircraft battery.",
         "choices": [
           "Lead-acid battery transport preparation",
           "NiCd battery replacement procedure",
@@ -49,7 +49,7 @@
           "Material Certification (C of C)"
         ],
         "correctIndex": 2,
-        "explanation": "The SDS contains comprehensive safety information for each chemical: hazards, handling procedures, PPE requirements, and first-aid measures \u2014 the product label alone is insufficient.",
+        "explanation": "The SDS contains comprehensive safety information for each chemical: hazards, handling procedures, PPE requirements, and first-aid measures — the product label alone is insufficient.",
         "difficulty": 200,
         "learningObjective": "State that the Safety Data Sheet (SDS) is the document containing specific safety information about a chemical solvent, including hazards, handling procedures, and first-aid measures.",
         "source": "CAET Training"
@@ -64,14 +64,14 @@
           "Worn safety gloves (non-contaminated)"
         ],
         "correctIndex": 1,
-        "explanation": "Hazardous chemicals must go through licensed disposal vendors following EPA and local regulations \u2014 drains and regular trash are prohibited.",
+        "explanation": "Hazardous chemicals must go through licensed disposal vendors following EPA and local regulations — drains and regular trash are prohibited.",
         "difficulty": 200,
         "learningObjective": "Describe proper disposal of hazardous materials in a GA repair environment as following EPA and local regulations, using licensed disposal vendors, and never pouring chemicals into drains or trash.",
         "source": "CAET Training"
       },
       {
         "id": "cat8-q009",
-        "clue": "These three steps \u2014 containing with absorbent materials, cutting power to nearby electronics, and following hazmat cleanup procedures \u2014 define the correct response to this type of bench-area contamination event.",
+        "clue": "These three steps — containing with absorbent materials, cutting power to nearby electronics, and following hazmat cleanup procedures — define the correct response to this type of bench-area contamination event.",
         "choices": [
           "Hydraulic fluid spill near avionics equipment",
           "An ESD event at the bench",
@@ -94,7 +94,7 @@
           "Lithium coin cells"
         ],
         "correctIndex": 1,
-        "explanation": "Cadmium is a toxic heavy metal \u2014 NiCd batteries must go through regulated hazmat disposal channels regardless of state of charge. Regular trash disposal is prohibited.",
+        "explanation": "Cadmium is a toxic heavy metal — NiCd batteries must go through regulated hazmat disposal channels regardless of state of charge. Regular trash disposal is prohibited.",
         "difficulty": 400,
         "learningObjective": "Describe the accepted procedure for disposing of a Nickel-Cadmium battery: follow local hazardous materials disposal regulations and do not discard in regular trash.",
         "source": "CAET Training"
@@ -116,7 +116,7 @@
       },
       {
         "id": "cat8-q016",
-        "clue": "Leave the area, get fresh air, notify a supervisor, and file an incident report \u2014 these four steps define the correct response when a technician feels dizzy in this type of chemical exposure situation.",
+        "clue": "Leave the area, get fresh air, notify a supervisor, and file an incident report — these four steps define the correct response when a technician feels dizzy in this type of chemical exposure situation.",
         "choices": [
           "Battery acid splash first aid",
           "ESD wrist strap malfunction procedure",
@@ -141,9 +141,9 @@
           "Wire bundle continuity checking"
         ],
         "correctIndex": 0,
-        "explanation": "Tool control is the foundation of FOD prevention \u2014 counting tools before and after every job ensures nothing is left inside an aircraft, and immediate cleanup of dropped hardware prevents items from migrating into aircraft structure.",
+        "explanation": "Tool control is the foundation of FOD prevention — counting tools before and after every job ensures nothing is left inside an aircraft, and immediate cleanup of dropped hardware prevents items from migrating into aircraft structure.",
         "difficulty": 100,
-        "learningObjective": "Select strict tool control \u2014 counting tools before and after each job and immediately cleaning up dropped hardware and debris \u2014 as the most effective practice for preventing FOD in an avionics shop.",
+        "learningObjective": "Select strict tool control — counting tools before and after each job and immediately cleaning up dropped hardware and debris — as the most effective practice for preventing FOD in an avionics shop.",
         "source": "CAET Training"
       },
       {
@@ -163,7 +163,7 @@
       },
       {
         "id": "cat8-q019",
-        "clue": "Stop work, find the item before closing the panels, and log the event \u2014 these are the required steps when this type of small fastener goes missing during avionics panel installation.",
+        "clue": "Stop work, find the item before closing the panels, and log the event — these are the required steps when this type of small fastener goes missing during avionics panel installation.",
         "choices": [
           "Panel alignment torque verification",
           "Tool audit discrepancy procedure",
@@ -175,6 +175,51 @@
         "difficulty": 400,
         "learningObjective": "Given a small screw dropped behind a panel during avionics installation, determine the correct action: stop work, retrieve the screw before closing any panels, and log it as a FOD prevention measure.",
         "source": "CAET Training"
+      },
+      {
+        "id": "cat8-q020",
+        "clue": "Before entering an aircraft fuel tank or other confined space for avionics wiring inspection, FAA and OSHA regulations require completing this critical step to ensure the atmosphere is safe for entry.",
+        "choices": [
+          "Running the aircraft APU for ventilation for 30 minutes before entry",
+          "Testing the atmosphere with a calibrated gas detector for oxygen level, flammable vapors, and toxic gases",
+          "Spraying the space with a degreasing agent to neutralize residual fumes",
+          "Verifying the aircraft insurance covers confined-space maintenance"
+        ],
+        "correctIndex": 1,
+        "explanation": "Confined space entry requires atmospheric testing with a calibrated 4-gas detector before and during entry.",
+        "difficulty": 300,
+        "category": "PPE & Protection",
+        "source": "Confined space atmospheric testing"
+      },
+      {
+        "id": "cat8-q021",
+        "clue": "A technician performing soldering work on avionics circuit boards should use this specific type of ventilation to prevent inhalation of flux fumes — which contain rosin decomposition products that can cause occupational asthma.",
+        "choices": [
+          "An open shop door providing general building ventilation",
+          "A standard dust mask rated for particulate filtration only",
+          "A fume extractor with activated carbon filter positioned at the soldering point",
+          "A full-face respirator with organic vapor cartridges rated for 8-hour use"
+        ],
+        "correctIndex": 2,
+        "explanation": "Soldering fume extractors with activated carbon filters capture rosin flux decomposition products at the source.",
+        "difficulty": 400,
+        "category": "PPE & Protection",
+        "source": "Soldering fume extraction"
+      },
+      {
+        "id": "cat8-q022",
+        "clue": "During engine run-up while troubleshooting avionics near the flight line, this PPE item is required because sustained exposure to turbine engine noise levels (typically 130+ dB) causes this type of irreversible occupational injury.",
+        "choices": [
+          "Impact-rated safety glasses to prevent FOD eye injuries",
+          "Steel-toed boots to protect against dropped tooling",
+          "High-visibility vest for ramp traffic awareness",
+          "Hearing protection (earplugs or earmuffs) to prevent permanent noise-induced hearing loss"
+        ],
+        "correctIndex": 3,
+        "explanation": "Turbine engine noise routinely exceeds 130 dB — well above the 85 dB OSHA threshold. Noise-induced hearing loss is cumulative and permanent.",
+        "difficulty": 500,
+        "category": "PPE & Protection",
+        "source": "Flight line hearing protection"
       }
     ],
     "Fire & Emergency": [
@@ -188,14 +233,14 @@
           "ESD wrist strap continuity test"
         ],
         "correctIndex": 2,
-        "explanation": "All four checks are required: gauge in green zone, intact pin/seal, no physical damage, and a current annual inspection tag \u2014 all must pass for the extinguisher to be considered serviceable.",
+        "explanation": "All four checks are required: gauge in green zone, intact pin/seal, no physical damage, and a current annual inspection tag — all must pass for the extinguisher to be considered serviceable.",
         "difficulty": 100,
         "learningObjective": "Describe how to check a fire extinguisher's readiness in a GA avionics shop: verify the pressure gauge is in the green zone, inspect the safety pin and tamper seal, check for visible damage, and confirm the annual inspection tag is current.",
         "source": "CAET Training"
       },
       {
         "id": "cat8-q013",
-        "clue": "The correct sequence for helping an electrical shock victim: verify the area is safe, cut power before touching the person, then summon emergency help \u2014 in that order.",
+        "clue": "The correct sequence for helping an electrical shock victim: verify the area is safe, cut power before touching the person, then summon emergency help — in that order.",
         "choices": [
           "Electrical shock victim first-aid response",
           "Cardiopulmonary resuscitation (CPR) algorithm",
@@ -203,10 +248,70 @@
           "Fainting response procedure"
         ],
         "correctIndex": 0,
-        "explanation": "Touching an energized victim can electrocute the rescuer. The first step is to ensure YOUR safety, then disconnect power \u2014 only then is it safe to touch the victim and call for emergency help.",
+        "explanation": "Touching an energized victim can electrocute the rescuer. The first step is to ensure YOUR safety, then disconnect power — only then is it safe to touch the victim and call for emergency help.",
         "difficulty": 300,
         "learningObjective": "Apply the correct first-aid response to an electrical shock victim: ensure the area is safe, disconnect the power source before touching the victim, then call for emergency assistance.",
         "source": "CAET Training"
+      },
+      {
+        "id": "cat8-q023",
+        "clue": "This class of fire involves energized electrical equipment — common in avionics shops — and must be extinguished with CO₂ or dry chemical agents, never water.",
+        "choices": [
+          "Class C",
+          "Class A",
+          "Class B",
+          "Class D"
+        ],
+        "correctIndex": 0,
+        "explanation": "Class C = energized electrical equipment. Water conducts electricity and creates electrocution hazard.",
+        "difficulty": 200,
+        "category": "Fire & Emergency",
+        "source": "Class C electrical fire"
+      },
+      {
+        "id": "cat8-q024",
+        "clue": "The PASS technique — Pull the pin, Aim at the base of the fire, Squeeze the handle, Sweep side to side — is the correct operating procedure for this safety device.",
+        "choices": [
+          "An emergency eyewash station",
+          "A portable fire extinguisher",
+          "A smoke evacuation system",
+          "A halon suppression panel"
+        ],
+        "correctIndex": 1,
+        "explanation": "PASS (Pull, Aim, Squeeze, Sweep) is the universally taught method for operating portable fire extinguishers.",
+        "difficulty": 300,
+        "category": "Fire & Emergency",
+        "source": "PASS fire extinguisher technique"
+      },
+      {
+        "id": "cat8-q025",
+        "clue": "When evacuating a hangar during a fire alarm, technicians must do this with any aircraft power and test equipment before leaving — failure to do so significantly increases the risk of the fire spreading.",
+        "choices": [
+          "Move the test equipment to the nearest emergency exit for later retrieval",
+          "Cover sensitive avionics with anti-static bags to prevent smoke damage",
+          "Disconnect or de-energize all aircraft and bench power sources",
+          "Lock the tool cabinet to prevent unauthorized access during evacuation"
+        ],
+        "correctIndex": 2,
+        "explanation": "De-energizing all power sources removes potential ignition sources and electrical shock hazards for responding firefighters.",
+        "difficulty": 400,
+        "category": "Fire & Emergency",
+        "source": "Evacuation power de-energization"
+      },
+      {
+        "id": "cat8-q026",
+        "clue": "A lithium battery in an avionics unit enters thermal runaway, producing white smoke, intense heat, and a chemical fire. Standard CO₂ and dry chemical extinguishers are ineffective because lithium fires require this response.",
+        "choices": [
+          "Flooding the area with halon gas to reduce oxygen concentration below 12%",
+          "Applying a standard ABC dry chemical extinguisher at maximum discharge rate",
+          "Smothering the fire with a standard fire blanket rated for Class B use",
+          "Applying copious water to cool the cells below the thermal runaway threshold"
+        ],
+        "correctIndex": 3,
+        "explanation": "Lithium battery fires are self-oxidizing, so CO₂ and halon (oxygen displacement) are ineffective. Water cools the cells below the thermal runaway temperature.",
+        "difficulty": 500,
+        "category": "Fire & Emergency",
+        "source": "Lithium battery thermal runaway response"
       }
     ],
     "Shop Procedures": [
@@ -227,7 +332,7 @@
       },
       {
         "id": "cat8-q008",
-        "clue": "These three ground rules \u2014 avoid the rear, approach from the front, and wait for the pilot's signal \u2014 define the correct way to approach a running helicopter on the ramp.",
+        "clue": "These three ground rules — avoid the rear, approach from the front, and wait for the pilot's signal — define the correct way to approach a running helicopter on the ramp.",
         "choices": [
           "Engine run-up clearance protocol",
           "Pushback crew coordination procedure",
@@ -239,6 +344,66 @@
         "difficulty": 300,
         "learningObjective": "Describe safe practice around moving rotorcraft: stay clear of the tail rotor, approach only from the front within the pilot's field of view, and never approach until the pilot signals it is safe.",
         "source": "CAET Training"
+      },
+      {
+        "id": "cat8-q027",
+        "clue": "Before beginning bench work on any avionics LRU, a technician's first action — before opening, testing, or troubleshooting — should be to verify this is available and current.",
+        "choices": [
+          "The manufacturer's current Component Maintenance Manual (CMM)",
+          "The customer's purchase order and billing authorization",
+          "Last month's calibration log for all bench test equipment",
+          "The shop's current liability insurance certificate"
+        ],
+        "correctIndex": 0,
+        "explanation": "Part 145 requires current manufacturer technical data before beginning any maintenance.",
+        "difficulty": 200,
+        "category": "Shop Procedures",
+        "source": "CMM first-step requirement"
+      },
+      {
+        "id": "cat8-q028",
+        "clue": "A repair station's \"Buy-Back\" or bench check procedure — where a returned unit tests serviceable with no fault found — must still generate this documentation before the unit can be released back to the customer.",
+        "choices": [
+          "A supplemental type certificate confirming the unit's configuration",
+          "A maintenance record entry with test results and a return-to-service statement",
+          "An FAA field approval letter authorizing the release",
+          "A manufacturer's service bulletin compliance record"
+        ],
+        "correctIndex": 1,
+        "explanation": "Even with no defect found, the unit must have a proper maintenance record entry with test results and a return-to-service statement per §43.9.",
+        "difficulty": 300,
+        "category": "Shop Procedures",
+        "source": "NFF bench check documentation"
+      },
+      {
+        "id": "cat8-q029",
+        "clue": "When receiving a unit for repair, the incoming inspection must document its physical condition — and specifically check these items to establish accountability and prevent later disputes about pre-existing damage.",
+        "choices": [
+          "The unit's retail replacement value and insurance coverage",
+          "The customer's maintenance training records and qualifications",
+          "External damage, missing hardware, and any non-standard modifications visible on the unit",
+          "The unit's electromagnetic emission profile measured at the shipping dock"
+        ],
+        "correctIndex": 2,
+        "explanation": "Incoming inspection documents the unit's as-received condition to protect both the shop and customer.",
+        "difficulty": 400,
+        "category": "Shop Procedures",
+        "source": "Incoming inspection documentation"
+      },
+      {
+        "id": "cat8-q030",
+        "clue": "A technician completes a repair and the unit passes all bench tests. Before the unit can be released with an 8130-3 tag, this person — whose authority is defined in the repair station manual — must review the work and approve the return to service.",
+        "choices": [
+          "The customer's designated engineering representative (DER)",
+          "The original equipment manufacturer's technical support engineer",
+          "The FAA's principal avionics inspector assigned to the repair station",
+          "The repair station's designated inspector or quality control representative"
+        ],
+        "correctIndex": 3,
+        "explanation": "The repair station's quality inspection system designates who can approve return-to-service — typically a designated inspector or QC representative.",
+        "difficulty": 500,
+        "category": "Shop Procedures",
+        "source": "8130-3 QC approval authority"
       }
     ],
     "ESD Prevention": [
@@ -267,16 +432,76 @@
           "Remove aircraft power immediately"
         ],
         "correctIndex": 3,
-        "explanation": "Burning insulation indicates active electrical damage or fire risk. Power must be removed FIRST before any investigation \u2014 continuing to apply power risks fire or further wiring damage.",
+        "explanation": "Burning insulation indicates active electrical damage or fire risk. Power must be removed FIRST before any investigation — continuing to apply power risks fire or further wiring damage.",
         "difficulty": 300,
         "learningObjective": "State the first action when a burning insulation odor is detected in an avionics rack: remove aircraft power immediately and identify the source before any further troubleshooting.",
         "source": "CAET Training"
+      },
+      {
+        "id": "cat8-q031",
+        "clue": "Static discharge as low as this voltage level can destroy a CMOS gate inside an avionics LRU — far below what a person can feel (approximately 3,000 volts).",
+        "choices": [
+          "100 volts or less",
+          "1,000 volts",
+          "2,500 volts",
+          "5,000 volts"
+        ],
+        "correctIndex": 0,
+        "explanation": "Many CMOS components can be damaged by ESD events as low as 100 volts or less. A human cannot feel a discharge below approximately 3,000 volts.",
+        "difficulty": 200,
+        "category": "ESD Prevention",
+        "source": "CMOS ESD sensitivity threshold"
+      },
+      {
+        "id": "cat8-q032",
+        "clue": "Before touching any circuit boards or static-sensitive components, a technician must verify that the resistance reading on their ESD wrist strap tester falls within this range — confirming the strap provides both static dissipation and personnel safety.",
+        "choices": [
+          "Less than 1 ohm (direct short to ground)",
+          "Between 750 kΩ and 10 MΩ (controlled dissipation with current limiting)",
+          "Greater than 100 MΩ (high-impedance isolation from ground)",
+          "Exactly 0 ohms (zero resistance to facility ground)"
+        ],
+        "correctIndex": 1,
+        "explanation": "ESD wrist straps contain a 1 MΩ resistor that limits current to safe levels while still dissipating static charge.",
+        "difficulty": 300,
+        "category": "ESD Prevention",
+        "source": "ESD wrist strap resistance range"
+      },
+      {
+        "id": "cat8-q033",
+        "clue": "When transporting an avionics LRU from the stockroom to the ESD-protected bench, the unit must remain inside this packaging material — which dissipates static charge rather than generating it.",
+        "choices": [
+          "Standard cardboard shipping box",
+          "Clear polyethylene bubble wrap",
+          "Static-dissipative or conductive ESD bag (pink or silver/black)",
+          "Foam peanuts in a sealed plastic bin"
+        ],
+        "correctIndex": 2,
+        "explanation": "ESD bags are designed to safely transport static-sensitive items. Standard packaging materials are triboelectric generators.",
+        "difficulty": 400,
+        "category": "ESD Prevention",
+        "source": "ESD-safe packaging for transport"
+      },
+      {
+        "id": "cat8-q034",
+        "clue": "An ESD-damaged component may pass initial bench testing but fail prematurely in service. This type of ESD failure — where the damage weakens but does not immediately destroy the component — accounts for the majority of field ESD-related failures.",
+        "choices": [
+          "Catastrophic failure detected during acceptance testing",
+          "Manufacturing defect unrelated to handling",
+          "Electromagnetic interference from adjacent installed equipment",
+          "Latent defect — degraded but functional until stress causes later failure"
+        ],
+        "correctIndex": 3,
+        "explanation": "Latent ESD damage weakens semiconductor junctions without immediately destroying them. The component passes testing but has reduced reliability.",
+        "difficulty": 500,
+        "category": "ESD Prevention",
+        "source": "Latent ESD damage"
       }
     ],
     "FOD Control": [
       {
         "id": "cat8-q015",
-        "clue": "This specified range \u2014 6 to 8 per inch \u2014 defines how tightly to apply the double-twist method when installing safety wire on aviation fasteners.",
+        "clue": "This specified range — 6 to 8 per inch — defines how tightly to apply the double-twist method when installing safety wire on aviation fasteners.",
         "choices": [
           "The minimum thread engagement for AN nuts",
           "The maximum torque tolerance for AN bolts",
@@ -299,10 +524,70 @@
           "LCR meter"
         ],
         "correctIndex": 1,
-        "explanation": "Megohmmeters apply high test voltages (500\u20135000 V). If the circuit is live or capacitors hold charge, connecting the meter risks equipment damage or technician injury.",
+        "explanation": "Megohmmeters apply high test voltages (500–5000 V). If the circuit is live or capacitors hold charge, connecting the meter risks equipment damage or technician injury.",
         "difficulty": 300,
         "learningObjective": "Apply the critical safety precaution when using a megohmmeter: ensure the circuit under test is completely de-energized and all capacitors are discharged before connecting the meter.",
         "source": "CAET Training"
+      },
+      {
+        "id": "cat8-q035",
+        "clue": "Before and after every maintenance task inside an aircraft, technicians must perform this accountability procedure — which is the single most effective method of preventing foreign object damage.",
+        "choices": [
+          "A complete tool inventory count matching the tool control sheet",
+          "A visual sweep of the work area with a flashlight",
+          "A supervisor walkthrough signoff on the FOD prevention checklist",
+          "A borescope inspection of all accessible compartments"
+        ],
+        "correctIndex": 0,
+        "explanation": "Tool accountability — counting every tool before and after the job — is the primary FOD prevention measure.",
+        "difficulty": 200,
+        "category": "FOD Control",
+        "source": "Tool accountability procedure"
+      },
+      {
+        "id": "cat8-q036",
+        "clue": "A technician drops a small screw inside an avionics bay behind the instrument panel. The required response per Part 145 shop procedures is this — regardless of how difficult retrieval may be.",
+        "choices": [
+          "Note it in the maintenance record and release the aircraft with the known FOD",
+          "Stop work immediately and retrieve the item before continuing — do not close any panels until it is found",
+          "Continue working and retrieve it during the next scheduled inspection",
+          "Notify the customer and let them decide whether retrieval is necessary"
+        ],
+        "correctIndex": 1,
+        "explanation": "A dropped fastener is a known FOD hazard. It must be retrieved before work continues and before any panels are closed.",
+        "difficulty": 300,
+        "category": "FOD Control",
+        "source": "Dropped fastener FOD response"
+      },
+      {
+        "id": "cat8-q037",
+        "clue": "FOD pouches, magnetic trays, and parts containers placed within arm's reach during aircraft maintenance serve this specific purpose in the FOD prevention program.",
+        "choices": [
+          "Organizing parts by size for faster installation during reassembly",
+          "Protecting removed parts from ESD damage on the shop floor",
+          "Containing loose hardware and fasteners so they cannot fall into the aircraft structure",
+          "Labeling removed components for warranty tracking purposes"
+        ],
+        "correctIndex": 2,
+        "explanation": "Containment is a core FOD prevention principle. Loose hardware placed on a wing surface or floor can migrate into the aircraft.",
+        "difficulty": 400,
+        "category": "FOD Control",
+        "source": "FOD containment tools"
+      },
+      {
+        "id": "cat8-q038",
+        "clue": "Safety wire clippings, stripped wire insulation, cable tie tails, and solder splashes are all examples of this category of FOD that is uniquely hazardous because individual pieces are small enough to be overlooked but can cause electrical shorts or mechanical jams.",
+        "choices": [
+          "Consumable supply contamination",
+          "Tool accountability violations",
+          "Chemical contamination requiring hazmat cleanup",
+          "Process-generated debris — byproducts of the maintenance work itself"
+        ],
+        "correctIndex": 3,
+        "explanation": "Process-generated debris is the most insidious FOD category because it is created by the maintenance work itself.",
+        "difficulty": 500,
+        "category": "FOD Control",
+        "source": "Process-generated FOD debris"
       }
     ]
   },
@@ -343,7 +628,7 @@
         "A diode"
       ],
       "correctIndex": 1,
-      "explanation": "A 1M\u03a9 resistor is built into the strap. It allows static electricity to safely bleed to ground, but limits the current to a harmless level (milliamps) if the technician touches 115V AC.",
+      "explanation": "A 1MΩ resistor is built into the strap. It allows static electricity to safely bleed to ground, but limits the current to a harmless level (milliamps) if the technician touches 115V AC.",
       "difficulty": 500
     }
   ]

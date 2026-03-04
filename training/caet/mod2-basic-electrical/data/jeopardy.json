@@ -19,7 +19,7 @@
           "R = V x I"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R is Ohm's Law solved for current. Rearranging gives the other two forms: V = I x R (solve for voltage) and R = V / I (solve for resistance). All three rearrangements are equally valid \u2014 knowing which variable is unknown determines which form to use.",
+        "explanation": "I = V / R is Ohm's Law solved for current. Rearranging gives the other two forms: V = I x R (solve for voltage) and R = V / I (solve for resistance). All three rearrangements are equally valid — knowing which variable is unknown determines which form to use.",
         "difficulty": 100,
         "learningObjective": "State Ohm's Law: I = V / R",
         "source": "ohms-law"
@@ -49,7 +49,7 @@
           "288 amps"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R = 24V / 12\u03a9 = 2 amps. Dividing 24 by 12 gives exactly 2. The distractor 0.5 amps results from inverting (12/24). The distractor 12 amps ignores the voltage entirely. The distractor 288 amps multiplies instead of divides.",
+        "explanation": "I = V / R = 24V / 12Ω = 2 amps. Dividing 24 by 12 gives exactly 2. The distractor 0.5 amps results from inverting (12/24). The distractor 12 amps ignores the voltage entirely. The distractor 288 amps multiplies instead of divides.",
         "difficulty": 100,
         "learningObjective": "Calculate current: 24V / 12 ohms = 2A",
         "source": "ohms-law"
@@ -59,7 +59,7 @@
         "clue": "This formula gives the total resistance of a series circuit containing three resistors: Rt equals R1 plus R2 plus this.",
         "choices": [
           "R3",
-          "R1 + R2 \u2014 the third resistor does not add resistance",
+          "R1 + R2 — the third resistor does not add resistance",
           "R1 x R2 x R3",
           "R1 / (R2 + R3)"
         ],
@@ -79,7 +79,7 @@
           "It doubles"
         ],
         "correctIndex": 3,
-        "explanation": "I = V / R. If V doubles and R is unchanged, the ratio V/R doubles. Current and voltage are directly proportional when resistance is constant. This is a linear relationship \u2014 a 2x change in voltage produces a 2x change in current, not a squared or square-root change.",
+        "explanation": "I = V / R. If V doubles and R is unchanged, the ratio V/R doubles. Current and voltage are directly proportional when resistance is constant. This is a linear relationship — a 2x change in voltage produces a 2x change in current, not a squared or square-root change.",
         "difficulty": 200,
         "learningObjective": "Predict current doubles when voltage doubles (R constant)",
         "source": "ohms-law"
@@ -109,7 +109,7 @@
           "144 watts"
         ],
         "correctIndex": 0,
-        "explanation": "P = V x I = 12V x 2A = 24 watts. The distractor 6 watts comes from dividing. The distractor 14 watts adds instead of multiplies. The distractor 144 watts squares the voltage. Power is always voltage times current \u2014 not a sum, quotient, or square.",
+        "explanation": "P = V x I = 12V x 2A = 24 watts. The distractor 6 watts comes from dividing. The distractor 14 watts adds instead of multiplies. The distractor 144 watts squares the voltage. Power is always voltage times current — not a sum, quotient, or square.",
         "difficulty": 200,
         "learningObjective": "Calculate power: P = V x I, 12V x 2A = 24W",
         "source": "power"
@@ -124,7 +124,7 @@
           "It = the largest branch current only = 3A"
         ],
         "correctIndex": 1,
-        "explanation": "Total parallel current is the sum of all branch currents: It = 1 + 2 + 3 = 6A. Unlike series circuits where current is the same everywhere, parallel circuits split current among branches \u2014 but the source must supply all branches combined. This is why adding parallel loads increases total current draw.",
+        "explanation": "Total parallel current is the sum of all branch currents: It = 1 + 2 + 3 = 6A. Unlike series circuits where current is the same everywhere, parallel circuits split current among branches — but the source must supply all branches combined. This is why adding parallel loads increases total current draw.",
         "difficulty": 300,
         "learningObjective": "Calculate total parallel current: It = I1 + I2 + I3",
         "source": "parallel-circuit"
@@ -139,7 +139,7 @@
           "0.89 watts"
         ],
         "correctIndex": 1,
-        "explanation": "P = V x I = 28 x 25 = 700 watts. The 28VDC aircraft bus is a standard reference point for power calculations. Knowing total power draw \u2014 not just individual loads \u2014 is required when verifying the aircraft's alternator capacity is sufficient for all installed equipment.",
+        "explanation": "P = V x I = 28 x 25 = 700 watts. The 28VDC aircraft bus is a standard reference point for power calculations. Knowing total power draw — not just individual loads — is required when verifying the aircraft's alternator capacity is sufficient for all installed equipment.",
         "difficulty": 300,
         "learningObjective": "Calculate power on 28V bus at 25A = 700W",
         "source": "power"
@@ -154,7 +154,7 @@
           "Voltage doubles"
         ],
         "correctIndex": 3,
-        "explanation": "V = I x R. If I doubles and R is constant, the product I x R doubles, so V doubles. Voltage and current are directly proportional for a given resistance \u2014 a linear relationship. This is different from power, which scales with the square of current.",
+        "explanation": "V = I x R. If I doubles and R is constant, the product I x R doubles, so V doubles. Voltage and current are directly proportional for a given resistance — a linear relationship. This is different from power, which scales with the square of current.",
         "difficulty": 300,
         "learningObjective": "Predict voltage doubles when current doubles (R constant)",
         "source": "ohms-law"
@@ -169,7 +169,7 @@
           "Total resistance decreases because additional current paths are created"
         ],
         "correctIndex": 3,
-        "explanation": "Every parallel branch creates an additional path for current, so total resistance drops. The formula 1/Rt = 1/R1 + 1/R2 + ... always produces a result smaller than the smallest individual branch. This is why adding avionics loads to a bus increases total current draw \u2014 lower total resistance draws more current from the same voltage.",
+        "explanation": "Every parallel branch creates an additional path for current, so total resistance drops. The formula 1/Rt = 1/R1 + 1/R2 + ... always produces a result smaller than the smallest individual branch. This is why adding avionics loads to a bus increases total current draw — lower total resistance draws more current from the same voltage.",
         "difficulty": 400,
         "learningObjective": "Understand adding parallel resistors reduces total resistance",
         "source": "parallel-circuit"
@@ -178,13 +178,13 @@
         "id": "CAT2-DC-013",
         "clue": "When voltage doubles and current doubles simultaneously in a circuit, power changes by this factor.",
         "choices": [
-          "It doubles \u2014 because two quantities each doubled",
-          "It quadruples \u2014 because 2V x 2I = 4 x original power",
-          "It triples \u2014 the midpoint between doubling each quantity",
-          "It stays the same \u2014 voltage and current increases cancel out"
+          "It doubles — because two quantities each doubled",
+          "It quadruples — because 2V x 2I = 4 x original power",
+          "It triples — the midpoint between doubling each quantity",
+          "It stays the same — voltage and current increases cancel out"
         ],
         "correctIndex": 1,
-        "explanation": "P = V x I. If V becomes 2V and I becomes 2I, then new power = 2V x 2I = 4 x (V x I). Power is the product of voltage and current \u2014 when both factors double, the product increases by 2 x 2 = 4. This compounding effect is why fault conditions with both elevated voltage and current can cause catastrophic damage rapidly.",
+        "explanation": "P = V x I. If V becomes 2V and I becomes 2I, then new power = 2V x 2I = 4 x (V x I). Power is the product of voltage and current — when both factors double, the product increases by 2 x 2 = 4. This compounding effect is why fault conditions with both elevated voltage and current can cause catastrophic damage rapidly.",
         "difficulty": 400,
         "learningObjective": "Predict power quadruples when both V and I double",
         "source": "power"
@@ -199,9 +199,9 @@
           "approximately 476 ohms"
         ],
         "correctIndex": 3,
-        "explanation": "1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021. Rt = 1/0.0021 \u2248 476 ohms. The answer must be less than 500 ohms (the smallest branch). Adding 11,500 (series) or averaging (3,833) are common errors from misapplying the formula.",
+        "explanation": "1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021. Rt = 1/0.0021 ≈ 476 ohms. The answer must be less than 500 ohms (the smallest branch). Adding 11,500 (series) or averaging (3,833) are common errors from misapplying the formula.",
         "difficulty": 400,
-        "learningObjective": "Calculate parallel resistance: 10k, 1k, 500 ohms \u2248 476 ohms",
+        "learningObjective": "Calculate parallel resistance: 10k, 1k, 500 ohms ≈ 476 ohms",
         "source": "parallel-circuit"
       },
       {
@@ -214,7 +214,7 @@
           "72 amps"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R = 12V / 6\u03a9 = 2 amps. The distractor 0.5 amps comes from inverting (6/12). The distractor 6 amps ignores the voltage. The distractor 72 amps multiplies voltage by resistance. Always divide voltage by resistance to find current.",
+        "explanation": "I = V / R = 12V / 6Ω = 2 amps. The distractor 0.5 amps comes from inverting (6/12). The distractor 6 amps ignores the voltage. The distractor 72 amps multiplies voltage by resistance. Always divide voltage by resistance to find current.",
         "difficulty": 500,
         "learningObjective": "Calculate current: 12V / 6 ohms = 2A",
         "source": "ohms-law"
@@ -229,7 +229,7 @@
           "Current is halved"
         ],
         "correctIndex": 3,
-        "explanation": "I = V / R. If R doubles (becomes 2R) and V is constant: new current = V / (2R) = (V/R) / 2 = half the original current. Resistance and current are inversely proportional at constant voltage \u2014 a fundamental inverse relationship in Ohm's Law.",
+        "explanation": "I = V / R. If R doubles (becomes 2R) and V is constant: new current = V / (2R) = (V/R) / 2 = half the original current. Resistance and current are inversely proportional at constant voltage — a fundamental inverse relationship in Ohm's Law.",
         "difficulty": 500,
         "learningObjective": "Predict current halved when resistance doubles (V constant)",
         "source": "ohms-law"
@@ -244,7 +244,7 @@
           "Through a single common resistor to limit current"
         ],
         "correctIndex": 0,
-        "explanation": "Parallel wiring gives each bulb an independent path to the bus. When one bulb burns out (open circuit), that branch is lost but all other branches remain unaffected. In a series circuit, one open stops all current and all lights would fail \u2014 clearly unacceptable for a safety-critical system.",
+        "explanation": "Parallel wiring gives each bulb an independent path to the bus. When one bulb burns out (open circuit), that branch is lost but all other branches remain unaffected. In a series circuit, one open stops all current and all lights would fail — clearly unacceptable for a safety-critical system.",
         "difficulty": 500,
         "learningObjective": "Analyze parallel circuit: remaining loads stay lit if one fails",
         "source": "parallel-circuit"
@@ -256,12 +256,12 @@
         "clue": "The unit used to measure the number of complete AC cycles occurring each second in an electrical system.",
         "choices": [
           "Volts (V)",
-          "Ohms (\u03a9)",
+          "Ohms (Ω)",
           "Watts (W)",
           "Hertz (Hz)"
         ],
         "correctIndex": 3,
-        "explanation": "Hertz (Hz) is the SI unit of frequency, named after Heinrich Hertz. One hertz equals one complete cycle per second. Aircraft AC systems operate at 400 Hz (400 cycles per second), while US household power is 60 Hz. Frequency is distinct from voltage (V), resistance (\u03a9), or power (W).",
+        "explanation": "Hertz (Hz) is the SI unit of frequency, named after Heinrich Hertz. One hertz equals one complete cycle per second. Aircraft AC systems operate at 400 Hz (400 cycles per second), while US household power is 60 Hz. Frequency is distinct from voltage (V), resistance (Ω), or power (W).",
         "difficulty": 100,
         "learningObjective": "State that frequency is measured in hertz (Hz)",
         "source": "ac-frequency"
@@ -271,12 +271,12 @@
         "clue": "This is the SI unit of capacitance, though avionics capacitors are almost always specified in one-millionth of this unit.",
         "choices": [
           "Henry (H)",
-          "Ohm (\u03a9)",
+          "Ohm (Ω)",
           "Farad (F)",
           "Siemen (S)"
         ],
         "correctIndex": 2,
-        "explanation": "The farad (F) is the SI unit of capacitance. Because one farad is impractically large, avionics capacitors are specified in microfarads (\u00b5F = 10\u207b\u2076 F) or picofarads (pF = 10\u207b\u00b9\u00b2 F). The henry measures inductance, the ohm measures resistance, and the siemen measures conductance.",
+        "explanation": "The farad (F) is the SI unit of capacitance. Because one farad is impractically large, avionics capacitors are specified in microfarads (µF = 10⁻⁶ F) or picofarads (pF = 10⁻¹² F). The henry measures inductance, the ohm measures resistance, and the siemen measures conductance.",
         "difficulty": 100,
         "learningObjective": "State that capacitance is measured in farads; microfarads most common in avionics",
         "source": "capacitance"
@@ -291,7 +291,7 @@
           "Inverters, which convert DC to AC for high-voltage loads"
         ],
         "correctIndex": 2,
-        "explanation": "Transformers only work with AC \u2014 they cannot change DC voltage levels. By stepping up voltage, transformers allow the same power to be transmitted at lower current. Lower current means smaller wire is adequate (P = V x I; at higher V, I is lower for the same P), reducing wire bundle weight. This is why aircraft with high power loads (radar, galleys) use AC distribution.",
+        "explanation": "Transformers only work with AC — they cannot change DC voltage levels. By stepping up voltage, transformers allow the same power to be transmitted at lower current. Lower current means smaller wire is adequate (P = V x I; at higher V, I is lower for the same P), reducing wire bundle weight. This is why aircraft with high power loads (radar, galleys) use AC distribution.",
         "difficulty": 200,
         "learningObjective": "State AC advantage: transformers enable lighter wiring",
         "source": "ac-systems"
@@ -306,7 +306,7 @@
           "Inductive reactance (XL)"
         ],
         "correctIndex": 3,
-        "explanation": "Inductive reactance (XL = 2\u03c0fL) describes how strongly an inductor opposes AC current. It is measured in ohms, like resistance, but is frequency-dependent. As frequency increases, XL increases \u2014 the opposite of capacitive reactance (XC), which decreases with frequency. At DC (f = 0), an ideal inductor has zero reactance and acts as a plain wire.",
+        "explanation": "Inductive reactance (XL = 2πfL) describes how strongly an inductor opposes AC current. It is measured in ohms, like resistance, but is frequency-dependent. As frequency increases, XL increases — the opposite of capacitive reactance (XC), which decreases with frequency. At DC (f = 0), an ideal inductor has zero reactance and acts as a plain wire.",
         "difficulty": 300,
         "learningObjective": "State inductive reactance: opposition to AC by inductors, measured in ohms, increases with frequency",
         "source": "inductive-reactance"
@@ -321,7 +321,7 @@
           "A digital multimeter and a tachometer"
         ],
         "correctIndex": 1,
-        "explanation": "A frequency counter directly measures cycles per second (Hz). A calibrated oscilloscope allows a technician to measure the period of one cycle and calculate frequency from it. A standard DMM's AC voltage function measures RMS magnitude, not frequency \u2014 it will not confirm the alternator is outputting 400 Hz versus 380 Hz or 420 Hz.",
+        "explanation": "A frequency counter directly measures cycles per second (Hz). A calibrated oscilloscope allows a technician to measure the period of one cycle and calculate frequency from it. A standard DMM's AC voltage function measures RMS magnitude, not frequency — it will not confirm the alternator is outputting 400 Hz versus 380 Hz or 420 Hz.",
         "difficulty": 300,
         "learningObjective": "Select correct instrument to verify AC alternator output frequency",
         "source": "ac-frequency"
@@ -428,7 +428,7 @@
           "Turn the circuit power off and discharge capacitors"
         ],
         "correctIndex": 3,
-        "explanation": "Measuring resistance with power applied will damage the meter's ohmmeter circuit and give false readings. Capacitors must also be discharged \u2014 they can hold charge that appears as voltage to the meter.",
+        "explanation": "Measuring resistance with power applied will damage the meter's ohmmeter circuit and give false readings. Capacitors must also be discharged — they can hold charge that appears as voltage to the meter.",
         "difficulty": 300,
         "learningObjective": "Correct procedure before measuring resistance with multimeter",
         "source": "multimeter"
@@ -443,7 +443,7 @@
           "In series, circuit powered off to insert, then powered on"
         ],
         "correctIndex": 3,
-        "explanation": "Current measurement requires series connection \u2014 break the circuit, insert the ammeter, then restore power so current flows through the meter. Parallel connection would short the supply through the meter's near-zero resistance.",
+        "explanation": "Current measurement requires series connection — break the circuit, insert the ammeter, then restore power so current flows through the meter. Parallel connection would short the supply through the meter's near-zero resistance.",
         "difficulty": 300,
         "learningObjective": "Connect ammeter in series to measure current",
         "source": "ammeter"
@@ -488,7 +488,7 @@
           "A short circuit bypassing the bulbs"
         ],
         "correctIndex": 0,
-        "explanation": "Dim bulbs mean reduced voltage at the bulb (V_bulb = V_supply \u2212 V_drop). Excessive resistance in the wiring or connectors upstream creates a voltage drop, leaving less voltage for the bulb \u2014 resulting in reduced brightness.",
+        "explanation": "Dim bulbs mean reduced voltage at the bulb (V_bulb = V_supply − V_drop). Excessive resistance in the wiring or connectors upstream creates a voltage drop, leaving less voltage for the bulb — resulting in reduced brightness.",
         "difficulty": 500,
         "learningObjective": "Diagnose dimmer-than-normal bulbs",
         "source": "voltage-drop"
@@ -505,7 +505,7 @@
         "correctIndex": 2,
         "explanation": "Voltage drop (V=IR) can occur anywhere current flows: supply wiring, connector pins, and the ground return path. Technicians often forget to check the ground return, which can have just as much resistance as the supply side.",
         "difficulty": 500,
-        "learningObjective": "Identify cause of 0.5V drop \u2014 wiring, connectors, or ground",
+        "learningObjective": "Identify cause of 0.5V drop — wiring, connectors, or ground",
         "source": "voltage-drop"
       }
     ],
@@ -565,14 +565,14 @@
           "Shorted capacitor on the bus"
         ],
         "correctIndex": 0,
-        "explanation": "Unstable but within-limits voltage points to intermittent (not failed) components. An intermittent ground adds variable resistance to the return path; a failing regulator produces inconsistent output \u2014 both create fluctuating readings.",
+        "explanation": "Unstable but within-limits voltage points to intermittent (not failed) components. An intermittent ground adds variable resistance to the return path; a failing regulator produces inconsistent output — both create fluctuating readings.",
         "difficulty": 400,
         "learningObjective": "Diagnose unstable within-limits voltage",
         "source": "voltage"
       },
       {
         "id": "CAT2-CA-010",
-        "clue": "A voltmeter reads 0V across a component in an energized circuit. This upstream condition \u2014 blown fuse, tripped breaker, or broken wire \u2014 is the most likely explanation.",
+        "clue": "A voltmeter reads 0V across a component in an energized circuit. This upstream condition — blown fuse, tripped breaker, or broken wire — is the most likely explanation.",
         "choices": [
           "Short circuit at the component",
           "Open circuit upstream of the component",
@@ -580,7 +580,7 @@
           "Reversed polarity at the connector"
         ],
         "correctIndex": 1,
-        "explanation": "0V across a component in a live circuit means no current is flowing through it \u2014 which requires an open circuit upstream. Check fuses, breakers, and wire continuity between the source and the component.",
+        "explanation": "0V across a component in a live circuit means no current is flowing through it — which requires an open circuit upstream. Check fuses, breakers, and wire continuity between the source and the component.",
         "difficulty": 500,
         "learningObjective": "Diagnose 0V across component in active circuit",
         "source": "voltage"
@@ -612,7 +612,7 @@
           "Current limiter"
         ],
         "correctIndex": 1,
-        "explanation": "The voltage regulator controls the alternator's field current to hold output voltage steady \u2014 typically 27.5\u201328.5V \u2014 regardless of engine speed or how many electrical loads are active. Without it, voltage would fluctuate widely.",
+        "explanation": "The voltage regulator controls the alternator's field current to hold output voltage steady — typically 27.5–28.5V — regardless of engine speed or how many electrical loads are active. Without it, voltage would fluctuate widely.",
         "difficulty": 100,
         "learningObjective": "Identify voltage regulator function",
         "source": "voltage-regulator"
@@ -623,11 +623,11 @@
         "choices": [
           "Positive (hot) cable",
           "Ground (negative) cable",
-          "Either \u2014 order doesn't matter",
+          "Either — order doesn't matter",
           "The bus tie cable"
         ],
         "correctIndex": 1,
-        "explanation": "Remove the negative (ground) cable first. With the negative disconnected, accidental contact of a tool with the airframe while removing the positive cable won't complete a circuit \u2014 no spark, no short. Removing positive first leaves the battery connected to the airframe, creating shock and spark hazard.",
+        "explanation": "Remove the negative (ground) cable first. With the negative disconnected, accidental contact of a tool with the airframe while removing the positive cable won't complete a circuit — no spark, no short. Removing positive first leaves the battery connected to the airframe, creating shock and spark hazard.",
         "difficulty": 200,
         "learningObjective": "State correct first step when disconnecting aircraft battery",
         "source": "battery"
@@ -642,14 +642,14 @@
           "Bus tie relay"
         ],
         "correctIndex": 2,
-        "explanation": "An electrical bus is the distribution backbone of the aircraft electrical system \u2014 it connects power sources (battery, alternator) to all loads (avionics, lights, systems) through a common node. Multiple buses (avionics bus, essential bus, main bus) provide load separation and redundancy.",
+        "explanation": "An electrical bus is the distribution backbone of the aircraft electrical system — it connects power sources (battery, alternator) to all loads (avionics, lights, systems) through a common node. Multiple buses (avionics bus, essential bus, main bus) provide load separation and redundancy.",
         "difficulty": 200,
         "learningObjective": "Define aircraft electrical bus",
         "source": "electrical-bus"
       },
       {
         "id": "CAT2-AE-009",
-        "clue": "These two components \u2014 one that shunts high-frequency noise to ground and one that blocks it from passing \u2014 are used together to filter alternator noise from the aircraft electrical bus.",
+        "clue": "These two components — one that shunts high-frequency noise to ground and one that blocks it from passing — are used together to filter alternator noise from the aircraft electrical bus.",
         "choices": [
           "Resistors and fuses",
           "Capacitors and inductors (chokes)",
@@ -657,7 +657,7 @@
           "Transformers and rectifiers"
         ],
         "correctIndex": 1,
-        "explanation": "Capacitors shunt high-frequency alternator noise to ground; inductors (chokes) block noise from propagating along the bus. Together they form a low-pass filter \u2014 passing clean DC while suppressing the RF interference generated by the alternator's rectifier.",
+        "explanation": "Capacitors shunt high-frequency alternator noise to ground; inductors (chokes) block noise from propagating along the bus. Together they form a low-pass filter — passing clean DC while suppressing the RF interference generated by the alternator's rectifier.",
         "difficulty": 300,
         "learningObjective": "Identify components that filter alternator noise",
         "source": "noise-filter"
@@ -674,7 +674,7 @@
         "correctIndex": 0,
         "explanation": "The DC electrical system powers essentially all electrically-dependent equipment in a GA aircraft: radios, navigation, lights, ignition, and the fuel pump. Loss of DC power is an immediate emergency requiring action.",
         "difficulty": 300,
-        "learningObjective": "State DC system purpose \u2014 power avionics, lights, ignition",
+        "learningObjective": "State DC system purpose — power avionics, lights, ignition",
         "source": "DC-electrical-system"
       },
       {
@@ -734,7 +734,7 @@
         "correctIndex": 3,
         "explanation": "Bonding jumpers enable DC current to return through the airframe (as the aircraft's common 'negative' conductor) and dissipate static charges before they build to levels that cause interference or ignition risk near fuel systems.",
         "difficulty": 500,
-        "learningObjective": "Explain bonding jumper purpose \u2014 current return and static discharge",
+        "learningObjective": "Explain bonding jumper purpose — current return and static discharge",
         "source": "bonding-jumper"
       }
     ],
@@ -766,7 +766,7 @@
         "correctIndex": 0,
         "explanation": "A fuse permanently opens when its element melts due to overcurrent. Unlike a circuit breaker (which can be reset), a blown fuse must be replaced. Both protect wiring from current levels that would cause overheating.",
         "difficulty": 200,
-        "learningObjective": "Explain fuse purpose \u2014 open circuit on overcurrent",
+        "learningObjective": "Explain fuse purpose — open circuit on overcurrent",
         "source": "fuse"
       },
       {
@@ -779,7 +779,7 @@
           "Insufficient bus voltage"
         ],
         "correctIndex": 0,
-        "explanation": "Voltage drop = I \u00d7 R. Any resistance in the wiring path (corroded pin, undersized wire, loose terminal) creates a proportional voltage drop. A 0.5V drop in a 24V circuit indicates measurable resistance between the source and test point.",
+        "explanation": "Voltage drop = I × R. Any resistance in the wiring path (corroded pin, undersized wire, loose terminal) creates a proportional voltage drop. A 0.5V drop in a 24V circuit indicates measurable resistance between the source and test point.",
         "difficulty": 300,
         "learningObjective": "Identify cause of 0.5V drop in 24V DC circuit",
         "source": "voltage-drop"
@@ -794,25 +794,55 @@
           "Apply power to the pitot heat and measure current draw"
         ],
         "correctIndex": 0,
-        "explanation": "An immediately-tripping breaker signals a hard fault \u2014 likely a short or failed heating element. Repeated resets force excessive current through the fault, risking fire or further damage. Isolate the circuit, then inspect before any power is reapplied.",
+        "explanation": "An immediately-tripping breaker signals a hard fault — likely a short or failed heating element. Repeated resets force excessive current through the fault, risking fire or further damage. Isolate the circuit, then inspect before any power is reapplied.",
         "difficulty": 400,
         "learningObjective": "Diagnose breaker that trips immediately on reset",
         "source": "circuit-breaker"
+      },
+      {
+        "id": "CAT2-PS-001",
+        "clue": "In a 28VDC aircraft electrical system, this protective device opens the circuit when current exceeds its rated value — protecting the wiring from overheating, not the connected equipment.",
+        "choices": [
+          "A voltage regulator",
+          "A current limiter relay",
+          "A circuit breaker",
+          "A zener diode clamp"
+        ],
+        "correctIndex": 2,
+        "explanation": "Circuit breakers protect wiring — they are sized to the wire gauge, not the equipment.",
+        "difficulty": 300,
+        "category": "Protection & Safety",
+        "source": "Circuit breaker purpose"
+      },
+      {
+        "id": "CAT2-PS-002",
+        "clue": "After pulling and resetting a tripped circuit breaker once, it trips again immediately. Per standard aircraft maintenance practice, the correct next action is this.",
+        "choices": [
+          "Replace the circuit breaker with a higher-rated unit to prevent nuisance trips",
+          "Reset it one more time — breakers are allowed two resets before grounding the circuit",
+          "Install a jumper wire to bypass the breaker and continue the maintenance run",
+          "Leave the breaker pulled and troubleshoot the protected circuit for a short or overload"
+        ],
+        "correctIndex": 3,
+        "explanation": "A circuit breaker that trips immediately after reset indicates a hard short or sustained overload. The correct action is to leave it pulled and investigate.",
+        "difficulty": 500,
+        "category": "Protection & Safety",
+        "source": "Tripped breaker response procedure"
       }
     ]
   },
   "final": [
     {
       "category": "Final Challenge: Advanced Circuit Analysis",
-      "clue": "In a parallel circuit with three resistors (100\u03a9, 200\u03a9, and 400\u03a9), what is the total equivalent resistance (Rt)?",
+      "clue": "In a parallel circuit with three resistors (100Ω, 200Ω, and 400Ω), what is the total equivalent resistance (Rt)?",
       "choices": [
-        "700\u03a9",
-        "57.1\u03a9",
-        "114.2\u03a9",
-        "14.2\u03a9"
+        "700Ω",
+        "57.1Ω",
+        "114.2Ω",
+        "14.2Ω"
       ],
       "correctIndex": 1,
-      "explanation": "Using the reciprocal formula: 1/Rt = 1/100 + 1/200 + 1/400. 1/Rt = 4/400 + 2/400 + 1/400 = 7/400. Rt = 400/7 \u2248 57.14 ohms.",
+      "explanation": "Using the reciprocal formula: 1/Rt = 1/100 + 1/200 + 1/400. 1/Rt = 4/400 + 2/400 + 1/400 = 7/400. Rt = 400/7 ≈ 57.14 ohms.",
       "difficulty": 500
     },
     {
@@ -825,7 +855,7 @@
         "Both decrease"
       ],
       "correctIndex": 0,
-      "explanation": "Inductive reactance (X_L = 2\u03c0fL) is directly proportional to frequency, so it increases. Capacitive reactance (X_C = 1 / 2\u03c0fC) is inversely proportional, so it decreases.",
+      "explanation": "Inductive reactance (X_L = 2πfL) is directly proportional to frequency, so it increases. Capacitive reactance (X_C = 1 / 2πfC) is inversely proportional, so it decreases.",
       "difficulty": 500
     },
     {

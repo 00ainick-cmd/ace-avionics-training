@@ -10,7 +10,7 @@
           "14 CFR Part 145"
         ],
         "correctIndex": 3,
-        "explanation": "Part 145 specifically governs certificated repair stations \u2014 their certification, personnel, facilities, and operational standards. Part 43 covers how maintenance is performed by anyone authorized; Part 91 covers aircraft operating rules; Part 65 covers airmen certificates. A common mistake is choosing Part 43, but Part 43 governs the work itself, not the repair station organization.",
+        "explanation": "Part 145 specifically governs certificated repair stations — their certification, personnel, facilities, and operational standards. Part 43 covers how maintenance is performed by anyone authorized; Part 91 covers aircraft operating rules; Part 65 covers airmen certificates. A common mistake is choosing Part 43, but Part 43 governs the work itself, not the repair station organization.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "Identify the repair station performance regulation",
@@ -32,7 +32,7 @@
         "id": "CAT1-MR-002"
       },
       {
-        "clue": "Per 14 CFR \u00a743.9, this element is NOT required in a maintenance record entry.",
+        "clue": "Per 14 CFR §43.9, this element is NOT required in a maintenance record entry.",
         "choices": [
           "Description of work performed",
           "Aircraft registration number",
@@ -40,10 +40,10 @@
           "Return-to-service signature"
         ],
         "correctIndex": 1,
-        "explanation": "\u00a743.9 requires: description of work, date, name, certificate number, and return-to-service signature. The aircraft registration number is not a \u00a743.9 required element \u2014 the five required elements describe who did the work and what was done, not the aircraft identifier.",
+        "explanation": "§43.9 requires: description of work, date, name, certificate number, and return-to-service signature. The aircraft registration number is not a §43.9 required element — the five required elements describe who did the work and what was done, not the aircraft identifier.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
-        "source": "State required elements of a maintenance record per \u00a743.9",
+        "source": "State required elements of a maintenance record per §43.9",
         "id": "CAT1-MR-003"
       },
       {
@@ -85,7 +85,7 @@
           "The repair station's work order number"
         ],
         "correctIndex": 1,
-        "explanation": "Part 43 requires the specific test equipment used to be documented \u2014 allowing verification that calibrated, appropriate equipment was actually used. Aircraft owner signature, flight hours, and work order numbers are not required transponder test record elements.",
+        "explanation": "Part 43 requires the specific test equipment used to be documented — allowing verification that calibrated, appropriate equipment was actually used. Aircraft owner signature, flight hours, and work order numbers are not required transponder test record elements.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Document altimeter and transponder test results per Part 43",
@@ -100,7 +100,7 @@
           "Flight director cues and GPWS alerts"
         ],
         "correctIndex": 1,
-        "explanation": "GA audio systems use mono (single-channel) audio for intercom communications and speaker monitoring. Stereo separation provides no operational benefit for ATC communications or crew intercom \u2014 the same audio signal goes to all headsets and speakers.",
+        "explanation": "GA audio systems use mono (single-channel) audio for intercom communications and speaker monitoring. Stereo separation provides no operational benefit for ATC communications or crew intercom — the same audio signal goes to all headsets and speakers.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "State the typical use of mono audio in GA aircraft",
@@ -130,7 +130,7 @@
           "Line replacement"
         ],
         "correctIndex": 1,
-        "explanation": "A major alteration is a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities \u2014 requiring approved data such as an STC or Form 337.",
+        "explanation": "A major alteration is a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities — requiring approved data such as an STC or Form 337.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "State the definition of a major alteration per Part 43 Appendix A",
@@ -145,14 +145,14 @@
           "The aircraft's airworthiness certificate"
         ],
         "correctIndex": 1,
-        "explanation": "Capability list listing provides authorization, but Part 145 also requires current technical data. An outdated manual does not satisfy this requirement \u2014 authorization and current data are both required, not interchangeable.",
+        "explanation": "Capability list listing provides authorization, but Part 145 also requires current technical data. An outdated manual does not satisfy this requirement — authorization and current data are both required, not interchangeable.",
         "difficulty": "hard",
         "category": "Maintenance Regulations",
         "source": "Determine when maintenance cannot proceed due to missing current technical data",
         "id": "CAT1-MR-010"
       },
       {
-        "clue": "The FAA definition of 'maintenance' includes inspection, overhaul, repair, preservation, and parts replacement \u2014 but explicitly excludes this.",
+        "clue": "The FAA definition of 'maintenance' includes inspection, overhaul, repair, preservation, and parts replacement — but explicitly excludes this.",
         "choices": [
           "Alterations",
           "Preventive maintenance",
@@ -160,7 +160,7 @@
           "Major repairs"
         ],
         "correctIndex": 1,
-        "explanation": "The FAA defines maintenance as inspection, overhaul, repair, preservation, and parts replacement. Preventive maintenance is a separate regulatory category limited to certificated pilots on aircraft they own or operate \u2014 explicitly excluded from the definition of maintenance.",
+        "explanation": "The FAA defines maintenance as inspection, overhaul, repair, preservation, and parts replacement. Preventive maintenance is a separate regulatory category limited to certificated pilots on aircraft they own or operate — explicitly excluded from the definition of maintenance.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "State the FAA definition of maintenance",
@@ -175,7 +175,7 @@
           "Check the antenna coax cable for continuity"
         ],
         "correctIndex": 2,
-        "explanation": "Part 145 requires maintenance to be performed per approved technical data. Consulting the maintenance manual is the mandatory first step \u2014 it defines the approved diagnostic procedure. Swapping components without approved data is shotgun troubleshooting and a regulatory violation.",
+        "explanation": "Part 145 requires maintenance to be performed per approved technical data. Consulting the maintenance manual is the mandatory first step — it defines the approved diagnostic procedure. Swapping components without approved data is shotgun troubleshooting and a regulatory violation.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Apply the correct first step when troubleshooting in a Part 145 shop",
@@ -190,14 +190,14 @@
           "A manufacturer's service letter"
         ],
         "correctIndex": 1,
-        "explanation": "A flight manual supplement changes the aircraft's approved operating limitations or procedures \u2014 that change to type design qualifies the installation as a major alteration under Part 43 Appendix A, regardless of the part's TSO approval.",
+        "explanation": "A flight manual supplement changes the aircraft's approved operating limitations or procedures — that change to type design qualifies the installation as a major alteration under Part 43 Appendix A, regardless of the part's TSO approval.",
         "difficulty": "hard",
         "category": "Maintenance Regulations",
         "source": "Classify STC installations with flight manual supplements as major alterations",
         "id": "CAT1-MR-013"
       },
       {
-        "clue": "This regulation governs performance rules for aircraft maintenance, preventive maintenance, and alterations \u2014 applying to any authorized person, not just repair stations.",
+        "clue": "This regulation governs performance rules for aircraft maintenance, preventive maintenance, and alterations — applying to any authorized person, not just repair stations.",
         "choices": [
           "14 CFR Part 43",
           "14 CFR Part 65",
@@ -205,7 +205,7 @@
           "14 CFR Part 145"
         ],
         "correctIndex": 0,
-        "explanation": "Part 43 sets the standards for how maintenance work must be performed and applies broadly \u2014 to individual mechanics, repair stations, and other authorized persons. Part 145 governs the repair station organization. Part 43 governs the work itself.",
+        "explanation": "Part 43 sets the standards for how maintenance work must be performed and applies broadly — to individual mechanics, repair stations, and other authorized persons. Part 145 governs the repair station organization. Part 43 governs the work itself.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "State that 14 CFR Part 43 governs maintenance performance rules",
@@ -220,7 +220,7 @@
           "Connector backshell removal tools"
         ],
         "correctIndex": 1,
-        "explanation": "Manufacturer-specified insertion and extraction tools are required. Improvised tools damage pins, bend contacts, or crack the connector insert \u2014 creating intermittent faults that are extremely difficult to diagnose later.",
+        "explanation": "Manufacturer-specified insertion and extraction tools are required. Improvised tools damage pins, bend contacts, or crack the connector insert — creating intermittent faults that are extremely difficult to diagnose later.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Apply correct insertion/extraction tool practice for circular connectors",
@@ -242,7 +242,7 @@
         "id": "CAT1-MR-016"
       },
       {
-        "clue": "When installing avionics wiring in a Part 145 shop, this advisory circular \u2014 or the aircraft manufacturer's wiring data \u2014 is the primary standard to follow.",
+        "clue": "When installing avionics wiring in a Part 145 shop, this advisory circular — or the aircraft manufacturer's wiring data — is the primary standard to follow.",
         "choices": [
           "AC 20-165B",
           "AC 91-78",
@@ -272,7 +272,7 @@
         "id": "CAT1-MR-018"
       },
       {
-        "clue": "Of these log entry elements, this one is required by \u00a743.9 but is most often omitted by new technicians.",
+        "clue": "Of these log entry elements, this one is required by §43.9 but is most often omitted by new technicians.",
         "choices": [
           "Certificate number",
           "Date completed",
@@ -280,7 +280,7 @@
           "Return-to-service statement"
         ],
         "correctIndex": 2,
-        "explanation": "The technician's certificate number is most frequently omitted \u2014 new techs include their name and signature but forget the certificate number, which \u00a743.9 explicitly requires and which ties the entry to a specific FAA-certificated individual.",
+        "explanation": "The technician's certificate number is most frequently omitted — new techs include their name and signature but forget the certificate number, which §43.9 explicitly requires and which ties the entry to a specific FAA-certificated individual.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "List required elements of a maintenance log entry for an avionics repair",
@@ -295,7 +295,7 @@
           "Every 100 flight hours"
         ],
         "correctIndex": 0,
-        "explanation": "91.413 requires transponder testing every 24 calendar months \u2014 not 12 months or flight hours. The interval is calendar-based, running from the date of the last check regardless of hours flown.",
+        "explanation": "91.413 requires transponder testing every 24 calendar months — not 12 months or flight hours. The interval is calendar-based, running from the date of the last check regardless of hours flown.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "State that 91.413 requires transponder testing every 24 calendar months",
@@ -370,7 +370,7 @@
           "Routine inspection"
         ],
         "correctIndex": 0,
-        "explanation": "Preventive maintenance is the only maintenance a certificated pilot (not a mechanic) may legally perform, and only on aircraft they own or operate \u2014 limited to simple tasks listed in Part 43 Appendix A.",
+        "explanation": "Preventive maintenance is the only maintenance a certificated pilot (not a mechanic) may legally perform, and only on aircraft they own or operate — limited to simple tasks listed in Part 43 Appendix A.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Explain that preventive maintenance under Part 43 is limited to certificated pilots on aircraft they own or operate",
@@ -385,7 +385,7 @@
           "Every 36 months"
         ],
         "correctIndex": 2,
-        "explanation": "The industry standard in Part 145 repair station manuals is recurrent training every 24 months \u2014 aligning with other 24-month aviation maintenance cycles. The specific interval is set in each station's manual; 24 months is the standard most stations use.",
+        "explanation": "The industry standard in Part 145 repair station manuals is recurrent training every 24 months — aligning with other 24-month aviation maintenance cycles. The specific interval is set in each station's manual; 24 months is the standard most stations use.",
         "difficulty": "easy",
         "category": "Maintenance Regulations",
         "source": "State the typical recurrent training interval in Part 145 station manuals",
@@ -430,7 +430,7 @@
           "A wattmeter"
         ],
         "correctIndex": 2,
-        "explanation": "Parasitic draw is current \u2014 measured with an ammeter in series. A voltmeter measures voltage in parallel. An ohmmeter measures resistance with power off. A wattmeter measures power but is not the standard tool for parasitic draw diagnosis.",
+        "explanation": "Parasitic draw is current — measured with an ammeter in series. A voltmeter measures voltage in parallel. An ohmmeter measures resistance with power off. A wattmeter measures power but is not the standard tool for parasitic draw diagnosis.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Confirm a parasitic draw source using ammeter in series",
@@ -460,7 +460,7 @@
           "Engine noise creates EMI that interferes with electronic test equipment"
         ],
         "correctIndex": 2,
-        "explanation": "Noise-induced hearing loss is cumulative and permanent \u2014 each unprotected exposure contributes to total damage even if no single event seems severe. It is a long-term occupational hazard, not just an acute discomfort issue.",
+        "explanation": "Noise-induced hearing loss is cumulative and permanent — each unprotected exposure contributes to total damage even if no single event seems severe. It is a long-term occupational hazard, not just an acute discomfort issue.",
         "difficulty": "medium",
         "category": "Maintenance Regulations",
         "source": "Explain why hearing protection is critical in a busy avionics shop",
@@ -477,7 +477,7 @@
           "R = V x I"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R is Ohm's Law solved for current. Rearranging gives the other two forms: V = I x R (solve for voltage) and R = V / I (solve for resistance). All three rearrangements are equally valid \u2014 knowing which variable is unknown determines which form to use.",
+        "explanation": "I = V / R is Ohm's Law solved for current. Rearranging gives the other two forms: V = I x R (solve for voltage) and R = V / I (solve for resistance). All three rearrangements are equally valid — knowing which variable is unknown determines which form to use.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State Ohm's Law: I = V / R",
@@ -492,7 +492,7 @@
           "288 amps"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R = 24V / 12\u03a9 = 2 amps. Dividing 24 by 12 gives exactly 2. The distractor 0.5 amps results from inverting (12/24). The distractor 12 amps ignores the voltage entirely. The distractor 288 amps multiplies instead of divides.",
+        "explanation": "I = V / R = 24V / 12Ω = 2 amps. Dividing 24 by 12 gives exactly 2. The distractor 0.5 amps results from inverting (12/24). The distractor 12 amps ignores the voltage entirely. The distractor 288 amps multiplies instead of divides.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Calculate current: 24V / 12 ohms = 2A",
@@ -502,7 +502,7 @@
         "clue": "This formula gives the total resistance of a series circuit containing three resistors: Rt equals R1 plus R2 plus this.",
         "choices": [
           "R3",
-          "R1 + R2 \u2014 the third resistor does not add resistance",
+          "R1 + R2 — the third resistor does not add resistance",
           "R1 x R2 x R3",
           "R1 / (R2 + R3)"
         ],
@@ -522,7 +522,7 @@
           "Through a single common resistor to limit current"
         ],
         "correctIndex": 0,
-        "explanation": "Parallel wiring gives each bulb an independent path to the bus. When one bulb burns out (open circuit), that branch is lost but all other branches remain unaffected. In a series circuit, one open stops all current and all lights would fail \u2014 clearly unacceptable for a safety-critical system.",
+        "explanation": "Parallel wiring gives each bulb an independent path to the bus. When one bulb burns out (open circuit), that branch is lost but all other branches remain unaffected. In a series circuit, one open stops all current and all lights would fail — clearly unacceptable for a safety-critical system.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Analyze parallel circuit: remaining loads stay lit if one fails",
@@ -537,7 +537,7 @@
           "It doubles"
         ],
         "correctIndex": 3,
-        "explanation": "I = V / R. If V doubles and R is unchanged, the ratio V/R doubles. Current and voltage are directly proportional when resistance is constant. This is a linear relationship \u2014 a 2x change in voltage produces a 2x change in current, not a squared or square-root change.",
+        "explanation": "I = V / R. If V doubles and R is unchanged, the ratio V/R doubles. Current and voltage are directly proportional when resistance is constant. This is a linear relationship — a 2x change in voltage produces a 2x change in current, not a squared or square-root change.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Predict current doubles when voltage doubles (R constant)",
@@ -567,7 +567,7 @@
           "144 watts"
         ],
         "correctIndex": 0,
-        "explanation": "P = V x I = 12V x 2A = 24 watts. The distractor 6 watts comes from dividing. The distractor 14 watts adds instead of multiplies. The distractor 144 watts squares the voltage. Power is always voltage times current \u2014 not a sum, quotient, or square.",
+        "explanation": "P = V x I = 12V x 2A = 24 watts. The distractor 6 watts comes from dividing. The distractor 14 watts adds instead of multiplies. The distractor 144 watts squares the voltage. Power is always voltage times current — not a sum, quotient, or square.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Calculate power: P = V x I, 12V x 2A = 24W",
@@ -582,7 +582,7 @@
           "It = the largest branch current only = 3A"
         ],
         "correctIndex": 1,
-        "explanation": "Total parallel current is the sum of all branch currents: It = 1 + 2 + 3 = 6A. Unlike series circuits where current is the same everywhere, parallel circuits split current among branches \u2014 but the source must supply all branches combined. This is why adding parallel loads increases total current draw.",
+        "explanation": "Total parallel current is the sum of all branch currents: It = 1 + 2 + 3 = 6A. Unlike series circuits where current is the same everywhere, parallel circuits split current among branches — but the source must supply all branches combined. This is why adding parallel loads increases total current draw.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Calculate total parallel current: It = I1 + I2 + I3",
@@ -597,7 +597,7 @@
           "0.89 watts"
         ],
         "correctIndex": 1,
-        "explanation": "P = V x I = 28 x 25 = 700 watts. The 28VDC aircraft bus is a standard reference point for power calculations. Knowing total power draw \u2014 not just individual loads \u2014 is required when verifying the aircraft's alternator capacity is sufficient for all installed equipment.",
+        "explanation": "P = V x I = 28 x 25 = 700 watts. The 28VDC aircraft bus is a standard reference point for power calculations. Knowing total power draw — not just individual loads — is required when verifying the aircraft's alternator capacity is sufficient for all installed equipment.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Calculate power on 28V bus at 25A = 700W",
@@ -627,7 +627,7 @@
           "Voltage doubles"
         ],
         "correctIndex": 3,
-        "explanation": "V = I x R. If I doubles and R is constant, the product I x R doubles, so V doubles. Voltage and current are directly proportional for a given resistance \u2014 a linear relationship. This is different from power, which scales with the square of current.",
+        "explanation": "V = I x R. If I doubles and R is constant, the product I x R doubles, so V doubles. Voltage and current are directly proportional for a given resistance — a linear relationship. This is different from power, which scales with the square of current.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Predict voltage doubles when current doubles (R constant)",
@@ -642,7 +642,7 @@
           "Total resistance decreases because additional current paths are created"
         ],
         "correctIndex": 3,
-        "explanation": "Every parallel branch creates an additional path for current, so total resistance drops. The formula 1/Rt = 1/R1 + 1/R2 + ... always produces a result smaller than the smallest individual branch. This is why adding avionics loads to a bus increases total current draw \u2014 lower total resistance draws more current from the same voltage.",
+        "explanation": "Every parallel branch creates an additional path for current, so total resistance drops. The formula 1/Rt = 1/R1 + 1/R2 + ... always produces a result smaller than the smallest individual branch. This is why adding avionics loads to a bus increases total current draw — lower total resistance draws more current from the same voltage.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Understand adding parallel resistors reduces total resistance",
@@ -651,13 +651,13 @@
       {
         "clue": "When voltage doubles and current doubles simultaneously in a circuit, power changes by this factor.",
         "choices": [
-          "It doubles \u2014 because two quantities each doubled",
-          "It quadruples \u2014 because 2V x 2I = 4 x original power",
-          "It triples \u2014 the midpoint between doubling each quantity",
-          "It stays the same \u2014 voltage and current increases cancel out"
+          "It doubles — because two quantities each doubled",
+          "It quadruples — because 2V x 2I = 4 x original power",
+          "It triples — the midpoint between doubling each quantity",
+          "It stays the same — voltage and current increases cancel out"
         ],
         "correctIndex": 1,
-        "explanation": "P = V x I. If V becomes 2V and I becomes 2I, then new power = 2V x 2I = 4 x (V x I). Power is the product of voltage and current \u2014 when both factors double, the product increases by 2 x 2 = 4. This compounding effect is why fault conditions with both elevated voltage and current can cause catastrophic damage rapidly.",
+        "explanation": "P = V x I. If V becomes 2V and I becomes 2I, then new power = 2V x 2I = 4 x (V x I). Power is the product of voltage and current — when both factors double, the product increases by 2 x 2 = 4. This compounding effect is why fault conditions with both elevated voltage and current can cause catastrophic damage rapidly.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Predict power quadruples when both V and I double",
@@ -672,10 +672,10 @@
           "approximately 476 ohms"
         ],
         "correctIndex": 3,
-        "explanation": "1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021. Rt = 1/0.0021 \u2248 476 ohms. The answer must be less than 500 ohms (the smallest branch). Adding 11,500 (series) or averaging (3,833) are common errors from misapplying the formula.",
+        "explanation": "1/Rt = 1/10000 + 1/1000 + 1/500 = 0.0001 + 0.001 + 0.002 = 0.0021. Rt = 1/0.0021 ≈ 476 ohms. The answer must be less than 500 ohms (the smallest branch). Adding 11,500 (series) or averaging (3,833) are common errors from misapplying the formula.",
         "difficulty": "medium",
         "category": "Basic Electrical",
-        "source": "Calculate parallel resistance: 10k, 1k, 500 ohms \u2248 476 ohms",
+        "source": "Calculate parallel resistance: 10k, 1k, 500 ohms ≈ 476 ohms",
         "id": "CAT2-DC-014"
       },
       {
@@ -687,7 +687,7 @@
           "72 amps"
         ],
         "correctIndex": 1,
-        "explanation": "I = V / R = 12V / 6\u03a9 = 2 amps. The distractor 0.5 amps comes from inverting (6/12). The distractor 6 amps ignores the voltage. The distractor 72 amps multiplies voltage by resistance. Always divide voltage by resistance to find current.",
+        "explanation": "I = V / R = 12V / 6Ω = 2 amps. The distractor 0.5 amps comes from inverting (6/12). The distractor 6 amps ignores the voltage. The distractor 72 amps multiplies voltage by resistance. Always divide voltage by resistance to find current.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Calculate current: 12V / 6 ohms = 2A",
@@ -702,7 +702,7 @@
           "Current is halved"
         ],
         "correctIndex": 3,
-        "explanation": "I = V / R. If R doubles (becomes 2R) and V is constant: new current = V / (2R) = (V/R) / 2 = half the original current. Resistance and current are inversely proportional at constant voltage \u2014 a fundamental inverse relationship in Ohm's Law.",
+        "explanation": "I = V / R. If R doubles (becomes 2R) and V is constant: new current = V / (2R) = (V/R) / 2 = half the original current. Resistance and current are inversely proportional at constant voltage — a fundamental inverse relationship in Ohm's Law.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Predict current halved when resistance doubles (V constant)",
@@ -717,7 +717,7 @@
           "A digital multimeter and a tachometer"
         ],
         "correctIndex": 1,
-        "explanation": "A frequency counter directly measures cycles per second (Hz). A calibrated oscilloscope allows a technician to measure the period of one cycle and calculate frequency from it. A standard DMM's AC voltage function measures RMS magnitude, not frequency \u2014 it will not confirm the alternator is outputting 400 Hz versus 380 Hz or 420 Hz.",
+        "explanation": "A frequency counter directly measures cycles per second (Hz). A calibrated oscilloscope allows a technician to measure the period of one cycle and calculate frequency from it. A standard DMM's AC voltage function measures RMS magnitude, not frequency — it will not confirm the alternator is outputting 400 Hz versus 380 Hz or 420 Hz.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Select correct instrument to verify AC alternator output frequency",
@@ -727,12 +727,12 @@
         "clue": "The unit used to measure the number of complete AC cycles occurring each second in an electrical system.",
         "choices": [
           "Volts (V)",
-          "Ohms (\u03a9)",
+          "Ohms (Ω)",
           "Watts (W)",
           "Hertz (Hz)"
         ],
         "correctIndex": 3,
-        "explanation": "Hertz (Hz) is the SI unit of frequency, named after Heinrich Hertz. One hertz equals one complete cycle per second. Aircraft AC systems operate at 400 Hz (400 cycles per second), while US household power is 60 Hz. Frequency is distinct from voltage (V), resistance (\u03a9), or power (W).",
+        "explanation": "Hertz (Hz) is the SI unit of frequency, named after Heinrich Hertz. One hertz equals one complete cycle per second. Aircraft AC systems operate at 400 Hz (400 cycles per second), while US household power is 60 Hz. Frequency is distinct from voltage (V), resistance (Ω), or power (W).",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State that frequency is measured in hertz (Hz)",
@@ -742,12 +742,12 @@
         "clue": "This is the SI unit of capacitance, though avionics capacitors are almost always specified in one-millionth of this unit.",
         "choices": [
           "Henry (H)",
-          "Ohm (\u03a9)",
+          "Ohm (Ω)",
           "Farad (F)",
           "Siemen (S)"
         ],
         "correctIndex": 2,
-        "explanation": "The farad (F) is the SI unit of capacitance. Because one farad is impractically large, avionics capacitors are specified in microfarads (\u00b5F = 10\u207b\u2076 F) or picofarads (pF = 10\u207b\u00b9\u00b2 F). The henry measures inductance, the ohm measures resistance, and the siemen measures conductance.",
+        "explanation": "The farad (F) is the SI unit of capacitance. Because one farad is impractically large, avionics capacitors are specified in microfarads (µF = 10⁻⁶ F) or picofarads (pF = 10⁻¹² F). The henry measures inductance, the ohm measures resistance, and the siemen measures conductance.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State that capacitance is measured in farads; microfarads most common in avionics",
@@ -777,7 +777,7 @@
           "Inverters, which convert DC to AC for high-voltage loads"
         ],
         "correctIndex": 2,
-        "explanation": "Transformers only work with AC \u2014 they cannot change DC voltage levels. By stepping up voltage, transformers allow the same power to be transmitted at lower current. Lower current means smaller wire is adequate (P = V x I; at higher V, I is lower for the same P), reducing wire bundle weight. This is why aircraft with high power loads (radar, galleys) use AC distribution.",
+        "explanation": "Transformers only work with AC — they cannot change DC voltage levels. By stepping up voltage, transformers allow the same power to be transmitted at lower current. Lower current means smaller wire is adequate (P = V x I; at higher V, I is lower for the same P), reducing wire bundle weight. This is why aircraft with high power loads (radar, galleys) use AC distribution.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State AC advantage: transformers enable lighter wiring",
@@ -792,7 +792,7 @@
           "Inductive reactance (XL)"
         ],
         "correctIndex": 3,
-        "explanation": "Inductive reactance (XL = 2\u03c0fL) describes how strongly an inductor opposes AC current. It is measured in ohms, like resistance, but is frequency-dependent. As frequency increases, XL increases \u2014 the opposite of capacitive reactance (XC), which decreases with frequency. At DC (f = 0), an ideal inductor has zero reactance and acts as a plain wire.",
+        "explanation": "Inductive reactance (XL = 2πfL) describes how strongly an inductor opposes AC current. It is measured in ohms, like resistance, but is frequency-dependent. As frequency increases, XL increases — the opposite of capacitive reactance (XC), which decreases with frequency. At DC (f = 0), an ideal inductor has zero reactance and acts as a plain wire.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State inductive reactance: opposition to AC by inductors, measured in ohms, increases with frequency",
@@ -897,7 +897,7 @@
           "Shorted capacitor on the bus"
         ],
         "correctIndex": 0,
-        "explanation": "Unstable but within-limits voltage points to intermittent (not failed) components. An intermittent ground adds variable resistance to the return path; a failing regulator produces inconsistent output \u2014 both create fluctuating readings.",
+        "explanation": "Unstable but within-limits voltage points to intermittent (not failed) components. An intermittent ground adds variable resistance to the return path; a failing regulator produces inconsistent output — both create fluctuating readings.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Diagnose unstable within-limits voltage",
@@ -927,7 +927,7 @@
           "Turn the circuit power off and discharge capacitors"
         ],
         "correctIndex": 3,
-        "explanation": "Measuring resistance with power applied will damage the meter's ohmmeter circuit and give false readings. Capacitors must also be discharged \u2014 they can hold charge that appears as voltage to the meter.",
+        "explanation": "Measuring resistance with power applied will damage the meter's ohmmeter circuit and give false readings. Capacitors must also be discharged — they can hold charge that appears as voltage to the meter.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Correct procedure before measuring resistance with multimeter",
@@ -942,14 +942,14 @@
           "Insufficient bus voltage"
         ],
         "correctIndex": 0,
-        "explanation": "Voltage drop = I \u00d7 R. Any resistance in the wiring path (corroded pin, undersized wire, loose terminal) creates a proportional voltage drop. A 0.5V drop in a 24V circuit indicates measurable resistance between the source and test point.",
+        "explanation": "Voltage drop = I × R. Any resistance in the wiring path (corroded pin, undersized wire, loose terminal) creates a proportional voltage drop. A 0.5V drop in a 24V circuit indicates measurable resistance between the source and test point.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Identify cause of 0.5V drop in 24V DC circuit",
         "id": "CAT2-CA-009"
       },
       {
-        "clue": "A voltmeter reads 0V across a component in an energized circuit. This upstream condition \u2014 blown fuse, tripped breaker, or broken wire \u2014 is the most likely explanation.",
+        "clue": "A voltmeter reads 0V across a component in an energized circuit. This upstream condition — blown fuse, tripped breaker, or broken wire — is the most likely explanation.",
         "choices": [
           "Short circuit at the component",
           "Open circuit upstream of the component",
@@ -957,7 +957,7 @@
           "Reversed polarity at the connector"
         ],
         "correctIndex": 1,
-        "explanation": "0V across a component in a live circuit means no current is flowing through it \u2014 which requires an open circuit upstream. Check fuses, breakers, and wire continuity between the source and the component.",
+        "explanation": "0V across a component in a live circuit means no current is flowing through it — which requires an open circuit upstream. Check fuses, breakers, and wire continuity between the source and the component.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Diagnose 0V across component in active circuit",
@@ -1002,7 +1002,7 @@
           "A short circuit bypassing the bulbs"
         ],
         "correctIndex": 0,
-        "explanation": "Dim bulbs mean reduced voltage at the bulb (V_bulb = V_supply \u2212 V_drop). Excessive resistance in the wiring or connectors upstream creates a voltage drop, leaving less voltage for the bulb \u2014 resulting in reduced brightness.",
+        "explanation": "Dim bulbs mean reduced voltage at the bulb (V_bulb = V_supply − V_drop). Excessive resistance in the wiring or connectors upstream creates a voltage drop, leaving less voltage for the bulb — resulting in reduced brightness.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Diagnose dimmer-than-normal bulbs",
@@ -1020,7 +1020,7 @@
         "explanation": "Voltage drop (V=IR) can occur anywhere current flows: supply wiring, connector pins, and the ground return path. Technicians often forget to check the ground return, which can have just as much resistance as the supply side.",
         "difficulty": "hard",
         "category": "Basic Electrical",
-        "source": "Identify cause of 0.5V drop \u2014 wiring, connectors, or ground",
+        "source": "Identify cause of 0.5V drop — wiring, connectors, or ground",
         "id": "CAT2-CA-014"
       },
       {
@@ -1032,7 +1032,7 @@
           "Apply power to the pitot heat and measure current draw"
         ],
         "correctIndex": 0,
-        "explanation": "An immediately-tripping breaker signals a hard fault \u2014 likely a short or failed heating element. Repeated resets force excessive current through the fault, risking fire or further damage. Isolate the circuit, then inspect before any power is reapplied.",
+        "explanation": "An immediately-tripping breaker signals a hard fault — likely a short or failed heating element. Repeated resets force excessive current through the fault, risking fire or further damage. Isolate the circuit, then inspect before any power is reapplied.",
         "difficulty": "hard",
         "category": "Basic Electrical",
         "source": "Diagnose breaker that trips immediately on reset",
@@ -1062,7 +1062,7 @@
           "In series, circuit powered off to insert, then powered on"
         ],
         "correctIndex": 3,
-        "explanation": "Current measurement requires series connection \u2014 break the circuit, insert the ammeter, then restore power so current flows through the meter. Parallel connection would short the supply through the meter's near-zero resistance.",
+        "explanation": "Current measurement requires series connection — break the circuit, insert the ammeter, then restore power so current flows through the meter. Parallel connection would short the supply through the meter's near-zero resistance.",
         "difficulty": "medium",
         "category": "Basic Electrical",
         "source": "Connect ammeter in series to measure current",
@@ -1125,7 +1125,7 @@
         "explanation": "A fuse permanently opens when its element melts due to overcurrent. Unlike a circuit breaker (which can be reset), a blown fuse must be replaced. Both protect wiring from current levels that would cause overheating.",
         "difficulty": "medium",
         "category": "Basic Electrical",
-        "source": "Explain fuse purpose \u2014 open circuit on overcurrent",
+        "source": "Explain fuse purpose — open circuit on overcurrent",
         "id": "CAT2-AE-004"
       },
       {
@@ -1137,7 +1137,7 @@
           "Current limiter"
         ],
         "correctIndex": 1,
-        "explanation": "The voltage regulator controls the alternator's field current to hold output voltage steady \u2014 typically 27.5\u201328.5V \u2014 regardless of engine speed or how many electrical loads are active. Without it, voltage would fluctuate widely.",
+        "explanation": "The voltage regulator controls the alternator's field current to hold output voltage steady — typically 27.5–28.5V — regardless of engine speed or how many electrical loads are active. Without it, voltage would fluctuate widely.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "Identify voltage regulator function",
@@ -1148,11 +1148,11 @@
         "choices": [
           "Positive (hot) cable",
           "Ground (negative) cable",
-          "Either \u2014 order doesn't matter",
+          "Either — order doesn't matter",
           "The bus tie cable"
         ],
         "correctIndex": 1,
-        "explanation": "Remove the negative (ground) cable first. With the negative disconnected, accidental contact of a tool with the airframe while removing the positive cable won't complete a circuit \u2014 no spark, no short. Removing positive first leaves the battery connected to the airframe, creating shock and spark hazard.",
+        "explanation": "Remove the negative (ground) cable first. With the negative disconnected, accidental contact of a tool with the airframe while removing the positive cable won't complete a circuit — no spark, no short. Removing positive first leaves the battery connected to the airframe, creating shock and spark hazard.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "State correct first step when disconnecting aircraft battery",
@@ -1182,14 +1182,14 @@
           "Bus tie relay"
         ],
         "correctIndex": 2,
-        "explanation": "An electrical bus is the distribution backbone of the aircraft electrical system \u2014 it connects power sources (battery, alternator) to all loads (avionics, lights, systems) through a common node. Multiple buses (avionics bus, essential bus, main bus) provide load separation and redundancy.",
+        "explanation": "An electrical bus is the distribution backbone of the aircraft electrical system — it connects power sources (battery, alternator) to all loads (avionics, lights, systems) through a common node. Multiple buses (avionics bus, essential bus, main bus) provide load separation and redundancy.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "Define aircraft electrical bus",
         "id": "CAT2-AE-008"
       },
       {
-        "clue": "These two components \u2014 one that shunts high-frequency noise to ground and one that blocks it from passing \u2014 are used together to filter alternator noise from the aircraft electrical bus.",
+        "clue": "These two components — one that shunts high-frequency noise to ground and one that blocks it from passing — are used together to filter alternator noise from the aircraft electrical bus.",
         "choices": [
           "Resistors and fuses",
           "Capacitors and inductors (chokes)",
@@ -1197,7 +1197,7 @@
           "Transformers and rectifiers"
         ],
         "correctIndex": 1,
-        "explanation": "Capacitors shunt high-frequency alternator noise to ground; inductors (chokes) block noise from propagating along the bus. Together they form a low-pass filter \u2014 passing clean DC while suppressing the RF interference generated by the alternator's rectifier.",
+        "explanation": "Capacitors shunt high-frequency alternator noise to ground; inductors (chokes) block noise from propagating along the bus. Together they form a low-pass filter — passing clean DC while suppressing the RF interference generated by the alternator's rectifier.",
         "difficulty": "easy",
         "category": "Basic Electrical",
         "source": "Identify components that filter alternator noise",
@@ -1215,7 +1215,7 @@
         "explanation": "The DC electrical system powers essentially all electrically-dependent equipment in a GA aircraft: radios, navigation, lights, ignition, and the fuel pump. Loss of DC power is an immediate emergency requiring action.",
         "difficulty": "easy",
         "category": "Basic Electrical",
-        "source": "State DC system purpose \u2014 power avionics, lights, ignition",
+        "source": "State DC system purpose — power avionics, lights, ignition",
         "id": "CAT2-AE-010"
       },
       {
@@ -1245,7 +1245,7 @@
         "explanation": "Bonding jumpers enable DC current to return through the airframe (as the aircraft's common 'negative' conductor) and dissipate static charges before they build to levels that cause interference or ignition risk near fuel systems.",
         "difficulty": "medium",
         "category": "Basic Electrical",
-        "source": "Explain bonding jumper purpose \u2014 current return and static discharge",
+        "source": "Explain bonding jumper purpose — current return and static discharge",
         "id": "CAT2-AE-012"
       }
     ],
@@ -1266,7 +1266,7 @@
         "id": "CAT3-NAV-001"
       },
       {
-        "clue": "These V-shaped or bent-dipole antennas tuned to 108\u2013117.95 MHz receive signals from VOR ground stations.",
+        "clue": "These V-shaped or bent-dipole antennas tuned to 108–117.95 MHz receive signals from VOR ground stations.",
         "choices": [
           "GPS patch antennas",
           "VOR antennas",
@@ -1274,7 +1274,7 @@
           "Glideslope antennas"
         ],
         "correctIndex": 1,
-        "explanation": "VOR antennas are V-shaped or bent-dipole designs, mounted on the vertical stabilizer or fuselage, tuned to the VOR frequency range of 108.0\u2013117.95 MHz (shared with ILS localizer on 108.1\u2013111.95 MHz odd decimals).",
+        "explanation": "VOR antennas are V-shaped or bent-dipole designs, mounted on the vertical stabilizer or fuselage, tuned to the VOR frequency range of 108.0–117.95 MHz (shared with ILS localizer on 108.1–111.95 MHz odd decimals).",
         "difficulty": "easy",
         "category": "CNS Systems",
         "source": "VOR antenna type and frequency range",
@@ -1289,7 +1289,7 @@
           "ADF"
         ],
         "correctIndex": 2,
-        "explanation": "DME (Distance Measuring Equipment) interrogates a ground station; the station replies; the receiver measures round-trip time and converts to nautical miles. The result is slant range \u2014 the diagonal distance, not horizontal ground distance.",
+        "explanation": "DME (Distance Measuring Equipment) interrogates a ground station; the station replies; the receiver measures round-trip time and converts to nautical miles. The result is slant range — the diagonal distance, not horizontal ground distance.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "DME measures slant-range distance in nautical miles",
@@ -1304,7 +1304,7 @@
           "Marker beacon system"
         ],
         "correctIndex": 3,
-        "explanation": "Marker beacons transmit at 75 MHz vertically. The outer marker (blue light, slow dashes) is ~4\u20137 NM from threshold; middle marker (amber, alternating dot-dash) is ~3,500 ft; inner marker (white, fast dots) is at the decision altitude point.",
+        "explanation": "Marker beacons transmit at 75 MHz vertically. The outer marker (blue light, slow dashes) is ~4–7 NM from threshold; middle marker (amber, alternating dot-dash) is ~3,500 ft; inner marker (white, fast dots) is at the decision altitude point.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "Marker beacon provides tones and lights at ILS fixed points",
@@ -1319,7 +1319,7 @@
           "The HSI bearing pointer"
         ],
         "correctIndex": 0,
-        "explanation": "The OBS (Omnibearing Selector) rotates the course card to select a desired VOR radial. When the CDI needle centers with the OBS set to a given radial, the aircraft is on that radial \u2014 TO or FROM the station as shown by the flag.",
+        "explanation": "The OBS (Omnibearing Selector) rotates the course card to select a desired VOR radial. When the CDI needle centers with the OBS set to a given radial, the aircraft is on that radial — TO or FROM the station as shown by the flag.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "OBS selects desired VOR radial",
@@ -1364,10 +1364,10 @@
           "ADF/NDB"
         ],
         "correctIndex": 3,
-        "explanation": "ADF/NDB navigation has two key limitations vs. VOR: (1) greater susceptibility to interference (especially thunderstorms, which cause the ADF needle to deflect toward lightning), and (2) it only gives a bearing pointer TO the station \u2014 no course deviation bar for precise tracking.",
+        "explanation": "ADF/NDB navigation has two key limitations vs. VOR: (1) greater susceptibility to interference (especially thunderstorms, which cause the ADF needle to deflect toward lightning), and (2) it only gives a bearing pointer TO the station — no course deviation bar for precise tracking.",
         "difficulty": "medium",
         "category": "CNS Systems",
-        "source": "Compare ADF/NDB to VOR \u2014 NDB less accurate, more interference",
+        "source": "Compare ADF/NDB to VOR — NDB less accurate, more interference",
         "id": "CAT3-NAV-008"
       },
       {
@@ -1394,7 +1394,7 @@
           "NDB approach"
         ],
         "correctIndex": 1,
-        "explanation": "ILS is a precision approach system providing two axes of guidance: the localizer (lateral \u2014 aligns aircraft with runway centerline) and glideslope (vertical \u2014 provides the standard 3\u00b0 descent path to the touchdown zone).",
+        "explanation": "ILS is a precision approach system providing two axes of guidance: the localizer (lateral — aligns aircraft with runway centerline) and glideslope (vertical — provides the standard 3° descent path to the touchdown zone).",
         "difficulty": "easy",
         "category": "CNS Systems",
         "source": "ILS provides both vertical and horizontal approach guidance",
@@ -1409,7 +1409,7 @@
           "Groundspeed along the selected course"
         ],
         "correctIndex": 2,
-        "explanation": "VOR provides magnetic bearing information \u2014 specifically, radials that are magnetic bearings FROM the station. A pilot can use VOR to track a specific course to or from a station by selecting the desired radial with the OBS.",
+        "explanation": "VOR provides magnetic bearing information — specifically, radials that are magnetic bearings FROM the station. A pilot can use VOR to track a specific course to or from a station by selecting the desired radial with the OBS.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "VOR provides magnetic bearing to/from station via radials",
@@ -1439,7 +1439,7 @@
           "PTT sensitivity setting"
         ],
         "correctIndex": 0,
-        "explanation": "The squelch control sets the carrier or signal threshold that must be exceeded before audio is passed to the headset. When no one is transmitting, weak RF noise stays below the threshold and the headset remains quiet \u2014 no continuous static.",
+        "explanation": "The squelch control sets the carrier or signal threshold that must be exceeded before audio is passed to the headset. When no one is transmitting, weak RF noise stays below the threshold and the headset remains quiet — no continuous static.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "Squelch mutes noise below signal threshold",
@@ -1454,10 +1454,10 @@
           "Radio tuning to incorrect frequency"
         ],
         "correctIndex": 1,
-        "explanation": "Intermittent or noisy audio points to physical connection problems. Corroded connectors and damaged coax create resistance that introduces noise. A failing mic jack causes noise that varies with microphone movement \u2014 all three are physical/mechanical rather than electronic failures.",
+        "explanation": "Intermittent or noisy audio points to physical connection problems. Corroded connectors and damaged coax create resistance that introduces noise. A failing mic jack causes noise that varies with microphone movement — all three are physical/mechanical rather than electronic failures.",
         "difficulty": "hard",
         "category": "CNS Systems",
-        "source": "Diagnose intermittent/noisy comm audio \u2014 connector, coax, mic jack",
+        "source": "Diagnose intermittent/noisy comm audio — connector, coax, mic jack",
         "id": "CAT3-VHF-003"
       },
       {
@@ -1469,7 +1469,7 @@
           "GPS RAIM prediction check"
         ],
         "correctIndex": 2,
-        "explanation": "VHF antenna inspections cover all five items: physical element condition (no cracks), mounting security (no play), coax connector torque, cable inspection for damage, and corrosion check at the base and connector \u2014 all of which affect antenna performance and longevity.",
+        "explanation": "VHF antenna inspections cover all five items: physical element condition (no cracks), mounting security (no play), coax connector torque, cable inspection for damage, and corrosion check at the base and connector — all of which affect antenna performance and longevity.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "VHF antenna inspection checklist",
@@ -1478,31 +1478,31 @@
       {
         "clue": "When working on or near a VHF antenna or any RF-transmitting system on an aircraft, this safety measure is required.",
         "choices": [
-          "Wear rubber gloves only \u2014 RF is an electrical hazard",
+          "Wear rubber gloves only — RF is an electrical hazard",
           "Ground the antenna with a static wick",
           "Keep transmitter in standby mode at reduced power",
           "De-energize (turn off) the transmitting system"
         ],
         "correctIndex": 3,
-        "explanation": "RF radiation from aircraft transmitters can cause thermal injury to body tissues at close range (especially eyes). The system must be completely OFF \u2014 not in standby \u2014 during any work on or near the antenna or transmission line.",
+        "explanation": "RF radiation from aircraft transmitters can cause thermal injury to body tissues at close range (especially eyes). The system must be completely OFF — not in standby — during any work on or near the antenna or transmission line.",
         "difficulty": "easy",
         "category": "CNS Systems",
-        "source": "RF radiation safety \u2014 system off during antenna work",
+        "source": "RF radiation safety — system off during antenna work",
         "id": "CAT3-VHF-005"
       },
       {
         "clue": "General aviation VHF communications use this frequency range, beginning at 118.0 MHz.",
         "choices": [
-          "118.0\u2013136.975 MHz",
-          "108.0\u2013117.95 MHz",
-          "329\u2013335 MHz",
-          "960\u20131215 MHz"
+          "118.0–136.975 MHz",
+          "108.0–117.95 MHz",
+          "329–335 MHz",
+          "960–1215 MHz"
         ],
         "correctIndex": 0,
-        "explanation": "Aviation VHF comm is 118.0\u2013136.975 MHz. The range 108.0\u2013117.95 MHz is shared by VOR and ILS (nav frequencies). 329\u2013335 MHz is glideslope. 960\u20131215 MHz is DME and transponder.",
+        "explanation": "Aviation VHF comm is 118.0–136.975 MHz. The range 108.0–117.95 MHz is shared by VOR and ILS (nav frequencies). 329–335 MHz is glideslope. 960–1215 MHz is DME and transponder.",
         "difficulty": "easy",
         "category": "CNS Systems",
-        "source": "VHF comm frequency range 118.0\u2013136.975 MHz",
+        "source": "VHF comm frequency range 118.0–136.975 MHz",
         "id": "CAT3-VHF-006"
       },
       {
@@ -1514,14 +1514,14 @@
           "Transmitter power output"
         ],
         "correctIndex": 1,
-        "explanation": "After coax replacement, SWR (Standing Wave Ratio, also called VSWR) must be measured to verify the antenna-cable system is properly matched. An SWR above 1.5:1 indicates a mismatch \u2014 caused by wrong impedance cable, damaged connector, or antenna fault.",
+        "explanation": "After coax replacement, SWR (Standing Wave Ratio, also called VSWR) must be measured to verify the antenna-cable system is properly matched. An SWR above 1.5:1 indicates a mismatch — caused by wrong impedance cable, damaged connector, or antenna fault.",
         "difficulty": "medium",
         "category": "CNS Systems",
-        "source": "Coaxial cable replacement \u2014 impedance, connectors, SWR",
+        "source": "Coaxial cable replacement — impedance, connectors, SWR",
         "id": "CAT3-VHF-007"
       },
       {
-        "clue": "When a pilot hears a constant tone but cannot hear ATC responses, this failure \u2014 keeping the transmitter continuously keyed \u2014 is the most likely diagnosis.",
+        "clue": "When a pilot hears a constant tone but cannot hear ATC responses, this failure — keeping the transmitter continuously keyed — is the most likely diagnosis.",
         "choices": [
           "Failed receiver squelch circuit",
           "Frequency selector stuck between channels",
@@ -1532,19 +1532,19 @@
         "explanation": "A stuck PTT keeps the transmitter on continuously, which blocks the receiver on the same frequency (you can't transmit and receive simultaneously on one radio). The constant sidetone in the headset is the transmitter sending back the mic signal. Other aircraft on the frequency also cannot transmit.",
         "difficulty": "hard",
         "category": "CNS Systems",
-        "source": "Diagnose stuck mic \u2014 constant tone blocks reception",
+        "source": "Diagnose stuck mic — constant tone blocks reception",
         "id": "CAT3-VHF-008"
       },
       {
         "clue": "This radio frequency band is used for long-range aviation communications over oceans and remote areas where VHF line-of-sight coverage doesn't reach.",
         "choices": [
-          "UHF (300\u20133000 MHz)",
-          "VHF (118\u2013136.975 MHz)",
+          "UHF (300–3000 MHz)",
+          "VHF (118–136.975 MHz)",
           "ELT (406 MHz)",
-          "HF (2\u201330 MHz)"
+          "HF (2–30 MHz)"
         ],
         "correctIndex": 3,
-        "explanation": "HF uses ionospheric skip to propagate signals thousands of miles \u2014 far beyond VHF's line-of-sight range limit. Oceanic tracks, polar routes, and remote continental operations use HF (or satellite communications) because ATC VHF coverage doesn't exist over open oceans.",
+        "explanation": "HF uses ionospheric skip to propagate signals thousands of miles — far beyond VHF's line-of-sight range limit. Oceanic tracks, polar routes, and remote continental operations use HF (or satellite communications) because ATC VHF coverage doesn't exist over open oceans.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "HF used for long-range oceanic communications",
@@ -1574,7 +1574,7 @@
           "ATC radar separation service"
         ],
         "correctIndex": 1,
-        "explanation": "TCAS actively interrogates nearby transponders, computes collision risk, and issues TAs (awareness) and RAs (climb/descend instructions) to the crew. TCAS RA instructions override ATC instructions \u2014 crews must follow TCAS RAs immediately.",
+        "explanation": "TCAS actively interrogates nearby transponders, computes collision risk, and issues TAs (awareness) and RAs (climb/descend instructions) to the crew. TCAS RA instructions override ATC instructions — crews must follow TCAS RAs immediately.",
         "difficulty": "easy",
         "category": "CNS Systems",
         "source": "TCAS monitors traffic and provides collision avoidance RAs",
@@ -1592,7 +1592,7 @@
         "explanation": "The transponder responds to ATC SSR interrogations at 1030 MHz with replies at 1090 MHz containing squawk code and altitude. This active response allows ATC to positively identify each aircraft rather than relying on passive primary radar returns alone.",
         "difficulty": "easy",
         "category": "CNS Systems",
-        "source": "Primary transponder purpose \u2014 reply to ATC SSR interrogations",
+        "source": "Primary transponder purpose — reply to ATC SSR interrogations",
         "id": "CAT3-XP-003"
       },
       {
@@ -1604,10 +1604,10 @@
           "Transponder antenna installation"
         ],
         "correctIndex": 3,
-        "explanation": "Transponder antenna installation at 1030/1090 MHz requires: 50\u03a9 impedance match (antenna and cable), correct low-loss coax for ~1 GHz operation, and properly installed/torqued connectors to ensure RF integrity and prevent water ingress.",
+        "explanation": "Transponder antenna installation at 1030/1090 MHz requires: 50Ω impedance match (antenna and cable), correct low-loss coax for ~1 GHz operation, and properly installed/torqued connectors to ensure RF integrity and prevent water ingress.",
         "difficulty": "medium",
         "category": "CNS Systems",
-        "source": "Transponder antenna installation \u2014 impedance, coax, torque",
+        "source": "Transponder antenna installation — impedance, coax, torque",
         "id": "CAT3-XP-004"
       },
       {
@@ -1619,7 +1619,7 @@
           "Flight ID callsign"
         ],
         "correctIndex": 0,
-        "explanation": "The 24-bit ICAO address is unique to each aircraft globally \u2014 assigned by the country of registration. Mode S ground stations use it to address specific aircraft individually (selective interrogation), reducing frequency congestion compared to Mode A/C all-call interrogations.",
+        "explanation": "The 24-bit ICAO address is unique to each aircraft globally — assigned by the country of registration. Mode S ground stations use it to address specific aircraft individually (selective interrogation), reducing frequency congestion compared to Mode A/C all-call interrogations.",
         "difficulty": "medium",
         "category": "CNS Systems",
         "source": "Mode S 24-bit address enables selective interrogation",
@@ -1634,7 +1634,7 @@
           "VHF comm position report"
         ],
         "correctIndex": 1,
-        "explanation": "ADS-B Out broadcasts all of this state data automatically at approximately 1 Hz on 1090 MHz (Mode S Extended Squitter) or 978 MHz (UAT). It doesn't wait to be interrogated \u2014 it broadcasts continuously to both ATC ground stations and other ADS-B In equipped aircraft.",
+        "explanation": "ADS-B Out broadcasts all of this state data automatically at approximately 1 Hz on 1090 MHz (Mode S Extended Squitter) or 978 MHz (UAT). It doesn't wait to be interrogated — it broadcasts continuously to both ATC ground stations and other ADS-B In equipped aircraft.",
         "difficulty": "easy",
         "category": "CNS Systems",
         "source": "ADS-B Out broadcasts position, altitude, velocity, ID",
@@ -1724,7 +1724,7 @@
           "Audio control panel"
         ],
         "correctIndex": 3,
-        "explanation": "The audio control panel centralizes all audio management: transmit selection (which COM to send on), receive selection (which COM/NAV/ADF to monitor), intercom control, and speaker selection \u2014 all from one panel accessible to both crew positions.",
+        "explanation": "The audio control panel centralizes all audio management: transmit selection (which COM to send on), receive selection (which COM/NAV/ADF to monitor), intercom control, and speaker selection — all from one panel accessible to both crew positions.",
         "difficulty": "easy",
         "category": "CNS Systems",
         "source": "Audio control panel enables crew to select and transmit on multiple radios",
@@ -1756,7 +1756,7 @@
           "Flux gate compass sensors"
         ],
         "correctIndex": 1,
-        "explanation": "EFIS systems use MEMS (Micro-Electro-Mechanical Systems) sensors \u2014 solid-state gyroscopes and accelerometers \u2014 to determine attitude and motion without mechanical moving parts.",
+        "explanation": "EFIS systems use MEMS (Micro-Electro-Mechanical Systems) sensors — solid-state gyroscopes and accelerometers — to determine attitude and motion without mechanical moving parts.",
         "difficulty": "easy",
         "category": "Flight Instruments",
         "source": "EFIS uses MEMS gyroscopes and accelerometers for attitude data",
@@ -1831,7 +1831,7 @@
           "Heading indicator"
         ],
         "correctIndex": 2,
-        "explanation": "The turn coordinator's gyro is tilted at ~30\u00b0 so it responds to both yaw and roll. The turn-and-bank indicator has a vertically mounted gyro that only senses yaw.",
+        "explanation": "The turn coordinator's gyro is tilted at ~30° so it responds to both yaw and roll. The turn-and-bank indicator has a vertically mounted gyro that only senses yaw.",
         "difficulty": "medium",
         "category": "Flight Instruments",
         "source": "Turn coordinator senses roll rate and yaw rate; turn-and-bank senses only yaw rate",
@@ -1846,7 +1846,7 @@
           "Magnetic compass"
         ],
         "correctIndex": 3,
-        "explanation": "The magnetic compass uses Earth's magnetic field \u2014 not a gyro. It works without electrical or vacuum power, making it the ultimate backup directional reference.",
+        "explanation": "The magnetic compass uses Earth's magnetic field — not a gyro. It works without electrical or vacuum power, making it the ultimate backup directional reference.",
         "difficulty": "easy",
         "category": "Flight Instruments",
         "source": "Magnetic compass is not gyroscopically driven",
@@ -1891,7 +1891,7 @@
           "VSI and airspeed indicator"
         ],
         "correctIndex": 2,
-        "explanation": "Both the altimeter and VSI rely on static pressure changes. A blocked static port traps pressure \u2014 the altimeter freezes at the blocked altitude, and the VSI reads zero (no pressure change detected).",
+        "explanation": "Both the altimeter and VSI rely on static pressure changes. A blocked static port traps pressure — the altimeter freezes at the blocked altitude, and the VSI reads zero (no pressure change detected).",
         "difficulty": "hard",
         "category": "Flight Instruments",
         "source": "Blocked static port freezes altimeter and VSI at zero",
@@ -1921,7 +1921,7 @@
           "Manifold pressure"
         ],
         "correctIndex": 0,
-        "explanation": "During climb, atmospheric pressure falls. Blocked pitot traps ram pressure constant. ASI measures pitot minus static \u2014 as static decreases, the differential grows, reading falsely high airspeed.",
+        "explanation": "During climb, atmospheric pressure falls. Blocked pitot traps ram pressure constant. ASI measures pitot minus static — as static decreases, the differential grows, reading falsely high airspeed.",
         "difficulty": "hard",
         "category": "Flight Instruments",
         "source": "Blocked pitot during climb causes falsely increasing ASI reading",
@@ -1936,10 +1936,10 @@
           "MEMS chips, ADC units, and flux gate compasses only"
         ],
         "correctIndex": 1,
-        "explanation": "AHRS systems combine rate gyros (angular rate), accelerometers (linear motion/gravity), and magnetometers (magnetic heading) in solid-state form \u2014 no mechanical spinning gyros needed.",
+        "explanation": "AHRS systems combine rate gyros (angular rate), accelerometers (linear motion/gravity), and magnetometers (magnetic heading) in solid-state form — no mechanical spinning gyros needed.",
         "difficulty": "medium",
         "category": "Flight Instruments",
-        "source": "AHRS uses rate gyros, accelerometers, magnetometers \u2014 no mechanical gyros",
+        "source": "AHRS uses rate gyros, accelerometers, magnetometers — no mechanical gyros",
         "id": "cat4-q014"
       },
       {
@@ -1958,7 +1958,7 @@
         "id": "cat4-q015"
       },
       {
-        "clue": "This value \u2014 29.92 inches of mercury or 1013.25 millibars \u2014 represents the standard atmospheric pressure at sea level used as a reference in aviation.",
+        "clue": "This value — 29.92 inches of mercury or 1013.25 millibars — represents the standard atmospheric pressure at sea level used as a reference in aviation.",
         "choices": [
           "The minimum safe pressure for pressurized cabins",
           "The altimeter correction factor for high-altitude flight",
@@ -1973,7 +1973,7 @@
         "id": "cat4-q016"
       },
       {
-        "clue": "This forward-facing probe senses and delivers ram air pressure \u2014 the key input to the airspeed indicator and air data computer.",
+        "clue": "This forward-facing probe senses and delivers ram air pressure — the key input to the airspeed indicator and air data computer.",
         "choices": [
           "Pitot tube",
           "Angle-of-attack vane",
@@ -1996,7 +1996,7 @@
           "Total pressure from both pitot and static"
         ],
         "correctIndex": 1,
-        "explanation": "The altimeter uses only static pressure \u2014 sensed through the static port \u2014 feeding an aneroid capsule that expands as static pressure decreases with altitude increase.",
+        "explanation": "The altimeter uses only static pressure — sensed through the static port — feeding an aneroid capsule that expands as static pressure decreases with altitude increase.",
         "difficulty": "medium",
         "category": "Flight Instruments",
         "source": "Altimeter measures barometric altitude via static pressure changes",
@@ -2026,7 +2026,7 @@
           "Upper-center"
         ],
         "correctIndex": 3,
-        "explanation": "The Basic T puts the AI at upper-center \u2014 the reference instrument for all cross-checks \u2014 with ASI upper-left, ALT upper-right, and DI/HI lower-center.",
+        "explanation": "The Basic T puts the AI at upper-center — the reference instrument for all cross-checks — with ASI upper-left, ALT upper-right, and DI/HI lower-center.",
         "difficulty": "easy",
         "category": "Flight Instruments",
         "source": "Standard T arrangement of flight instruments",
@@ -2097,13 +2097,13 @@
       {
         "clue": "The two standard ARINC 429 data rates are this low-speed range and a high-speed rate of 100 kbps.",
         "choices": [
-          "1\u20135 kbps low speed",
-          "12.5\u201314.5 kbps low speed",
-          "25\u201350 kbps low speed",
-          "50\u201375 kbps low speed"
+          "1–5 kbps low speed",
+          "12.5–14.5 kbps low speed",
+          "25–50 kbps low speed",
+          "50–75 kbps low speed"
         ],
         "correctIndex": 1,
-        "explanation": "ARINC 429 defines low-speed operation at 12.5\u201314.5 kbps and high-speed operation at 100 kbps. High speed is used for critical flight data; low speed for less time-critical data.",
+        "explanation": "ARINC 429 defines low-speed operation at 12.5–14.5 kbps and high-speed operation at 100 kbps. High speed is used for critical flight data; low speed for less time-critical data.",
         "difficulty": "easy",
         "category": "Digital Databus",
         "source": "ARINC 429 speeds: 12.5 kbps low speed, 100 kbps high speed",
@@ -2133,7 +2133,7 @@
           "Reliable standardized data transfer between multiple LRUs"
         ],
         "correctIndex": 3,
-        "explanation": "The fundamental purpose of a databus is standardized, reliable communication between LRUs \u2014 replacing analog point-to-point wiring with a shared digital medium.",
+        "explanation": "The fundamental purpose of a databus is standardized, reliable communication between LRUs — replacing analog point-to-point wiring with a shared digital medium.",
         "difficulty": "medium",
         "category": "Digital Databus",
         "source": "Digital databus purpose: standardized reliable data transfer between LRUs",
@@ -2178,7 +2178,7 @@
           "Bus loading percentage"
         ],
         "correctIndex": 2,
-        "explanation": "A wrong remote terminal (RT) address means the device will never receive its command \u2014 it will appear to not respond even though it's otherwise functional.",
+        "explanation": "A wrong remote terminal (RT) address means the device will never receive its command — it will appear to not respond even though it's otherwise functional.",
         "difficulty": "hard",
         "category": "Digital Databus",
         "source": "MIL-STD-1553 device not responding: check controller config, RT address, wiring",
@@ -2223,7 +2223,7 @@
           "Temperature and humidity at the avionics bay"
         ],
         "correctIndex": 1,
-        "explanation": "ARINC 429 signal quality depends on proper differential voltage levels (+10V/0V/-10V) and correct termination resistance (75\u201385 \u03a9). Both affect the ability of receivers to decode data accurately.",
+        "explanation": "ARINC 429 signal quality depends on proper differential voltage levels (+10V/0V/-10V) and correct termination resistance (75–85 Ω). Both affect the ability of receivers to decode data accurately.",
         "difficulty": "medium",
         "category": "Digital Databus",
         "source": "ARINC 429 data errors: first verify bus voltage and termination resistance",
@@ -2238,7 +2238,7 @@
           "Full-duplex point-to-point link"
         ],
         "correctIndex": 2,
-        "explanation": "ARINC 429 is a unidirectional broadcast bus \u2014 one transmitter, one or more receivers, on shielded twisted pair. Communication is strictly one-way on any given bus pair.",
+        "explanation": "ARINC 429 is a unidirectional broadcast bus — one transmitter, one or more receivers, on shielded twisted pair. Communication is strictly one-way on any given bus pair.",
         "difficulty": "medium",
         "category": "Digital Databus",
         "source": "ARINC 429 is unidirectional broadcast on shielded twisted pair",
@@ -2286,7 +2286,7 @@
         "explanation": "RS-232 is a point-to-point, single-ended, asynchronous interface with a ~15 meter practical cable limit due to capacitance and noise susceptibility.",
         "difficulty": "easy",
         "category": "Digital Databus",
-        "source": "RS-232: point-to-point asynchronous, single-ended, \u226415m",
+        "source": "RS-232: point-to-point asynchronous, single-ended, ≤15m",
         "id": "cat5-q014"
       },
       {
@@ -2298,7 +2298,7 @@
           "Tri-state digital"
         ],
         "correctIndex": 2,
-        "explanation": "RS-232 is single-ended \u2014 one signal conductor references to common ground. This contrasts with differential standards like RS-485 and ARINC 429 that use two wires per signal.",
+        "explanation": "RS-232 is single-ended — one signal conductor references to common ground. This contrasts with differential standards like RS-485 and ARINC 429 that use two wires per signal.",
         "difficulty": "easy",
         "category": "Digital Databus",
         "source": "RS-232 is asynchronous single-ended serial communication",
@@ -2322,13 +2322,13 @@
       {
         "clue": "For a correct RS-485 installation, the cable type is shielded twisted-pair, and the bus must be terminated at both ends using this method.",
         "choices": [
-          "The characteristic impedance (typically 120 \u03a9) at both ends",
-          "A 1 M\u03a9 pull-up resistor at one end only",
-          "A 75 \u03a9 coaxial terminator at the transmitter only",
-          "No termination \u2014 RS-485 is self-terminating"
+          "The characteristic impedance (typically 120 Ω) at both ends",
+          "A 1 MΩ pull-up resistor at one end only",
+          "A 75 Ω coaxial terminator at the transmitter only",
+          "No termination — RS-485 is self-terminating"
         ],
         "correctIndex": 0,
-        "explanation": "RS-485 buses must be terminated at both ends with the characteristic impedance (typically 120 \u03a9). Unterminated or single-end terminated buses cause reflections that corrupt data.",
+        "explanation": "RS-485 buses must be terminated at both ends with the characteristic impedance (typically 120 Ω). Unterminated or single-end terminated buses cause reflections that corrupt data.",
         "difficulty": "medium",
         "category": "Digital Databus",
         "source": "RS-422/RS-485 wiring: shielded twisted pair, terminated at both ends",
@@ -2403,7 +2403,7 @@
           "Fiber optic cable"
         ],
         "correctIndex": 1,
-        "explanation": "Shielded twisted-pair is the standard for avionics digital buses: the twist cancels differential noise, and the shield reduces capacitive coupling and EMI \u2014 both essential in aircraft electrical environments.",
+        "explanation": "Shielded twisted-pair is the standard for avionics digital buses: the twist cancels differential noise, and the shield reduces capacitive coupling and EMI — both essential in aircraft electrical environments.",
         "difficulty": "easy",
         "category": "Digital Databus",
         "source": "Shielded twisted pair is used for digital data transfer to reduce EMI",
@@ -2433,7 +2433,7 @@
           "Bus Controller (BC)"
         ],
         "correctIndex": 3,
-        "explanation": "The Bus Controller (BC) is the master of MIL-STD-1553. No RT transmits unless the BC issues a command \u2014 the BC schedules all data transfers by sending command words to each RT.",
+        "explanation": "The Bus Controller (BC) is the master of MIL-STD-1553. No RT transmits unless the BC issues a command — the BC schedules all data transfers by sending command words to each RT.",
         "difficulty": "medium",
         "category": "Digital Databus",
         "source": "MIL-STD-1553 bus controller schedules all transfers by issuing command words",
@@ -2470,7 +2470,7 @@
         "id": "cat5-q026"
       },
       {
-        "clue": "All digital avionics data \u2014 from ARINC 429 words to BITE fault codes \u2014 is ultimately represented as combinations of these two digits.",
+        "clue": "All digital avionics data — from ARINC 429 words to BITE fault codes — is ultimately represented as combinations of these two digits.",
         "choices": [
           "0 through 9 (decimal digits)",
           "0 through F (hexadecimal digits)",
@@ -2478,7 +2478,7 @@
           "Any voltage between 0 and 5V"
         ],
         "correctIndex": 2,
-        "explanation": "All digital data is binary at the fundamental level \u2014 sequences of 0s and 1s. Higher representations like hex are just shorthand for groups of binary digits.",
+        "explanation": "All digital data is binary at the fundamental level — sequences of 0s and 1s. Higher representations like hex are just shorthand for groups of binary digits.",
         "difficulty": "easy",
         "category": "Digital Databus",
         "source": "Binary (base-2) is the number system for digital avionics data",
@@ -2515,7 +2515,7 @@
         "id": "cat5-q029"
       },
       {
-        "clue": "This fundamental unit of digital information can represent exactly two states \u2014 0 or 1 \u2014 and is the basic building block of all digital avionics data.",
+        "clue": "This fundamental unit of digital information can represent exactly two states — 0 or 1 — and is the basic building block of all digital avionics data.",
         "choices": [
           "Byte",
           "Bit (binary digit)",
@@ -2523,14 +2523,14 @@
           "Label"
         ],
         "correctIndex": 1,
-        "explanation": "A bit is the smallest unit of digital data \u2014 a single 0 or 1. Bytes, words, and labels are all groups of bits. Everything in digital avionics reduces to bits at the fundamental level.",
+        "explanation": "A bit is the smallest unit of digital data — a single 0 or 1. Bytes, words, and labels are all groups of bits. Everything in digital avionics reduces to bits at the fundamental level.",
         "difficulty": "easy",
         "category": "Digital Databus",
         "source": "Bit (binary digit) is the fundamental unit of digital systems",
         "id": "cat5-q030"
       },
       {
-        "clue": "ARINC 429 is described as this type of data bus because digital data flows in one direction only \u2014 from the transmitting LRU to receiving LRUs.",
+        "clue": "ARINC 429 is described as this type of data bus because digital data flows in one direction only — from the transmitting LRU to receiving LRUs.",
         "choices": [
           "Bidirectional",
           "Command-response",
@@ -2570,7 +2570,7 @@
           "Connector lock ring"
         ],
         "correctIndex": 0,
-        "explanation": "Strain relief clamps the wire near the connector so any pulling force is absorbed by the clamp rather than transmitted to the pins or solder joints \u2014 preventing intermittent faults.",
+        "explanation": "Strain relief clamps the wire near the connector so any pulling force is absorbed by the clamp rather than transmitted to the pins or solder joints — preventing intermittent faults.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Strain relief prevents tension transfer to connector pins or solder joints",
@@ -2585,7 +2585,7 @@
           "Hex driver with compression insert"
         ],
         "correctIndex": 1,
-        "explanation": "A calibrated ratcheting crimp tool locks at the correct crimp force and cannot be released prematurely, ensuring full crimp completion every time \u2014 the FAA-preferred method for aircraft wiring.",
+        "explanation": "A calibrated ratcheting crimp tool locks at the correct crimp force and cannot be released prematurely, ensuring full crimp completion every time — the FAA-preferred method for aircraft wiring.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Properly sized crimped terminals with calibrated ratcheting tool are preferred",
@@ -2600,14 +2600,14 @@
           "Increased wire bundle rigidity"
         ],
         "correctIndex": 2,
-        "explanation": "Connectors allow LRUs to be removed and replaced without re-wiring the aircraft. This removability is the key function \u2014 reliable, repeatable electrical junctions for ease of maintenance.",
+        "explanation": "Connectors allow LRUs to be removed and replaced without re-wiring the aircraft. This removability is the key function — reliable, repeatable electrical junctions for ease of maintenance.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Connector function: reliable removable electrical junction for maintenance",
         "id": "cat6-q003"
       },
       {
-        "clue": "The critical step in making a reliable solder joint is to heat this \u2014 not the solder \u2014 so the solder flows into the joint rather than balling up on a cold surface.",
+        "clue": "The critical step in making a reliable solder joint is to heat this — not the solder — so the solder flows into the joint rather than balling up on a cold surface.",
         "choices": [
           "The soldering iron tip only",
           "The heat-shrink tubing adjacent to the joint",
@@ -2735,7 +2735,7 @@
           "Ground loops causing EMI"
         ],
         "correctIndex": 3,
-        "explanation": "Grounding a shield at both ends creates a ground loop \u2014 a closed conductor loop that acts as a transformer secondary. Any AC difference between the two ground points drives circulating current, creating EMI.",
+        "explanation": "Grounding a shield at both ends creates a ground loop — a closed conductor loop that acts as a transformer secondary. Any AC difference between the two ground points drives circulating current, creating EMI.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Shield termination: ground at one end only to prevent ground loops",
@@ -2745,12 +2745,12 @@
         "clue": "In the high-temperature zone adjacent to an aircraft engine, wire insulation must be rated for elevated temperatures; PTFE (MIL-W-22759/16) or this type of insulation is typically required.",
         "choices": [
           "Fiberglass-insulated wire",
-          "PVC insulation rated to 60\u00b0C",
+          "PVC insulation rated to 60°C",
           "Nylon-jacketed wire",
           "Standard rubber-insulated wire"
         ],
         "correctIndex": 0,
-        "explanation": "Fiberglass-insulated wire handles temperatures up to 400\u00b0C+ and is used in the most extreme heat zones near engines. PTFE (MIL-W-22759) is used for moderate-high temperature zones.",
+        "explanation": "Fiberglass-insulated wire handles temperatures up to 400°C+ and is used in the most extreme heat zones near engines. PTFE (MIL-W-22759) is used for moderate-high temperature zones.",
         "difficulty": "easy",
         "category": "Aircraft Wiring",
         "source": "High-temperature wire required near aircraft engines",
@@ -2795,7 +2795,7 @@
           "Soldering wires to contacts designed for crimping"
         ],
         "correctIndex": 3,
-        "explanation": "Soldering onto crimp contacts wicks solder up the wire, creating a brittle heat-affected zone at the solder line \u2014 a common point of wire fracture under vibration. Crimp contacts must be crimped, not soldered.",
+        "explanation": "Soldering onto crimp contacts wicks solder up the wire, creating a brittle heat-affected zone at the solder line — a common point of wire fracture under vibration. Crimp contacts must be crimped, not soldered.",
         "difficulty": "easy",
         "category": "Aircraft Wiring",
         "source": "Prohibited wiring practices: soldering crimp contacts, automotive connectors, unprotected wire ends",
@@ -2810,7 +2810,7 @@
           "Into the connector backshell"
         ],
         "correctIndex": 0,
-        "explanation": "A grounded shield provides a low-impedance path to ground for induced currents. A floating shield cannot divert these currents \u2014 they have nowhere to go except into the signal conductors.",
+        "explanation": "A grounded shield provides a low-impedance path to ground for induced currents. A floating shield cannot divert these currents — they have nowhere to go except into the signal conductors.",
         "difficulty": "hard",
         "category": "Aircraft Wiring",
         "source": "Shield floating at both ends provides no EMI protection",
@@ -2820,7 +2820,7 @@
         "clue": "In the AWG system, a 22 AWG wire is smaller in diameter than a 16 AWG wire because in this numbering system, higher numbers indicate smaller conductors.",
         "choices": [
           "A 16 AWG wire is smaller because lower numbers indicate finer wire",
-          "A 22 AWG wire is smaller \u2014 higher AWG numbers mean smaller conductor cross-section",
+          "A 22 AWG wire is smaller — higher AWG numbers mean smaller conductor cross-section",
           "Both wires are the same size because AWG only specifies insulation thickness",
           "A 22 AWG wire has a larger conductor but thinner insulation than 16 AWG"
         ],
@@ -2873,7 +2873,7 @@
         "explanation": "Part 43 requires that maintenance use materials and parts that meet or exceed FAA-approved standards. Automotive connectors are designed for automotive environments and do not meet aviation temperature, vibration, or altitude specifications.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
-        "source": "Automotive connectors not acceptable in avionics \u2014 not FAA-approved materials",
+        "source": "Automotive connectors not acceptable in avionics — not FAA-approved materials",
         "id": "cat6-q021"
       },
       {
@@ -2885,7 +2885,7 @@
           "The circuit voltage level"
         ],
         "correctIndex": 1,
-        "explanation": "The crimp die must match both the contact/terminal type AND the wire gauge. The die geometry sets the crimp depth \u2014 too shallow (under-crimp) leaves a loose connection; too deep (over-crimp) damages the contact.",
+        "explanation": "The crimp die must match both the contact/terminal type AND the wire gauge. The die geometry sets the crimp depth — too shallow (under-crimp) leaves a loose connection; too deep (over-crimp) damages the contact.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Select correct crimping tool and die for connector and wire size",
@@ -2900,14 +2900,14 @@
           "Stretching the insulation beyond the strip length"
         ],
         "correctIndex": 2,
-        "explanation": "Nicking conductor strands weakens the wire at the strip point \u2014 a nicked conductor has reduced cross-section and will fail under vibration or bending stress at the nick.",
+        "explanation": "Nicking conductor strands weakens the wire at the strip point — a nicked conductor has reduced cross-section and will fail under vibration or bending stress at the nick.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Teflon wire stripping: verify blade depth to avoid nicking conductor",
         "id": "cat6-q023"
       },
       {
-        "clue": "The correct first step when fabricating an aircraft wire harness from a wiring diagram is to study the diagram completely \u2014 understanding wire runs, connector locations, and pin assignments \u2014 before doing this.",
+        "clue": "The correct first step when fabricating an aircraft wire harness from a wiring diagram is to study the diagram completely — understanding wire runs, connector locations, and pin assignments — before doing this.",
         "choices": [
           "Ordering the connector hardware",
           "Crimping the connector contacts",
@@ -2915,7 +2915,7 @@
           "Cutting any wire"
         ],
         "correctIndex": 3,
-        "explanation": "Studying the diagram first is essential \u2014 harness errors discovered after cutting wire waste materials and require re-work. Understanding the complete wire list before cutting is the first and most critical step.",
+        "explanation": "Studying the diagram first is essential — harness errors discovered after cutting wire waste materials and require re-work. Understanding the complete wire list before cutting is the first and most critical step.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Harness fabrication first step: study the diagram completely before cutting",
@@ -2930,7 +2930,7 @@
           "Tape-wrapped crimp splice"
         ],
         "correctIndex": 0,
-        "explanation": "Environmentally sensitive areas require splices that are sealed against moisture and fluids \u2014 solder-sleeve splices or adhesive-lined heat-shrink over crimp splices provide this protection.",
+        "explanation": "Environmentally sensitive areas require splices that are sealed against moisture and fluids — solder-sleeve splices or adhesive-lined heat-shrink over crimp splices provide this protection.",
         "difficulty": "easy",
         "category": "Aircraft Wiring",
         "source": "Environmentally sealed splices preferred in exposed areas",
@@ -3005,7 +3005,7 @@
           "Heat shrink tubing"
         ],
         "correctIndex": 1,
-        "explanation": "Slack is essential \u2014 a tight bundle near flight controls can be pinched or stretched when the control moves through its full range, risking wire damage or worse, restricting control movement.",
+        "explanation": "Slack is essential — a tight bundle near flight controls can be pinched or stretched when the control moves through its full range, risking wire damage or worse, restricting control movement.",
         "difficulty": "medium",
         "category": "Aircraft Wiring",
         "source": "Wire bundles near flight controls: conduit with slack, prevent contact",
@@ -3035,7 +3035,7 @@
           "Structural integrity and mechanical strength"
         ],
         "correctIndex": 3,
-        "explanation": "A nick reduces the center conductor cross-section, compromising mechanical strength (vibration fatigue) and changing local impedance (causing signal reflections). Neither is repairable \u2014 the run must be replaced.",
+        "explanation": "A nick reduces the center conductor cross-section, compromising mechanical strength (vibration fatigue) and changing local impedance (causing signal reflections). Neither is repairable — the run must be replaced.",
         "difficulty": "hard",
         "category": "Aircraft Wiring",
         "source": "Nicked coaxial center conductor: replace the entire cable run",
@@ -3050,7 +3050,7 @@
           "A one-time logbook notation"
         ],
         "correctIndex": 0,
-        "explanation": "Severe outer jacket damage \u2014 especially if individual wire insulation is compromised \u2014 cannot be repaired to original airworthiness. The harness must be replaced.",
+        "explanation": "Severe outer jacket damage — especially if individual wire insulation is compromised — cannot be repaired to original airworthiness. The harness must be replaced.",
         "difficulty": "hard",
         "category": "Aircraft Wiring",
         "source": "Damaged harness jacket: assess damage and repair per manual or replace if severe",
@@ -3082,7 +3082,7 @@
           "Frequency counter"
         ],
         "correctIndex": 1,
-        "explanation": "An oscilloscope displays voltage vs. time, enabling measurement and visualization of amplitude, frequency, and waveform shape \u2014 information that a DMM cannot provide.",
+        "explanation": "An oscilloscope displays voltage vs. time, enabling measurement and visualization of amplitude, frequency, and waveform shape — information that a DMM cannot provide.",
         "difficulty": "medium",
         "category": "Tools & Test Equipment",
         "source": "Oscilloscope visualizes voltage waveforms showing amplitude, frequency, and shape",
@@ -3097,7 +3097,7 @@
           "A reverse-biased diode in the measurement path"
         ],
         "correctIndex": 2,
-        "explanation": "'OL' means the resistance exceeds the meter's range \u2014 typically an open circuit (infinite resistance) or a legitimate high-resistance reading that exceeds the selected scale.",
+        "explanation": "'OL' means the resistance exceeds the meter's range — typically an open circuit (infinite resistance) or a legitimate high-resistance reading that exceeds the selected scale.",
         "difficulty": "easy",
         "category": "Tools & Test Equipment",
         "source": "OL on multimeter ohms = open circuit or out of range",
@@ -3112,7 +3112,7 @@
           "Digital databus analyzer"
         ],
         "correctIndex": 3,
-        "explanation": "A databus analyzer decodes the bus protocol layer \u2014 showing individual ARINC 429 labels, values, timing, and errors \u2014 unlike an oscilloscope which shows only the electrical waveform without decoding.",
+        "explanation": "A databus analyzer decodes the bus protocol layer — showing individual ARINC 429 labels, values, timing, and errors — unlike an oscilloscope which shows only the electrical waveform without decoding.",
         "difficulty": "medium",
         "category": "Tools & Test Equipment",
         "source": "Digital databus analyzer captures, displays, and decodes bus traffic to verify and diagnose",
@@ -3127,7 +3127,7 @@
           "Pitot-static tester"
         ],
         "correctIndex": 0,
-        "explanation": "A protocol/databus analyzer captures all bus traffic continuously, recording error events and their timestamps even for brief, intermittent failures \u2014 unlike an oscilloscope which requires triggering at the right moment.",
+        "explanation": "A protocol/databus analyzer captures all bus traffic continuously, recording error events and their timestamps even for brief, intermittent failures — unlike an oscilloscope which requires triggering at the right moment.",
         "difficulty": "easy",
         "category": "Tools & Test Equipment",
         "source": "Databus analyzer is most useful for capturing intermittent digital bus failures",
@@ -3142,7 +3142,7 @@
           "Oscilloscope"
         ],
         "correctIndex": 1,
-        "explanation": "A databus analyzer captures and decodes bus traffic in real time \u2014 showing each data word's label, value, and any error status \u2014 enabling direct identification of bad or missing transmissions.",
+        "explanation": "A databus analyzer captures and decodes bus traffic in real time — showing each data word's label, value, and any error status — enabling direct identification of bad or missing transmissions.",
         "difficulty": "easy",
         "category": "Tools & Test Equipment",
         "source": "Databus analyzer captures real-time bus traffic and decodes data words",
@@ -3157,7 +3157,7 @@
           "Logic probe"
         ],
         "correctIndex": 2,
-        "explanation": "A protocol analyzer (databus analyzer) is the specialized instrument for digital bus traffic capture and analysis in avionics \u2014 connecting non-intrusively to the bus and decoding all protocol data.",
+        "explanation": "A protocol analyzer (databus analyzer) is the specialized instrument for digital bus traffic capture and analysis in avionics — connecting non-intrusively to the bus and decoding all protocol data.",
         "difficulty": "easy",
         "category": "Tools & Test Equipment",
         "source": "Databus/protocol analyzer is the tool for digital databus traffic analysis",
@@ -3183,7 +3183,7 @@
         "choices": [
           "Zero the micrometer with the surfaces closed",
           "Lubricate the spindle thread",
-          "Set the reference temperature to 20\u00b0C",
+          "Set the reference temperature to 20°C",
           "Mark the measurement point with a scribe"
         ],
         "correctIndex": 0,
@@ -3202,7 +3202,7 @@
           "Matches the color code of the screw head material"
         ],
         "correctIndex": 1,
-        "explanation": "Full engagement means the blade or bit fills the screw head recess completely \u2014 maximizing contact area, distributing force evenly, and preventing the bit from riding up and camming out.",
+        "explanation": "Full engagement means the blade or bit fills the screw head recess completely — maximizing contact area, distributing force evenly, and preventing the bit from riding up and camming out.",
         "difficulty": "medium",
         "category": "Tools & Test Equipment",
         "source": "Screwdriver must fully engage the screw head to prevent cam-out",
@@ -3217,7 +3217,7 @@
           "Temperature, humidity, and pressure"
         ],
         "correctIndex": 2,
-        "explanation": "A multimeter combines voltmeter (voltage), ammeter (current), and ohmmeter (resistance) functions in one instrument \u2014 hence 'multi' (multiple) meter.",
+        "explanation": "A multimeter combines voltmeter (voltage), ammeter (current), and ohmmeter (resistance) functions in one instrument — hence 'multi' (multiple) meter.",
         "difficulty": "medium",
         "category": "Tools & Test Equipment",
         "source": "Multimeter measures voltage, current, and resistance",
@@ -3226,7 +3226,7 @@
     ],
     "Shop Safety": [
       {
-        "clue": "",
+        "clue": "Federal regulations require these documents, which detail chemical hazards and emergency procedures, to be stored where every shop worker can reach them without delay.",
         "choices": [
           "Safety Data Sheets (SDS)",
           "The aircraft maintenance manual",
@@ -3241,7 +3241,7 @@
         "id": "cat8-q001"
       },
       {
-        "clue": "",
+        "clue": "In a GA repair shop, disposing of this type of material requires a licensed vendor and must never involve dumping it down a drain or in the regular trash.",
         "choices": [
           "Scrap aluminum shavings",
           "Hazardous chemical waste",
@@ -3256,7 +3256,7 @@
         "id": "cat8-q002"
       },
       {
-        "clue": "",
+        "clue": "An avionics tech drops a soldering iron that narrowly misses a coworker and lands harmlessly on the floor. This unplanned event with no injury but real danger potential has a specific safety term.",
         "choices": [
           "A tool audit failure",
           "An acceptable risk",
@@ -3271,7 +3271,7 @@
         "id": "cat8-q003"
       },
       {
-        "clue": "",
+        "clue": "This is the first required action when a tech detects a burning electrical odor from an avionics rack during a bench test.",
         "choices": [
           "Continue testing to isolate the source",
           "Grab a fire extinguisher",
@@ -3286,7 +3286,7 @@
         "id": "cat8-q004"
       },
       {
-        "clue": "",
+        "clue": "These three steps — checking vent caps, confirming charge state, and using a non-conductive sealed container — must be completed before moving this type of aircraft battery.",
         "choices": [
           "Lead-acid battery transport preparation",
           "NiCd battery replacement procedure",
@@ -3301,7 +3301,7 @@
         "id": "cat8-q005"
       },
       {
-        "clue": "",
+        "clue": "Before connecting this high-voltage insulation resistance test instrument, two safety steps are mandatory: verify the circuit is de-energized and discharge all capacitors.",
         "choices": [
           "Oscilloscope",
           "Megohmmeter",
@@ -3316,7 +3316,7 @@
         "id": "cat8-q006"
       },
       {
-        "clue": "",
+        "clue": "This document, required for every hazardous chemical in the shop, lists the substance's hazards, safe handling procedures, required PPE, and first-aid steps for exposure.",
         "choices": [
           "Environmental Impact Assessment",
           "Aircraft Maintenance Manual (AMM)",
@@ -3331,7 +3331,7 @@
         "id": "cat8-q007"
       },
       {
-        "clue": "",
+        "clue": "These three ground rules — avoid the rear, approach from the front, and wait for the pilot's signal — define the correct way to approach a running helicopter on the ramp.",
         "choices": [
           "Engine run-up clearance protocol",
           "Pushback crew coordination procedure",
@@ -3346,7 +3346,7 @@
         "id": "cat8-q008"
       },
       {
-        "clue": "",
+        "clue": "These three steps — containing with absorbent materials, cutting power to nearby electronics, and following hazmat cleanup procedures — define the correct response to this type of bench-area contamination event.",
         "choices": [
           "Hydraulic fluid spill near avionics equipment",
           "An ESD event at the bench",
@@ -3361,7 +3361,7 @@
         "id": "cat8-q009"
       },
       {
-        "clue": "",
+        "clue": "Cadmium's toxicity means these rechargeable aircraft batteries cannot be thrown in regular trash and must be handled through hazardous materials disposal channels.",
         "choices": [
           "Sealed lead-acid batteries",
           "Nickel-Cadmium (NiCd) batteries",
@@ -3376,7 +3376,7 @@
         "id": "cat8-q010"
       },
       {
-        "clue": "",
+        "clue": "Verifying this shop safety device involves checking the pressure gauge, confirming the pin and seal are intact, inspecting for damage, and ensuring the annual tag is current.",
         "choices": [
           "Emergency shower flow check",
           "Ground fault circuit interrupter test",
@@ -3391,7 +3391,7 @@
         "id": "cat8-q011"
       },
       {
-        "clue": "",
+        "clue": "Reading this document for each chemical before first use gives a new technician the hazards, PPE requirements, and emergency steps needed for safe handling.",
         "choices": [
           "The equipment rental agreement",
           "The shop's floor plan",
@@ -3406,7 +3406,7 @@
         "id": "cat8-q012"
       },
       {
-        "clue": "",
+        "clue": "The correct sequence for helping an electrical shock victim: verify the area is safe, cut power before touching the person, then summon emergency help — in that order.",
         "choices": [
           "Electrical shock victim first-aid response",
           "Cardiopulmonary resuscitation (CPR) algorithm",
@@ -3421,7 +3421,7 @@
         "id": "cat8-q013"
       },
       {
-        "clue": "",
+        "clue": "These self-closing, approved, labeled containers kept in a dedicated cabinet away from sparks are the OSHA-compliant way to store volatile cleaning solvents in an avionics shop.",
         "choices": [
           "Standard open-top drum containers",
           "Flammable liquid safety containers",
@@ -3436,7 +3436,7 @@
         "id": "cat8-q014"
       },
       {
-        "clue": "",
+        "clue": "This specified range — 6 to 8 per inch — defines how tightly to apply the double-twist method when installing safety wire on aviation fasteners.",
         "choices": [
           "The minimum thread engagement for AN nuts",
           "The maximum torque tolerance for AN bolts",
@@ -3451,7 +3451,7 @@
         "id": "cat8-q015"
       },
       {
-        "clue": "",
+        "clue": "Leave the area, get fresh air, notify a supervisor, and file an incident report — these four steps define the correct response when a technician feels dizzy in this type of chemical exposure situation.",
         "choices": [
           "Battery acid splash first aid",
           "ESD wrist strap malfunction procedure",
@@ -3466,7 +3466,7 @@
         "id": "cat8-q016"
       },
       {
-        "clue": "",
+        "clue": "Counting tools at the start and end of every job and immediately retrieving any dropped hardware defines this practice, which is the most effective way to prevent foreign object damage in avionics work.",
         "choices": [
           "Strict tool control for FOD prevention",
           "ESD wrist strap verification",
@@ -3481,7 +3481,7 @@
         "id": "cat8-q017"
       },
       {
-        "clue": "",
+        "clue": "A grounded anti-static wrist strap and a specially equipped handling station are the two required safeguards before touching any sensitive avionics component.",
         "choices": [
           "High-voltage insulation test setup",
           "ESD damage prevention requirements",
@@ -3496,7 +3496,7 @@
         "id": "cat8-q018"
       },
       {
-        "clue": "",
+        "clue": "Stop work, find the item before closing the panels, and log the event — these are the required steps when this type of small fastener goes missing during avionics panel installation.",
         "choices": [
           "Panel alignment torque verification",
           "Tool audit discrepancy procedure",

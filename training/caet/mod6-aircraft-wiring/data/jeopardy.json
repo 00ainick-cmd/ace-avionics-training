@@ -43,12 +43,12 @@
         "clue": "In the high-temperature zone adjacent to an aircraft engine, wire insulation must be rated for elevated temperatures; PTFE (MIL-W-22759/16) or this type of insulation is typically required.",
         "choices": [
           "Fiberglass-insulated wire",
-          "PVC insulation rated to 60\u00b0C",
+          "PVC insulation rated to 60°C",
           "Nylon-jacketed wire",
           "Standard rubber-insulated wire"
         ],
         "correctIndex": 0,
-        "explanation": "Fiberglass-insulated wire handles temperatures up to 400\u00b0C+ and is used in the most extreme heat zones near engines. PTFE (MIL-W-22759) is used for moderate-high temperature zones.",
+        "explanation": "Fiberglass-insulated wire handles temperatures up to 400°C+ and is used in the most extreme heat zones near engines. PTFE (MIL-W-22759) is used for moderate-high temperature zones.",
         "difficulty": 200,
         "learningObjective": "High-temperature wire required near aircraft engines",
         "source": "high-temperature wire"
@@ -58,7 +58,7 @@
         "clue": "In the AWG system, a 22 AWG wire is smaller in diameter than a 16 AWG wire because in this numbering system, higher numbers indicate smaller conductors.",
         "choices": [
           "A 16 AWG wire is smaller because lower numbers indicate finer wire",
-          "A 22 AWG wire is smaller \u2014 higher AWG numbers mean smaller conductor cross-section",
+          "A 22 AWG wire is smaller — higher AWG numbers mean smaller conductor cross-section",
           "Both wires are the same size because AWG only specifies insulation thickness",
           "A 22 AWG wire has a larger conductor but thinner insulation than 16 AWG"
         ],
@@ -125,7 +125,7 @@
           "Increased wire bundle rigidity"
         ],
         "correctIndex": 2,
-        "explanation": "Connectors allow LRUs to be removed and replaced without re-wiring the aircraft. This removability is the key function \u2014 reliable, repeatable electrical junctions for ease of maintenance.",
+        "explanation": "Connectors allow LRUs to be removed and replaced without re-wiring the aircraft. This removability is the key function — reliable, repeatable electrical junctions for ease of maintenance.",
         "difficulty": 200,
         "learningObjective": "Connector function: reliable removable electrical junction for maintenance",
         "source": "connector"
@@ -170,7 +170,7 @@
           "Heat shrink tubing"
         ],
         "correctIndex": 1,
-        "explanation": "Slack is essential \u2014 a tight bundle near flight controls can be pinched or stretched when the control moves through its full range, risking wire damage or worse, restricting control movement.",
+        "explanation": "Slack is essential — a tight bundle near flight controls can be pinched or stretched when the control moves through its full range, risking wire damage or worse, restricting control movement.",
         "difficulty": 500,
         "learningObjective": "Wire bundles near flight controls: conduit with slack, prevent contact",
         "source": "flight controls"
@@ -179,7 +179,7 @@
     "Crimping & Soldering": [
       {
         "id": "cat6-q004",
-        "clue": "The critical step in making a reliable solder joint is to heat this \u2014 not the solder \u2014 so the solder flows into the joint rather than balling up on a cold surface.",
+        "clue": "The critical step in making a reliable solder joint is to heat this — not the solder — so the solder flows into the joint rather than balling up on a cold surface.",
         "choices": [
           "The soldering iron tip only",
           "The heat-shrink tubing adjacent to the joint",
@@ -217,7 +217,7 @@
           "Tape-wrapped crimp splice"
         ],
         "correctIndex": 0,
-        "explanation": "Environmentally sensitive areas require splices that are sealed against moisture and fluids \u2014 solder-sleeve splices or adhesive-lined heat-shrink over crimp splices provide this protection.",
+        "explanation": "Environmentally sensitive areas require splices that are sealed against moisture and fluids — solder-sleeve splices or adhesive-lined heat-shrink over crimp splices provide this protection.",
         "difficulty": 200,
         "learningObjective": "Environmentally sealed splices preferred in exposed areas",
         "source": "environmentally sealed splice"
@@ -232,7 +232,7 @@
           "Hex driver with compression insert"
         ],
         "correctIndex": 1,
-        "explanation": "A calibrated ratcheting crimp tool locks at the correct crimp force and cannot be released prematurely, ensuring full crimp completion every time \u2014 the FAA-preferred method for aircraft wiring.",
+        "explanation": "A calibrated ratcheting crimp tool locks at the correct crimp force and cannot be released prematurely, ensuring full crimp completion every time — the FAA-preferred method for aircraft wiring.",
         "difficulty": 300,
         "learningObjective": "Properly sized crimped terminals with calibrated ratcheting tool are preferred",
         "source": "crimp"
@@ -262,7 +262,7 @@
           "The circuit voltage level"
         ],
         "correctIndex": 1,
-        "explanation": "The crimp die must match both the contact/terminal type AND the wire gauge. The die geometry sets the crimp depth \u2014 too shallow (under-crimp) leaves a loose connection; too deep (over-crimp) damages the contact.",
+        "explanation": "The crimp die must match both the contact/terminal type AND the wire gauge. The die geometry sets the crimp depth — too shallow (under-crimp) leaves a loose connection; too deep (over-crimp) damages the contact.",
         "difficulty": 500,
         "learningObjective": "Select correct crimping tool and die for connector and wire size",
         "source": "crimp tool"
@@ -286,7 +286,7 @@
       },
       {
         "id": "cat6-q024",
-        "clue": "The correct first step when fabricating an aircraft wire harness from a wiring diagram is to study the diagram completely \u2014 understanding wire runs, connector locations, and pin assignments \u2014 before doing this.",
+        "clue": "The correct first step when fabricating an aircraft wire harness from a wiring diagram is to study the diagram completely — understanding wire runs, connector locations, and pin assignments — before doing this.",
         "choices": [
           "Ordering the connector hardware",
           "Crimping the connector contacts",
@@ -294,7 +294,7 @@
           "Cutting any wire"
         ],
         "correctIndex": 3,
-        "explanation": "Studying the diagram first is essential \u2014 harness errors discovered after cutting wire waste materials and require re-work. Understanding the complete wire list before cutting is the first and most critical step.",
+        "explanation": "Studying the diagram first is essential — harness errors discovered after cutting wire waste materials and require re-work. Understanding the complete wire list before cutting is the first and most critical step.",
         "difficulty": 200,
         "learningObjective": "Harness fabrication first step: study the diagram completely before cutting",
         "source": "harness fabrication"
@@ -328,6 +328,36 @@
         "difficulty": 400,
         "learningObjective": "Wire bundle too large for routing path: consult manual for alternate route",
         "source": "wire bundle"
+      },
+      {
+        "id": "cat6-q034",
+        "clue": "Per AC 43.13-1B, wire bundles routed through pressurized areas must have this minimum clearance from flight control cables, hydraulic lines, and high-temperature ducting to prevent chafing, heat damage, and interference.",
+        "choices": [
+          "No clearance required if a wrap of silicone tape is applied",
+          "A minimum separation distance specified in the aircraft's wiring diagram or IPC",
+          "One inch from all other aircraft systems regardless of installation",
+          "Contact is acceptable if anti-chafe conduit is installed over the bundle"
+        ],
+        "correctIndex": 1,
+        "explanation": "The aircraft manufacturer's IPC and wiring diagrams specify required separation distances, which vary by system and area.",
+        "difficulty": 300,
+        "category": "Harness & Routing",
+        "source": "Wire bundle separation requirements"
+      },
+      {
+        "id": "cat6-q035",
+        "clue": "When routing a new wire bundle through an existing harness clamp, the clamp must not be overtightened to prevent this failure mode — which creates high-resistance connections and intermittent faults.",
+        "choices": [
+          "Insulation discoloration from UV exposure",
+          "Conductor fatigue from vibration resonance",
+          "Conductor crushing that deforms the wire and damages insulation",
+          "Electrolytic corrosion from moisture ingress at connector backshells"
+        ],
+        "correctIndex": 2,
+        "explanation": "Overtightened clamps crush conductors and damage insulation, creating high-resistance points and intermittent opens under vibration.",
+        "difficulty": 500,
+        "category": "Harness & Routing",
+        "source": "Clamp overtightening damage"
       }
     ],
     "EMI & Shielding": [
@@ -356,7 +386,7 @@
           "Ground loops causing EMI"
         ],
         "correctIndex": 3,
-        "explanation": "Grounding a shield at both ends creates a ground loop \u2014 a closed conductor loop that acts as a transformer secondary. Any AC difference between the two ground points drives circulating current, creating EMI.",
+        "explanation": "Grounding a shield at both ends creates a ground loop — a closed conductor loop that acts as a transformer secondary. Any AC difference between the two ground points drives circulating current, creating EMI.",
         "difficulty": 200,
         "learningObjective": "Shield termination: ground at one end only to prevent ground loops",
         "source": "shield termination"
@@ -386,10 +416,40 @@
           "Into the connector backshell"
         ],
         "correctIndex": 0,
-        "explanation": "A grounded shield provides a low-impedance path to ground for induced currents. A floating shield cannot divert these currents \u2014 they have nowhere to go except into the signal conductors.",
+        "explanation": "A grounded shield provides a low-impedance path to ground for induced currents. A floating shield cannot divert these currents — they have nowhere to go except into the signal conductors.",
         "difficulty": 400,
         "learningObjective": "Shield floating at both ends provides no EMI protection",
         "source": "shield"
+      },
+      {
+        "id": "cat6-q036",
+        "clue": "The braided metal shield surrounding a sensitive signal wire in an avionics installation serves this primary purpose — and must be grounded per the installation drawing to be effective.",
+        "choices": [
+          "Preventing external electromagnetic interference from coupling into the signal path",
+          "Providing a redundant ground return path for the signal current",
+          "Increasing the wire's current-carrying capacity by adding conductor area",
+          "Protecting the wire from physical abrasion during maintenance"
+        ],
+        "correctIndex": 0,
+        "explanation": "EMI shielding intercepts external electromagnetic fields and shunts them to ground before they can induce noise in the signal conductor.",
+        "difficulty": 200,
+        "category": "EMI & Shielding",
+        "source": "EMI shield purpose"
+      },
+      {
+        "id": "cat6-q037",
+        "clue": "After installing a new comm radio, the pilot reports alternator whine in the headset that varies with engine RPM. The most likely cause is EMI entering the audio system through this path.",
+        "choices": [
+          "The VHF antenna picking up alternator harmonics on the comm frequency",
+          "The headset jack's internal microphone preamp oscillating due to impedance mismatch",
+          "The comm radio's internal power supply filter capacitor failing open",
+          "The power supply wiring — inadequate filtering or a missing ground on the radio's power input"
+        ],
+        "correctIndex": 3,
+        "explanation": "Alternator whine varying with RPM is conducted EMI on the power bus, entering through the radio's DC power input.",
+        "difficulty": 400,
+        "category": "EMI & Shielding",
+        "source": "Alternator whine diagnosis"
       }
     ],
     "Damage, Repair & Inspection": [
@@ -403,7 +463,7 @@
           "Soldering wires to contacts designed for crimping"
         ],
         "correctIndex": 3,
-        "explanation": "Soldering onto crimp contacts wicks solder up the wire, creating a brittle heat-affected zone at the solder line \u2014 a common point of wire fracture under vibration. Crimp contacts must be crimped, not soldered.",
+        "explanation": "Soldering onto crimp contacts wicks solder up the wire, creating a brittle heat-affected zone at the solder line — a common point of wire fracture under vibration. Crimp contacts must be crimped, not soldered.",
         "difficulty": 100,
         "learningObjective": "Prohibited wiring practices: soldering crimp contacts, automotive connectors, unprotected wire ends",
         "source": "prohibited practices"
@@ -418,7 +478,7 @@
           "Connector lock ring"
         ],
         "correctIndex": 0,
-        "explanation": "Strain relief clamps the wire near the connector so any pulling force is absorbed by the clamp rather than transmitted to the pins or solder joints \u2014 preventing intermittent faults.",
+        "explanation": "Strain relief clamps the wire near the connector so any pulling force is absorbed by the clamp rather than transmitted to the pins or solder joints — preventing intermittent faults.",
         "difficulty": 100,
         "learningObjective": "Strain relief prevents tension transfer to connector pins or solder joints",
         "source": "strain relief"
@@ -450,7 +510,7 @@
         "correctIndex": 0,
         "explanation": "Part 43 requires that maintenance use materials and parts that meet or exceed FAA-approved standards. Automotive connectors are designed for automotive environments and do not meet aviation temperature, vibration, or altitude specifications.",
         "difficulty": 200,
-        "learningObjective": "Automotive connectors not acceptable in avionics \u2014 not FAA-approved materials",
+        "learningObjective": "Automotive connectors not acceptable in avionics — not FAA-approved materials",
         "source": "automotive connectors"
       },
       {
@@ -463,7 +523,7 @@
           "Stretching the insulation beyond the strip length"
         ],
         "correctIndex": 2,
-        "explanation": "Nicking conductor strands weakens the wire at the strip point \u2014 a nicked conductor has reduced cross-section and will fail under vibration or bending stress at the nick.",
+        "explanation": "Nicking conductor strands weakens the wire at the strip point — a nicked conductor has reduced cross-section and will fail under vibration or bending stress at the nick.",
         "difficulty": 300,
         "learningObjective": "Teflon wire stripping: verify blade depth to avoid nicking conductor",
         "source": "Teflon wire"
@@ -493,7 +553,7 @@
           "Structural integrity and mechanical strength"
         ],
         "correctIndex": 3,
-        "explanation": "A nick reduces the center conductor cross-section, compromising mechanical strength (vibration fatigue) and changing local impedance (causing signal reflections). Neither is repairable \u2014 the run must be replaced.",
+        "explanation": "A nick reduces the center conductor cross-section, compromising mechanical strength (vibration fatigue) and changing local impedance (causing signal reflections). Neither is repairable — the run must be replaced.",
         "difficulty": 400,
         "learningObjective": "Nicked coaxial center conductor: replace the entire cable run",
         "source": "coaxial cable"
@@ -508,7 +568,7 @@
           "A one-time logbook notation"
         ],
         "correctIndex": 0,
-        "explanation": "Severe outer jacket damage \u2014 especially if individual wire insulation is compromised \u2014 cannot be repaired to original airworthiness. The harness must be replaced.",
+        "explanation": "Severe outer jacket damage — especially if individual wire insulation is compromised — cannot be repaired to original airworthiness. The harness must be replaced.",
         "difficulty": 500,
         "learningObjective": "Damaged harness jacket: assess damage and repair per manual or replace if severe",
         "source": "harness"

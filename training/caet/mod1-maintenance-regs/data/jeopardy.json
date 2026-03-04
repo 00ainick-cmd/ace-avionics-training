@@ -18,7 +18,7 @@
           "14 CFR Part 145"
         ],
         "correctIndex": 3,
-        "explanation": "Part 145 specifically governs certificated repair stations \u2014 their certification, personnel, facilities, and operational standards. Part 43 covers how maintenance is performed by anyone authorized; Part 91 covers aircraft operating rules; Part 65 covers airmen certificates. A common mistake is choosing Part 43, but Part 43 governs the work itself, not the repair station organization.",
+        "explanation": "Part 145 specifically governs certificated repair stations — their certification, personnel, facilities, and operational standards. Part 43 covers how maintenance is performed by anyone authorized; Part 91 covers aircraft operating rules; Part 65 covers airmen certificates. A common mistake is choosing Part 43, but Part 43 governs the work itself, not the repair station organization.",
         "difficulty": 100,
         "learningObjective": "Identify the repair station performance regulation",
         "source": "14 CFR Part 145"
@@ -40,7 +40,7 @@
       },
       {
         "id": "CAT1-MR-011",
-        "clue": "The FAA definition of 'maintenance' includes inspection, overhaul, repair, preservation, and parts replacement \u2014 but explicitly excludes this.",
+        "clue": "The FAA definition of 'maintenance' includes inspection, overhaul, repair, preservation, and parts replacement — but explicitly excludes this.",
         "choices": [
           "Alterations",
           "Preventive maintenance",
@@ -48,14 +48,14 @@
           "Major repairs"
         ],
         "correctIndex": 1,
-        "explanation": "The FAA defines maintenance as inspection, overhaul, repair, preservation, and parts replacement. Preventive maintenance is a separate regulatory category limited to certificated pilots on aircraft they own or operate \u2014 explicitly excluded from the definition of maintenance.",
+        "explanation": "The FAA defines maintenance as inspection, overhaul, repair, preservation, and parts replacement. Preventive maintenance is a separate regulatory category limited to certificated pilots on aircraft they own or operate — explicitly excluded from the definition of maintenance.",
         "difficulty": 200,
         "learningObjective": "State the FAA definition of maintenance",
         "source": "14 CFR Part 43"
       },
       {
         "id": "CAT1-MR-014",
-        "clue": "This regulation governs performance rules for aircraft maintenance, preventive maintenance, and alterations \u2014 applying to any authorized person, not just repair stations.",
+        "clue": "This regulation governs performance rules for aircraft maintenance, preventive maintenance, and alterations — applying to any authorized person, not just repair stations.",
         "choices": [
           "14 CFR Part 43",
           "14 CFR Part 65",
@@ -63,7 +63,7 @@
           "14 CFR Part 145"
         ],
         "correctIndex": 0,
-        "explanation": "Part 43 sets the standards for how maintenance work must be performed and applies broadly \u2014 to individual mechanics, repair stations, and other authorized persons. Part 145 governs the repair station organization. Part 43 governs the work itself.",
+        "explanation": "Part 43 sets the standards for how maintenance work must be performed and applies broadly — to individual mechanics, repair stations, and other authorized persons. Part 145 governs the repair station organization. Part 43 governs the work itself.",
         "difficulty": 300,
         "learningObjective": "State that 14 CFR Part 43 governs maintenance performance rules",
         "source": "14 CFR Part 43"
@@ -78,7 +78,7 @@
           "Every 100 flight hours"
         ],
         "correctIndex": 0,
-        "explanation": "91.413 requires transponder testing every 24 calendar months \u2014 not 12 months or flight hours. The interval is calendar-based, running from the date of the last check regardless of hours flown.",
+        "explanation": "91.413 requires transponder testing every 24 calendar months — not 12 months or flight hours. The interval is calendar-based, running from the date of the last check regardless of hours flown.",
         "difficulty": 300,
         "learningObjective": "State that 91.413 requires transponder testing every 24 calendar months",
         "source": "14 CFR 91.413"
@@ -108,7 +108,7 @@
           "Routine inspection"
         ],
         "correctIndex": 0,
-        "explanation": "Preventive maintenance is the only maintenance a certificated pilot (not a mechanic) may legally perform, and only on aircraft they own or operate \u2014 limited to simple tasks listed in Part 43 Appendix A.",
+        "explanation": "Preventive maintenance is the only maintenance a certificated pilot (not a mechanic) may legally perform, and only on aircraft they own or operate — limited to simple tasks listed in Part 43 Appendix A.",
         "difficulty": 500,
         "learningObjective": "Explain that preventive maintenance under Part 43 is limited to certificated pilots on aircraft they own or operate",
         "source": "14 CFR Part 43"
@@ -117,7 +117,7 @@
     "Records & Logbooks": [
       {
         "id": "CAT1-MR-003",
-        "clue": "Per 14 CFR \u00a743.9, this element is NOT required in a maintenance record entry.",
+        "clue": "Per 14 CFR §43.9, this element is NOT required in a maintenance record entry.",
         "choices": [
           "Description of work performed",
           "Aircraft registration number",
@@ -125,14 +125,14 @@
           "Return-to-service signature"
         ],
         "correctIndex": 1,
-        "explanation": "\u00a743.9 requires: description of work, date, name, certificate number, and return-to-service signature. The aircraft registration number is not a \u00a743.9 required element \u2014 the five required elements describe who did the work and what was done, not the aircraft identifier.",
+        "explanation": "§43.9 requires: description of work, date, name, certificate number, and return-to-service signature. The aircraft registration number is not a §43.9 required element — the five required elements describe who did the work and what was done, not the aircraft identifier.",
         "difficulty": 100,
-        "learningObjective": "State required elements of a maintenance record per \u00a743.9",
-        "source": "14 CFR \u00a743.9"
+        "learningObjective": "State required elements of a maintenance record per §43.9",
+        "source": "14 CFR §43.9"
       },
       {
         "id": "CAT1-MR-019",
-        "clue": "Of these log entry elements, this one is required by \u00a743.9 but is most often omitted by new technicians.",
+        "clue": "Of these log entry elements, this one is required by §43.9 but is most often omitted by new technicians.",
         "choices": [
           "Certificate number",
           "Date completed",
@@ -140,10 +140,10 @@
           "Return-to-service statement"
         ],
         "correctIndex": 2,
-        "explanation": "The technician's certificate number is most frequently omitted \u2014 new techs include their name and signature but forget the certificate number, which \u00a743.9 explicitly requires and which ties the entry to a specific FAA-certificated individual.",
+        "explanation": "The technician's certificate number is most frequently omitted — new techs include their name and signature but forget the certificate number, which §43.9 explicitly requires and which ties the entry to a specific FAA-certificated individual.",
         "difficulty": 200,
         "learningObjective": "List required elements of a maintenance log entry for an avionics repair",
-        "source": "14 CFR \u00a743.9"
+        "source": "14 CFR §43.9"
       },
       {
         "id": "CAT1-MR-006",
@@ -155,10 +155,55 @@
           "The repair station's work order number"
         ],
         "correctIndex": 1,
-        "explanation": "Part 43 requires the specific test equipment used to be documented \u2014 allowing verification that calibrated, appropriate equipment was actually used. Aircraft owner signature, flight hours, and work order numbers are not required transponder test record elements.",
+        "explanation": "Part 43 requires the specific test equipment used to be documented — allowing verification that calibrated, appropriate equipment was actually used. Aircraft owner signature, flight hours, and work order numbers are not required transponder test record elements.",
         "difficulty": 400,
         "learningObjective": "Document altimeter and transponder test results per Part 43",
         "source": "14 CFR Part 43"
+      },
+      {
+        "id": "CAT1-MR-032",
+        "clue": "After completing a 91.411 pitot-static test, the maintenance record must include the specific test equipment used — including this detail about each instrument, which proves the measurements were valid.",
+        "choices": [
+          "The equipment's original purchase date and vendor",
+          "The calibration due date, confirming the equipment was in calibration at the time of the test",
+          "The equipment's serial number and firmware version",
+          "The equipment manufacturer's ISO 9001 certification number"
+        ],
+        "correctIndex": 1,
+        "explanation": "Documenting that test equipment was within its calibration interval at the time of use proves the measurements are traceable to known standards.",
+        "difficulty": 300,
+        "category": "Records & Logbooks",
+        "source": "Test equipment calibration documentation"
+      },
+      {
+        "id": "CAT1-MR-033",
+        "clue": "A technician signs off an avionics installation in the aircraft logbook but omits this specific §43.9 element — which is the single most common regulatory deficiency found during FSDO surveillance of Part 145 shops.",
+        "choices": [
+          "The aircraft tail number",
+          "The work order reference number",
+          "The technician's certificate number",
+          "The shop's repair station number"
+        ],
+        "correctIndex": 2,
+        "explanation": "The technician's certificate number is the most commonly omitted §43.9 element.",
+        "difficulty": 400,
+        "category": "Records & Logbooks",
+        "source": "Common §43.9 deficiency"
+      },
+      {
+        "id": "CAT1-MR-034",
+        "clue": "A technician discovers that a previous maintenance record entry references the wrong part number for an installed component. Under Part 43, the correct action is this — not simply crossing it out or adding a note.",
+        "choices": [
+          "Make a new corrective entry referencing the original entry, with the correct part number and a new signature",
+          "White out the incorrect number and write the correct one with initials and date",
+          "Contact the FAA FSDO to request a formal records amendment",
+          "Remove the page from the logbook and replace it with a corrected version"
+        ],
+        "correctIndex": 0,
+        "explanation": "Part 43 maintenance records cannot be erased, whited out, or removed. The correct procedure is a new separate entry referencing the original.",
+        "difficulty": 500,
+        "category": "Records & Logbooks",
+        "source": "Maintenance record correction procedure"
       }
     ],
     "Forms & Approvals": [
@@ -217,7 +262,7 @@
           "Line replacement"
         ],
         "correctIndex": 1,
-        "explanation": "A major alteration is a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities \u2014 requiring approved data such as an STC or Form 337.",
+        "explanation": "A major alteration is a type design change that might appreciably affect structural strength, flight characteristics, or other airworthiness qualities — requiring approved data such as an STC or Form 337.",
         "difficulty": 300,
         "learningObjective": "State the definition of a major alteration per Part 43 Appendix A",
         "source": "14 CFR Part 43 Appendix A"
@@ -232,7 +277,7 @@
           "A manufacturer's service letter"
         ],
         "correctIndex": 1,
-        "explanation": "A flight manual supplement changes the aircraft's approved operating limitations or procedures \u2014 that change to type design qualifies the installation as a major alteration under Part 43 Appendix A, regardless of the part's TSO approval.",
+        "explanation": "A flight manual supplement changes the aircraft's approved operating limitations or procedures — that change to type design qualifies the installation as a major alteration under Part 43 Appendix A, regardless of the part's TSO approval.",
         "difficulty": 400,
         "learningObjective": "Classify STC installations with flight manual supplements as major alterations",
         "source": "STC"
@@ -256,7 +301,7 @@
     "Repair Station Ops": [
       {
         "id": "CAT1-MR-017",
-        "clue": "When installing avionics wiring in a Part 145 shop, this advisory circular \u2014 or the aircraft manufacturer's wiring data \u2014 is the primary standard to follow.",
+        "clue": "When installing avionics wiring in a Part 145 shop, this advisory circular — or the aircraft manufacturer's wiring data — is the primary standard to follow.",
         "choices": [
           "AC 20-165B",
           "AC 91-78",
@@ -294,7 +339,7 @@
           "Every 36 months"
         ],
         "correctIndex": 2,
-        "explanation": "The industry standard in Part 145 repair station manuals is recurrent training every 24 months \u2014 aligning with other 24-month aviation maintenance cycles. The specific interval is set in each station's manual; 24 months is the standard most stations use.",
+        "explanation": "The industry standard in Part 145 repair station manuals is recurrent training every 24 months — aligning with other 24-month aviation maintenance cycles. The specific interval is set in each station's manual; 24 months is the standard most stations use.",
         "difficulty": 200,
         "learningObjective": "State the typical recurrent training interval in Part 145 station manuals",
         "source": "Part 145"
@@ -339,7 +384,7 @@
           "The aircraft's airworthiness certificate"
         ],
         "correctIndex": 1,
-        "explanation": "Capability list listing provides authorization, but Part 145 also requires current technical data. An outdated manual does not satisfy this requirement \u2014 authorization and current data are both required, not interchangeable.",
+        "explanation": "Capability list listing provides authorization, but Part 145 also requires current technical data. An outdated manual does not satisfy this requirement — authorization and current data are both required, not interchangeable.",
         "difficulty": 500,
         "learningObjective": "Determine when maintenance cannot proceed due to missing current technical data",
         "source": "capability list"
@@ -356,7 +401,7 @@
           "Flight director cues and GPWS alerts"
         ],
         "correctIndex": 1,
-        "explanation": "GA audio systems use mono (single-channel) audio for intercom communications and speaker monitoring. Stereo separation provides no operational benefit for ATC communications or crew intercom \u2014 the same audio signal goes to all headsets and speakers.",
+        "explanation": "GA audio systems use mono (single-channel) audio for intercom communications and speaker monitoring. Stereo separation provides no operational benefit for ATC communications or crew intercom — the same audio signal goes to all headsets and speakers.",
         "difficulty": 100,
         "learningObjective": "State the typical use of mono audio in GA aircraft",
         "source": "audio systems"
@@ -371,7 +416,7 @@
           "Check the antenna coax cable for continuity"
         ],
         "correctIndex": 2,
-        "explanation": "Part 145 requires maintenance to be performed per approved technical data. Consulting the maintenance manual is the mandatory first step \u2014 it defines the approved diagnostic procedure. Swapping components without approved data is shotgun troubleshooting and a regulatory violation.",
+        "explanation": "Part 145 requires maintenance to be performed per approved technical data. Consulting the maintenance manual is the mandatory first step — it defines the approved diagnostic procedure. Swapping components without approved data is shotgun troubleshooting and a regulatory violation.",
         "difficulty": 200,
         "learningObjective": "Apply the correct first step when troubleshooting in a Part 145 shop",
         "source": "VOR"
@@ -386,10 +431,55 @@
           "Connector backshell removal tools"
         ],
         "correctIndex": 1,
-        "explanation": "Manufacturer-specified insertion and extraction tools are required. Improvised tools damage pins, bend contacts, or crack the connector insert \u2014 creating intermittent faults that are extremely difficult to diagnose later.",
+        "explanation": "Manufacturer-specified insertion and extraction tools are required. Improvised tools damage pins, bend contacts, or crack the connector insert — creating intermittent faults that are extremely difficult to diagnose later.",
         "difficulty": 400,
         "learningObjective": "Apply correct insertion/extraction tool practice for circular connectors",
         "source": "circular connectors"
+      },
+      {
+        "id": "CAT1-MR-035",
+        "clue": "Per 14 CFR 91.411, altimeter and pitot-static system inspections must be performed at this fixed interval — the same interval required for transponder checks under 91.413.",
+        "choices": [
+          "Every 12 calendar months",
+          "Every 100 flight hours",
+          "At each annual inspection",
+          "Every 24 calendar months"
+        ],
+        "correctIndex": 3,
+        "explanation": "Both 91.411 (altimeter/pitot-static) and 91.413 (transponder) require testing every 24 calendar months.",
+        "difficulty": 200,
+        "category": "Inspections & Testing",
+        "source": "91.411 pitot-static interval"
+      },
+      {
+        "id": "CAT1-MR-036",
+        "clue": "During a transponder test per Part 43 Appendix F, the test set verifies reply frequency, power output, suppression, and this parameter — which confirms the transponder correctly reports the aircraft's barometric altitude.",
+        "choices": [
+          "Mode C altitude encoding accuracy within ±125 feet",
+          "ATC radar interrogation response delay within 3 microseconds",
+          "Squawk code assignment timing within 10 milliseconds",
+          "Antenna VSWR below 1.5:1 at 1090 MHz"
+        ],
+        "correctIndex": 0,
+        "explanation": "Mode C altitude reporting accuracy must be verified within ±125 feet per Part 43 Appendix F.",
+        "difficulty": 300,
+        "category": "Inspections & Testing",
+        "source": "Mode C altitude accuracy test"
+      },
+      {
+        "id": "CAT1-MR-037",
+        "clue": "An ELT inspection per 91.207 requires verifying battery expiration, proper mounting, antenna condition, and this — which must be performed only during the first five minutes of each hour to avoid triggering a false alert to search-and-rescue satellites.",
+        "choices": [
+          "A full-duration 60-second transmission test on 406 MHz",
+          "A brief operational test limited to three audible sweeps on 121.5 MHz",
+          "A 30-second transmission test monitored on the aircraft's comm radio",
+          "No transmission test — only a visual inspection of the cockpit-mounted status light"
+        ],
+        "correctIndex": 1,
+        "explanation": "ELT operational tests are limited to three audible sweeps (approximately one second) and may only be performed during the first five minutes of each hour per 91.207(d).",
+        "difficulty": 400,
+        "category": "Inspections & Testing",
+        "source": "ELT operational test procedure"
       }
     ],
     "Shop Safety & Hazmat": [
@@ -448,7 +538,7 @@
           "A wattmeter"
         ],
         "correctIndex": 2,
-        "explanation": "Parasitic draw is current \u2014 measured with an ammeter in series. A voltmeter measures voltage in parallel. An ohmmeter measures resistance with power off. A wattmeter measures power but is not the standard tool for parasitic draw diagnosis.",
+        "explanation": "Parasitic draw is current — measured with an ammeter in series. A voltmeter measures voltage in parallel. An ohmmeter measures resistance with power off. A wattmeter measures power but is not the standard tool for parasitic draw diagnosis.",
         "difficulty": 300,
         "learningObjective": "Confirm a parasitic draw source using ammeter in series",
         "source": "parasitic draw"
@@ -463,7 +553,7 @@
           "Engine noise creates EMI that interferes with electronic test equipment"
         ],
         "correctIndex": 2,
-        "explanation": "Noise-induced hearing loss is cumulative and permanent \u2014 each unprotected exposure contributes to total damage even if no single event seems severe. It is a long-term occupational hazard, not just an acute discomfort issue.",
+        "explanation": "Noise-induced hearing loss is cumulative and permanent — each unprotected exposure contributes to total damage even if no single event seems severe. It is a long-term occupational hazard, not just an acute discomfort issue.",
         "difficulty": 400,
         "learningObjective": "Explain why hearing protection is critical in a busy avionics shop",
         "source": "hearing protection"
