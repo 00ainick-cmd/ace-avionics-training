@@ -804,7 +804,7 @@
 
     // ── Attitude Indicator ────────────────────────────────────
     function drawAI(pitch, bank) {
-      pitch = pitch || 0;
+      pitch = pitch ?? 0;
       bank = bank || 0;
       const { ctx, size } = setupCanvas('cv-ai', 160);
       const cx = size/2, cy = size/2, r = size/2 - 4;
@@ -1003,7 +1003,7 @@
 
     // ── Turn Coordinator ──────────────────────────────────────
     function drawTC(turnRate, slip) {
-      turnRate = turnRate || 0;
+      turnRate = turnRate ?? 0;
       slip = slip || 0;
       const { ctx, size } = setupCanvas('cv-tc', 160);
       const cx = size/2, cy = size/2, r = size/2 - 4;
@@ -1112,7 +1112,7 @@
 
     // ── Heading Indicator ─────────────────────────────────────
     function drawHI(heading) {
-      heading = heading || 0;
+      heading = heading ?? 0;
       const { ctx, size } = setupCanvas('cv-hi', 160);
       const cx = size/2, cy = size/2, r = size/2 - 4;
       drawBezel(ctx, cx, cy, r);
@@ -1596,10 +1596,8 @@
 
       // Reveal each instrument one by one
       let roundCorrect = 0;
-      const order = ['asi', 'ai', 'alt', 'tc', 'hi', 'vsi'];
-
-      for (let i = 0; i < order.length; i++) {
-        const inst = order[i];
+      for (let i = 0; i < INSTRUMENTS.length; i++) {
+        const inst = INSTRUMENTS[i];
         await delay(500);
 
         // Spotlight
@@ -1701,8 +1699,7 @@
 
     function showExplanations(scenario) {
       expItemsEl.innerHTML = '';
-      const order = ['asi', 'ai', 'alt', 'tc', 'hi', 'vsi'];
-      order.forEach(inst => {
+      INSTRUMENTS.forEach(inst => {
         const item = document.createElement('div');
         item.className = 'pf-exp-item';
 
@@ -1799,24 +1796,27 @@
       // Offer restart
       nextBtn.textContent = 'Restart';
       nextBtn.disabled = false;
-      nextBtn.removeEventListener('click', nextScenario);
-      function handleRestart() {
+      phase = 'complete';
+    }
+
+    function handleNextBtn() {
+      if (phase === 'complete') {
+        // Restart from beginning
         totalCorrect = 0;
         totalAnswered = 0;
         scenarioScores = {};
         scoreMasteredEl.textContent = '0/7';
         scoreOverallEl.textContent = '0%';
         nextBtn.textContent = 'Next Scenario';
-        nextBtn.removeEventListener('click', handleRestart);
-        nextBtn.addEventListener('click', nextScenario);
         loadScenario(0);
+      } else {
+        nextScenario();
       }
-      nextBtn.addEventListener('click', handleRestart);
     }
 
     // ── EVENT HANDLERS ────────────────────────────────────────
     revealBtn.addEventListener('click', doReveal);
-    nextBtn.addEventListener('click', nextScenario);
+    nextBtn.addEventListener('click', handleNextBtn);
 
     // ── INITIALIZE ────────────────────────────────────────────
     loadScenario(0);
